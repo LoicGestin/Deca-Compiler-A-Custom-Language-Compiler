@@ -1,3 +1,2 @@
-# gl29
-
-Projet GL équipe gl29
+# Projet Génie Logiciel, Ensimag.
+@AUTHOR@, @DATE@.

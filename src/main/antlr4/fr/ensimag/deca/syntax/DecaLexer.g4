@@ -19,14 +19,14 @@ options {
 // Ref      => https://github.com/antlr/antlr4/blob/master/doc/lexer-rules.md
 
 
-fragment EOL : '\n' + '\r' + '\n\r' ;
+fragment EOL : '\r'? '\n' ;
 
 // =====================
 // Comments
 
 MULTI_LINE_COMMENT : '/*' .*? '*/' -> skip ;
 // Single line comment starts with // and ends with EOL or EOF
-SINGLE_LINE_COMMENT : '//' ~[\n\r]* (EOL + EOF) -> skip ;
+SINGLE_LINE_COMMENT : '//' ~[\n\r]* -> skip ;
 
 
 // =====================

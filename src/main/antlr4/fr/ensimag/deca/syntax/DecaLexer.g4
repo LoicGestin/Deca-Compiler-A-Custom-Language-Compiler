@@ -9,13 +9,25 @@ options {
 }
 
 @members {
+    void inclusion(){
+        String tokenText = getText(); // getText() est une méthode définie par ANTLR
+        doInclude(tokenText);
+    }
 }
 
 // To debug => END : ('endif'|'end') {System.out.println("found an end");} ;
 // Ref      => https://github.com/antlr/antlr4/blob/master/doc/lexer-rules.md
 
 
-EOL : '\r'? '\n' ;
+fragment EOL : '\n' ;
+
+// =====================
+// Comments
+
+MULTI_LINE_COMMENT : '/*' .*? '*/' -> skip ;
+// Single line comment starts with // and ends with EOL or EOF
+SINGLE_LINE_COMMENT : '//' .*? (EOL + EOF) -> skip ;
+
 
 // =====================
 // Reserved words
@@ -103,13 +115,6 @@ STRING : '"' (STRING_CAR + '\\"' + '\\\\')* '"' ;
 MULTI_LINE_STRING : '"' (STRING_CAR + EOL + '\\"' + '\\\\')* '"' ;
 
 // =====================
-// Comments
-
-MULTI_LINE_COMMENT : '/*' .*? '*/' -> skip ;
-// Single line comment starts with // and ends with EOL or EOF
-SINGLE_LINE_COMMENT : '//' .*? (EOL + EOF) -> skip ;
-
-// =====================
 // Whitespace
 
 WS : [ \t\n\r]+ -> skip ;
@@ -118,4 +123,5 @@ WS : [ \t\n\r]+ -> skip ;
 // File inclusion
 
 fragment FILENAME : (LETTER + DIGIT + '.' + '-' + '_')+;
-INCLUDE : '#include' (' ')* '"' FILENAME '"' -> doInclude(FILENAME);
+// Call the AbstractDecaLexer method to include the file
+INCLUDE : '#include' (' ')* '"' FILENAME '"' {inclusion();};

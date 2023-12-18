@@ -55,18 +55,18 @@ IDENT : (LETTER + '$' + '_')(LETTER + DIGIT + '$' + '_')* ;
 
 LT : '<' ;
 GT : '>' ;
-EQ : '=' ;
+EQUALS : '=' ;
 PLUS : '+' ;
 MINUS : '-' ;
 TIMES : '*' ;
-DIVIDE : '/' ;
-MODULO : '%' ;
+SLASH : '/' ;
+PERCENT : '%' ;
 DOT : '.' ;
 COMMA : ',' ;
-LPAREN : '(' ;
-RPAREN : ')' ;
-LBRACE : '{' ;
-RBRACE : '}' ;
+OPARENT: '(' ;
+CPARENT : ')' ;
+OBRACE : '{' ;
+CBRACE : '}' ;
 EXCLAM : '!' ;
 SEMI : ';' ;
 EQEQ : '==' ;
@@ -118,4 +118,4 @@ WS : [ \t\n\r]+ -> skip ;
 // File inclusion
 
 fragment FILENAME : (LETTER + DIGIT + '.' + '-' + '_')+;
-INCLUDE : '#include' (' ')* '"' FILENAME '"' ;
+INCLUDE : '#include' (' ')* '"' FILENAME '"' -> doInclude(FILENAME);

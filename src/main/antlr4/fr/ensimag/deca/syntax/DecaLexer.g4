@@ -19,14 +19,14 @@ options {
 // Ref      => https://github.com/antlr/antlr4/blob/master/doc/lexer-rules.md
 
 
-fragment EOL : '\n' ;
+fragment EOL : '\n' + '\r' + '\n\r' ;
 
 // =====================
 // Comments
 
 MULTI_LINE_COMMENT : '/*' .*? '*/' -> skip ;
 // Single line comment starts with // and ends with EOL or EOF
-SINGLE_LINE_COMMENT : '//' .*? (EOL + EOF) -> skip ;
+SINGLE_LINE_COMMENT : '//' ~[\n\r]* (EOL + EOF) -> skip ;
 
 
 // =====================
@@ -60,7 +60,7 @@ WHILE : 'while' ;
 
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT : [0-9] ;
-IDENT : (LETTER + '$' + '_')(LETTER + DIGIT + '$' + '_')* ;
+IDENT : (LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* ;
 
 // =====================
 // Operators
@@ -92,27 +92,27 @@ OR : '||' ;
 // Integer literals
 
 fragment POSITIVE_DIGIT : [1-9] ;
-INT : '0' + POSITIVE_DIGIT DIGIT*;
+INT : '0' | POSITIVE_DIGIT DIGIT*;
 
 // =====================
 // Floating-point literals
 
-fragment NUM : DIGIT+;
-fragment EXP : ('E' + 'e') ('+' + '-')? NUM;
+fragment NUM : DIGIT|;
+fragment EXP : ('E' | 'e') ('+' | '-')? NUM;
 fragment DEC : NUM '.' NUM;
-fragment FLOATDEC : (DEC + DEC EXP) ('F' + 'f')?;
+fragment FLOATDEC : (DEC | DEC EXP) ('F' | 'f')?;
 fragment DIGITHEX : [0-9A-Fa-f];
-fragment NUMHEX : DIGITHEX+;
-fragment FLOATHEX : ('0x' + '0X') NUMHEX '.' NUMHEX ('P' + 'p') ('+' + '-')? NUM ('F' + 'f');
-FLOAT : FLOATDEC + FLOATHEX;
+fragment NUMHEX : DIGITHEX|;
+fragment FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') ('+' | '-')? NUM ('F' | 'f');
+FLOAT : FLOATDEC | FLOATHEX;
 
 // =====================
 // Strings
 
 
 fragment STRING_CAR : [^\\"\n\r] ; // Stringcar is all characters except " and \ and EOL
-STRING : '"' (STRING_CAR + '\\"' + '\\\\')* '"' ;
-MULTI_LINE_STRING : '"' (STRING_CAR + EOL + '\\"' + '\\\\')* '"' ;
+STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"' ;
+MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"' ;
 
 // =====================
 // Whitespace
@@ -122,6 +122,6 @@ WS : [ \t\n\r]+ -> skip ;
 // =====================
 // File inclusion
 
-fragment FILENAME : (LETTER + DIGIT + '.' + '-' + '_')+;
+fragment FILENAME : (LETTER | DIGIT | '.' | '-' | '_')+;
 // Call the AbstractDecaLexer method to include the file
 INCLUDE : '#include' (' ')* '"' FILENAME '"' {inclusion();};

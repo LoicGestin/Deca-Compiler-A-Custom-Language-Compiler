@@ -109,8 +109,8 @@ FLOAT : FLOATDEC | FLOATHEX;
 // =====================
 // Strings
 
-
-fragment STRING_CAR : [^\\"\n\r] ; // Stringcar is all characters except " and \ and EOL
+// Stringcar is all characters except " and \ and EOL
+fragment STRING_CAR : ~["\\\r\n] ;
 STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"' ;
 MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"' ;
 

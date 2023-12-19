@@ -17,7 +17,7 @@ import fr.ensimag.deca.tree.Location;
 public class EnvironmentType {
     public EnvironmentType(DecacCompiler compiler) {
         
-        envTypes = new HashMap<Symbol, TypeDefinition>();
+        envTypes = new HashMap<>();
         
         Symbol intSymb = compiler.createSymbol("int");
         INT = new IntType(intSymb);
@@ -38,7 +38,12 @@ public class EnvironmentType {
         Symbol stringSymb = compiler.createSymbol("string");
         STRING = new StringType(stringSymb);
         // not added to envTypes, it's not visible for the user.
-        
+
+        // TODO : check if it's the right way to do it
+        Symbol objectSymb = compiler.createSymbol("Object");
+        OBJECT = new ClassType(objectSymb, new Location(0, 0, "Object"), null);
+        envTypes.put(objectSymb, new TypeDefinition(OBJECT, Location.BUILTIN));
+
     }
 
     private final Map<Symbol, TypeDefinition> envTypes;
@@ -47,9 +52,19 @@ public class EnvironmentType {
         return envTypes.get(s);
     }
 
+
+    public void declareClass(Symbol key, ClassDefinition value) throws EnvironmentExp.DoubleDefException {
+        if (envTypes.containsKey(key)) {
+            throw new EnvironmentExp.DoubleDefException();
+        }
+        envTypes.put(key, new TypeDefinition(value.getType(), value.getLocation()));
+    }
+
+
     public final VoidType    VOID;
     public final IntType     INT;
     public final FloatType   FLOAT;
     public final StringType  STRING;
     public final BooleanType BOOLEAN;
+    public final ClassType   OBJECT;
 }

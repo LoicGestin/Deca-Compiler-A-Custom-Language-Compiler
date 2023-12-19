@@ -16,7 +16,7 @@ import java.util.Map;
  * @date 01/01/2024
  */
 public class SymbolTable {
-    private Map<String, Symbol> map = new HashMap<String, Symbol>();
+    private final Map<String, Symbol> map = new HashMap<>();
 
     /**
      * Create or reuse a symbol.
@@ -25,7 +25,13 @@ public class SymbolTable {
      * this Symbol. Otherwise, create a new Symbol and add it to the table.
      */
     public Symbol create(String name) {
-        throw new UnsupportedOperationException("Symbol creation");
+        if (map.containsKey(name)) {
+            return map.get(name);
+        } else {
+            Symbol symb = new Symbol(name);
+            map.put(name, symb);
+            return symb;
+        }
     }
 
     public static class Symbol {
@@ -46,6 +52,6 @@ public class SymbolTable {
             return name;
         }
 
-        private String name;
+        private final String name;
     }
 }

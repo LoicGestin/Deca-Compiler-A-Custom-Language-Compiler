@@ -4,6 +4,8 @@ import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import org.apache.commons.lang.Validate;
+
 import java.io.PrintStream;
 
 /**
@@ -14,9 +16,24 @@ import java.io.PrintStream;
  */
 public class DeclClass extends AbstractDeclClass {
 
+    private AbstractIdentifier varName;
+    private AbstractIdentifier varSuper;
+    private ListDeclField listDeclField;
+    private ListDeclMethod listDeclMethod;
+
+    public DeclClass(AbstractIdentifier varName, AbstractIdentifier varSuper, ListDeclField listDeclField, ListDeclMethod listDeclMethod) {
+        Validate.notNull(varName);
+        Validate.notNull(varSuper);
+        Validate.notNull(listDeclField);
+        Validate.notNull(listDeclMethod);
+        this.varName = varName;
+        this.varSuper = varName;
+        this.listDeclField = listDeclField;
+        this.listDeclMethod = listDeclMethod;
+    }
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("class { ... A FAIRE ... }");
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override

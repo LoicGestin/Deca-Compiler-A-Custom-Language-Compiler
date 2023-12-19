@@ -1,0 +1,10 @@
+// Description :
+//      test 4 de programmes lexicalement incorrects. Le contre-exemple est au niveau des commentaires.
+// Résultats :
+//      erreur de reconnaissance de token.
+// Historique :
+//      créé le 19/12/2023
+
+/* Salut,
+je suis un commentaire
+classique qui n'a pas de fin.

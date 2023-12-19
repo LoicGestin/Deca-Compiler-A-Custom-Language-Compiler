@@ -1,0 +1,13 @@
+// Description :
+//      test de programmes lexicalement corrects. On teste les réels. On teste les commentaires.
+// Résultats :
+//      cf Documentation
+// Historique :
+//      créé le 19/12/2023
+
+/* Salut,
+je suis un
+commentaire
+classique. */
+
+// Et moi je suis un commentaire sur une ligne.

@@ -1,0 +1,8 @@
+// Description :
+//      test 1 de programmes lexicalement incorrects. Le contre-exemple est au niveau des opérateurs.
+// Résultats :
+//      erreur de reconnaissance de token.
+// Historique :
+//      créé le 19/12/2023
+
+|||

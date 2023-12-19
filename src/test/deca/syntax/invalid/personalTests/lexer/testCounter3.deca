@@ -1,0 +1,8 @@
+// Description :
+//      test 3 de programmes lexicalement incorrects. Le contre-exemple est au niveau des chaînes de caractères.
+// Résultats :
+//      erreur de reconnaissance de token.
+// Historique :
+//      créé le 19/12/2023
+
+"Je suis une chaîne de caractères sans fin.

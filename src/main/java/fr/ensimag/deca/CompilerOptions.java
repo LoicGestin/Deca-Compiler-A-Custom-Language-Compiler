@@ -67,7 +67,19 @@ public class CompilerOptions {
             logger.info("Java assertions disabled");
         }
 
-        throw new UnsupportedOperationException("not yet implemented");
+        for (String arg : args) {
+            if (arg.equals("-b")) {
+                printBanner = true;
+            } else if (arg.equals("-p")) {
+                parallel = true;
+            } else if (arg.equals("-v")) {
+                debug++;
+            } else if (arg.startsWith("-")) {
+                throw new UnsupportedOperationException("Option " + arg + " not yet implemented");
+            } else {
+                sourceFiles.add(new File(arg));
+            }
+        }
     }
 
     protected void displayUsage() {

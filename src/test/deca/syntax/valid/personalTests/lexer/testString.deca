@@ -1,0 +1,13 @@
+// Description :
+//      test 6 de programmes lexicalement corrects. On teste les Strings.
+// Résultats :
+//      cf Documentation
+// Historique :
+//      créé le 19/12/2023
+
+"Chaîne courte ?"
+
+"Chaîne de taille moyenne je dirais !"
+
+"Cette chaîne de caractères est siiiiiiiii longue, on devrait mettre en prison les gens qui sont aussi sadiques. \\
+Vous vous rendez compte ! Il faut même retourner à la ligne tellement c'est long."

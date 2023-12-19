@@ -1,0 +1,10 @@
+// Description :
+//      test 7 de programmes lexicalement corrects. On teste les Include.
+// Résultats :
+//      cf Documentation
+// Historique :
+//      créé le 19/12/2023
+
+#include "testIdentifiers.deca"
+#include "error404.extensionRandom"
+#include "nomDeFichierRandom"

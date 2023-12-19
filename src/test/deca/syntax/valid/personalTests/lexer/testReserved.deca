@@ -1,0 +1,9 @@
+// Description :
+//      test 1 de programmes lexicalement corrects. On teste les mots réservés.
+// Résultat :
+//      cf Documentation
+// Historique :
+//      créé le 19/12/2023
+
+asm classextends else false if instanceof new null readInt readFloat print println printx printlnx
+printx protected return this true while

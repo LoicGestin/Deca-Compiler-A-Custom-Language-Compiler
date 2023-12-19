@@ -1,0 +1,9 @@
+// Description :
+//      test 3 de programmes lexicalement corrects. On teste les opérateurs.
+// Résultats :
+//      cf Documentation
+// Historique :
+//      créé le 19/12/2023
+
+< > = + - * / % . , ) ( { } ! ; == !=
+<= >= && ||

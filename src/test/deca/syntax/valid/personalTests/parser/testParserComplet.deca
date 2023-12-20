@@ -1,0 +1,14 @@
+// Description :
+//      test 4 de programmes syntaxiquement corrects. Cas Complet.
+// Résultats :
+//      cf Documentation
+// Historique :
+//      créé le 20/12/2023
+
+{
+if (b instanceof(int)) {
+    b = 1;
+    } else {
+    return 45;
+        }
+}

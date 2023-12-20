@@ -1,0 +1,10 @@
+// Description :
+//      test 2 de programmes syntaxiquement corrects. Cas SansObjet.
+// Résultats :
+//      cf Documentation
+// Historique :
+//      créé le 20/12/2023
+
+{
+float i = 5.0;
+}

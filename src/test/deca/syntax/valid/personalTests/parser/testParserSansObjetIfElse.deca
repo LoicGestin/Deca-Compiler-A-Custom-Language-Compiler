@@ -1,0 +1,14 @@
+// Description :
+//      test 2 de programmes syntaxiquement corrects. Cas SansObjet.
+// Résultats :
+//      cf Documentation
+// Historique :
+//      créé le 20/12/2023
+
+{
+if (a = 2) {
+    a = 4;
+} else {
+    a = 8;
+}
+}

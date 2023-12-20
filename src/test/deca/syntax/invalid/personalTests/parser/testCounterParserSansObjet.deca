@@ -1,0 +1,12 @@
+// Description :
+//      test 2 de programmes syntaxiquement incorrects. Cas SansObjet.
+// Résultats :
+//      erreur de syntaxe.
+// Historique :
+//      créé le 20/12/2023
+
+if (a == 1) {
+a = 6;
+} if (a == 2) {
+a = 19;
+}

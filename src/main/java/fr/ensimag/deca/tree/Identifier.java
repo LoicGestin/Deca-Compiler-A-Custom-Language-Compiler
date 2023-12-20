@@ -175,8 +175,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        EnvironmentType envTypes = compiler.getEnvironmentType();
-        TypeDefinition typeDef = envTypes.defOfType(this.getName());
+        TypeDefinition typeDef = compiler.getEnvironmentType().defOfType(this.getName());
         if (typeDef == null) {
             throw new ContextualError("Type " + this.getName() + " is not defined", this.getLocation());
         }

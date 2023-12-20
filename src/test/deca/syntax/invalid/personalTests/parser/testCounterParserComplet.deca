@@ -1,0 +1,8 @@
+// Description :
+//      test 3 de programmes syntaxiquement incorrects. Cas Complet.
+// Résultats :
+//      erreur de syntaxe.
+// Historique :
+//      créé le 20/12/2023
+
+int) b = 7;

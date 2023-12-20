@@ -11,15 +11,15 @@ cd "$(dirname "$0")"/../../../../../.. || exit 1
 PATH=./src/test/script/launchers:"$PATH"
 
 mvn compile
-echo "Lancement des tests des programmes lexicalement corrects pour l'étape A"
+echo "Lancement des tests des programmes syntaxiquement corrects pour l'étape A"
 
 passed=0
 total=0
 
-for file in src/test/deca/syntax/valid/personalTests/lexer/*.deca
+for file in src/test/deca/syntax/valid/personalTests/parser/*.deca
 do
-  if test_lex $file 2>&1 \
-  | grep -q -e "token recognition error"
+  if test_synt $file 2>&1 \
+    | grep -q -e "Exception"
   then
     echo "$file : FAILED"
   else

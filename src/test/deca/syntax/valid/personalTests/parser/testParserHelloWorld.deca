@@ -1,0 +1,10 @@
+// Description :
+//      test 1 de programmes syntaxiquement corrects. Cas HelloWorld.
+// Résultats :
+//      cf Documentation
+// Historique :
+//      créé le 20/12/2023
+
+{
+    println("Hello world");
+}

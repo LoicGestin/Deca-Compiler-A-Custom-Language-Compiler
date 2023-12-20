@@ -87,17 +87,16 @@ list_decl_var[ListDeclVar l, AbstractIdentifier t]
 
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
-
+            AbstractInitialization init = new NoInitialization();
         }
     : i=ident {
             assert($i.tree != null);
-            $tree = new DeclVar($i.tree, $i.tree, new NoInitialization());
         }
       (EQUALS e=expr {
             assert($e.tree != null);
-            $tree = new DeclVar($i.tree, $i.tree, new Initialization($e.tree));
+            init = new Initialization($e.tree);
         }
-      )? {
+      )? {  $tree = new DeclVar($t, $i.tree, init);
         }
     ;
 
@@ -380,6 +379,7 @@ primary_expr returns[AbstractExpr tree]
 type returns[AbstractIdentifier tree]
     : ident {
             assert($ident.tree != null);
+            $tree = $ident.tree;
         }
     ;
 

@@ -1,0 +1,10 @@
+// Description :
+//      test 3 de programmes syntaxiquement corrects. Cas Essentiel.
+// Résultats :
+//      cf Documentation
+// Historique :
+//      créé le 20/12/2023
+
+class A extends B {
+int a;
+}

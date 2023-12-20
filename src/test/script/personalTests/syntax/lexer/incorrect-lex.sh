@@ -10,7 +10,8 @@ cd "$(dirname "$0")"/../../../../../.. || exit 1
 
 PATH=./src/test/script/launchers:"$PATH"
 
-echo "Lancement des tests des programmes lexicalement incorrects pour l'étape A de HelloWorld"
+mvn compile
+echo "Lancement des tests des programmes lexicalement incorrects pour l'étape A"
 
 passed=0
 total=0

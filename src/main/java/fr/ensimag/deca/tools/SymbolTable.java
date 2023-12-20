@@ -39,7 +39,6 @@ public class SymbolTable {
         // through SymbolTable.create factory (which thus ensures uniqueness
         // of symbols).
         private Symbol(String name) {
-            super();
             this.name = name;
         }
 

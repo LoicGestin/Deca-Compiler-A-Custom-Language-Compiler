@@ -1,7 +1,6 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -21,18 +20,19 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
 
     /**
      * Implements non-terminal "list_decl_var" of [SyntaxeContextuelle] in pass 3
+     *
      * @param compiler contains the "env_types" attribute
-     * @param localEnv 
-     *   its "parentEnvironment" corresponds to "env_exp_sup" attribute
-     *   in precondition, its "current" dictionary corresponds to 
-     *      the "env_exp" attribute
-     *   in postcondition, its "current" dictionary corresponds to 
-     *      the "env_exp_r" attribute
-     * @param currentClass 
-     *          corresponds to "class" attribute (null in the main bloc).
+     * @param localEnv its "parentEnvironment" corresponds to "env_exp_sup" attribute
+     *                 in precondition, its "current" dictionary corresponds to
+     *                 the "env_exp" attribute
+     *                 in postcondition, its "current" dictionary corresponds to
+     *                 the "env_exp_r" attribute
      */    
-    void verifyListDeclVariable(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+    void verifyListDeclVariable(DecacCompiler compiler, EnvironmentExp localEnv) throws ContextualError {
+        // For each declaration in the list, we verify it and add it to the environment
+        for (AbstractDeclVar decl : getList()) {
+            decl.verifyDeclVar(compiler, localEnv, null);
+        }
     }
 
 

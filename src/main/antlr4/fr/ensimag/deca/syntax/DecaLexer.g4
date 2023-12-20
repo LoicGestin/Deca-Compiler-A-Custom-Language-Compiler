@@ -97,7 +97,7 @@ INT : '0' | POSITIVE_DIGIT DIGIT*;
 // =====================
 // Floating-point literals
 
-fragment NUM : DIGIT|;
+fragment NUM : DIGIT+;
 fragment EXP : ('E' | 'e') ('+' | '-')? NUM;
 fragment DEC : NUM '.' NUM;
 fragment FLOATDEC : (DEC | DEC EXP) ('F' | 'f')?;

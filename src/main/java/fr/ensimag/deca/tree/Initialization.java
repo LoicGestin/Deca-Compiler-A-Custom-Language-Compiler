@@ -35,13 +35,17 @@ public class Initialization extends AbstractInitialization {
     protected void verifyInitialization(DecacCompiler compiler, Type t,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        // Vérification de la compatibilité des types
+        Type type = expression.verifyExpr(compiler, localEnv, currentClass);
+        if (type == null) {
+            throw new ContextualError("Incompatible types null in initialization", expression.getLocation());
+        }
     }
 
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        expression.decompile(s);
     }
 
     @Override

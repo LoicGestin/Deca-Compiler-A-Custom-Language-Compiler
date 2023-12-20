@@ -24,6 +24,7 @@ public class SymbolTable {
      * If a symbol already exists with the same name in this table, then return
      * this Symbol. Otherwise, create a new Symbol and add it to the table.
      */
+
     public Symbol create(String name) {
         if (map.containsKey(name)) {
             return map.get(name);
@@ -49,6 +50,19 @@ public class SymbolTable {
         @Override
         public String toString() {
             return name;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(obj instanceof Symbol) {
+                return this.name.equals(((Symbol) obj).name);
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return this.name.hashCode();
         }
 
         private final String name;

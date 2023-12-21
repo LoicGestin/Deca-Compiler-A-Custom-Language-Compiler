@@ -150,8 +150,7 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
-            $tree = new Return($expr.tree);
-            setLocation($tree, $RETURN);
+
         }
     ;
 
@@ -172,14 +171,14 @@ if_then_else returns[IfThenElse tree]
             assert($elsif_li.tree != null);
             IfThenElse elseif = new IfThenElse($elsif_cond.tree, $elsif_li.tree, new ListInst());
             setLocation(elseif, $ELSE);
-            branch.elseBranch.add(elseif);
+            branch.getElseBranch().add(elseif);
 
 
         }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
             assert($li_else.tree != null);
-            branch.elseBranch = $li_else.tree;
+            branch.setElseBranch($li_else.tree);
         }
       )?
     ;

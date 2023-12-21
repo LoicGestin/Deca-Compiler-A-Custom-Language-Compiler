@@ -1,0 +1,5 @@
+// Erreur de compilation
+
+{
+   bool b = "Hello" == 5;
+}

@@ -1,0 +1,23 @@
+// Test de déclaration d'une classe en deca et affectation d'une instance d'une autre classe
+// Doit retourner une erreur de typage
+
+class A{
+    public void getA(){
+        return 1;
+    }
+}
+
+class B{
+    public void getB(){
+        return 2;
+    }
+}
+
+{
+    A a;
+    B b;
+    b = new A();
+    a = new B();
+    a.getA();
+    b.getB();
+}

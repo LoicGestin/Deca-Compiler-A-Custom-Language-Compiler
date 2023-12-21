@@ -1,0 +1,21 @@
+// Test la declaration d'un objet avec un bloc d'initialisation et l'appel d'une methode
+
+class A {
+
+    public void m() {
+        println("m");
+    }
+    int a;
+}
+
+class B extends A {
+    public void n() {
+        println("n");
+    }
+}
+
+{
+    B b;
+    b = new B();
+    b.m();
+}

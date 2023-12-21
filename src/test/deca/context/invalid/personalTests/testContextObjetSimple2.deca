@@ -1,0 +1,16 @@
+// Test la declaration d'un objet
+
+class A {
+    int a;
+    string b;
+}
+
+class B {
+    int a;
+    string b;
+}
+
+{
+    A a;
+    a = new B();
+}

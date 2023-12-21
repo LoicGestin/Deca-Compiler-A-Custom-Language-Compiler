@@ -1,0 +1,6 @@
+// Erreur de typage
+
+
+{
+    int x = "Hello"; // Erreur : type incompatible.
+}

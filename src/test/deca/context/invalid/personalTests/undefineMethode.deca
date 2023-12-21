@@ -1,0 +1,5 @@
+// Test d'utilisation d'une méthode non définie
+
+{
+    int a = calculer(1, 2); // Erreur : calculer n'est pas définie
+}

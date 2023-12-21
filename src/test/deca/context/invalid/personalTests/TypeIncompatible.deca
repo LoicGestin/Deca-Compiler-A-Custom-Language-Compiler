@@ -1,0 +1,6 @@
+// Erreur de compilation : types incompatibles.
+
+{
+    String text = "Hello";
+    int result = text + 5; // Erreur : types incompatibles.
+}

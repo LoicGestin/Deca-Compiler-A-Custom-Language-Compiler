@@ -1,0 +1,8 @@
+// Test de double déclaration d'une méthode
+
+class A {
+  public void m() {}
+  public void m() {}
+}
+
+{}

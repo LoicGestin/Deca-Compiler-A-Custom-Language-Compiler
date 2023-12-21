@@ -3,7 +3,7 @@
 # On se place dans le répertoire du projet (quel que soit le
 # répertoire d'où est lancé le script) :
 
-cd "$(dirname "$0")"/../../.. || exit 1$
+cd "$(dirname "$0")"/../../.. || exit 1
 
 erreur_total=0
 temps_initial=$(date +%s%N)
@@ -123,7 +123,7 @@ total=0
 for file in src/test/deca/context/valid/personalTests/*.deca
 do
   if test_context $file 2>&1 \
-  | grep -q -e "Contextual error"
+  | grep -q -e "Exception"
   then
     echo -ne "\r\t${RED}[FAILED]${NC}   : ${file##*/}                                \r\n"
     erreur_total=$((erreur_total + 1))
@@ -144,7 +144,7 @@ total=0
 for file in src/test/deca/context/invalid/personalTests/*.deca
 do
   if test_context $file 2>&1 \
-  | grep -q -e "Contextual error"
+  | grep -q -e "Exception"
   then
     # print in red if the test failed and the name of the file without the path
     echo -ne "\r\t${GREEN}[FAILED]${NC}  : ${file##*/}                                    "

@@ -1,0 +1,6 @@
+// Test reference à une variable non déclarée
+
+{
+    a = 1;
+    print(a);
+}

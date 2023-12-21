@@ -1,0 +1,6 @@
+// Double declaration of the variable x
+
+{
+   int x;
+   int x; // Erreur : La variable x est déjà déclarée.
+}

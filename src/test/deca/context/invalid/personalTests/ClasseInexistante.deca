@@ -1,0 +1,6 @@
+// Test d'utilisation d'une classe non importée.
+
+
+{
+    Date now = new Date(); // Erreur : Date n'est pas importé.
+}

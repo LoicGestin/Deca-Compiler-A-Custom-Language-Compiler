@@ -1,0 +1,11 @@
+// Test la declaration d'un objet
+
+class A {
+    int a;
+}
+
+{
+    A a;
+    a = new A();
+    println("ok");
+}

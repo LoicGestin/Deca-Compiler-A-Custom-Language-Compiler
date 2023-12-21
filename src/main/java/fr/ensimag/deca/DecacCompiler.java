@@ -117,10 +117,6 @@ public class DecacCompiler {
      * The global environment for types (and the symbolTable)
      */
     public final EnvironmentType environmentType = new EnvironmentType(this);
-
-    public EnvironmentType getEnvironmentType() {
-        return environmentType;
-    }
     public SymbolTable symbolTable = new SymbolTable();
 
     public Symbol createSymbol(String name) {

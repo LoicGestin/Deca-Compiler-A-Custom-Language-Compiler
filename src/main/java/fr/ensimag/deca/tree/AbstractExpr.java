@@ -8,6 +8,7 @@ import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -117,12 +118,12 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        compiler.addInstruction(new LOAD(1, compiler.getRegister(1)));
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        compiler.addInstruction(new LOAD(0, compiler.getRegister(1)));
     }
     
 

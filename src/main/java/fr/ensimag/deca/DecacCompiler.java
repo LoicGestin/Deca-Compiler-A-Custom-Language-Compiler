@@ -8,10 +8,7 @@ import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
-import fr.ensimag.ima.pseudocode.AbstractLine;
-import fr.ensimag.ima.pseudocode.IMAProgram;
-import fr.ensimag.ima.pseudocode.Instruction;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -239,4 +236,7 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
+    public GPRegister getRegister(int i) {
+        return GPRegister.getR(i);
+    }
 }

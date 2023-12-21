@@ -9,4 +9,10 @@
 
 {
         int i = 5;
+        if(i == 5){
+                println("Salut");
+        }
+        else{
+                println("Aurevoir");
+        }
 }

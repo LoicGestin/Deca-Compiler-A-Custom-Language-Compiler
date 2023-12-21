@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # On se place dans le répertoire du projet (quel que soit le
 # répertoire d'où est lancé le script) :

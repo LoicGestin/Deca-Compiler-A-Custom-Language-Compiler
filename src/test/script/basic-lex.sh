@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # Auteur : gl29
 # Version initiale : 01/01/2024

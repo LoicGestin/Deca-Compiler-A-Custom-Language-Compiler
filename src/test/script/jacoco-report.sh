@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 POM="$(dirname "$0")"/../../../pom.xml
 

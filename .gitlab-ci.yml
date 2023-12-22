@@ -1,13 +1,10 @@
-# Install docker in ./docker
-default:
-  image: ./docker/Dockerfile
-
-
 test:
 
   before_script:
     - apk add --no-cache --upgrade bash
-    - ./docker/run.sh
+    # Install dependencies (mvn)
+    - apk add --no-cache --upgrade maven
+    - mvn --version
 
   stage: test
   script:

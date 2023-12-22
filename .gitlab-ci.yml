@@ -15,11 +15,17 @@ test:
     - apk add --no-cache --upgrade bash
     # Install dependencies (mvn)
     - apk add --no-cache --upgrade maven
-    - mvn --version
+    - apk add --no-cache --upgrade curl
 
   stage: test
   script:
     - ./src/test/script/run_all_tests.sh
+
+  # Si echec, on envoie un message sur discord
+  when: on_failure
+    after_script:
+        - 'curl -X POST -H "Content-Type: application/json" -d "{\"content\":\"Les tests unitaires ont échoué dans GitLab CI.\"}" https://discord.com/api/webhooks/1187702532554895431/CrsFIZMdfILQrGXoB09JTv9W5mHDKcst4aTX_B4Sim8PjFH97ImD8pfHB7IqZcT0sSo6'
+
 
 notify_discord:
   stage: build

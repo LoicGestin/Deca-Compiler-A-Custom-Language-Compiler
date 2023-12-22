@@ -2,9 +2,6 @@
 on push:
   script:
     - mvn compile
-  # reject the commit if mvn compile fails
-  except:
-    - master
 
 # Unit test
 test:

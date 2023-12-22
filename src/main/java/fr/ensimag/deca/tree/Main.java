@@ -45,8 +45,8 @@ public class Main extends AbstractMain {
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
         // A FAIRE: traiter les déclarations de variables.
-        compiler.addInstruction(new TSTO(1));
-        compiler.addInstruction(new ADDSP(1));
+        compiler.addComment("variables:");
+        declVariables.codeGenListDeclVar(compiler);
         compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler);
     }

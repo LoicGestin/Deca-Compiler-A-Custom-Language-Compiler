@@ -20,3 +20,13 @@ test:
   stage: test
   script:
     - ./src/test/script/run_all_tests.sh
+
+notify_discord:
+  stage: build
+  before_script:
+    - apk add --no-cache --upgrade bash
+    - apk add --no-cache --upgrade curl
+
+  script:
+    - 'curl -X POST -H "Content-Type: application/json" -d "{\"content\":\"La compilation a échoué dans GitLab CI.\"}" https://discord.com/api/webhooks/1187702532554895431/CrsFIZMdfILQrGXoB09JTv9W5mHDKcst4aTX_B4Sim8PjFH97ImD8pfHB7IqZcT0sSo6'
+  when: on_failure

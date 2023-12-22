@@ -1,0 +1,16 @@
+// Test context avec un if
+
+{
+    int a = readInt();
+    if (a == 0) {
+        println("a = 0");
+    } else {
+        if (a < 0) {
+            println("a < 0");
+        } else {
+            println("a > 0");
+        }
+    }
+}
+
+

@@ -46,6 +46,7 @@ notify_discord_failure:
 notify_discord_build_failure:
     <<: *notify_discord
     script:
-      - 'curl -X POST -H "Content-Type: application/json" -d "{\"content\":\"[Les gars ça compile pas](https://giphy.com/embed/kNA1sKSqxgFDq) \"}" https://discord.com/api/webhooks/1187702532554895431/CrsFIZMdfILQrGXoB09JTv9W5mHDKcst4aTX_B4Sim8PjFH97ImD8pfHB7IqZcT0sSo6'
+      - 'curl -X POST -H "Content-Type: application/json" -d "{\"content\":\"Florian ! Tu push pas si ça compile pas ![Les gars ça compile pas](https://giphy.com/embed/kNA1sKSqxgFDq) \"}" https://discord.com/api/webhooks/1187702532554895431/CrsFIZMdfILQrGXoB09JTv9W5mHDKcst4aTX_B4Sim8PjFH97ImD8pfHB7IqZcT0sSo6'
     needs:
       - build
+    when : on_failure

@@ -49,7 +49,7 @@ public class Main extends AbstractMain {
         declVariables.codeGenListDeclVar(compiler);
         compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler);
-    }
+
     
     @Override
     public void decompile(IndentPrintStream s) {

@@ -38,7 +38,10 @@ public class Initialization extends AbstractInitialization {
         // Vérification de la compatibilité des types
         Type type = expression.verifyExpr(compiler, localEnv, currentClass);
         if (type == null) {
-            throw new ContextualError("Incompatible types null in initialization", expression.getLocation());
+            throw new ContextualError("Exception : Incompatible types null in initialization", expression.getLocation());
+        }
+        if(!type.sameType(t)) {
+            throw new ContextualError("Exception : Incompatible types in initialization", expression.getLocation());
         }
     }
 

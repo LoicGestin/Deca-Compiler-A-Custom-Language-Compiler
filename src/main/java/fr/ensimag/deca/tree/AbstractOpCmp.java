@@ -22,7 +22,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         Type t1 =this.getLeftOperand().getType();
         Type t2 =this.getRightOperand().getType();
       if (t1.sameType(t2)){
-        if (t1.isInt() || t1.isFloat() || t1.isBoolean()){
+        if (t1.isInt() || t1.isFloat() || t1.isBoolean() || t1.isString()){
           this.setType(new BooleanType(compiler.createSymbol("boolean")));
           return this.getType();
         }

@@ -33,7 +33,7 @@ public class DeclVar extends AbstractDeclVar {
         // Vérification du type != void
         Type t = type.verifyType(compiler);
         if (t.isVoid()) {
-            throw new ContextualError("Variable type cannot be void", type.getLocation());
+            throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
         }
         varName.setDefinition(new VariableDefinition(t, varName.getLocation()));
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);

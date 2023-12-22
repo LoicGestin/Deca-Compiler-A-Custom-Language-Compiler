@@ -1,4 +1,7 @@
 # Install docker in ./docker
+default:
+  image: ./docker/Dockerfile
+
 
 test:
 

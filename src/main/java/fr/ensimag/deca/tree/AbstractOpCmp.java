@@ -27,11 +27,11 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
           return this.getType();
         }
         else{
-          throw new ContextualError("OpCmp : type incompatible", this.getLocation());
+          throw new ContextualError("Exception : type incompatible", this.getLocation());
         }
       }
       else{
-        throw new ContextualError("OpCmp : type incompatible", this.getLocation());
+        throw new ContextualError("Exception : type incompatible", this.getLocation());
       }
     }
 

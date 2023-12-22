@@ -1,6 +1,6 @@
 // Erreur de compilation : types incompatibles.
 
 {
-    String text = "Hello";
+    string text = "Hello";
     int result = text + 5; // Erreur : types incompatibles.
 }

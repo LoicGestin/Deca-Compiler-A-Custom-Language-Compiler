@@ -1,0 +1,4 @@
+test:
+  stage: test
+  script:
+    - ./src/test/script/run_all_tests.sh

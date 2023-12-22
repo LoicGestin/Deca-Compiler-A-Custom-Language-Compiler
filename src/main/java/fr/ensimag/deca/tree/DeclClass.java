@@ -22,10 +22,6 @@ public class DeclClass extends AbstractDeclClass {
     private ListDeclMethod listDeclMethod;
 
     public DeclClass(AbstractIdentifier varName, AbstractIdentifier varSuper, ListDeclField listDeclField, ListDeclMethod listDeclMethod) {
-        Validate.notNull(varName);
-        Validate.notNull(varSuper);
-        Validate.notNull(listDeclField);
-        Validate.notNull(listDeclMethod);
         this.varName = varName;
         this.varSuper = varName;
         this.listDeclField = listDeclField;
@@ -55,7 +51,10 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        varName.prettyPrint(s, prefix, false);
+        varSuper.prettyPrint(s, prefix, false);
+        listDeclField.prettyPrint(s, prefix, false);
+        listDeclMethod.prettyPrint(s, prefix, false);
     }
 
     @Override

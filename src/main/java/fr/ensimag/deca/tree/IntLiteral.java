@@ -3,6 +3,8 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
 import java.io.PrintStream;
 
 /**
@@ -29,6 +31,9 @@ public class IntLiteral extends AbstractExpr {
         return getType();
     }
 
+    public void codeGenInst(DecacCompiler compiler) {
+        compiler.addInstruction(new LOAD(this.getValue(), compiler.getRegister(2)));
+    }
 
     @Override
     String prettyPrintNode() {

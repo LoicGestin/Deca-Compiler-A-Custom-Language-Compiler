@@ -9,7 +9,7 @@ import org.apache.commons.lang.Validate;
  * @author Ensimag
  * @date 01/01/2024
  */
-public class BinaryInstruction extends Instruction {
+public class  BinaryInstruction extends Instruction {
     private Operand operand1, operand2;
 
     public Operand getOperand1() {

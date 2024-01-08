@@ -123,6 +123,16 @@ public class DecacCompiler {
         return this.symbolTable.create(name);
     }
 
+    private int ifCounter = 0;
+
+    public int getIfCounter() {
+        return ifCounter;
+    }
+
+    public void incrementIfCounter() {
+        ifCounter++;
+    }
+
     /**
      * Run the compiler (parse source file, generate code)
      *
@@ -259,5 +269,12 @@ public class DecacCompiler {
 
     public GPRegister getRegister(int i) {
         return GPRegister.getR(i);
+    }
+
+    private int nbOffSet = 0;
+
+    public DAddr nextOffSet() {
+        nbOffSet++;
+        return new RegisterOffset(nbOffSet, Register.GB);
     }
 }

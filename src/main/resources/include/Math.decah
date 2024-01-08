@@ -41,10 +41,22 @@ class Math {
        return res;
     }
     float asin(float f) {
-        println("asin(f) not yet implemented");
+        if (f < -1.0 || f > 1.0) {
+            println("Erreur : l'argument n'est pas dans l'intervalle de définition.");
+            return 0.0;
+        }
+        float res = 0;
+        for (int i = 0; i < precision; i++) {
+            res = res + puiss(f, 2*i+3) * fact(2*(i+1))/(puiss(2, 2*(i+1))*puiss(fact(i+1), 2)*(2*i+3));
+        }
+        return res;
     }
     float atan(float f) {
-        println("atan(f) not yet implemented");
+        float res = 0;
+        for (int i = 0; i < precision; i++) {
+            res = res + (puiss(-1, i+1)*puiss(f, 2*(i+1)+1))/(2*(i+1)+1);
+        }
+        return res;
     }
     float ulp(float f) {
         println("ulp(f) not yet implemented");

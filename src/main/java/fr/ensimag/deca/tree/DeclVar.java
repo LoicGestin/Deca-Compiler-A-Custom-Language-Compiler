@@ -61,9 +61,16 @@ public class DeclVar extends AbstractDeclVar {
         type.decompile(s);
         s.print("\033[0m ");
         varName.decompile(s);
-        s.print(" = ");
-        initialization.decompile(s);
-        s.println(";");
+        if (initialization instanceof NoInitialization)
+        {
+            s.println("\033[0;35m;\033[0m");
+        }
+        else
+        {
+            s.print(" = ");
+            initialization.decompile(s);
+            s.println("\033[0;35m;\033[0m");
+        }
     }
 
     @Override

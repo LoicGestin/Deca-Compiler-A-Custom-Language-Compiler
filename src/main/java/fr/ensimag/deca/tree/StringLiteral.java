@@ -43,7 +43,7 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     public void decompile(IndentPrintStream s) {
-         s.print(value);
+         s.print("\033[0;37m\"" + value + "\"\033[0m");
     }
 
     @Override

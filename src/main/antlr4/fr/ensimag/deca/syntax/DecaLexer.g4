@@ -101,9 +101,9 @@ fragment NUM : DIGIT+;
 fragment EXP : ('E' | 'e') ('+' | '-')? NUM;
 fragment DEC : NUM '.' NUM;
 fragment FLOATDEC : (DEC | DEC EXP) ('F' | 'f')?;
-fragment DIGITHEX : [0-9A-Fa-f];
-fragment NUMHEX : DIGITHEX|;
-fragment FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') ('+' | '-')? NUM ('F' | 'f');
+fragment DIGITHEX : [0-9a-fA-F];
+fragment NUMHEX : DIGITHEX+;
+fragment FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') ('+' | '-')? NUM ('F' | 'f')?;
 FLOAT : FLOATDEC | FLOATHEX;
 
 // =====================

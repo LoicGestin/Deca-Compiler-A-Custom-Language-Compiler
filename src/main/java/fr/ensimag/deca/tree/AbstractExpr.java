@@ -130,7 +130,7 @@ public abstract class AbstractExpr extends AbstractInst {
     @Override
     protected void decompileInst(IndentPrintStream s) {
         decompile(s);
-        s.print(";");
+        s.print("\033[0;35m;\033[0m");
     }
 
     @Override

@@ -11,6 +11,6 @@
    int a;
    boolean b;
 
-   // Doit etre refuse.
+   // Doit être refuse.
    a = b;
 }

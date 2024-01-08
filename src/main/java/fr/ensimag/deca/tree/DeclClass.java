@@ -23,7 +23,7 @@ public class DeclClass extends AbstractDeclClass {
 
     public DeclClass(AbstractIdentifier varName, AbstractIdentifier varSuper, ListDeclField listDeclField, ListDeclMethod listDeclMethod) {
         this.varName = varName;
-        this.varSuper = varName;
+        this.varSuper = varSuper;
         this.listDeclField = listDeclField;
         this.listDeclMethod = listDeclMethod;
     }

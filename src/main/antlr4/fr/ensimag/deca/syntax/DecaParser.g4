@@ -156,7 +156,7 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
-
+            $tree = new Return($expr.tree);
         }
     ;
 

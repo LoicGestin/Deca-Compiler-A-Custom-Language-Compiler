@@ -107,6 +107,7 @@ list_inst returns[ListInst tree]
     $tree = new ListInst();
 }
     : (i=inst {
+            assert($i.tree != null);
             $tree.add($i.tree);
         }
       )*
@@ -115,8 +116,12 @@ list_inst returns[ListInst tree]
 inst returns[AbstractInst tree]
     : e1=expr SEMI {
             assert($e1.tree != null);
+            $tree = $e1.tree;
+            setLocation($tree, $SEMI);
         }
     | SEMI {
+            $tree = new NoOperation();
+            setLocation($tree, $SEMI);
         }
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -141,6 +146,7 @@ inst returns[AbstractInst tree]
     | if_then_else {
             assert($if_then_else.tree != null);
             $tree = $if_then_else.tree;
+            setLocation($tree, $if_then_else.start);
         }
     | WHILE OPARENT condition=expr CPARENT OBRACE body=list_inst CBRACE {
             assert($condition.tree != null);
@@ -150,7 +156,7 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
-
+            $tree = new Return($expr.tree);
         }
     ;
 
@@ -172,13 +178,13 @@ if_then_else returns[IfThenElse tree]
             IfThenElse elseif = new IfThenElse($elsif_cond.tree, $elsif_li.tree, new ListInst());
             setLocation(elseif, $ELSE);
             branch.getElseBranch().add(elseif);
-
-
+            branch = elseif;
         }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
             assert($li_else.tree != null);
             branch.setElseBranch($li_else.tree);
+            setLocation(branch.getElseBranch(), $ELSE);
         }
       )?
     ;
@@ -379,10 +385,11 @@ select_expr returns[AbstractExpr tree]
         }
         (o=OPARENT args=list_expr CPARENT {
             // we matched "e1.i(args)"
-            assert($args.tree != null);
+            $tree = new CallMethod($e1.tree, $i.tree, $args.tree);
         }
         | /* epsilon */ {
             // we matched "e.i"
+            $tree = new GetAttribut($e1.tree, $i.tree);
         }
         )
     ;
@@ -410,6 +417,7 @@ primary_expr returns[AbstractExpr tree]
         }
     | NEW ident OPARENT CPARENT {
             assert($ident.tree != null);
+            $tree = new New($ident.tree);
         }
     | cast=OPARENT type CPARENT OPARENT expr CPARENT {
             assert($type.tree != null);
@@ -483,9 +491,6 @@ list_classes returns[ListDeclClass tree]
 class_decl returns[AbstractDeclClass tree]
     : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
             assert($name.tree != null);
-            assert($superclass.tree != null);
-            assert($class_body.field != null);
-            assert($class_body.method != null);
             $tree = new DeclClass($name.tree, $superclass.tree, $class_body.field, $class_body.method);
         }
     ;

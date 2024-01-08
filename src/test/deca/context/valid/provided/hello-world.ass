@@ -1,5 +1,6 @@
 ; start main program
 ; Main program
+; variables:
 ; Beginning of main instructions:
 	WSTR "Hello, world!"
 	WNL

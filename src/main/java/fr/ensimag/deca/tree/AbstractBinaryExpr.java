@@ -45,11 +45,18 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("(");
-        getLeftOperand().decompile(s);
-        s.print(" " + getOperatorName() + " ");
-        getRightOperand().decompile(s);
-        s.print(")");
+        // If operator is =, no need parenthesis
+        if (getOperatorName().equals("=")) {
+            leftOperand.decompile(s);
+            s.print(" " + getOperatorName() + " ");
+            rightOperand.decompile(s);
+        } else {
+            s.print("(");
+            leftOperand.decompile(s);
+            s.print(" " + getOperatorName() + " ");
+            rightOperand.decompile(s);
+            s.print(")");
+        }
     }
 
     abstract protected String getOperatorName();

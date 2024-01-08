@@ -49,7 +49,7 @@ public class While extends AbstractInst {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("while (");
+        s.print("\033[0;35mwhile\033[0m (");
         getCondition().decompile(s);
         s.println(") {");
         s.indent();

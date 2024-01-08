@@ -22,7 +22,16 @@ public class MethodBody extends AbstractMethodBody{
     }
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (stringLiteral != null) {
+            stringLiteral.decompile(s);
+        } else {
+            s.println("{");
+            s.indent();
+            declVars.decompile(s);
+            insts.decompile(s);
+            s.unindent();
+            s.println("}");
+        }
     }
 
     @Override

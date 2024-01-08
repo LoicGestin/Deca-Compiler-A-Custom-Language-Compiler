@@ -22,21 +22,34 @@ public class Cast extends AbstractExpr{
     }
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type t = type.verifyType(compiler);
+        Type t2 = expr.verifyExpr(compiler, localEnv, currentClass);
+        if (!t2.isFloat() && !t2.isInt()) {
+            throw new ContextualError("Cast impossible", getLocation());
+        }
+        setType(t);
+        return t;
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("(");
+        type.decompile(s);
+        s.print(") ");
+        s.print("(");
+        expr.decompile(s);
+        s.print(")");
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("not yet implemented");
+        type.prettyPrint(s, prefix, true);
+        expr.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("not yet implemented");
+        type.iter(f);
+        expr.iter(f);
     }
 }

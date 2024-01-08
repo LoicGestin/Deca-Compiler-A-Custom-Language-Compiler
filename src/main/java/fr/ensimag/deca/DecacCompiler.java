@@ -172,20 +172,32 @@ public class DecacCompiler {
      * @param err        stream to use to display compilation errors
      * @return true on error
      */
-    private boolean doCompile(String sourceName, String destName,
-                              PrintStream out, PrintStream err)
+    private boolean doCompile(String sourceName, String destName, PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
-        AbstractProgram prog = doLexingAndParsing(sourceName, err);
 
+
+        LOG.debug("compilation started");
+
+
+        AbstractProgram prog = doLexingAndParsing(sourceName, err);
         if (prog == null) {
             LOG.info("Parsing failed");
             return true;
         }
+
+        if (compilerOptions.maxStep == CompilerOptions.Step.PARSE) {
+            // Display parse tree
+            prog.decompile(out);
+            return false;
+        }
+
         assert (prog.checkAllLocations());
-
-
         prog.verifyProgram(this);
         assert (prog.checkAllDecorations());
+
+        if (compilerOptions.maxStep == CompilerOptions.Step.VERIF) {
+            return false;
+        }
 
         addComment("start main program");
         prog.codeGenProgram(this);
@@ -194,7 +206,7 @@ public class DecacCompiler {
         LOG.info("Output file assembly file is: " + destName);
 
 
-        FileOutputStream fstream = null;
+        FileOutputStream fstream;
         try {
             fstream = new FileOutputStream(destName);
         } catch (FileNotFoundException e) {
@@ -223,6 +235,9 @@ public class DecacCompiler {
      */
     protected AbstractProgram doLexingAndParsing(String sourceName, PrintStream err)
             throws DecacFatalError, DecacInternalError {
+
+        LOG.debug("Lexing and parsing source file " + sourceName);
+        LOG.debug("Building lexer ...");
         DecaLexer lex;
         try {
             lex = new DecaLexer(CharStreams.fromFileName(sourceName));
@@ -231,6 +246,12 @@ public class DecacCompiler {
         }
         lex.setDecacCompiler(this);
         CommonTokenStream tokens = new CommonTokenStream(lex);
+
+        LOG.trace("Building token stream ...");
+
+
+        LOG.debug("Building parser ...");
+
         DecaParser parser = new DecaParser(tokens);
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);

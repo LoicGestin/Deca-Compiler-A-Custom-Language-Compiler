@@ -2,11 +2,43 @@
 // Library for class Math of Deca, coded in Deca
 
 class Math {
+
+    int precision = 256;
+
+    float puiss(float f, int p) {
+        float res = f;
+        if (p == 0) {
+            return 1.0;
+        }
+        for (int i = 1; i < p; i++) {
+            res = res*f;
+        }
+        return res
+    }
+
+    int fact(int p) {
+        if (p == 0) {
+            return 1;
+        }
+
+        else {
+           return p*fact(p-1);
+        }
+    }
+
     float sin(float f) {
-        println("sin(f) not yet implemented");
+       float res = 0;
+       for (int i = 0; i < precision; i++) {
+           res = res + (puiss(-1, i+1)*puiss(f, 2*i+3))/fact(2*i+3);
+       }
+       return res;
     }
     float cos(float f) {
-        println("cos(f) not yet implemented");
+        float res = 0;
+       for (int i = 0; i < precision; i++) {
+           res = res + (puiss(-1, i+1)*puiss(f, 2*(i+1)))/fact(2*(i+1));
+       }
+       return res;
     }
     float asin(float f) {
         println("asin(f) not yet implemented");

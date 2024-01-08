@@ -19,6 +19,7 @@ public class IfThenElse extends AbstractInst {
     
     private final AbstractExpr condition; 
     private final ListInst thenBranch;
+
     private ListInst elseBranch;
 
     public void setElseBranch(ListInst elseBranch){
@@ -54,7 +55,17 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("\033[0;35mif\033[0m ");
+        condition.decompile(s);
+        s.println(" {");
+        s.indent();
+        thenBranch.decompile(s);
+        s.unindent();
+        s.println("} \033[0;35melse\033[0m {");
+        s.indent();
+        elseBranch.decompile(s);
+        s.unindent();
+        s.print("}");
     }
 
     @Override

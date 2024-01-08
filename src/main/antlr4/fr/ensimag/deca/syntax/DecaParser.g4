@@ -385,10 +385,11 @@ select_expr returns[AbstractExpr tree]
         }
         (o=OPARENT args=list_expr CPARENT {
             // we matched "e1.i(args)"
-            assert($args.tree != null);
+            $tree = new CallMethod($e1.tree, $i.tree, $args.tree);
         }
         | /* epsilon */ {
             // we matched "e.i"
+            $tree = new GetAttribut($e1.tree, $i.tree);
         }
         )
     ;
@@ -416,6 +417,7 @@ primary_expr returns[AbstractExpr tree]
         }
     | NEW ident OPARENT CPARENT {
             assert($ident.tree != null);
+            $tree = new New($ident.tree);
         }
     | cast=OPARENT type CPARENT OPARENT expr CPARENT {
             assert($type.tree != null);
@@ -489,9 +491,6 @@ list_classes returns[ListDeclClass tree]
 class_decl returns[AbstractDeclClass tree]
     : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
             assert($name.tree != null);
-            assert($superclass.tree != null);
-            assert($class_body.field != null);
-            assert($class_body.method != null);
             $tree = new DeclClass($name.tree, $superclass.tree, $class_body.field, $class_body.method);
         }
     ;

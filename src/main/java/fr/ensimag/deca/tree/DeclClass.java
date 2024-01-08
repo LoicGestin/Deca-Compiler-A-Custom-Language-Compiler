@@ -29,7 +29,18 @@ public class DeclClass extends AbstractDeclClass {
     }
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        s.print("\033[0;35mclass\033[0m ");
+        varName.decompile(s);
+        if (varSuper != null) {
+            s.print(" \033[0;35mextends\033[0m ");
+            varSuper.decompile(s);
+        }
+        s.println(" {");
+        s.indent();
+        listDeclMethod.decompile(s);
+        listDeclField.decompile(s);
+        s.unindent();
+        s.println("}");
     }
 
     @Override

@@ -23,12 +23,16 @@ public class Cast extends AbstractExpr{
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
-        Type t2 = expr.verifyExpr(compiler, localEnv, currentClass);
-        if (!t2.isFloat() && !t2.isInt()) {
-            throw new ContextualError("Cast impossible", getLocation());
+        Type e = expr.verifyExpr(compiler, localEnv, currentClass);
+        if (t.isFloat() && e.isInt()) {
+            ConvFloat conv = new ConvFloat(expr);
+            conv.setType(t);
+            conv.setLocation(expr.getLocation());
+            setType(t);
+            return t;
         }
-        setType(t);
-        return t;
+
+        throw new ContextualError("cast error", getLocation());
     }
 
     @Override

@@ -38,7 +38,9 @@ public class Plus extends AbstractOpArith {
             if (tR.isFloat()) {
                 RValue.codeGenInst(compiler);
                 LValue.codeGenInst(compiler);
-                compiler.addInstruction(new ADD(compiler.getRegister(3), compiler.getRegister(2)));
+                compiler.addInstruction(new ADD(compiler.getRegister(3), compiler.getRegister(2)));                compiler.libererRegistre();
+                compiler.libererRegistre();
+                compiler.libererRegistre();
             }
 
             else {

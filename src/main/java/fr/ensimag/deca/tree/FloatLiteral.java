@@ -45,7 +45,7 @@ public class FloatLiteral extends AbstractExpr {
         compiler.addInstruction(new WSTR(new ImmediateString(Float.toString(value))));
     }
     public void codeGenInst(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), compiler.getRegister(2)));
+        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), compiler.getNextRegistreLibre()));
     }
     @Override
     public void decompile(IndentPrintStream s) {

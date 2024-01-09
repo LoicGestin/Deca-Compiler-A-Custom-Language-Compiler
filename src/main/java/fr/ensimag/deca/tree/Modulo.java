@@ -5,6 +5,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.REM;
 
 /**
  *
@@ -20,12 +22,25 @@ public class Modulo extends AbstractOpArith {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type tL = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type tR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+        setType(tL);
+        if (!tL.isInt() || !tR.isInt()) {
+            throw new ContextualError("Invalid type for modulo", getLocation());
+        }
+
+        return getType();
     }
 
     @Override
     public void codeGenArith(DecacCompiler compiler) {
-
+        AbstractExpr LValue = this.getLeftOperand();
+        AbstractExpr RValue = this.getRightOperand();
+        LValue.codeGenInst(compiler);
+        RValue.codeGenInst(compiler);
+        compiler.addInstruction(new REM(compiler.getRegister(3), compiler.getRegister(2)));
+        compiler.libererRegistre();
+        compiler.libererRegistre();
     }
 
 

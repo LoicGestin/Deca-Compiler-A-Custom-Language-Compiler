@@ -1,6 +1,6 @@
 {
-float a = 5.0;
-float b = 3.0;
-b = a / b;
+int a = 5;
+int b = 4;
+b = a % b;
 print(b);
 }

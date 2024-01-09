@@ -362,6 +362,7 @@ unary_expr returns[AbstractExpr tree]
     : op=MINUS e=unary_expr {
             assert($e.tree != null);
             $tree = new UnaryMinus($e.tree);
+            setLocation($tree, $op);
         }
     | op=EXCLAM e=unary_expr {
             assert($e.tree != null);

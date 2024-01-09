@@ -36,9 +36,9 @@ public class Plus extends AbstractOpArith {
 
         else {
             if (tR.isFloat()) {
-                FloatLiteral fR = (FloatLiteral) RValue;
+                RValue.codeGenInst(compiler);
                 LValue.codeGenInst(compiler);
-                compiler.addInstruction(new ADD(new ImmediateFloat(fR.getValue()), compiler.getRegister(2)));
+                compiler.addInstruction(new ADD(compiler.getRegister(3), compiler.getRegister(2)));
             }
 
             else {

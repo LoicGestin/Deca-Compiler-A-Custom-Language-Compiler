@@ -37,4 +37,11 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         setType(getLeftOperand().getType());
         return getType();
     }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        codeGenArith(compiler);
+    }
+
+    public abstract void codeGenArith(DecacCompiler compiler);
 }

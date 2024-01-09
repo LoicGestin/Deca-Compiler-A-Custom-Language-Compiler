@@ -128,9 +128,9 @@ public abstract class AbstractExpr extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        //compiler.addInstruction(new LOAD(0, compiler.getRegister(1)));
+        throw new UnsupportedOperationException("Not implem");
     }
-    
+
 
     @Override
     protected void decompileInst(IndentPrintStream s) {

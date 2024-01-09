@@ -5,7 +5,7 @@ class A {
     void m() {
         println("m");
     }
-    public int a;
+    protected int a;
 }
 
 class B extends A {

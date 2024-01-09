@@ -1,10 +1,6 @@
 // Test la declaration d'un objet avec un bloc d'initialisation et l'appel d'une methode
 
 class A {
-    {
-        println("init");
-    }
-
 
     void m() {
         println("m");
@@ -15,6 +11,7 @@ class A {
     }
 
     int a;
+    println("init");
 }
 
 {

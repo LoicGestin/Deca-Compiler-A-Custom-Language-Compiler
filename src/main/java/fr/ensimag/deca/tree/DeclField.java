@@ -10,17 +10,37 @@ public class DeclField extends AbstractDeclField{
     private AbstractIdentifier field;
     private AbstractInitialization initialization;
 
-    public DeclField(AbstractIdentifier type, AbstractIdentifier field, AbstractInitialization initialization) {
+    private Visibility visibility;
+
+    public DeclField(AbstractIdentifier type, AbstractIdentifier field, AbstractInitialization initialization, Visibility visibility) {
         Validate.notNull(type);
         Validate.notNull(field);
         Validate.notNull(initialization);
+        Validate.notNull(visibility);
         this.type = type;
         this.field = field;
         this.initialization = initialization;
+        this.visibility = visibility;
     }
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        s.print("\033[0;35m");
+        type.decompile(s);
+        if (visibility == Visibility.PROTECTED) {
+            s.print(" protected ");
+        }
+        s.print("\033[0m ");
+        field.decompile(s);
+        if (initialization instanceof NoInitialization)
+        {
+            s.println("\033[0;35m;\033[0m");
+        }
+        else
+        {
+            s.print(" = ");
+            initialization.decompile(s);
+            s.println("\033[0;35m;\033[0m");
+        }
     }
 
     @Override

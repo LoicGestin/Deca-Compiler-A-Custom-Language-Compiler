@@ -2,14 +2,14 @@
 
 class A {
 
-    public void m() {
+    void m() {
         println("m");
     }
-    int a;
+    protected int a;
 }
 
 class B extends A {
-    public void n() {
+    void n() {
         println("n");
     }
 }

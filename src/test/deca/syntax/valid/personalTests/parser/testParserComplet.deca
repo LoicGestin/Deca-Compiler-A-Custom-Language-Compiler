@@ -6,7 +6,7 @@
 //      créé le 20/12/2023
 
 {
-if (b instanceof(int)) {
+if (b instanceof int) {
     b = 1;
     } else {
     return 45;

@@ -310,7 +310,6 @@ inequality_expr returns[AbstractExpr tree]
             assert($e1.tree != null);
             assert($type.tree != null);
             $tree = new InstanceOf($e1.tree, $type.tree);
-
         }
     ;
 
@@ -520,9 +519,7 @@ class_body returns[ListDeclField field, ListDeclMethod method]
     ;
 
 decl_field_set [ListDeclField l]
-    : v=visibility t=type list_decl_field
-      SEMI
-    ;
+    : v=visibility t=type list_decl_field[$l, $t.tree, $v.v] SEMI;
 
 visibility returns[Visibility v]
     : /* epsilon */ {
@@ -533,18 +530,29 @@ visibility returns[Visibility v]
         }
     ;
 
-list_decl_field
-    : dv1=decl_field
-        (COMMA dv2=decl_field
+list_decl_field[ListDeclField l, AbstractIdentifier t, Visibility v]
+    : dv1=decl_field[$t, $v] {
+            $l.add($dv1.tree);
+    } (COMMA dv2=decl_field[$t, $v] {
+            $l.add($dv2.tree);
+    }
       )*
     ;
 
-decl_field
+decl_field[AbstractIdentifier t, Visibility v] returns[AbstractDeclField tree]
+@init {
+        AbstractInitialization init = new NoInitialization();
+        }
     : i=ident {
+        assert($i.tree != null);
         }
       (EQUALS e=expr {
+            assert($e.tree != null);
+            init = new Initialization($e.tree);
+            setLocation(init, $e.start);
         }
-      )? {
+      )? {  $tree = new DeclField(t, $i.tree, init, v);
+            setLocation($tree, $i.start);
         }
     ;
 

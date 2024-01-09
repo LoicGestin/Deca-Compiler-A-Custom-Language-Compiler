@@ -43,6 +43,7 @@ public class DeclVar extends AbstractDeclVar {
             throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
         }
         varName.setDefinition(new VariableDefinition(t, varName.getLocation()));
+        varName.setType(t);
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);
         try {
             localEnv.declare(varName.getName(), varName.getExpDefinition());

@@ -54,7 +54,7 @@ public class EnvironmentType {
     }
 
     public boolean compatible(Type t1, Type t2){
-        return t1.isFloat() && t2.isInt() || t1.isInt() && t2.isFloat();
+        return t1.isFloat() && t2.isInt() || t1.isInt() && t2.isFloat() || t1.sameType(t2);
     }
 
     public TypeDefinition defOfType(Symbol s) {

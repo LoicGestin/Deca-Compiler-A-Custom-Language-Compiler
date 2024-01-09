@@ -5,6 +5,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.SUB;
 
 /**
@@ -35,6 +36,7 @@ public class Minus extends AbstractOpArith {
             LValue.codeGenInst(compiler);
             RValue.codeGenInst(compiler);
             compiler.addInstruction(new SUB(compiler.getRegister(3), compiler.getRegister(2)));
+            compiler.addInstruction(new LOAD(compiler.getRegister(2), compiler.getNextRegistreLibre()));
             compiler.libererRegistre();
             compiler.libererRegistre();
         }

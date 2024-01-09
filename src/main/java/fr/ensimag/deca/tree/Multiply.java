@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.MUL;
 
 /**
@@ -21,6 +22,7 @@ public class Multiply extends AbstractOpArith {
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
         compiler.addInstruction(new MUL(compiler.getRegister(3), compiler.getRegister(2)));
+        compiler.addInstruction(new LOAD(compiler.getRegister(2), compiler.getNextRegistreLibre()));
         compiler.libererRegistre();
         compiler.libererRegistre();
     }

@@ -30,6 +30,7 @@ public class Divide extends AbstractOpArith {
         else {
             compiler.addInstruction(new DIV(compiler.getRegister(3), compiler.getRegister(2)));
         }
+        compiler.addInstruction(new LOAD(compiler.getRegister(2), compiler.getNextRegistreLibre()));
         compiler.libererRegistre();
         compiler.libererRegistre();
     }

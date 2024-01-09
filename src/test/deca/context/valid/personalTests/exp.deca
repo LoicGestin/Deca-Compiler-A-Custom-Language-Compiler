@@ -1,6 +1,6 @@
 {
 int a = 5;
-float b = 2.0;
-b = a + b;
+float b = 3.5;
+b = a + b + b;
 print(b);
 }

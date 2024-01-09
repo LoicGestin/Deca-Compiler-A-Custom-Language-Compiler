@@ -3,7 +3,10 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 import java.io.PrintStream;
 
@@ -30,9 +33,13 @@ public class IntLiteral extends AbstractExpr {
         setType(new IntType(compiler.createSymbol("int")));
         return getType();
     }
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(new ImmediateString(Integer.toString(value))));
+    }
 
     public void codeGenInst(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(this.getValue(), compiler.getRegister(2)));
+        compiler.addInstruction(new LOAD(new ImmediateInteger(this.getValue()), compiler.getRegister(2)));
     }
 
     @Override

@@ -4,6 +4,11 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
+import fr.ensimag.ima.pseudocode.ImmediateString;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -35,7 +40,13 @@ public class FloatLiteral extends AbstractExpr {
         return getType();
     }
 
-
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(new ImmediateString(Float.toString(value))));
+    }
+    public void codeGenInst(DecacCompiler compiler) {
+        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), compiler.getRegister(2)));
+    }
     @Override
     public void decompile(IndentPrintStream s) {
         s.print(java.lang.Float.toHexString(value));

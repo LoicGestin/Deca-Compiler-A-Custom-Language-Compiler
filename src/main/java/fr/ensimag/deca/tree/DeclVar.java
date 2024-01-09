@@ -7,6 +7,10 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -41,7 +45,7 @@ public class DeclVar extends AbstractDeclVar {
         varName.setDefinition(new VariableDefinition(t, varName.getLocation()));
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);
         try {
-            localEnv.declare(varName.getName(), new VariableDefinition(t, varName.getLocation()));
+            localEnv.declare(varName.getName(), varName.getExpDefinition());
         }
         catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Variable " + varName.getName() + " already declared", varName.getLocation());
@@ -52,9 +56,15 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        initialization.codeGenInit(compiler);
-
+        // var global
+        DAddr addr = compiler.nextRegisterOffset();
+        varName.getExpDefinition().setOperand(addr);
+        //System.out.println(varName);
+        if (initialization instanceof Initialization) {
+            initialization.codeGenInit(compiler, addr);
+        }
     }
+
 
     
     @Override

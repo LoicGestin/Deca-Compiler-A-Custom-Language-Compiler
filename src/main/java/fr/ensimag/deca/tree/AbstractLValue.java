@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DAddr;
 
 /**
  * Left-hand side value of an assignment.
@@ -15,4 +16,5 @@ import fr.ensimag.deca.tools.SymbolTable;
  */
 public abstract class AbstractLValue extends AbstractExpr {
     public abstract SymbolTable.Symbol getName();
+    public abstract DAddr getAddr();
 }

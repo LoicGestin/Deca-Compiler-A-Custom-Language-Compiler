@@ -5,7 +5,10 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 /**
  * @author gl29
@@ -41,7 +44,7 @@ public class Plus extends AbstractOpArith {
             else {
                 IntLiteral fR = (IntLiteral) RValue;
                 LValue.codeGenInst(compiler);
-                compiler.addInstruction(new ADD(new ImmediateFloat(fR.getValue()), compiler.getRegister(2)));
+                compiler.addInstruction(new ADD(new ImmediateInteger(fR.getValue()), compiler.getRegister(2)));
             }
         }
     }

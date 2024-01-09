@@ -156,6 +156,11 @@ public class Identifier extends AbstractIdentifier {
         return name;
     }
 
+    @Override
+    public DAddr getAddr() {
+        return this.getExpDefinition().getOperand();
+    }
+
     private Symbol name;
 
     public Identifier(Symbol name) {
@@ -231,11 +236,18 @@ public class Identifier extends AbstractIdentifier {
     private static String asciiIntToString(int asciiInt) {
         String asciiString = Integer.toString(asciiInt);
         StringBuilder reconstructedString = new StringBuilder();
-        for (int i = 0; i < asciiString.length(); i += 2) {
-            String twoDigitSubstring = asciiString.substring(i, Math.min(i + 2, asciiString.length()));
-            char c = (char) Integer.parseInt(twoDigitSubstring);
-            reconstructedString.append(c);
+
+        String save = "";
+
+        for (int i = asciiString.length() -1; i > 0; i --) {
+            save += asciiString.charAt(i);
+            int value = Integer.parseInt(save);
+            if (value > 32 && value < 127) {
+                reconstructedString.append((char) value);
+                save = "";
+            }
         }
+        reconstructedString.append('\0');
         return reconstructedString.toString();
     }
     @Override
@@ -254,21 +266,22 @@ public class Identifier extends AbstractIdentifier {
         }
         else if(definition.getType().isBoolean())
         {
-            if(GPRegister.getR(1).getNumber() == 0){
-                compiler.addInstruction(new WSTR(new ImmediateString("false")));
-            }
-            else{
-                compiler.addInstruction(new WSTR(new ImmediateString("true")));
-
-            }
+            // TO DO
+            compiler.addInstruction(new WSTR(new ImmediateString("false")));
         }
         else if(definition.getType().isString())
         {
-           // compiler.addInstruction(new WSTR(new ImmediateString(asciiIntToString(GPRegister.getR(1).getNumber()))));
+            // TO DO
         }
         else
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        DAddr dAddr = this.getExpDefinition().getOperand();
+        compiler.addInstruction(new LOAD(dAddr, Register.getR(2)));
     }
 }

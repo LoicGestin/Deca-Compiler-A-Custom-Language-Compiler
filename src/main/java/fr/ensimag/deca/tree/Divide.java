@@ -3,6 +3,8 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.DIV;
 
 /**
  *
@@ -16,7 +18,14 @@ public class Divide extends AbstractOpArith {
 
     @Override
     public void codeGenArith(DecacCompiler compiler) {
+        AbstractExpr LValue = this.getLeftOperand();
+        AbstractExpr RValue = this.getRightOperand();
 
+        LValue.codeGenInst(compiler);
+        RValue.codeGenInst(compiler);
+        compiler.addInstruction(new DIV(compiler.getRegister(3), compiler.getRegister(2)));
+        compiler.libererRegistre();
+        compiler.libererRegistre();
     }
 
 

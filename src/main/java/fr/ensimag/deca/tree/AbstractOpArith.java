@@ -33,7 +33,6 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         }
         getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         getRightOperand().verifyExpr(compiler, localEnv, currentClass);
-
         setType(getLeftOperand().getType());
         return getType();
     }

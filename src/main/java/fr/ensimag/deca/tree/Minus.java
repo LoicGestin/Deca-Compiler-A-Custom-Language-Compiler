@@ -32,9 +32,9 @@ public class Minus extends AbstractOpArith {
         }
 
         else {
-            RValue.codeGenInst(compiler);
             LValue.codeGenInst(compiler);
-            compiler.addInstruction(new SUB(compiler.getRegister(3), compiler.getRegister(2)));                compiler.libererRegistre();
+            RValue.codeGenInst(compiler);
+            compiler.addInstruction(new SUB(compiler.getRegister(3), compiler.getRegister(2)));
             compiler.libererRegistre();
             compiler.libererRegistre();
         }

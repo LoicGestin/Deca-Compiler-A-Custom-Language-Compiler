@@ -35,8 +35,8 @@ public class Minus extends AbstractOpArith {
         else {
             LValue.codeGenInst(compiler);
             RValue.codeGenInst(compiler);
-            compiler.addInstruction(new SUB(compiler.getRegister(3), compiler.getRegister(2)));
-            compiler.addInstruction(new LOAD(compiler.getRegister(2), compiler.getNextRegistreLibre()));
+            int number = compiler.getNextRegistreLibre().getNumber();
+            compiler.addInstruction(new SUB(compiler.getRegister(number-1), compiler.getRegister(number-2)));
             compiler.libererRegistre();
             compiler.libererRegistre();
         }

@@ -22,15 +22,16 @@ public class Divide extends AbstractOpArith {
 
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
+
+        int number = compiler.getNextRegistreLibre().getNumber();
         
         if (LValue.getType().isInt() && RValue.getType().isInt()) {
-            compiler.addInstruction(new QUO(compiler.getRegister(3), compiler.getRegister(2)));
+            compiler.addInstruction(new QUO(compiler.getRegister(number-1), compiler.getRegister(number-2)));
         }
 
         else {
-            compiler.addInstruction(new DIV(compiler.getRegister(3), compiler.getRegister(2)));
+            compiler.addInstruction(new DIV(compiler.getRegister(number-1), compiler.getRegister(number-2)));
         }
-        compiler.addInstruction(new LOAD(compiler.getRegister(2), compiler.getNextRegistreLibre()));
         compiler.libererRegistre();
         compiler.libererRegistre();
     }

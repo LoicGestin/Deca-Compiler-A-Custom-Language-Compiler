@@ -1,6 +1,9 @@
 {
 int a = 5;
-float b = 3.5;
-b = a + b + b;
-print(b);
+float b = 3.0;
+float c = 2.0;
+int d = 7;
+int e = 8;
+b = a + b * c / c + d + e;
+println(b);
 }

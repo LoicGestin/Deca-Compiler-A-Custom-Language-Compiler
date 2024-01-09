@@ -21,8 +21,8 @@ public class Multiply extends AbstractOpArith {
         AbstractExpr RValue = this.getRightOperand();
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
-        compiler.addInstruction(new MUL(compiler.getRegister(3), compiler.getRegister(2)));
-        compiler.addInstruction(new LOAD(compiler.getRegister(2), compiler.getNextRegistreLibre()));
+        int number = compiler.getNextRegistreLibre().getNumber();
+        compiler.addInstruction(new MUL(compiler.getRegister(number-1), compiler.getRegister(number-2)));
         compiler.libererRegistre();
         compiler.libererRegistre();
     }

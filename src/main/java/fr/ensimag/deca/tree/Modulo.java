@@ -39,7 +39,8 @@ public class Modulo extends AbstractOpArith {
         AbstractExpr RValue = this.getRightOperand();
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
-        compiler.addInstruction(new REM(compiler.getRegister(3), compiler.getRegister(2)));
+        int number = compiler.getNextRegistreLibre().getNumber();
+        compiler.addInstruction(new REM(compiler.getRegister(number-1), compiler.getRegister(number-2)));
         compiler.addInstruction(new LOAD(compiler.getRegister(2), compiler.getNextRegistreLibre()));
         compiler.libererRegistre();
         compiler.libererRegistre();

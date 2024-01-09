@@ -31,6 +31,9 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 
             }
         }
+        if(!getLeftOperand().getType().sameType(getRightOperand().getType())) {
+            throw new ContextualError("Incompatible types in initialization", getLocation());
+        }
         getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         getRightOperand().verifyExpr(compiler, localEnv, currentClass);
         setType(getLeftOperand().getType());

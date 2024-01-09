@@ -16,7 +16,6 @@ import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
 
 /**
  * Deca Identifier

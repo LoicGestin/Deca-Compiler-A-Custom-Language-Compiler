@@ -18,9 +18,8 @@ public class ConvFloat extends AbstractUnaryExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         Type typeOp = getOperand().verifyExpr(compiler, localEnv, currentClass);
-        Type floatType = new FloatType(compiler.createSymbol("float"));
         if (typeOp.isInt()) {
-            setType(floatType);
+            setType(compiler.environmentType.FLOAT);
             return getType();
         }
         else {
@@ -32,7 +31,7 @@ public class ConvFloat extends AbstractUnaryExpr {
 
     @Override
     protected String getOperatorName() {
-        return "/* conv float */";
+        return "(float)";
     }
 
 }

@@ -25,11 +25,11 @@ public class DeclField extends AbstractDeclField{
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("\033[0;35m");
-        type.decompile(s);
         if (visibility == Visibility.PROTECTED) {
-            s.print(" protected ");
+            s.print("protected ");
         }
-        s.print("\033[0m ");
+        type.decompile(s);
+        s.print(" \033[0m ");
         field.decompile(s);
         if (initialization instanceof NoInitialization)
         {

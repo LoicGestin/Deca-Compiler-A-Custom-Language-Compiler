@@ -271,10 +271,9 @@ public class DecacCompiler {
         return GPRegister.getR(i);
     }
 
-    private int nbOffSet = 0;
-
-    public DAddr nextOffSet() {
-        nbOffSet++;
-        return new RegisterOffset(nbOffSet, Register.GB);
+    private int indexPile = 0;
+    public DAddr nextRegisterOffset() {
+        indexPile ++;
+        return new RegisterOffset(indexPile, Register.GB);
     }
 }

@@ -6,6 +6,15 @@ import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateString;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -185,8 +194,7 @@ public class Identifier extends AbstractIdentifier {
         }
         return typeDef.getType();
     }
-    
-    
+
     private Definition definition;
 
 
@@ -221,4 +229,47 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
+    private static String asciiIntToString(int asciiInt) {
+        String asciiString = Integer.toString(asciiInt);
+        StringBuilder reconstructedString = new StringBuilder();
+        for (int i = 0; i < asciiString.length(); i += 2) {
+            String twoDigitSubstring = asciiString.substring(i, Math.min(i + 2, asciiString.length()));
+            char c = (char) Integer.parseInt(twoDigitSubstring);
+            reconstructedString.append(c);
+        }
+        return reconstructedString.toString();
+    }
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        DAddr dAddr = this.getExpDefinition().getOperand();
+        //System.out.println(this);
+        compiler.addInstruction(new LOAD(dAddr, Register.getR(2)));
+        compiler.addInstruction(new LOAD(Register.getR(2),GPRegister.getR(1)));
+        if(definition.getType().isInt())
+        {
+            compiler.addInstruction(new WINT());
+        }
+        else if(definition.getType().isFloat())
+        {
+            compiler.addInstruction(new WFLOAT());
+        }
+        else if(definition.getType().isBoolean())
+        {
+            if(GPRegister.getR(1).getNumber() == 0){
+                compiler.addInstruction(new WSTR(new ImmediateString("false")));
+            }
+            else{
+                compiler.addInstruction(new WSTR(new ImmediateString("true")));
+
+            }
+        }
+        else if(definition.getType().isString())
+        {
+           // compiler.addInstruction(new WSTR(new ImmediateString(asciiIntToString(GPRegister.getR(1).getNumber()))));
+        }
+        else
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }
 }

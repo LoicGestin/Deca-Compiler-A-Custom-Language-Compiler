@@ -8,6 +8,8 @@ build:
     - apk add --no-cache --upgrade bash
     # Install dependencies (mvn)
     - apk add --no-cache --upgrade maven
+    # Install echo
+    - apk add --no-cache --upgrade coreutils
   stage: build
   script:
     - mvn compile

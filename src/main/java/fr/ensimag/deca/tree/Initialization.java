@@ -38,14 +38,21 @@ public class Initialization extends AbstractInitialization {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         // Vérification de la compatibilité des types
-        Type type = expression.verifyExpr(compiler, localEnv, currentClass);
-        if (type == null) {
+        Type type = expression.verifyRValue(compiler, localEnv, currentClass, t).getType();
+        expression.setType(type);
+        if(t.isFloat() && type.isInt()) {
+            expression = new ConvFloat(expression);
+            expression.verifyExpr(compiler, localEnv, currentClass);
+            expression.setType(t);
+        }
+        else if (type == null) {
             throw new ContextualError("Exception : Incompatible types null in initialization", expression.getLocation());
         }
-        if(!type.sameType(t)) {
+        else if(!type.sameType(t)) {
             throw new ContextualError("Exception : Incompatible types in initialization", expression.getLocation());
         }
     }
+
 
     @Override
     public void codeGenInit(DecacCompiler compiler) {

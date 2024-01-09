@@ -17,7 +17,16 @@ public class ConvFloat extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type typeOp = getOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type floatType = new FloatType(compiler.createSymbol("float"));
+        if (typeOp.isInt()) {
+            setType(floatType);
+            return getType();
+        }
+        else {
+            throw new ContextualError("Conversion impossible", getLocation());
+        }
+
     }
 
 

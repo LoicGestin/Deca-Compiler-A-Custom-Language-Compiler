@@ -29,4 +29,6 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         setType(getLeftOperand().getType());
         return getType();
     }
+
+    public abstract void codeGenArith(DecacCompiler compiler) throws ContextualError;
 }

@@ -23,6 +23,11 @@ public class Modulo extends AbstractOpArith {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    @Override
+    public void codeGenArith(DecacCompiler compiler) throws ContextualError {
+
+    }
+
 
     @Override
     protected String getOperatorName() {

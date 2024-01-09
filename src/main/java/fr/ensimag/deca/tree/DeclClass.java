@@ -3,6 +3,8 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentType;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -45,7 +47,15 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type tName = varName.verifyType(compiler);
+        Type tSuper = varSuper.verifyType(compiler);
+        if (!tName.isString()) {
+            throw new ContextualError("Wrong type for class name", varName.getLocation());
+        }
+
+        if (!tSuper.isString()) {
+            throw new ContextualError("Wrong type for class name", varSuper.getLocation());
+        }
     }
 
     @Override

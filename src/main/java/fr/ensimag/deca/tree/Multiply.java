@@ -1,6 +1,8 @@
 package fr.ensimag.deca.tree;
 
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ContextualError;
 
 /**
  * @author gl29
@@ -9,6 +11,11 @@ package fr.ensimag.deca.tree;
 public class Multiply extends AbstractOpArith {
     public Multiply(AbstractExpr leftOperand, AbstractExpr rightOperand) {
         super(leftOperand, rightOperand);
+    }
+
+    @Override
+    public void codeGenArith(DecacCompiler compiler) throws ContextualError {
+
     }
 
 

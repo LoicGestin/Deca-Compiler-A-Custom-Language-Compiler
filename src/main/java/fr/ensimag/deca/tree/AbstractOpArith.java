@@ -22,8 +22,8 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
-        getRightOperand().verifyExpr(compiler, localEnv, currentClass);
-        if(!getLeftOperand().getType().sameType(getRightOperand().getType())) {
+        AbstractExpr f = new ConvFloat(getRightOperand()); f.verifyExpr(compiler, localEnv, currentClass);
+        if(!getLeftOperand().getType().sameType(f.getType())) {
             throw new ContextualError("Exception : Incompatible types in arithmetic operation", getLocation());
         }
         setType(getLeftOperand().getType());

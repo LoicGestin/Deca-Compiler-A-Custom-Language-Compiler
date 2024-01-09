@@ -254,8 +254,9 @@ public class Identifier extends AbstractIdentifier {
     protected void codeGenPrint(DecacCompiler compiler) {
         DAddr dAddr = this.getExpDefinition().getOperand();
         //System.out.println(this);
-        compiler.addInstruction(new LOAD(dAddr, Register.getR(2)));
-        compiler.addInstruction(new LOAD(Register.getR(2),GPRegister.getR(1)));
+        GPRegister register = compiler.getNextRegistreLibre();
+        compiler.addInstruction(new LOAD(dAddr,register));
+        compiler.addInstruction(new LOAD(register,GPRegister.getR(1)));
         if(definition.getType().isInt())
         {
             compiler.addInstruction(new WINT());

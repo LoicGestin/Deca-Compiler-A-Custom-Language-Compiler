@@ -60,7 +60,9 @@ public class Initialization extends AbstractInitialization {
     @Override
     public void codeGenInit(DecacCompiler compiler, DAddr addr) {
         expression.codeGenInst(compiler);
-        compiler.addInstruction(new STORE(Register.getR(2), addr));
+        compiler.libererRegistre();
+        compiler.addInstruction(new STORE(compiler.getRegistreLibre(), addr));
+
     }
 
     @Override

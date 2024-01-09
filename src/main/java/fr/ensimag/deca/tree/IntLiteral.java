@@ -39,7 +39,7 @@ public class IntLiteral extends AbstractExpr {
     }
 
     public void codeGenInst(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(new ImmediateInteger(this.getValue()), compiler.getRegister(2)));
+        compiler.addInstruction(new LOAD(new ImmediateInteger(this.getValue()), compiler.getNextRegistreLibre()));
     }
 
     @Override

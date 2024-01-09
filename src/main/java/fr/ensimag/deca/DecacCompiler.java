@@ -276,4 +276,19 @@ public class DecacCompiler {
         indexPile ++;
         return new RegisterOffset(indexPile, Register.GB);
     }
+
+    private int registreLibre = 2;
+    public GPRegister getNextRegistreLibre(){
+        if(registreLibre == 15){
+            throw new UnsupportedOperationException("Plus de registre libre");
+        }
+        return Register.getR(registreLibre ++);
+    }
+    public void libererRegistre(){
+        registreLibre --;
+    }
+
+    public GPRegister getRegistreLibre() {
+        return Register.getR(registreLibre );
+    }
 }

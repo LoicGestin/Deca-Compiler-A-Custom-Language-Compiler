@@ -17,14 +17,18 @@ public class Plus extends AbstractOpArith {
     }
 
     @Override
-    public void codeGenArith(DecacCompiler compiler) throws ContextualError {
+    public void codeGenArith(DecacCompiler compiler) {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
         Type tR = RValue.getType();
         Type tL = LValue.getType();
 
         if (!(tR.isFloat() || tR.isInt()) && !(tL.isFloat() || tL.isInt())) {
-            throw new ContextualError("Incompatible types in initialization", RValue.getLocation());
+            try {
+                throw new ContextualError("Incompatible types in initialization", RValue.getLocation());
+            } catch (ContextualError e) {
+                throw new RuntimeException(e);
+            }
         }
 
         else {

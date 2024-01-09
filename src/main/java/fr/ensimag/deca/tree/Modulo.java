@@ -24,7 +24,7 @@ public class Modulo extends AbstractOpArith {
     }
 
     @Override
-    public void codeGenArith(DecacCompiler compiler) throws ContextualError {
+    public void codeGenArith(DecacCompiler compiler) {
 
     }
 

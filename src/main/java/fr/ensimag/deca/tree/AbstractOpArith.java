@@ -23,12 +23,17 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         AbstractExpr f = new ConvFloat(getRightOperand()); f.verifyExpr(compiler, localEnv, currentClass);
-        if(!getLeftOperand().getType().sameType(f.getType())) {
+        if(!getLeftOperand().getType().sameType(getRightOperand().getType())) {
             throw new ContextualError("Exception : Incompatible types in arithmetic operation", getLocation());
         }
         setType(getLeftOperand().getType());
         return getType();
     }
 
-    public abstract void codeGenArith(DecacCompiler compiler) throws ContextualError;
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        codeGenArith(compiler);
+    }
+
+    public abstract void codeGenArith(DecacCompiler compiler);
 }

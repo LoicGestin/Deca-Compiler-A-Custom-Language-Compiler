@@ -21,8 +21,8 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        Type typeL = getLeftOperand().getType();
-        Type typeR = getRightOperand().getType();
+        Type typeL = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type typeR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
         if(compiler.environmentType.compatible(typeL, typeR)) {
             if (typeL.isFloat() && typeR.isInt()) {
                 setRightOperand(new ConvFloat(getRightOperand()));

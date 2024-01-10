@@ -21,8 +21,8 @@ public class Or extends AbstractOpBool {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = compiler.labelTable.create("vrai");
-        Label fin = compiler.labelTable.create("fin");
+        Label vrai = compiler.labelTable.create("vrai_Or");
+        Label fin = compiler.labelTable.create("fin_Or");
 
         getLeftOperand().codeGenInst(compiler);
         compiler.libererRegistre();

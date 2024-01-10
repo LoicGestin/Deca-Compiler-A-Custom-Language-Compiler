@@ -3,6 +3,8 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
@@ -21,26 +23,34 @@ public class Divide extends AbstractOpArith {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
         Label divByZero = new Label("divByZero");
+        Label fin = new Label("fin");
 
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
 
-        compiler.getRegistreLibre();
-        compiler.addInstruction(new CMP(0, compiler.getRegistreLibre()));
-        compiler.addInstruction(new BEQ(divByZero));
+        compiler.libererRegistre();
 
         int number = compiler.getNextRegistreLibre().getNumber();
         
         if (LValue.getType().isInt() && RValue.getType().isInt()) {
-            compiler.addInstruction(new QUO(compiler.getRegister(number-1), compiler.getRegister(number-2)));
+            compiler.addInstruction(new CMP(new ImmediateInteger(0), compiler.getRegister(number)));
+            compiler.addInstruction(new BEQ(divByZero));
+            compiler.addInstruction(new QUO(compiler.getRegister(number), compiler.getRegister(number-1)));
+            compiler.addInstruction(new BRA(fin));
         }
 
         else {
-            compiler.addInstruction(new DIV(compiler.getRegister(number-1), compiler.getRegister(number-2)));
+            compiler.addInstruction(new CMP(new ImmediateFloat(0), compiler.getRegister(number)));
+            compiler.addInstruction(new BEQ(divByZero));
+            compiler.addInstruction(new DIV(compiler.getRegister(number), compiler.getRegister(number-1)));
+            compiler.addInstruction(new BRA(fin));
         }
 
         compiler.addLabel(divByZero);
         compiler.addInstruction(new WSTR("Erreur : division par 0"));
+        compiler.addInstruction(new HALT());
+
+        compiler.addLabel(fin);
 
         compiler.libererRegistre();
         compiler.libererRegistre();

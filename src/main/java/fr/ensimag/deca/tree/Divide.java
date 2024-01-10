@@ -49,7 +49,6 @@ public class Divide extends AbstractOpArith {
         compiler.addLabel(fin);
 
         compiler.libererRegistre();
-        compiler.libererRegistre();
     }
 
 

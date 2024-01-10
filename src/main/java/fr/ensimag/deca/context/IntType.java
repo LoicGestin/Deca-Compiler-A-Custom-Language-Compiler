@@ -1,11 +1,8 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.DVal;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
 
 /**
- *
  * @author Ensimag
  * @date 01/01/2024
  */

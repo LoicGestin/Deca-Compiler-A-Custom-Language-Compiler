@@ -10,16 +10,16 @@ import java.util.List;
  * @date 01/01/2024
  */
 public class Signature {
-    List<Type> args = new ArrayList<Type>();
+    List<Type> args = new ArrayList<>();
 
     public void add(Type t) {
         args.add(t);
     }
-    
+
     public Type paramNumber(int n) {
         return args.get(n);
     }
-    
+
     public int size() {
         return args.size();
     }

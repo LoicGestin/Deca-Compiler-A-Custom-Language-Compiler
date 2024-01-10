@@ -34,8 +34,8 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = compiler.labelTable.create("vrai_Not");
-        Label fin = compiler.labelTable.create("fin_Not");
+        Label vrai = compiler.labelTable.addLabel("vrai_Not");
+        Label fin = compiler.labelTable.addLabel("fin_Not");
 
         getOperand().codeGenInst(compiler);
 

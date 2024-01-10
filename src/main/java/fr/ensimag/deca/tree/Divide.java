@@ -22,8 +22,8 @@ public class Divide extends AbstractOpArith {
     public void codeGenArith(DecacCompiler compiler) {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
-        Label divByZero = compiler.labelTable.create("divByZero");
-        Label fin = compiler.labelTable.create("fin");
+        Label divByZero = compiler.labelTable.addLabel("divByZero");
+        Label fin = compiler.labelTable.addLabel("fin");
 
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);

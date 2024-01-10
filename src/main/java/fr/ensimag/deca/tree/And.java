@@ -21,8 +21,8 @@ public class And extends AbstractOpBool {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label faux = compiler.labelTable.create("faux_And");
-        Label fin = compiler.labelTable.create("fin_And");
+        Label faux = compiler.labelTable.addLabel("faux_And");
+        Label fin = compiler.labelTable.addLabel("fin_And");
 
         getLeftOperand().codeGenInst(compiler);
         compiler.libererRegistre();

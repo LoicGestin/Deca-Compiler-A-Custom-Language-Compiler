@@ -54,8 +54,8 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label elseLabel = compiler.labelTable.create("elseLabel");
-        Label endLabel = compiler.labelTable.create("endLabel");
+        Label elseLabel = compiler.labelTable.addLabel("elseLabel");
+        Label endLabel = compiler.labelTable.addLabel("endLabel");
         compiler.incrementIfCounter();
         condition.codeGenInst(compiler);
         compiler.addInstruction(new BOV(elseLabel));

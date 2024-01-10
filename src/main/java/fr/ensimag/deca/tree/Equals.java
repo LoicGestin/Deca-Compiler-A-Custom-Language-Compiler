@@ -32,8 +32,8 @@ public class Equals extends AbstractOpExactCmp {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = compiler.labelTable.create("vrai_Equals");
-        Label fin = compiler.labelTable.create("fin_Equals");
+        Label vrai = compiler.labelTable.addLabel("vrai_Equals");
+        Label fin = compiler.labelTable.addLabel("fin_Equals");
 
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);

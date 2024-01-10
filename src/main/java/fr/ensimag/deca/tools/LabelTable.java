@@ -9,11 +9,10 @@ import java.util.Map;
 public class LabelTable {
     private final Map<String, ArrayList<Label>> map = new HashMap<>();
 
-    public Label create(String type) {
+    public Label addLabel(String type) {
         if (map.containsKey(type)) {
             ArrayList<Label> labelArrayList= map.get(type);
-            Label lastLab = labelArrayList.get(labelArrayList.size()-1);
-            Label lab = new Label(type, lastLab.getTypeIndex()+1);
+            Label lab = new Label(type, labelArrayList.size());
             return lab;
 
         } else {

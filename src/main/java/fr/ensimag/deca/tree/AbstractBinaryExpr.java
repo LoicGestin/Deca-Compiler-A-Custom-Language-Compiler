@@ -1,10 +1,10 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+
+import java.io.PrintStream;
 
 /**
  * Binary expressions.
@@ -14,29 +14,11 @@ import org.apache.commons.lang.Validate;
  */
 public abstract class AbstractBinaryExpr extends AbstractExpr {
 
-    public AbstractExpr getLeftOperand() {
-        return leftOperand;
-    }
-
-    public AbstractExpr getRightOperand() {
-        return rightOperand;
-    }
-
-    protected void setLeftOperand(AbstractExpr leftOperand) {
-        Validate.notNull(leftOperand);
-        this.leftOperand = leftOperand;
-    }
-
-    protected void setRightOperand(AbstractExpr rightOperand) {
-        Validate.notNull(rightOperand);
-        this.rightOperand = rightOperand;
-    }
-
     private AbstractExpr leftOperand;
     private AbstractExpr rightOperand;
 
     public AbstractBinaryExpr(AbstractExpr leftOperand,
-            AbstractExpr rightOperand) {
+                              AbstractExpr rightOperand) {
         Validate.notNull(leftOperand, "left operand cannot be null");
         Validate.notNull(rightOperand, "right operand cannot be null");
         Validate.isTrue(leftOperand != rightOperand, "Sharing subtrees is forbidden");
@@ -44,6 +26,23 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         this.rightOperand = rightOperand;
     }
 
+    public AbstractExpr getLeftOperand() {
+        return leftOperand;
+    }
+
+    protected void setLeftOperand(AbstractExpr leftOperand) {
+        Validate.notNull(leftOperand);
+        this.leftOperand = leftOperand;
+    }
+
+    public AbstractExpr getRightOperand() {
+        return rightOperand;
+    }
+
+    protected void setRightOperand(AbstractExpr rightOperand) {
+        Validate.notNull(rightOperand);
+        this.rightOperand = rightOperand;
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {
@@ -79,6 +78,4 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
     protected void codeGenInst(DecacCompiler compiler) {
         throw new UnsupportedOperationException("Not implem");
     }
-
-
 }

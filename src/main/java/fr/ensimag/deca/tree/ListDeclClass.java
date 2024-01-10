@@ -6,13 +6,12 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.log4j.Logger;
 
 /**
- *
  * @author gl29
  * @date 01/01/2024
  */
 public class ListDeclClass extends TreeList<AbstractDeclClass> {
     private static final Logger LOG = Logger.getLogger(ListDeclClass.class);
-    
+
     @Override
     public void decompile(IndentPrintStream s) {
         for (AbstractDeclClass c : getList()) {
@@ -36,7 +35,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     public void verifyListClassMembers(DecacCompiler compiler) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
     }
-    
+
     /**
      * Pass 3 of [SyntaxeContextuelle]
      */

@@ -10,7 +10,7 @@ import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 /**
  * Operator "x >= y"
- * 
+ *
  * @author gl29
  * @date 01/01/2024
  */
@@ -28,25 +28,14 @@ public class GreaterOrEqual extends AbstractOpIneq {
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);
 
-        compiler.libererRegistre();
-        compiler.libererRegistre();
+        compiler.libererRegistre(2);
 
         compiler.addInstruction(new CMP(compiler.getNextRegistreLibre(), compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BGE(vrai));
 
-        compiler.libererRegistre();
-        compiler.libererRegistre();
-
-        compiler.addInstruction(new LOAD(0, compiler.getNextRegistreLibre()));
-        compiler.addInstruction(new BRA(fin));
-
-        compiler.libererRegistre();
-
-        compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(1, compiler.getNextRegistreLibre()));
-
-        compiler.addLabel(fin);
+        Equals.comparison(compiler, vrai, fin);
     }
+
     @Override
     protected String getOperatorName() {
         return ">=";

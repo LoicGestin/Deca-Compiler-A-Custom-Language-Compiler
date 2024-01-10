@@ -1,7 +1,10 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.ImmediateString;
@@ -11,13 +14,12 @@ import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import java.io.PrintStream;
 
 /**
- *
  * @author gl29
  * @date 01/01/2024
  */
 public class BooleanLiteral extends AbstractExpr {
 
-    private boolean value;
+    private final boolean value;
 
     public BooleanLiteral(boolean value) {
         this.value = value;
@@ -29,7 +31,7 @@ public class BooleanLiteral extends AbstractExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         setType(compiler.environmentType.BOOLEAN);
         return getType();
     }
@@ -38,9 +40,11 @@ public class BooleanLiteral extends AbstractExpr {
     protected void codeGenPrint(DecacCompiler compiler) {
         compiler.addInstruction(new WSTR(new ImmediateString(Boolean.toString(value))));
     }
+
     public void codeGenInst(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(new ImmediateInteger(this.value ?  1 : 0), compiler.getRegister(2)));
+        compiler.addInstruction(new LOAD(new ImmediateInteger(this.value ? 1 : 0), compiler.getRegister(2)));
     }
+
     @Override
     public void decompile(IndentPrintStream s) {
         s.print(Boolean.toString(value));

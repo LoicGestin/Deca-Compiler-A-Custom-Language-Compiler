@@ -13,7 +13,6 @@ import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 /**
- *
  * @author gl29
  * @date 01/01/2024
  */
@@ -25,7 +24,7 @@ public class Equals extends AbstractOpExactCmp {
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
-        if(!this.getLeftOperand().getType().isBoolean() || !this.getRightOperand().getType().isBoolean()){
+        if (!this.getLeftOperand().getType().isBoolean() || !this.getRightOperand().getType().isBoolean()) {
             throw new ContextualError("Boolean expected", this.getLocation());
         }
     }
@@ -38,14 +37,17 @@ public class Equals extends AbstractOpExactCmp {
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);
 
-        compiler.libererRegistre();
-        compiler.libererRegistre();
+        compiler.libererRegistre(2);
 
         compiler.addInstruction(new CMP(compiler.getNextRegistreLibre(), compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BEQ(vrai));
 
-        compiler.libererRegistre();
-        compiler.libererRegistre();
+        comparison(compiler, vrai, fin);
+
+    }
+
+    static void comparison(DecacCompiler compiler, Label vrai, Label fin) {
+        compiler.libererRegistre(2);
 
         compiler.addInstruction(new LOAD(0, compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BRA(fin));
@@ -56,12 +58,11 @@ public class Equals extends AbstractOpExactCmp {
         compiler.addInstruction(new LOAD(1, compiler.getNextRegistreLibre()));
 
         compiler.addLabel(fin);
-
     }
 
     @Override
     protected String getOperatorName() {
         return "==";
-    }    
-    
+    }
+
 }

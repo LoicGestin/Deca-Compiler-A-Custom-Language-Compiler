@@ -1,8 +1,9 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+
+import java.io.PrintStream;
 
 /**
  * Unary expression.
@@ -12,31 +13,22 @@ import org.apache.commons.lang.Validate;
  */
 public abstract class AbstractUnaryExpr extends AbstractExpr {
 
-    public AbstractExpr getOperand() {
-        return operand;
-    }
-    private AbstractExpr operand;
+    private final AbstractExpr operand;
+
     public AbstractUnaryExpr(AbstractExpr operand) {
         Validate.notNull(operand);
         this.operand = operand;
     }
 
+    public AbstractExpr getOperand() {
+        return operand;
+    }
 
     protected abstract String getOperatorName();
-  
+
     @Override
     public void decompile(IndentPrintStream s) {
-        if (getOperatorName().equals("++") || getOperatorName().equals("--")) {
-            s.print(getOperatorName());
-            operand.decompile(s);
-        } else {
-            s.print("(");
-            s.print(getOperatorName());
-            operand.decompile(s);
-            s.print(")");
-        }
-        s.print(getOperatorName());
-        operand.decompile(s);
+        s.print("(" + getOperatorName() + operand.decompile() + ")");
     }
 
     @Override

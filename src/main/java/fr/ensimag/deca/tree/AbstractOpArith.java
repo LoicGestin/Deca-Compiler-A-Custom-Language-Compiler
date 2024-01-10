@@ -1,14 +1,14 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 
 /**
  * Arithmetic binary operations (+, -, /, ...)
- * 
+ *
  * @author gl29
  * @date 01/01/2024
  */
@@ -20,10 +20,10 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         Type typeL = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type typeR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
-        if(compiler.environmentType.compatible(typeL, typeR)) {
+        if (compiler.environmentType.compatible(typeL, typeR)) {
             if (typeL.isFloat() && typeR.isInt()) {
                 typeR = new ConvFloat(getRightOperand()).verifyExpr(compiler, localEnv, currentClass);
                 setRightOperand(new ConvFloat(getRightOperand()));
@@ -34,9 +34,9 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
             }
         }
-        if(!typeL.sameType(typeR)) {
+        if (!typeL.sameType(typeR)) {
             // Print left type and right type in debug mode
-            throw new ContextualError("Exception : Incompatible types in arithmetic operation: " + typeL.getName() + " and " + typeR.getName(), getLocation());
+            throw new ContextualError("Exception : Incompatible types in arithmetic operation: " + typeL + " and " + typeR, getLocation());
         }
         setType(typeL);
         return getType();

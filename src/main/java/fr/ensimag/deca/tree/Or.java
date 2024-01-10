@@ -9,7 +9,6 @@ import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 /**
- *
  * @author gl29
  * @date 01/01/2024
  */
@@ -46,6 +45,7 @@ public class Or extends AbstractOpBool {
 
         compiler.addLabel(fin);
     }
+
     @Override
     protected String getOperatorName() {
         return "||";

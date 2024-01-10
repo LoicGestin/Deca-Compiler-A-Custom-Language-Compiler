@@ -7,7 +7,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 
 /**
  * List of declarations (e.g. int x; float y,z).
- * 
+ *
  * @author gl29
  * @date 01/01/2024
  */
@@ -29,7 +29,7 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
      *                 the "env_exp" attribute
      *                 in postcondition, its "current" dictionary corresponds to
      *                 the "env_exp_r" attribute
-     */    
+     */
     void verifyListDeclVariable(DecacCompiler compiler, EnvironmentExp localEnv) throws ContextualError {
         // For each declaration in the list, we verify it and add it to the environment
         for (AbstractDeclVar decl : getList()) {

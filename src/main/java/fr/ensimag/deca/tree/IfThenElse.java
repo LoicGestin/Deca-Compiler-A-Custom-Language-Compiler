@@ -1,17 +1,17 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
-
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import org.apache.commons.lang.Validate;
+
+import java.io.PrintStream;
 
 /**
  * Full if/else if/else statement.
@@ -20,19 +20,11 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2024
  */
 public class IfThenElse extends AbstractInst {
-    
-    private final AbstractExpr condition; 
+
+    private final AbstractExpr condition;
     private final ListInst thenBranch;
 
     private ListInst elseBranch;
-
-    public void setElseBranch(ListInst elseBranch){
-        this.elseBranch = elseBranch;
-    }
-
-    public ListInst getElseBranch(){
-        return this.elseBranch;
-    }
 
     public IfThenElse(AbstractExpr condition, ListInst thenBranch, ListInst elseBranch) {
         Validate.notNull(condition);
@@ -42,10 +34,18 @@ public class IfThenElse extends AbstractInst {
         this.thenBranch = thenBranch;
         this.elseBranch = elseBranch;
     }
-    
+
+    public ListInst getElseBranch() {
+        return this.elseBranch;
+    }
+
+    public void setElseBranch(ListInst elseBranch) {
+        this.elseBranch = elseBranch;
+    }
+
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         this.condition.verifyCondition(compiler, localEnv, currentClass);
         this.thenBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
@@ -68,22 +68,33 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("\033[0;35mif\033[0m ");
+        if (DecacCompiler.getColor()) {
+            s.print("if ", "purple");
+        } else {
+            s.print("if ");
+        }
         condition.decompile(s);
         s.println(" {");
         s.indent();
         thenBranch.decompile(s);
         s.unindent();
-        s.println("} \033[0;35melse\033[0m {");
-        s.indent();
-        elseBranch.decompile(s);
-        s.unindent();
-        s.print("}");
+        s.print("} ");
+        if (!(elseBranch.isEmpty())) {
+            if (DecacCompiler.getColor()) {
+                s.print("else ", "purple");
+            } else {
+                s.print("else ");
+            }
+            s.println("{");
+            s.indent();
+            elseBranch.decompile(s);
+            s.unindent();
+            s.print("}");
+        }
     }
 
     @Override
-    protected
-    void iterChildren(TreeFunction f) {
+    protected void iterChildren(TreeFunction f) {
         condition.iter(f);
         thenBranch.iter(f);
         elseBranch.iter(f);

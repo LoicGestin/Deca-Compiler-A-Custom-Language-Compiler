@@ -2,7 +2,6 @@ package fr.ensimag.deca.tree;
 
 
 /**
- *
  * @author gl29
  * @date 01/01/2024
  */

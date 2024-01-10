@@ -2,5 +2,5 @@
 
 
 {
-    int x = "Hello"; // Erreur : type incompatible.
+    int x = "Hello"; // Erreur : x n'est pas un int
 }

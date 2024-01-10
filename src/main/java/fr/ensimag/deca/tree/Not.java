@@ -1,10 +1,10 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
@@ -13,7 +13,6 @@ import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 
 /**
- *
  * @author gl29
  * @date 01/01/2024
  */
@@ -25,7 +24,7 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         getOperand().verifyCondition(compiler, localEnv, currentClass);
         setType(compiler.environmentType.BOOLEAN);
 
@@ -44,6 +43,10 @@ public class Not extends AbstractUnaryExpr {
         compiler.addInstruction(new CMP(0, compiler.getRegistreLibre()));
         compiler.addInstruction(new BNE(vrai));
 
+        to_rename_function(compiler, vrai, fin);
+    }
+
+    static void to_rename_function(DecacCompiler compiler, Label vrai, Label fin) {
         compiler.libererRegistre();
 
         compiler.addInstruction(new LOAD(1, compiler.getRegistreLibre()));

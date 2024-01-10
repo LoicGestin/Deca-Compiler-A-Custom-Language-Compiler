@@ -10,8 +10,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 public class GetAttribut extends AbstractExpr {
-    private AbstractExpr expr;
-    private AbstractIdentifier attribut;
+    private final AbstractExpr expr;
+    private final AbstractIdentifier attribut;
 
     public GetAttribut(AbstractExpr expr, AbstractIdentifier attribut) {
         this.expr = expr;

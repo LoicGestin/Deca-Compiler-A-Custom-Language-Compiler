@@ -4,8 +4,6 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.ima.pseudocode.instructions.ADD;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.SUB;
 
 /**
@@ -26,19 +24,16 @@ public class Minus extends AbstractOpArith {
 
         if (!(tR.isFloat() || tR.isInt()) && !(tL.isFloat() || tL.isInt())) {
             try {
-                throw new ContextualError("Incompatible types in initialization", RValue.getLocation());
+                throw new ContextualError("Exception : Incompatible for minus : " + tR + " and " + tL, RValue.getLocation());
             } catch (ContextualError e) {
                 throw new RuntimeException(e);
             }
-        }
-
-        else {
+        } else {
             LValue.codeGenInst(compiler);
             RValue.codeGenInst(compiler);
             int number = compiler.getNextRegistreLibre().getNumber();
-            compiler.addInstruction(new SUB(compiler.getRegister(number-1), compiler.getRegister(number-2)));
-            compiler.libererRegistre();
-            compiler.libererRegistre();
+            compiler.addInstruction(new SUB(compiler.getRegister(number - 1), compiler.getRegister(number - 2)));
+            compiler.libererRegistre(2);
         }
     }
 
@@ -47,5 +42,5 @@ public class Minus extends AbstractOpArith {
     protected String getOperatorName() {
         return "-";
     }
-    
+
 }

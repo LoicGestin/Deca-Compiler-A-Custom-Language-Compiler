@@ -39,6 +39,8 @@ public class And extends AbstractOpBool {
         compiler.addInstruction(new LOAD(1, compiler.getRegistreLibre()));
         compiler.addInstruction(new BRA(fin));
 
+        compiler.libererRegistre();
+
         compiler.addLabel(faux);
         compiler.addInstruction(new LOAD(0, compiler.getRegistreLibre()));
 

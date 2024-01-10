@@ -49,6 +49,8 @@ public class Not extends AbstractUnaryExpr {
         compiler.addInstruction(new LOAD(1, compiler.getRegistreLibre()));
         compiler.addInstruction(new BRA(fin));
 
+        compiler.libererRegistre();
+
         compiler.addLabel(vrai);
         compiler.addInstruction(new LOAD(0, compiler.getRegistreLibre()));
 

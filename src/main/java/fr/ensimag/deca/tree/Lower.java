@@ -21,8 +21,8 @@ public class Lower extends AbstractOpIneq {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = compiler.labelTable.create("vrai");
-        Label fin = compiler.labelTable.create("fin");
+        Label vrai = compiler.labelTable.create("vrai_Lower");
+        Label fin = compiler.labelTable.create("fin_Lower");
 
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);

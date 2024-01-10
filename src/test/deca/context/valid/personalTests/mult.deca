@@ -1,0 +1,29 @@
+// Test MULTIPLY
+
+{
+    int a = 13;
+    int b = 42;
+
+    float c = 12.0;
+    float d = 42.0;
+
+    float e = a * c;
+
+    int f = a * b;
+    float g = d * c;
+
+    int h = a * b * f;
+    float i = d * c * g;
+
+    b = a * b;
+    d = c * d;
+
+    println(b);
+    println(d);
+    println(e);
+    println(f);
+    println(g);
+    println(h);
+    println(i);
+
+}

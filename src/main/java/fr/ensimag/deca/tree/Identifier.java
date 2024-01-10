@@ -1,12 +1,10 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-import java.io.PrintStream;
-
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateString;
@@ -17,6 +15,8 @@ import fr.ensimag.ima.pseudocode.instructions.WINT;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 
+import java.io.PrintStream;
+
 /**
  * Deca Identifier
  *
@@ -24,7 +24,33 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2024
  */
 public class Identifier extends AbstractIdentifier {
-    
+
+    private final Symbol name;
+    private Definition definition;
+
+    public Identifier(Symbol name) {
+        Validate.notNull(name);
+        this.name = name;
+    }
+
+    private static String asciiIntToString(int asciiInt) {
+        String asciiString = Integer.toString(asciiInt);
+        StringBuilder reconstructedString = new StringBuilder();
+
+        String save = "";
+
+        for (int i = asciiString.length() - 1; i > 0; i--) {
+            save += asciiString.charAt(i);
+            int value = Integer.parseInt(save);
+            if (value > 32 && value < 127) {
+                reconstructedString.append((char) value);
+                save = "";
+            }
+        }
+        reconstructedString.append('\0');
+        return reconstructedString.toString();
+    }
+
     @Override
     protected void checkDecoration() {
         if (getDefinition() == null) {
@@ -37,15 +63,19 @@ public class Identifier extends AbstractIdentifier {
         return definition;
     }
 
+    @Override
+    public void setDefinition(Definition definition) {
+        this.definition = definition;
+    }
+
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * ClassDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a class definition.
+     *
+     * @throws DecacInternalError if the definition is not a class definition.
      */
     @Override
     public ClassDefinition getClassDefinition() {
@@ -62,12 +92,11 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * MethodDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a method definition.
+     *
+     * @throws DecacInternalError if the definition is not a method definition.
      */
     @Override
     public MethodDefinition getMethodDefinition() {
@@ -84,12 +113,11 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * FieldDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a field definition.
+     *
+     * @throws DecacInternalError if the definition is not a field definition.
      */
     @Override
     public FieldDefinition getFieldDefinition() {
@@ -106,12 +134,11 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * VariableDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a field definition.
+     *
+     * @throws DecacInternalError if the definition is not a field definition.
      */
     @Override
     public VariableDefinition getVariableDefinition() {
@@ -127,12 +154,11 @@ public class Identifier extends AbstractIdentifier {
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a field definition.
+     *
+     * @throws DecacInternalError if the definition is not a field definition.
      */
     @Override
     public ExpDefinition getExpDefinition() {
@@ -147,11 +173,6 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
-    public void setDefinition(Definition definition) {
-        this.definition = definition;
-    }
-
-    @Override
     public Symbol getName() {
         return name;
     }
@@ -161,21 +182,13 @@ public class Identifier extends AbstractIdentifier {
         return this.getExpDefinition().getOperand();
     }
 
-    private Symbol name;
-
-    public Identifier(Symbol name) {
-        Validate.notNull(name);
-        this.name = name;
-    }
-
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         ExpDefinition expDef = localEnv.get(this.getName());
         if (expDef == null) {
-            throw new ContextualError("Identifier " + this.getName() + " is not defined", this.getLocation());
-        }
-        else {
+            throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
+        } else {
             this.definition = expDef;
             setType(expDef.getType());
         }
@@ -184,23 +197,20 @@ public class Identifier extends AbstractIdentifier {
 
     /**
      * Implements non-terminal "type" of [SyntaxeContextuelle] in the 3 passes
+     *
      * @param compiler contains "env_types" attribute
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
         TypeDefinition typeDef = compiler.environmentType.defOfType(this.getName());
         if (typeDef == null) {
-            throw new ContextualError("Type " + this.getName() + " is not defined", this.getLocation());
-        }
-        else {
+            throw new ContextualError("Exception : Type " + this.getName() + " is not defined", this.getLocation());
+        } else {
             this.definition = typeDef;
             setType(typeDef.getType());
         }
         return typeDef.getType();
     }
-
-    private Definition definition;
-
 
     @Override
     protected void iterChildren(TreeFunction f) {
@@ -233,48 +243,20 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
-    private static String asciiIntToString(int asciiInt) {
-        String asciiString = Integer.toString(asciiInt);
-        StringBuilder reconstructedString = new StringBuilder();
-
-        String save = "";
-
-        for (int i = asciiString.length() -1; i > 0; i --) {
-            save += asciiString.charAt(i);
-            int value = Integer.parseInt(save);
-            if (value > 32 && value < 127) {
-                reconstructedString.append((char) value);
-                save = "";
-            }
-        }
-        reconstructedString.append('\0');
-        return reconstructedString.toString();
-    }
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
         DAddr dAddr = this.getExpDefinition().getOperand();
         //System.out.println(this);
         compiler.addInstruction(new LOAD(dAddr, Register.getR(2)));
-        compiler.addInstruction(new LOAD(Register.getR(2),GPRegister.getR(1)));
-        if(definition.getType().isInt())
-        {
+        compiler.addInstruction(new LOAD(Register.getR(2), GPRegister.getR(1)));
+        if (definition.getType().isInt()) {
             compiler.addInstruction(new WINT());
-        }
-        else if(definition.getType().isFloat())
-        {
+        } else if (definition.getType().isFloat()) {
             compiler.addInstruction(new WFLOAT());
-        }
-        else if(definition.getType().isBoolean())
-        {
+        } else if (definition.getType().isBoolean()) {
             // TO DO
             compiler.addInstruction(new WSTR(new ImmediateString("false")));
-        }
-        else if(definition.getType().isString())
-        {
-            // TO DO
-        }
-        else
-        {
+        } else {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }

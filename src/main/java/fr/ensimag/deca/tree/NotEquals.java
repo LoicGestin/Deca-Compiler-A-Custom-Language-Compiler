@@ -9,7 +9,6 @@ import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 /**
- *
  * @author gl29
  * @date 01/01/2024
  */
@@ -27,25 +26,24 @@ public class NotEquals extends AbstractOpExactCmp {
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);
 
-        compiler.libererRegistre();
-        compiler.libererRegistre();
+        compiler.libererRegistre(2);
 
         compiler.addInstruction(new CMP(compiler.getNextRegistreLibre(), compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BNE(vrai));
 
-        compiler.libererRegistre();
-        compiler.libererRegistre();
+        compiler.libererRegistre(2);
 
         compiler.addInstruction(new LOAD(0, compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BRA(fin));
 
-        compiler.libererRegistre();
+        compiler.libererRegistre(2);
 
         compiler.addLabel(vrai);
         compiler.addInstruction(new LOAD(1, compiler.getRegistreLibre()));
 
         compiler.addLabel(fin);
     }
+
     @Override
     protected String getOperatorName() {
         return "!=";

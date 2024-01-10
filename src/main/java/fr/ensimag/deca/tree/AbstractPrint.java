@@ -1,16 +1,14 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.FloatType;
-import fr.ensimag.deca.context.IntType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+
+import java.io.PrintStream;
 
 /**
  * Print statement (print, println, ...).
@@ -20,10 +18,8 @@ import org.apache.commons.lang.Validate;
  */
 public abstract class AbstractPrint extends AbstractInst {
 
-    private boolean printHex;
+    private final boolean printHex;
     private ListExpr arguments = new ListExpr();
-    
-    abstract String getSuffix();
 
     public AbstractPrint(boolean printHex, ListExpr arguments) {
         Validate.notNull(arguments);
@@ -31,22 +27,23 @@ public abstract class AbstractPrint extends AbstractInst {
         this.printHex = printHex;
     }
 
+    abstract String getSuffix();
+
     public ListExpr getArguments() {
         return arguments;
     }
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
 
         // Check that each argument is compatible with print type
         for (AbstractExpr a : getArguments().getList()) {
             Type t = a.verifyExpr(compiler, localEnv, currentClass);
-            /*
-            if (!t.isString()) {
-                throw new ContextualError("Print argument must be a string", a.getLocation());
-            }*/
+            if (!t.isInt() && !t.isFloat() && !t.isString()) {
+                throw new ContextualError("Exception : Argument of print must be int, float or string", a.getLocation());
+            }
         }
     }
 
@@ -63,12 +60,13 @@ public abstract class AbstractPrint extends AbstractInst {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("\033[0;35mprint");
-        s.print(getSuffix());
-        if (getPrintHex()) s.print("x");
-        s.print("\033[0m(");
-        arguments.decompile(s);
-        s.print(")\033[0;35m;\033[0m");
+        if (DecacCompiler.getColor()) {
+            s.print("print" + getSuffix() + ((getPrintHex()) ? "x" : ""), "purple");
+            s.print("(" + arguments.decompile() + ")");
+            s.print(";", "orange");
+        } else {
+            s.print("print" + getSuffix() + ((getPrintHex()) ? "x" : "") + "(" + arguments.decompile() + ");");
+        }
     }
 
     @Override

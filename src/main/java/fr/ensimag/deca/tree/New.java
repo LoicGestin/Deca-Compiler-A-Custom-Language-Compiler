@@ -6,21 +6,25 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 
-public class New extends AbstractExpr{
-    private AbstractIdentifier type;
-    public New(AbstractIdentifier type){
+public class New extends AbstractExpr {
+    private final AbstractIdentifier type;
+
+    public New(AbstractIdentifier type) {
         Validate.notNull(type);
         this.type = type;
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("\033[0;35mnew\033[0m ");
+        if (DecacCompiler.getColor()) {
+            s.print("new ", "purple");
+        } else {
+            s.print("new ");
+        }
         type.decompile(s);
         s.print("()");
     }

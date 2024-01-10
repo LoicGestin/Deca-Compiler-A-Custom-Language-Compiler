@@ -1,17 +1,12 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
-
 import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.commons.lang.Validate;
+
+import java.io.PrintStream;
 
 /**
  * @author gl29
@@ -19,7 +14,7 @@ import org.apache.commons.lang.Validate;
  */
 public class DeclVar extends AbstractDeclVar {
 
-    
+
     final private AbstractIdentifier type;
     final private AbstractIdentifier varName;
     final private AbstractInitialization initialization;
@@ -35,7 +30,7 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     protected void verifyDeclVar(DecacCompiler compiler,
-            EnvironmentExp localEnv, ClassDefinition currentClass)
+                                 EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         // Vérification du type != void
         Type t = type.verifyType(compiler);
@@ -47,9 +42,8 @@ public class DeclVar extends AbstractDeclVar {
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);
         try {
             localEnv.declare(varName.getName(), varName.getExpDefinition());
-        }
-        catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Variable " + varName.getName() + " already declared", varName.getLocation());
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Exception : Variable " + varName.getName() + " already declared", varName.getLocation());
         }
 
         // TODO : To finish
@@ -67,34 +61,30 @@ public class DeclVar extends AbstractDeclVar {
     }
 
 
-    
     @Override
-    public void decompile(IndentPrintStream s)
-    {
-        s.print("\033[0;31m");
+    public void decompile(IndentPrintStream s) {
+        if (DecacCompiler.getColor()) s.print("\033[0;31m");
         type.decompile(s);
-        s.print("\033[0m ");
+        if (DecacCompiler.getColor()) s.print("\033[0m ");
         varName.decompile(s);
-        if (initialization instanceof NoInitialization)
-        {
-            s.println("\033[0;35m;\033[0m");
-        }
-        else
-        {
+        if (!(initialization instanceof NoInitialization)) {
             s.print(" = ");
             initialization.decompile(s);
-            s.println("\033[0;35m;\033[0m");
+        }
+        if (DecacCompiler.getColor()) {
+            s.println(";", "orange");
+        } else {
+            s.println(";");
         }
     }
 
     @Override
-    protected
-    void iterChildren(TreeFunction f) {
+    protected void iterChildren(TreeFunction f) {
         type.iter(f);
         varName.iter(f);
         initialization.iter(f);
     }
-    
+
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);

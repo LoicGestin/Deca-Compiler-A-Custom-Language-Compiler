@@ -9,6 +9,8 @@
 
 {
         int i = 5;
+        int j = -i;
+        j = j + 1;
         if(i == 5){
                 println("Salut");
         }

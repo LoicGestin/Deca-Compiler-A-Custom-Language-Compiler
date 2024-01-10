@@ -39,10 +39,13 @@ public class DecacCompiler {
      */
     private static final String nl = System.getProperty("line.separator", "\n");
 
+    private static boolean color = false;
+
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
+        color = compilerOptions.color;
     }
 
     /**
@@ -125,7 +128,7 @@ public class DecacCompiler {
         }
         return this.symbolTable.create(name);
     }
-
+    // TODO : à enlever
     private int ifCounter = 0;
 
     public int getIfCounter() {
@@ -134,6 +137,10 @@ public class DecacCompiler {
 
     public void incrementIfCounter() {
         ifCounter++;
+    }
+
+    public static boolean getColor() {
+        return color;
     }
 
     /**
@@ -289,6 +296,10 @@ public class DecacCompiler {
     }
     public void libererRegistre(){
         registreLibre --;
+    }
+
+    public void libererRegistre(int i){
+        registreLibre -= i;
     }
 
     public GPRegister getRegistreLibre() {

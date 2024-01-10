@@ -40,6 +40,8 @@ public class CompilerOptions {
     private boolean parallel = false;
     private boolean printBanner = false;
 
+    public boolean color = false;
+
     protected enum Step {PARSE, VERIF, ALL};
     protected Step maxStep = Step.ALL;
     private boolean warning = false;
@@ -47,6 +49,9 @@ public class CompilerOptions {
 
     private final List<File> sourceFiles = new ArrayList<>();
 
+    public boolean getWarning() {
+        return warning;
+    }
 
     public void parseArgs(String[] args) throws CLIException {
         for (String arg : args) {
@@ -76,7 +81,15 @@ public class CompilerOptions {
                 parallel = true;
             } else if (arg.equals("-w")) {
                 warning = true;
-            } else {
+            } else if (arg.equals("-h")) {
+                displayUsage();
+                System.exit(0);
+            } else if (arg.equals("--color")) {
+                color = true;
+            } else if (arg.startsWith("-")) {
+                throw new UnsupportedOperationException("Option " + arg + " inconnue");
+            }
+            else {
                 sourceFiles.add(new File(arg));
             }
         }

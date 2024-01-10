@@ -8,9 +8,10 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
-public class Return extends AbstractInst{
 
-    private AbstractExpr expr;
+public class Return extends AbstractInst {
+
+    private final AbstractExpr expr;
 
     public Return(AbstractExpr expr) {
         this.expr = expr;
@@ -46,7 +47,11 @@ public class Return extends AbstractInst{
      */
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("\033[0;35mreturn\033[0;0m ");
+        if (DecacCompiler.getColor()) {
+            s.print("return ", "purple");
+        } else {
+            s.print("return ");
+        }
         expr.decompile(s);
     }
 

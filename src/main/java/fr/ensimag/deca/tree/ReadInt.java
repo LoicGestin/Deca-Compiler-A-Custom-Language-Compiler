@@ -1,12 +1,12 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+
 import java.io.PrintStream;
 
 /**
- *
  * @author gl29
  * @date 01/01/2024
  */
@@ -14,7 +14,7 @@ public class ReadInt extends AbstractReadExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         setType(new IntType(compiler.createSymbol("int")));
         return getType();
     }
@@ -22,7 +22,12 @@ public class ReadInt extends AbstractReadExpr {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("readInt()");
+        if (DecacCompiler.getColor()) {
+            s.print("readInt", "purple");
+            s.print("()");
+        } else {
+            s.print("readInt()");
+        }
     }
 
     @Override

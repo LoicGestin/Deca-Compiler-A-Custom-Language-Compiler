@@ -1,4 +1,4 @@
 package fr.ensimag.deca.tree;
 
-public abstract class AbstractMethodBody extends Tree{
+public abstract class AbstractMethodBody extends Tree {
 }

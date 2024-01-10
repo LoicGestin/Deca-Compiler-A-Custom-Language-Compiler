@@ -2,12 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Type;
-import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.instructions.ADD;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 /**
  * @author gl29
@@ -26,9 +21,8 @@ public class Plus extends AbstractOpArith {
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
         int number = compiler.getNextRegistreLibre().getNumber();
-        compiler.addInstruction(new ADD(compiler.getRegister(number-1), compiler.getRegister(number-2)));
-        compiler.libererRegistre();
-        compiler.libererRegistre();
+        compiler.addInstruction(new ADD(compiler.getRegister(number - 1), compiler.getRegister(number - 2)));
+        compiler.libererRegistre(2);
     }
 
 

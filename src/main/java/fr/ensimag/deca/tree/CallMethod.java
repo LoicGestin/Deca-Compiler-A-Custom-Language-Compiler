@@ -13,9 +13,9 @@ import java.io.PrintStream;
 public class CallMethod extends AbstractExpr {
 
 
-    private AbstractExpr expr;
-    private AbstractIdentifier method;
-    private ListExpr arguments;
+    private final AbstractExpr expr;
+    private final AbstractIdentifier method;
+    private final ListExpr arguments;
 
     public CallMethod(AbstractExpr expr, AbstractIdentifier method, ListExpr arguments) {
         this.expr = expr;

@@ -1,15 +1,18 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
-
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
+
+import java.io.PrintStream;
 
 /**
  * Single precision, floating-point literal
@@ -19,11 +22,7 @@ import org.apache.commons.lang.Validate;
  */
 public class FloatLiteral extends AbstractExpr {
 
-    public float getValue() {
-        return value;
-    }
-
-    private float value;
+    private final float value;
 
     public FloatLiteral(float value) {
         Validate.isTrue(!Float.isInfinite(value),
@@ -33,9 +32,13 @@ public class FloatLiteral extends AbstractExpr {
         this.value = value;
     }
 
+    public float getValue() {
+        return value;
+    }
+
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         setType(compiler.environmentType.FLOAT);
         return getType();
     }
@@ -44,9 +47,11 @@ public class FloatLiteral extends AbstractExpr {
     protected void codeGenPrint(DecacCompiler compiler) {
         compiler.addInstruction(new WSTR(new ImmediateString(Float.toString(value))));
     }
+
     public void codeGenInst(DecacCompiler compiler) {
         compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), compiler.getNextRegistreLibre()));
     }
+
     @Override
     public void decompile(IndentPrintStream s) {
         s.print(java.lang.Float.toHexString(value));

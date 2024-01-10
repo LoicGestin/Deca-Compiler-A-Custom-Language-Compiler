@@ -5,21 +5,23 @@ import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 
-public class MethodBody extends AbstractMethodBody{
+public class MethodBody extends AbstractMethodBody {
     private ListInst insts;
     private ListDeclVar declVars;
     private StringLiteral stringLiteral;
 
-    public MethodBody(ListDeclVar declVars,ListInst insts) {
+    public MethodBody(ListDeclVar declVars, ListInst insts) {
         Validate.notNull(insts);
         Validate.notNull(declVars);
         this.insts = insts;
         this.declVars = declVars;
     }
+
     public MethodBody(StringLiteral stringLiteral) {
         Validate.notNull(stringLiteral);
         this.stringLiteral = stringLiteral;
     }
+
     @Override
     public void decompile(IndentPrintStream s) {
         if (stringLiteral != null) {
@@ -36,7 +38,12 @@ public class MethodBody extends AbstractMethodBody{
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (stringLiteral != null) {
+            stringLiteral.prettyPrint(s, prefix, false);
+        } else {
+            declVars.prettyPrint(s, prefix, false);
+            insts.prettyPrint(s, prefix, true);
+        }
     }
 
     @Override

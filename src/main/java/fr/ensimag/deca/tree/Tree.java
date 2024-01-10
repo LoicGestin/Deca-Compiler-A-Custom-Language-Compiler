@@ -3,23 +3,24 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import org.apache.log4j.Logger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import org.apache.log4j.Logger;
 
 /**
  * Base class for any node in the Deca abstract syntax tree.
- *
+ * <p>
  * Factors all the common elements and utility functions to manipulate trees
  * (location in source-code, pretty-printing, ...).
  *
  * @author gl29
  * @date 01/01/2024
- *
  */
 public abstract class Tree {
 
     private static final Logger LOG = Logger.getLogger(Main.class);
+    private Location location;
 
     public Location getLocation() {
         return location;
@@ -32,7 +33,6 @@ public abstract class Tree {
     public void setLocation(int line, int column, String filename) {
         this.location = new Location(line, column, filename);
     }
-    private Location location;
 
     /**
      * Display the tree as a (compilable) source program
@@ -59,22 +59,22 @@ public abstract class Tree {
      * wrapper for
      * {@link #printNodeLine(PrintStream, String, boolean, boolean, String)},
      * calling {@link #prettyPrintNode()} to display the node element.
-     * 
+     *
      * @param s
      * @param prefix
      * @param last
      * @param inlist
      * @return The prefix to use for the next recursive calls to
-     *         {@link #prettyPrint()}.
+     * {@link #prettyPrint()}.
      */
     protected String printNodeLine(PrintStream s, String prefix, boolean last,
-            boolean inlist) {
+                                   boolean inlist) {
         return printNodeLine(s, prefix, last, inlist, prettyPrintNode());
     }
 
     /**
      * Print the line corresponding to the current node.
-     *
+     * <p>
      * This displays the prefix (to show the tree hierarchy in ASCII-art), and
      * the node name and information.
      *
@@ -87,7 +87,7 @@ public abstract class Tree {
      * {@link #prettyPrint()}.
      */
     String printNodeLine(PrintStream s, String prefix, boolean last,
-            boolean inlist, String nodeName) {
+                         boolean inlist, String nodeName) {
         s.print(prefix);
         if (inlist) {
             s.print("[]>");
@@ -131,12 +131,15 @@ public abstract class Tree {
      * Pretty-print the definition of the tree, if applicable
      */
     protected void prettyPrintDefinition(PrintStream s, String newPrefix) {
-        // Nothing by default
+        s.print(newPrefix);
+        s.print("  ");
+        s.print("Definition: ");
+        s.println();
     }
 
     /**
      * Print the node information on a single line.
-     *
+     * <p>
      * Does not print the children (the recursive call is done by prettyPrint).
      */
     String prettyPrintNode() {
@@ -165,7 +168,7 @@ public abstract class Tree {
     }
 
     protected final void prettyPrint(PrintStream s, String prefix,
-            boolean last) {
+                                     boolean last) {
         prettyPrint(s, prefix, last, false);
     }
 
@@ -173,14 +176,14 @@ public abstract class Tree {
      * Pretty-print tree (see {@link #prettyPrint()}). This is an internal
      * function that should usually not be called directly.
      *
-     * @param s Stream to send the output to
+     * @param s      Stream to send the output to
      * @param prefix Prefix (ASCII-art showing hierarchy) to print for this
-     * node.
-     * @param last Whether the node being displayed is the last child of a tree.
+     *               node.
+     * @param last   Whether the node being displayed is the last child of a tree.
      * @param inlist Whether the node is being displayed as part of a list.
      */
     protected final void prettyPrint(PrintStream s, String prefix,
-            boolean last, boolean inlist) {
+                                     boolean last, boolean inlist) {
         String next = printNodeLine(s, prefix, last, inlist);
         prettyPrintChildren(s, next);
     }
@@ -215,10 +218,10 @@ public abstract class Tree {
     /**
      * Check that the current node has correctly been decorated, and throws an
      * error if not.
-     *
+     * <p>
      * This is used only for defensive programming, each node type can add
      * checks by overloading this method. Does nothing by default.
-     *
+     * <p>
      * The method is called automatically by {@link #checkAllDecorations()}.
      */
     protected void checkDecoration() {
@@ -227,7 +230,7 @@ public abstract class Tree {
 
     /**
      * Check that all nodes of the tree have been correctly decorated.
-     *
+     * <p>
      * Useful for debugging/defensive programming.
      *
      * @return true. Raises an exception in case of error. The return value is
@@ -235,18 +238,13 @@ public abstract class Tree {
      * check only if assertions are enabled.
      */
     public boolean checkAllDecorations() {
-        iter(new TreeFunction() {
-            @Override
-            public void apply(Tree t) {
-                t.checkDecoration();
-            }
-        });
+        iter(Tree::checkDecoration);
         return true;
     }
 
     /**
      * Check that the location has been correctly set for this tree.
-     *
+     * <p>
      * By default, this checks that getLocation() does not return null, but can
      * be overridden for particular classes that do not require location
      * information.
@@ -262,7 +260,7 @@ public abstract class Tree {
 
     /**
      * Check that all nodes of the tree have a location correctly set.
-     *
+     * <p>
      * Useful for debugging/defensive programming.
      *
      * @return true. Raises an exception in case of error. The return value is
@@ -270,20 +268,15 @@ public abstract class Tree {
      * check only if assertions are enabled.
      */
     public boolean checkAllLocations() {
-        iter(new TreeFunction() {
-            @Override
-            public void apply(Tree t) {
-                t.checkLocation();
-            }
-        });
+        iter(Tree::checkLocation);
         return true;
     }
 
     /**
      * Call decompile() if the compiler has a debug level greater than 1.
-     * 
+     * <p>
      * Useful for debugging.
-     * 
+     *
      * @param compiler
      * @return Decompilation, or the empty string.
      */

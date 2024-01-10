@@ -5,13 +5,10 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.VoidType;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
-
-import fr.ensimag.ima.pseudocode.instructions.ADDSP;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
-import fr.ensimag.ima.pseudocode.instructions.TSTO;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
+
+import java.io.PrintStream;
 
 /**
  * @author gl29
@@ -19,11 +16,12 @@ import org.apache.log4j.Logger;
  */
 public class Main extends AbstractMain {
     private static final Logger LOG = Logger.getLogger(Main.class);
-    
-    private ListDeclVar declVariables;
-    private ListInst insts;
+
+    private final ListDeclVar declVariables;
+    private final ListInst insts;
+
     public Main(ListDeclVar declVariables,
-            ListInst insts) {
+                ListInst insts) {
         Validate.notNull(declVariables);
         Validate.notNull(insts);
         this.declVariables = declVariables;
@@ -50,7 +48,7 @@ public class Main extends AbstractMain {
         declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
     }
-    
+
     @Override
     public void decompile(IndentPrintStream s) {
         s.println("{");
@@ -66,7 +64,7 @@ public class Main extends AbstractMain {
         declVariables.iter(f);
         insts.iter(f);
     }
- 
+
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         declVariables.prettyPrint(s, prefix, false);

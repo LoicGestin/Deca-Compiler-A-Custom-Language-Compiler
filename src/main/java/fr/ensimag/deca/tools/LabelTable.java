@@ -11,14 +11,14 @@ public class LabelTable {
 
     public Label addLabel(String type) {
         if (map.containsKey(type)) {
-            ArrayList<Label> labelArrayList= map.get(type);
+            ArrayList<Label> labelArrayList = map.get(type);
             Label lab = new Label(type, labelArrayList.size());
             labelArrayList.add(lab);
             return lab;
 
         } else {
-            ArrayList<Label> newArrayLab = new ArrayList<Label>();
-            Label lab = new Label(type,0);
+            ArrayList<Label> newArrayLab = new ArrayList<>();
+            Label lab = new Label(type, 0);
             newArrayLab.add(lab);
             map.put(type, newArrayLab);
             return lab;

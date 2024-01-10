@@ -1,0 +1,14 @@
+//Test DIV 0
+{
+      int a = 13;
+      float c = 3.0;
+
+      int j = 0;
+      float k = 0.0;
+
+      int l = a / j;
+      float m = c / k;
+
+      println(l);
+      println(m);
+}

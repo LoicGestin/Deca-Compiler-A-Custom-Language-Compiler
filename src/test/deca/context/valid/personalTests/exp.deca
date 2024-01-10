@@ -1,6 +1,6 @@
 {
-int a = 7;
-float b = 0.0;
-float c = a + b;
-println(c);
+float a = 7.0;
+float b = 2.0;
+b = a + b;
+println(b);
 }

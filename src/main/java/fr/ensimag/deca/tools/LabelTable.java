@@ -13,6 +13,7 @@ public class LabelTable {
         if (map.containsKey(type)) {
             ArrayList<Label> labelArrayList= map.get(type);
             Label lab = new Label(type, labelArrayList.size());
+            labelArrayList.add(lab);
             return lab;
 
         } else {

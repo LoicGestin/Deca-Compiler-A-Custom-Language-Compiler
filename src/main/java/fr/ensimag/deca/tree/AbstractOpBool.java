@@ -20,7 +20,13 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type typeL = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type typeR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+        if(!typeL.isBoolean() || !typeR.isBoolean()) {
+            throw new ContextualError("Exception : Incompatible types in boolean operation: " + typeL + " and " + typeR, getLocation());
+        }
+        setType(typeL);
+        return getType();
     }
 
 }

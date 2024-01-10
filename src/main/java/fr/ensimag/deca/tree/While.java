@@ -36,7 +36,7 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override

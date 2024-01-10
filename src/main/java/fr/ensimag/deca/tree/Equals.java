@@ -6,6 +6,11 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 /**
  *
@@ -23,6 +28,33 @@ public class Equals extends AbstractOpExactCmp {
         if(!this.getLeftOperand().getType().isBoolean() || !this.getRightOperand().getType().isBoolean()){
             throw new ContextualError("Boolean expected", this.getLocation());
         }
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        Label vrai = new Label("vrai");
+        Label fin = new Label("fin");
+
+        getLeftOperand().codeGenInst(compiler);
+        getRightOperand().codeGenInst(compiler);
+
+        compiler.libererRegistre();
+        compiler.libererRegistre();
+
+        compiler.addInstruction(new CMP(compiler.getNextRegistreLibre(), compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new BEQ(vrai));
+
+        compiler.libererRegistre();
+        compiler.libererRegistre();
+
+        compiler.addInstruction(new LOAD(0, compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new BRA(fin));
+
+        compiler.addLabel(vrai);
+        compiler.addInstruction(new LOAD(1, compiler.getNextRegistreLibre()));
+
+        compiler.addLabel(fin);
+
     }
 
     @Override

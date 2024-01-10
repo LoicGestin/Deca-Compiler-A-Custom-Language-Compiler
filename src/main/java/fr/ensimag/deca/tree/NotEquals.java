@@ -22,7 +22,9 @@ public class NotEquals extends AbstractOpExactCmp {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         Label vrai = new Label("vrai");
+        vrai.getNewName();
         Label fin = new Label("fin");
+        fin.getNewName();
 
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);

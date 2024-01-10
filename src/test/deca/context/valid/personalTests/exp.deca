@@ -1,6 +1,6 @@
 {
 int a = 7;
 float b = 0.0;
-b = a / b;
-println(b);
+float c = a + b;
+println(c);
 }

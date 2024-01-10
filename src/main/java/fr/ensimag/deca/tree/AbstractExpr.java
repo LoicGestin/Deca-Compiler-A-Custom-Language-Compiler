@@ -108,7 +108,7 @@ public abstract class AbstractExpr extends AbstractInst {
      *            Definition of the class containing the expression, or null in
      *            the main program.
      */
-    void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
+    protected void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         Type t = verifyExpr(compiler, localEnv, currentClass);
         if (!t.isBoolean()) {

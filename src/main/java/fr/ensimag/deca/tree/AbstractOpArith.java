@@ -25,18 +25,20 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         Type typeR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
         if(compiler.environmentType.compatible(typeL, typeR)) {
             if (typeL.isFloat() && typeR.isInt()) {
+                typeR = new ConvFloat(getRightOperand()).verifyExpr(compiler, localEnv, currentClass);
                 setRightOperand(new ConvFloat(getRightOperand()));
                 getRightOperand().verifyExpr(compiler, localEnv, currentClass);
             } else if (typeL.isInt() && typeR.isFloat()) {
+                typeL = new ConvFloat(getLeftOperand()).verifyExpr(compiler, localEnv, currentClass);
                 setLeftOperand(new ConvFloat(getLeftOperand()));
                 getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
             }
         }
-        if(!getLeftOperand().getType().sameType(getRightOperand().getType())) {
+        if(!typeL.sameType(typeR)) {
             // Print left type and right type in debug mode
-            throw new ContextualError("Exception : Incompatible types in arithmetic operation: " + getLeftOperand().getType() + " and " + getRightOperand().getType(), getLocation());
+            throw new ContextualError("Exception : Incompatible types in arithmetic operation: " + typeL.getName() + " and " + typeR.getName(), getLocation());
         }
-        setType(getLeftOperand().getType());
+        setType(typeL);
         return getType();
     }
 

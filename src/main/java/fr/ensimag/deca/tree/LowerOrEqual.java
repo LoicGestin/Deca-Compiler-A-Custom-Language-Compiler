@@ -20,8 +20,8 @@ public class LowerOrEqual extends AbstractOpIneq {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = new Label("vrai");
-        Label fin = new Label("fin");
+        Label vrai = compiler.labelTable.create("vrai");
+        Label fin = compiler.labelTable.create("fin");
 
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);

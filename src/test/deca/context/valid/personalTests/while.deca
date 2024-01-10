@@ -1,0 +1,10 @@
+// Test avec while
+
+{
+int a = 0;
+while (a != 3) {
+    println("Salut !");
+    a = a + 1;
+}
+println("Fini!");
+}

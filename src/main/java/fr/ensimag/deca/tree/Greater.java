@@ -21,10 +21,8 @@ public class Greater extends AbstractOpIneq {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = new Label("vrai");
-        vrai.getNewName();
-        Label fin = new Label("fin");
-        fin.getNewName();
+        Label vrai = compiler.labelTable.create("vrai_Greater");
+        Label fin = compiler.labelTable.create("fin_Greater");
 
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);

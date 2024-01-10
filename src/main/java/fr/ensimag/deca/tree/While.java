@@ -40,10 +40,8 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label debut_while = new Label("debut_while");
-        debut_while.getNewName();
-        Label fin_while = new Label("fin_while");
-        fin_while.getNewName();
+        Label debut_while = compiler.labelTable.create("debut_while");
+        Label fin_while = compiler.labelTable.create("fin_while");
 
 
 

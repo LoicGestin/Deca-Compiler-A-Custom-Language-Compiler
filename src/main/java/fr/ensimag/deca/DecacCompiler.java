@@ -4,6 +4,7 @@ import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
+import fr.ensimag.deca.tools.LabelTable;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
@@ -111,10 +112,12 @@ public class DecacCompiler {
 
 
     /**
-     * The global environment for types (and the symbolTable)
+     * The global environment for types, the symbolTable and the labelTable
      */
     public final EnvironmentType environmentType = new EnvironmentType(this);
     public SymbolTable symbolTable = new SymbolTable();
+
+    public LabelTable labelTable = new LabelTable();
 
     public Symbol createSymbol(String name) {
         if (symbolTable == null) { // TODO : à enlever

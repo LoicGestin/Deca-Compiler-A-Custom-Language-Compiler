@@ -2,21 +2,13 @@
 
 {
 int a = 0;
-while (a != 5) {
+while (a != 3) {
     println("Salut !");
     a = a + 1;
 }
-println("Fini !");
-
-while (a != 10) {
-    println("Ah bah c'est pas fini.");
-    a = a + 1;
+while (a!=5){
+    println("2e boucle");
+    a=a+1;
 }
-println("Ah bah si c'est fini.");
-
-while (a != 15) {
-    println("Ah bah c'est pas fini, encore.");
-    a = a + 1;
-}
-println("Wow incroyable ça marche.");
+println("Fini!");
 }

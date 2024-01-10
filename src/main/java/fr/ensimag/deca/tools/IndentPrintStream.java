@@ -78,6 +78,8 @@ public class IndentPrintStream {
                 return "\033[36m" + s + "\033[0m";
             case "white":
                 return "\033[37m" + s + "\033[0m";
+            case "gray":
+                return "\033[90m" + s + "\033[0m";
             default:
                 return s;
         }

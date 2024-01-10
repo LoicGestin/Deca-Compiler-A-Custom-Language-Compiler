@@ -65,7 +65,8 @@ public class DeclVar extends AbstractDeclVar {
     public void decompile(IndentPrintStream s) {
         if (DecacCompiler.getColor()) s.print("\033[0;31m");
         type.decompile(s);
-        if (DecacCompiler.getColor()) s.print("\033[0m ");
+        if (DecacCompiler.getColor()) s.print("\033[0m");
+        s.print(" ");
         varName.decompile(s);
         if (!(initialization instanceof NoInitialization)) {
             s.print(" = ");

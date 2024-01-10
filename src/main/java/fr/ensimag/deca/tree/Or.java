@@ -24,20 +24,20 @@ public class Or extends AbstractOpBool {
         Label fin = compiler.labelTable.addLabel("fin_Or");
 
         getLeftOperand().codeGenInst(compiler);
-        compiler.libererRegistre();
-        compiler.addInstruction(new CMP(1, compiler.getRegistreLibre()));
+
+
+        compiler.addInstruction(new CMP(1, compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BEQ(vrai));
         compiler.libererRegistre();
 
         getRightOperand().codeGenInst(compiler);
-        compiler.libererRegistre();
-        compiler.addInstruction(new CMP(1, compiler.getRegistreLibre()));
+
+        compiler.addInstruction(new CMP(1, compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BEQ(vrai));
         compiler.libererRegistre();
 
-        compiler.addInstruction(new LOAD(0, compiler.getRegistreLibre()));
+        compiler.addInstruction(new LOAD(0, compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BRA(fin));
-
         compiler.libererRegistre();
 
         compiler.addLabel(vrai);

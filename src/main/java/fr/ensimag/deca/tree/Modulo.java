@@ -5,8 +5,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.REM;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  * @author gl29
@@ -35,11 +36,24 @@ public class Modulo extends AbstractOpArith {
     public void codeGenArith(DecacCompiler compiler) {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
+
+        Label divByZero = compiler.labelTable.addLabel("divByZero");
+        Label fin = compiler.labelTable.addLabel("fin");
+
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
         int number = compiler.getNextRegistreLibre().getNumber();
-        compiler.addInstruction(new REM(compiler.getRegister(number - 1), compiler.getRegister(number - 2)));
-        compiler.addInstruction(new LOAD(compiler.getRegister(2), compiler.getNextRegistreLibre()));
+
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), compiler.getRegister(number-1)));
+        compiler.addInstruction(new BEQ(divByZero));
+        compiler.addInstruction(new REM(compiler.getRegister(number-1), compiler.getRegister(number - 2)));
+        compiler.addInstruction(new BRA(fin));
+
+        compiler.addLabel(divByZero);
+        compiler.addInstruction(new WSTR("Erreur : division par 0"));
+        compiler.addInstruction(new HALT());
+
+        compiler.addLabel(fin);
         compiler.libererRegistre(2);
     }
 

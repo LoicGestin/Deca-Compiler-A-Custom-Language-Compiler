@@ -51,7 +51,7 @@ public class Modulo extends AbstractOpArith {
 
         compiler.addLabel(divByZero);
         compiler.addInstruction(new WSTR("Erreur : division par 0"));
-        compiler.addInstruction(new HALT());
+        compiler.addInstruction(new ERROR());
 
         compiler.addLabel(fin);
         compiler.libererRegistre(2);

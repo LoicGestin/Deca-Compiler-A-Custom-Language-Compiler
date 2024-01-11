@@ -42,7 +42,7 @@ public class BooleanLiteral extends AbstractExpr {
     }
 
     public void codeGenInst(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(new ImmediateInteger(this.value ? 1 : 0), compiler.getRegister(2)));
+        compiler.addInstruction(new LOAD(new ImmediateInteger(this.value ? 1 : 0),  compiler.getNextRegistreLibre()));
     }
 
     @Override

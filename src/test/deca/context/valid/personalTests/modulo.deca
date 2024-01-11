@@ -1,0 +1,16 @@
+// Test MODULO
+
+{
+    int a = 13;
+    int b = 42;
+
+    int f = b % a;
+
+    int h = a % b % f;
+
+    b = b % a;
+
+    println(b);
+    println(f);
+    println(h);
+}

@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.RFLOAT;
 
 import java.io.PrintStream;
 
@@ -17,6 +18,10 @@ public class ReadFloat extends AbstractReadExpr {
                            ClassDefinition currentClass) throws ContextualError {
         setType(new FloatType(compiler.createSymbol("float")));
         return getType();
+    }
+
+    public void codeGenInst(DecacCompiler compiler) {
+        compiler.addInstruction(new RFLOAT());
     }
 
 

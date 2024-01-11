@@ -45,7 +45,9 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        color = compilerOptions.color;
+        if (compilerOptions != null) {
+            color = compilerOptions.color;
+        }
     }
 
     /**

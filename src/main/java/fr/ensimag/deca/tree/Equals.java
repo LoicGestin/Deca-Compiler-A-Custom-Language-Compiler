@@ -56,7 +56,7 @@ public class Equals extends AbstractOpExactCmp {
 
         compiler.addLabel(vrai);
         compiler.addInstruction(new LOAD(1, compiler.getNextRegistreLibre()));
-
+        compiler.libererRegistre();
         compiler.addLabel(fin);
     }
 

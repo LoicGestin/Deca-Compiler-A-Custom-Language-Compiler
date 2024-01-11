@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LabelTable {
-    private final Map<String, Integer> map = new HashMap<>();
+    private final Map<String, ArrayList<Label>> map = new HashMap<>();
 
     public Label addLabel(String type) {
         if (map.containsKey(type)) {

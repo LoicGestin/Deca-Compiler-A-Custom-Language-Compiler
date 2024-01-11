@@ -2,7 +2,9 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BLT;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
@@ -28,7 +30,9 @@ public class Lower extends AbstractOpIneq {
 
         compiler.libererRegistre(2);
 
-        compiler.addInstruction(new CMP(compiler.getNextRegistreLibre(), compiler.getNextRegistreLibre()));
+        GPRegister r1 = compiler.getNextRegistreLibre();
+        GPRegister r2 = compiler.getNextRegistreLibre();
+        compiler.addInstruction(new CMP(r2, r1));
         compiler.addInstruction(new BLT(vrai));
 
         Equals.comparison(compiler, vrai, fin);

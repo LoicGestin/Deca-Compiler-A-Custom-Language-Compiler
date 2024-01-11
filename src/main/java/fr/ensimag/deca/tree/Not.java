@@ -47,12 +47,11 @@ public class Not extends AbstractUnaryExpr {
     }
 
     static void to_rename_function(DecacCompiler compiler, Label vrai, Label fin) {
-        compiler.libererRegistre();
 
         compiler.addInstruction(new LOAD(1, compiler.getRegistreLibre()));
         compiler.addInstruction(new BRA(fin));
 
-        compiler.libererRegistre();
+
 
         compiler.addLabel(vrai);
         compiler.addInstruction(new LOAD(0, compiler.getRegistreLibre()));

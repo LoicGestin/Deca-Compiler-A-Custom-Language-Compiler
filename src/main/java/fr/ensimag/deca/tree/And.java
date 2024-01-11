@@ -22,13 +22,13 @@ public class And extends AbstractOpBool {
         Label fin = compiler.labelTable.addLabel("fin_And");
 
         getLeftOperand().codeGenInst(compiler);
-        compiler.libererRegistre();
+
         compiler.addInstruction(new CMP(0, compiler.getRegistreLibre()));
         compiler.addInstruction(new BEQ(faux));
-        compiler.libererRegistre();
+
 
         getRightOperand().codeGenInst(compiler);
-        compiler.libererRegistre();
+
         compiler.addInstruction(new CMP(0, compiler.getRegistreLibre()));
         compiler.addInstruction(new BEQ(faux));
         Not.to_rename_function(compiler, faux, fin);

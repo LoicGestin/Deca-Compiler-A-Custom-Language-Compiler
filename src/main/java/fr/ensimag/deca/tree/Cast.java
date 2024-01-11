@@ -33,7 +33,7 @@ public class Cast extends AbstractExpr {
             return t;
         }
 
-        throw new ContextualError("cast error, you can't cast " + t + " to " + e, getLocation());
+        throw new ContextualError("Exception : cast error, you can't cast " + t + " to " + e, getLocation());
     }
 
     @Override

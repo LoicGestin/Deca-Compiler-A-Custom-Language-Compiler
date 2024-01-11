@@ -13,6 +13,22 @@ public class ClassType extends Type {
 
     protected ClassDefinition definition;
 
+    /**
+     * Standard creation of a type class.
+     */
+    public ClassType(Symbol className, Location location, ClassDefinition superClass) {
+        super(className);
+        this.definition = new ClassDefinition(this, location, superClass);
+    }
+
+    /**
+     * Creates a type representing a class className.
+     * (To be used by subclasses only)
+     */
+    protected ClassType(Symbol className) {
+        super(className);
+    }
+
     public ClassDefinition getDefinition() {
         return this.definition;
     }
@@ -31,23 +47,6 @@ public class ClassType extends Type {
     public boolean isClassOrNull() {
         return true;
     }
-
-    /**
-     * Standard creation of a type class.
-     */
-    public ClassType(Symbol className, Location location, ClassDefinition superClass) {
-        super(className);
-        this.definition = new ClassDefinition(this, location, superClass);
-    }
-
-    /**
-     * Creates a type representing a class className.
-     * (To be used by subclasses only)
-     */
-    protected ClassType(Symbol className) {
-        super(className);
-    }
-
 
     @Override
     public boolean sameType(Type otherType) {

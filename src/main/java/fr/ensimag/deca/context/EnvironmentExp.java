@@ -27,17 +27,12 @@ public class EnvironmentExp {
     // d'empilement).
     // [DONE]
 
-    EnvironmentExp parentEnvironment;
-
     private final HashMap<Symbol, ExpDefinition> envExp = new HashMap<>();
+    EnvironmentExp parentEnvironment;
 
 
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
         this.parentEnvironment = parentEnvironment;
-    }
-
-    public static class DoubleDefException extends Exception {
-        private static final long serialVersionUID = -2733379901827316441L;
     }
 
     /**
@@ -70,6 +65,10 @@ public class EnvironmentExp {
         } else {
             envExp.put(name, def);
         }
+    }
+
+    public static class DoubleDefException extends Exception {
+        private static final long serialVersionUID = -2733379901827316441L;
     }
 
 }

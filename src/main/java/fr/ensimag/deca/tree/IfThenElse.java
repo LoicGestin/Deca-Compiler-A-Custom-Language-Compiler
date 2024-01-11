@@ -7,8 +7,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -58,7 +57,8 @@ public class IfThenElse extends AbstractInst {
         Label endLabel = compiler.labelTable.addLabel("endLabel");
         compiler.incrementIfCounter();
         condition.codeGenInst(compiler);
-        compiler.addInstruction(new BOV(elseLabel));
+        compiler.addInstruction(new CMP(0, compiler.getRegistreLibre()));
+        compiler.addInstruction(new BEQ(elseLabel));
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(endLabel));
         compiler.addLabel(elseLabel);

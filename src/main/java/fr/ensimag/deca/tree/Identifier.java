@@ -246,6 +246,11 @@ public class Identifier extends AbstractIdentifier {
         if (definition.getType().isInt()) {
             compiler.addInstruction(new WINT());
         } else if (definition.getType().isFloat()) {
+            if(super.isHexa()) {
+                compiler.addInstruction(new WFLOATX());
+            } else {
+                compiler.addInstruction(new WFLOAT());
+            }
             compiler.addInstruction(new WFLOAT());
         } else if (definition.getType().isBoolean()) {
             compiler.addInstruction(new CMP(1, Register.getR(2)));

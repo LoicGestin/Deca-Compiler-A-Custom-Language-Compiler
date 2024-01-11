@@ -19,7 +19,14 @@ import java.io.PrintStream;
  */
 public abstract class AbstractExpr extends AbstractInst {
     private Type type;
+    private boolean isHexa = false;
 
+    public boolean isHexa() {
+        return isHexa;
+    }
+    public void setHexa(boolean hexa) {
+        isHexa = hexa;
+    }
     /**
      * @return true if the expression does not correspond to any concrete token
      * in the source code (and should be decompiled to the empty string).

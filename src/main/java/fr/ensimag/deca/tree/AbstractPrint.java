@@ -17,7 +17,6 @@ import java.io.PrintStream;
  * @date 01/01/2024
  */
 public abstract class AbstractPrint extends AbstractInst {
-
     private final boolean printHex;
     private ListExpr arguments = new ListExpr();
 
@@ -42,7 +41,7 @@ public abstract class AbstractPrint extends AbstractInst {
         for (AbstractExpr a : getArguments().getList()) {
             Type t = a.verifyExpr(compiler, localEnv, currentClass);
             if (!t.isInt() && !t.isFloat() && !t.isString() && !t.isBoolean()) {
-                throw new ContextualError("Exception : Argument of print must be int, float or string", a.getLocation());
+                throw new ContextualError("Exception : Argument of print must be int, float, boolean or string", a.getLocation());
             }
         }
     }
@@ -50,6 +49,7 @@ public abstract class AbstractPrint extends AbstractInst {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         for (AbstractExpr a : getArguments().getList()) {
+            a.setHexa(getPrintHex());
             a.codeGenPrint(compiler);
         }
     }

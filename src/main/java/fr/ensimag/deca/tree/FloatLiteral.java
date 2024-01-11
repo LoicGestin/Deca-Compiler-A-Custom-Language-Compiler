@@ -6,9 +6,13 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.ImmediateString;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 
@@ -45,7 +49,9 @@ public class FloatLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(new ImmediateString(Float.toString(value))));
+        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), Register.getR(2)));
+        compiler.addInstruction(new LOAD(Register.getR(2), GPRegister.getR(1)));
+        compiler.addInstruction( super.isHexa() ? new WFLOATX() : new WFLOAT());
     }
 
     public void codeGenInst(DecacCompiler compiler) {

@@ -1,0 +1,9 @@
+// Test PRINTLNX
+
+{
+    printlnx("Salut !");
+    printlnx(47);
+    printlnx(4.7);
+    printlnx(true);
+    printlnx(false);
+}

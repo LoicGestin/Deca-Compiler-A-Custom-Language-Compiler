@@ -1,0 +1,23 @@
+// Test EQUALS
+
+{
+    int a = 45;
+    int b = 12;
+
+    float c = 7.8165;
+    float d = 78.165e-01;
+
+    if (a == b) {
+        println("a == b");
+    }
+    else {
+        println("a != b");
+    }
+
+    if (c == d) {
+        println("c == d");
+    }
+    else {
+        println("c != d");
+    }
+}

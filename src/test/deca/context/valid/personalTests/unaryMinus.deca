@@ -1,0 +1,7 @@
+// Test UNARYMINUS
+
+{
+    int a = -5;
+    println(a);
+    println(-a);
+}

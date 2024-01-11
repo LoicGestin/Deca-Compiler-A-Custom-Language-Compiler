@@ -161,9 +161,12 @@ echo -ne "\r\t[Total : $failed/$total]                                    \n"
 
 echo "====================   Etape C   ===================="
 
+echo "==> Test de génération du code assembleur"
 
+failed=0
+total=0
 # TODO : ajouter les tests de l'étape C
-
+echo -ne "\r\t[Total : $failed/$total]                                    \n"
 
 echo "====================   Synthese  ===================="
 

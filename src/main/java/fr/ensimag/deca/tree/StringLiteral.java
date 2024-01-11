@@ -19,7 +19,7 @@ import java.io.PrintStream;
  */
 public class StringLiteral extends AbstractStringLiteral {
 
-    private String value;
+    private final String value;
 
     public StringLiteral(String value) {
         Validate.notNull(value);

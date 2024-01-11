@@ -1,0 +1,9 @@
+// Test PRINTLN
+
+{
+    println("Salut !");
+    println(47);
+    println(4.7);
+    println(true);
+    println(false);
+}

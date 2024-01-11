@@ -1,0 +1,9 @@
+// Test PRINT
+
+{
+    print("Salut !");
+    print(47);
+    print(4.7);
+    print(true);
+    print(false);
+}

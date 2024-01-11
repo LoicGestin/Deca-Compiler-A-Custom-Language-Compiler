@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.instructions.RINT;
+
 import java.io.PrintStream;
 
 /**
@@ -30,6 +31,11 @@ public class ReadInt extends AbstractReadExpr {
         }
     }
 
+    @Override
+    public void codeGenPrint(DecacCompiler compiler) {
+        codeGenInst(compiler);
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.WINT());
+    }
     @Override
     protected void iterChildren(TreeFunction f) {
         // leaf node => nothing to do

@@ -1,0 +1,9 @@
+// Test PRINTX
+
+{
+    printx("Salut !");
+    printx(47);
+    printx(4.7);
+    printx(true);
+    printx(false);
+}

@@ -14,7 +14,7 @@ public class Plus extends AbstractOpArith {
     }
 
     @Override
-    public void codeGenArith(DecacCompiler compiler) {
+    public void codeGenInst(DecacCompiler compiler) {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
 

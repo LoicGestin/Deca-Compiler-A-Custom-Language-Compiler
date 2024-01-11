@@ -18,7 +18,7 @@ import java.io.PrintStream;
  */
 public abstract class AbstractPrint extends AbstractInst {
     private final boolean printHex;
-    private ListExpr arguments = new ListExpr();
+    private final ListExpr arguments;
 
     public AbstractPrint(boolean printHex, ListExpr arguments) {
         Validate.notNull(arguments);

@@ -24,6 +24,11 @@ public class ReadFloat extends AbstractReadExpr {
         compiler.addInstruction(new RFLOAT());
     }
 
+    public void codeGenPrint(DecacCompiler compiler) {
+        codeGenInst(compiler);
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.WFLOAT());
+    }
+
 
     @Override
     public void decompile(IndentPrintStream s) {

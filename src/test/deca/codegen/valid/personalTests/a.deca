@@ -1,0 +1,9 @@
+{
+int a = 12;
+
+println(false || false || false);
+println(false || false || true);
+println(2 + 2);
+println(2 + 2 + 2 + a);
+
+}

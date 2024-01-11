@@ -42,10 +42,4 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         return getType();
     }
 
-    @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        codeGenArith(compiler);
-    }
-
-    public abstract void codeGenArith(DecacCompiler compiler);
 }

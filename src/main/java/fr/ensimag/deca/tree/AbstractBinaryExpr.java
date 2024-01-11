@@ -2,6 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.ImmediateString;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -58,6 +62,31 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
             rightOperand.decompile(s);
             s.print(")");
         }
+    }
+
+    public void codeGenPrint(DecacCompiler compiler) {
+        codeGenInst(compiler);
+        // On charge le registre contenant la valeur à afficher
+        compiler.addInstruction(new LOAD(compiler.getRegistreLibre(), compiler.getRegister(1)));
+        // On affiche la valeur en fonction de son type
+        if (super.getType().isInt()) {
+            compiler.addInstruction(new WINT());
+        } else if (super.getType().isFloat()) {
+            compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
+        } else if (super.getType().isBoolean()) {
+            compiler.addInstruction(new CMP(1, Register.getR(2)));
+            Label vrai = compiler.labelTable.addLabel("vrai_Identifier");
+            Label fin = compiler.labelTable.addLabel("fin_Identifier");
+            compiler.addInstruction(new BEQ(vrai));
+            compiler.addInstruction(new WSTR(new ImmediateString("false")));
+            compiler.addInstruction(new BRA(fin));
+            compiler.addLabel(vrai);
+            compiler.addInstruction(new WSTR(new ImmediateString("true")));
+            compiler.addLabel(fin);
+        } else {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
     }
 
     abstract protected String getOperatorName();

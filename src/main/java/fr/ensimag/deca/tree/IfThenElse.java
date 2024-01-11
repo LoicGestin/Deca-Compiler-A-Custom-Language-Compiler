@@ -56,6 +56,7 @@ public class IfThenElse extends AbstractInst {
         Label elseLabel = compiler.labelTable.addLabel("elseLabel");
         Label endLabel = compiler.labelTable.addLabel("endLabel");
         condition.codeGenInst(compiler);
+        compiler.libererRegistre();
         compiler.addInstruction(new CMP(0, compiler.getRegistreLibre()));
         compiler.addInstruction(new BEQ(elseLabel));
         thenBranch.codeGenListInst(compiler);

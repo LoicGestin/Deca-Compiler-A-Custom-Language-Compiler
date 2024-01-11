@@ -1,4 +1,7 @@
 {
 print(false || false || true);
 print(false || false || false);
+print(13 + 45 + 45.0);
+
+
 }

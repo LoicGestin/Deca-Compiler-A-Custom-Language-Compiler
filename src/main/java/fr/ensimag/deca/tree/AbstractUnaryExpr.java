@@ -1,6 +1,11 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -25,6 +30,20 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
     }
 
     protected abstract String getOperatorName();
+
+    public void codeGenPrint(DecacCompiler compiler) {
+        codeGenInst(compiler);
+        // On charge le registre contenant la valeur à afficher
+        compiler.addInstruction(new LOAD(compiler.getRegistreLibre(), compiler.getRegister(1)));
+        // On affiche la valeur en fonction de son type
+        if (super.getType().isInt()) {
+            compiler.addInstruction(new WINT());
+        } else if (super.getType().isFloat()) {
+            compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
+        } else {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {

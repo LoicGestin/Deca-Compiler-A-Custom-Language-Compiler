@@ -22,7 +22,7 @@ public class Plus extends AbstractOpArith {
         RValue.codeGenInst(compiler);
         int number = compiler.getNextRegistreLibre().getNumber();
         compiler.addInstruction(new ADD(compiler.getRegister(number - 1), compiler.getRegister(number - 2)));
-        compiler.libererRegistre(3);
+        compiler.libererRegistre(2);
     }
 
 

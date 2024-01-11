@@ -7,19 +7,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LabelTable {
-    private final Map<String, ArrayList<Label>> map = new HashMap<>();
+    private final Map<String, Integer> map = new HashMap<>();
 
     public Label addLabel(String type) {
         if (map.containsKey(type)) {
-            ArrayList<Label> labelArrayList= map.get(type);
-            Label lab = new Label(type, labelArrayList.size());
+            map.replace(type, map.get(type)+1);
+            Label lab = new Label(type, map.get(type));
             return lab;
 
         } else {
-            ArrayList<Label> newArrayLab = new ArrayList<Label>();
             Label lab = new Label(type,0);
-            newArrayLab.add(lab);
-            map.put(type, newArrayLab);
+            map.put(type, 0);
             return lab;
         }
     }

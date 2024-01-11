@@ -5,14 +5,8 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.ImmediateString;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
-import fr.ensimag.ima.pseudocode.instructions.WINT;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -254,8 +248,15 @@ public class Identifier extends AbstractIdentifier {
         } else if (definition.getType().isFloat()) {
             compiler.addInstruction(new WFLOAT());
         } else if (definition.getType().isBoolean()) {
-            // TO DO
+            compiler.addInstruction(new CMP(1, Register.getR(2)));
+            Label vrai = compiler.labelTable.addLabel("vrai_Identifier");
+            Label fin = compiler.labelTable.addLabel("fin_Identifier");
+            compiler.addInstruction(new BEQ(vrai));
             compiler.addInstruction(new WSTR(new ImmediateString("false")));
+            compiler.addInstruction(new BRA(fin));
+            compiler.addLabel(vrai);
+            compiler.addInstruction(new WSTR(new ImmediateString("true")));
+            compiler.addLabel(fin);
         } else {
             throw new UnsupportedOperationException("Not supported yet.");
         }

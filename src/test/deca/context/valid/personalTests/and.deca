@@ -1,0 +1,13 @@
+// Test And
+
+{
+    int a = 5;
+    float b = 3.5;
+
+    if(a > 0 && b > 0.0) {
+        print("a and b are positive");
+    }
+    else {
+        print("a or b is negative");
+    }
+}

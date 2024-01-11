@@ -31,6 +31,11 @@ public class ReadInt extends AbstractReadExpr {
     }
 
     @Override
+    public void codeGenPrint(DecacCompiler compiler) {
+        codeGenInst(compiler);
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.WINT());
+    }
+    @Override
     protected void iterChildren(TreeFunction f) {
         // leaf node => nothing to do
     }

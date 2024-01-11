@@ -1,7 +1,6 @@
 {
-print(false || false || true);
-print(false || false || false);
-print(13 + 45 + 45.0);
-
-
+   int a = 12;
+   float b = 0x1.e66666p1;
+   print(a + b);
+   print(3.8);
 }

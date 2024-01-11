@@ -248,15 +248,7 @@ public class Identifier extends AbstractIdentifier {
         } else if (definition.getType().isFloat()) {
             compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
         } else if (definition.getType().isBoolean()) {
-            compiler.addInstruction(new CMP(1, Register.getR(2)));
-            Label vrai = compiler.labelTable.addLabel("vrai_Identifier");
-            Label fin = compiler.labelTable.addLabel("fin_Identifier");
-            compiler.addInstruction(new BEQ(vrai));
-            compiler.addInstruction(new WSTR(new ImmediateString("false")));
-            compiler.addInstruction(new BRA(fin));
-            compiler.addLabel(vrai);
-            compiler.addInstruction(new WSTR(new ImmediateString("true")));
-            compiler.addLabel(fin);
+            AbstractBinaryExpr.print_boolean(compiler);
         } else {
             throw new UnsupportedOperationException("Not supported yet.");
         }

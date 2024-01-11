@@ -1,0 +1,21 @@
+// Test GREATER
+
+{
+    int a = 1;
+    int b = 2;
+
+    float c = 1.0;
+    float d = 2.0;
+
+    if (a > b) {
+        println("a > b");
+    } else {
+        println("a <= b");
+    }
+
+    if (c > d) {
+        println("c > d");
+    } else {
+        println("c <= d");
+    }
+}

@@ -1,0 +1,18 @@
+// Test NOT
+
+{
+    boolean a = false;
+    boolean b = !a;
+
+    if(!a) {
+        println("a is false");
+    } else {
+        println("a is true");
+    }
+
+    if(b) {
+        println("b is true");
+    } else {
+        println("b is false");
+    }
+}

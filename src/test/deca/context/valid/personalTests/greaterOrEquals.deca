@@ -1,0 +1,39 @@
+// Test GREATEROREQUALS
+
+{
+    int a = 1;
+    int b = 2;
+
+    int aa = 3;
+    int bb = 3;
+
+    float c = 1.0;
+    float d = 2.0;
+
+    float cc = 3.0;
+    float dd = 3.0;
+
+    if (a >= b) {
+        println("a >= b");
+    } else {
+        println("a < b");
+    }
+
+    if (aa >= bb) {
+            println("aa >= bb");
+        } else {
+            println("aa < bb");
+        }
+
+    if (c >= d) {
+        println("c >= d");
+    } else {
+        println("c < d");
+    }
+
+    if (cc >= dd) {
+            println("cc >= dd");
+        } else {
+            println("cc < dd");
+        }
+}

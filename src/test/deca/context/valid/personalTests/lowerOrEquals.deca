@@ -1,0 +1,42 @@
+// Test LOWEROREQUALS
+
+{
+    int a = 7;
+    int b = 2;
+
+    int aa = 64;
+    int bb = 64;
+
+    float c = 7.1;
+    float d = 7.0;
+
+    float cc = 64.0;
+    float dd = 64.0;
+
+    if (a <= b) {
+        println("a <= b");
+    } else {
+        println("a > b");
+    }
+
+    if (aa <= bb) {
+            println("aa <= bb");
+        } else {
+            println("aa > bb");
+        }
+
+    if (c <= d) {
+        println("c <= d");
+    } else {
+        println("c > d");
+    }
+
+    if (cc <= dd) {
+            println("cc <= dd");
+        } else {
+            println("cc > dd");
+        }
+
+    println(c);
+    println(d);
+}

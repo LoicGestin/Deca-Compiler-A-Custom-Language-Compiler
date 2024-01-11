@@ -47,12 +47,7 @@ public class Equals extends AbstractOpExactCmp {
 
     static void comparison(DecacCompiler compiler, Label vrai, Label fin) {
         compiler.libererRegistre(2);
-        compiler.addInstruction(new LOAD(0, compiler.getNextRegistreLibre()));
-        compiler.addInstruction(new BRA(fin));
-        compiler.libererRegistre();
-        compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(1, compiler.getNextRegistreLibre()));
-        compiler.addLabel(fin);
+        Or.condition_branch(compiler, vrai, fin);
     }
 
     @Override

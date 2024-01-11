@@ -1,6 +1,3 @@
 {
-   int a = 12;
-   float b = 0x1.e66666p1;
-   print(a + b);
-   print(3.8);
+   print("¥");
 }

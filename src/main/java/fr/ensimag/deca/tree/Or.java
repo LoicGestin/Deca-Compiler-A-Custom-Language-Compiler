@@ -36,6 +36,10 @@ public class Or extends AbstractOpBool {
         compiler.addInstruction(new BEQ(vrai));
         compiler.libererRegistre();
 
+        condition_branch(compiler, vrai, fin);
+    }
+
+    static void condition_branch(DecacCompiler compiler, Label vrai, Label fin) {
         compiler.addInstruction(new LOAD(0, compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BRA(fin));
         compiler.libererRegistre();

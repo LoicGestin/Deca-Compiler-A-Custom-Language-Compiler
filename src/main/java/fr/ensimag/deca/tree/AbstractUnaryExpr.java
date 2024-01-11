@@ -34,6 +34,7 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
     public void codeGenPrint(DecacCompiler compiler) {
         codeGenInst(compiler);
         // On charge le registre contenant la valeur à afficher
+        compiler.libererRegistre();
         compiler.addInstruction(new LOAD(compiler.getRegistreLibre(), compiler.getRegister(1)));
         // On affiche la valeur en fonction de son type
         if (super.getType().isInt()) {

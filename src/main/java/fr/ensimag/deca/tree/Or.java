@@ -23,21 +23,27 @@ public class Or extends AbstractOpBool {
         Label vrai = compiler.labelTable.addLabel("vrai_Or");
         Label fin = compiler.labelTable.addLabel("fin_Or");
 
-        this.getLeftOperand().codeGenInst(compiler);
+        getLeftOperand().codeGenInst(compiler);
         compiler.libererRegistre();
-        compiler.addInstruction(new CMP(1, compiler.getRegistreLibre()));
-        compiler.addInstruction(new BEQ(vrai));
 
-        this.getRightOperand().codeGenInst(compiler);
-        compiler.libererRegistre();
-        compiler.addInstruction(new CMP(1, compiler.getRegistreLibre()));
+        compiler.addInstruction(new CMP(1, compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BEQ(vrai));
-        compiler.addInstruction(new LOAD(0, compiler.getRegistreLibre()));
+        compiler.libererRegistre();
+
+        getRightOperand().codeGenInst(compiler);
+        compiler.libererRegistre();
+        compiler.addInstruction(new CMP(1, compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new BEQ(vrai));
+        compiler.libererRegistre();
+
+        compiler.addInstruction(new LOAD(0, compiler.getNextRegistreLibre()));
         compiler.addInstruction(new BRA(fin));
-        compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(1, compiler.getRegistreLibre()));
-        compiler.addLabel(fin);
+        compiler.libererRegistre();
 
+        compiler.addLabel(vrai);
+        compiler.addInstruction(new LOAD(1, compiler.getNextRegistreLibre()));
+
+        compiler.addLabel(fin);
     }
 
     @Override

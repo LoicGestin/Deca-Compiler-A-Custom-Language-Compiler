@@ -1,3 +1,4 @@
 {
-println(-(5 + 4));
+print(false || false || true);
+print(false || false || false);
 }

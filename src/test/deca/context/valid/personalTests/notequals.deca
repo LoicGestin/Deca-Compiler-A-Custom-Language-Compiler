@@ -1,0 +1,28 @@
+// Test NOTEQUALS
+
+{
+    int a = 3;
+    int b = 4;
+    int c = 3;
+
+    if(a != b) {
+        println("a != b");
+    }
+    else {
+        println("a == b");
+    }
+
+    if(a != c) {
+        println("a != c");
+    }
+    else {
+        println("a == c");
+    }
+
+    if(b != c) {
+        println("b != c");
+    }
+    else {
+        println("b == c");
+    }
+}

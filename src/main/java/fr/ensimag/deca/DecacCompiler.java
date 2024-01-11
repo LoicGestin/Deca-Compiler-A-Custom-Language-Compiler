@@ -130,16 +130,6 @@ public class DecacCompiler {
         }
         return this.symbolTable.create(name);
     }
-    // TODO : à enlever
-    private int ifCounter = 0;
-
-    public int getIfCounter() {
-        return ifCounter;
-    }
-
-    public void incrementIfCounter() {
-        ifCounter++;
-    }
 
     public static boolean getColor() {
         return color;

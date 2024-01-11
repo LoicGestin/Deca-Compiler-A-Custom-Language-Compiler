@@ -39,7 +39,7 @@ public class NotEquals extends AbstractOpExactCmp {
         compiler.libererRegistre(1);
 
         compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(1, compiler.getRegistreLibre()));
+        compiler.addInstruction(new LOAD(1, compiler.getNextRegistreLibre()));
 
         compiler.addLabel(fin);
     }

@@ -35,6 +35,7 @@ public class ReadInt extends AbstractReadExpr {
     public void codeGenPrint(DecacCompiler compiler) {
         codeGenInst(compiler);
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.WINT());
+
     }
     @Override
     protected void iterChildren(TreeFunction f) {
@@ -48,6 +49,8 @@ public class ReadInt extends AbstractReadExpr {
 
     public void codeGenInst(DecacCompiler compiler) {
         compiler.addInstruction(new RINT());
+        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.PUSH(compiler.getRegister(1)));
+
     }
 
 }

@@ -41,6 +41,8 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
             compiler.addInstruction(new WINT());
         } else if (super.getType().isFloat()) {
             compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
+        } else if (super.getType().isBoolean()) {
+            print_boolean(compiler);
         } else {
             throw new UnsupportedOperationException("Not supported yet.");
         }

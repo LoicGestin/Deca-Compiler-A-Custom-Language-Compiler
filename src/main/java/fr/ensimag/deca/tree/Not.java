@@ -38,10 +38,7 @@ public class Not extends AbstractUnaryExpr {
         Label fin = compiler.labelTable.addLabel("fin_Not");
 
         getOperand().codeGenInst(compiler);
-
-        compiler.libererRegistre();
-
-        compiler.addInstruction(new CMP(0, compiler.getRegistreLibre()));
+        compiler.addInstruction(new CMP(0, codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BNE(vrai));
 
         to_rename_function(compiler, vrai, fin);

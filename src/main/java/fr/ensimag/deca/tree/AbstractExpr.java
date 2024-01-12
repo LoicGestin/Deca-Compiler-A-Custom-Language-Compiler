@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -62,7 +63,7 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     static void print_boolean(DecacCompiler compiler) {
-        compiler.addInstruction(new CMP(1, Register.getR(2)));
+        compiler.addInstruction(new CMP(1, codeGen.getCurrentRegistreLibre()));
         Label vrai = compiler.labelTable.addLabel("vrai_Identifier");
         Label fin = compiler.labelTable.addLabel("fin_Identifier");
         compiler.addInstruction(new BEQ(vrai));

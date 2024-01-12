@@ -183,6 +183,16 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
+    public GPRegister getGPRegister() {
+        return this.getExpDefinition().getGPRegister();
+    }
+
+    @Override
+    public boolean isAddr() {
+        return this.getExpDefinition().isAddr();
+    }
+
+    @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
         ExpDefinition expDef = localEnv.get(this.getName());

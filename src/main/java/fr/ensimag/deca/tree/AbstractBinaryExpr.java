@@ -66,7 +66,11 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
 
     public void codeGenPrint(DecacCompiler compiler) {
         codeGenInst(compiler);
+
+        compiler.libererRegistre();
+
         // On charge le registre contenant la valeur à afficher
+
         compiler.addInstruction(new LOAD(compiler.getRegistreLibre(), compiler.getRegister(1)));
         // On affiche la valeur en fonction de son type
         if (super.getType().isInt()) {

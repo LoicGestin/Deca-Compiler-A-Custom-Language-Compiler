@@ -17,11 +17,6 @@ public class Print extends AbstractPrint {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        super.codeGenInst(compiler);
-        compiler.addInstruction(new WNL());
-    }
-    @Override
     String getSuffix() {
         return "";
     }

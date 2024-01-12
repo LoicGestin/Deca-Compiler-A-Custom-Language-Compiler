@@ -28,7 +28,7 @@ public class Or extends AbstractOpBool {
         compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));
         getRightOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(1, codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));
         condition_branch(compiler, vrai, fin);
     }

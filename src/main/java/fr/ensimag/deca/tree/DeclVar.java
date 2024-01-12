@@ -52,12 +52,14 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        // var global
-        DAddr addr = codeGen.getRegistreVariable();
-        varName.getExpDefinition().setOperand(addr);
-        //System.out.println(varName);
+        if(codeGen.isGPRegisterRestant()){
+            varName.getExpDefinition().setGPRegister(codeGen.getGPRegisterVariable());
+        }
+        else{
+            varName.getExpDefinition().setOperand(codeGen.getRegistreVariable());
+        }
         if (initialization instanceof Initialization) {
-            initialization.codeGenInit(compiler, addr);
+            initialization.codeGenInit(compiler, varName.getExpDefinition());
         }
     }
 

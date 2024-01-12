@@ -22,6 +22,6 @@ public class RegisterOffset extends DAddr {
     }
     @Override
     public String toString() {
-        return offset + "(" + register + ")";
+        return offset == 0 ? register + "" : offset + "(" + register + ")";
     }
 }

@@ -2,12 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
@@ -55,9 +53,15 @@ public class Initialization extends AbstractInitialization {
 
 
     @Override
-    public void codeGenInit(DecacCompiler compiler, DAddr addr) {
+    public void codeGenInit(DecacCompiler compiler, ExpDefinition var) {
         expression.codeGenInst(compiler);
-        compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), addr));
+        if(var.isAddr()){
+            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), var.getOperand()));
+        }
+        else{
+            compiler.addInstruction(new LOAD( codeGen.getRegistreUtilise(),var.getGPRegister()));
+        }
+
     }
 
     @Override

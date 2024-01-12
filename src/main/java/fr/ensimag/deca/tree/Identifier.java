@@ -245,9 +245,7 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        DAddr dAddr = this.getExpDefinition().getOperand();
-        //System.out.println(this);
-        compiler.addInstruction(new LOAD(dAddr, codeGen.getCurrentRegistreLibre()));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().isAddr() ? this.getExpDefinition().getOperand() : this.getExpDefinition().getGPRegister(), codeGen.getCurrentRegistreLibre()));
         compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreLibre(), GPRegister.getR(1)));
         if (definition.getType().isInt()) {
             compiler.addInstruction(new WINT());
@@ -262,8 +260,7 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        DAddr dAddr = this.getExpDefinition().getOperand();
         GPRegister register = codeGen.getRegistreLibre();
-        compiler.addInstruction(new LOAD(dAddr, register));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().isAddr() ? this.getExpDefinition().getOperand() : this.getExpDefinition().getGPRegister(), register));
     }
 }

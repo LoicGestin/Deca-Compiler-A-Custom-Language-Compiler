@@ -25,18 +25,11 @@ public class Or extends AbstractOpBool {
         Label fin = compiler.labelTable.addLabel("fin_Or");
 
         getLeftOperand().codeGenInst(compiler);
-        compiler.libererRegistre();
-
-        compiler.addInstruction(new CMP(1, compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));
-        compiler.libererRegistre();
-
         getRightOperand().codeGenInst(compiler);
-        compiler.libererRegistre();
-        compiler.addInstruction(new CMP(1, compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new CMP(1, codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));
-        compiler.libererRegistre();
-
         condition_branch(compiler, vrai, fin);
     }
 

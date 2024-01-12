@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BLE;
@@ -24,11 +25,7 @@ public class LowerOrEqual extends AbstractOpIneq {
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);
 
-        compiler.libererRegistre(2);
-
-        GPRegister r1 = compiler.getNextRegistreLibre();
-        GPRegister r2 = compiler.getNextRegistreLibre();
-        compiler.addInstruction(new CMP(r2, r1));
+        compiler.addInstruction(new CMP(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BLE(vrai));
 
         Equals.comparison(compiler, vrai, fin);

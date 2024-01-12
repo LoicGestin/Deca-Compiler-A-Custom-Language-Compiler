@@ -27,7 +27,6 @@ public class Divide extends AbstractOpArith {
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
 
-        int number = compiler.getNextRegistreLibre().getNumber();
 
         if (LValue.getType().isInt() && RValue.getType().isInt()) {
             compiler.addInstruction(new QUO(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));

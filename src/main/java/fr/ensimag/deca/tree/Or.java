@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
@@ -40,12 +41,11 @@ public class Or extends AbstractOpBool {
     }
 
     static void condition_branch(DecacCompiler compiler, Label vrai, Label fin) {
-        compiler.addInstruction(new LOAD(0, compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new LOAD(0, codeGen.getRegistreLibre()));
         compiler.addInstruction(new BRA(fin));
-        compiler.libererRegistre();
 
         compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(1, compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new LOAD(1, codeGen.getCurrentRegistreUtilise()));
 
         compiler.addLabel(fin);
     }

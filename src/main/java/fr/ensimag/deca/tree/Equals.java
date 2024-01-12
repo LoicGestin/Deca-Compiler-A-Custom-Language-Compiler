@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -37,16 +38,13 @@ public class Equals extends AbstractOpExactCmp {
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);
 
-        compiler.libererRegistre(2);
-
-        compiler.addInstruction(new CMP(compiler.getNextRegistreLibre(), compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new CMP(codeGen.getCurrentRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));
         comparison(compiler, vrai, fin);
 
     }
 
     static void comparison(DecacCompiler compiler, Label vrai, Label fin) {
-        compiler.libererRegistre(2);
         Or.condition_branch(compiler, vrai, fin);
     }
 

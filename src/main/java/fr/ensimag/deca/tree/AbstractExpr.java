@@ -63,7 +63,7 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     static void print_boolean(DecacCompiler compiler) {
-        compiler.addInstruction(new CMP(1, codeGen.getCurrentRegistreLibre()));
+        compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
         Label vrai = compiler.labelTable.addLabel("vrai_Identifier");
         Label fin = compiler.labelTable.addLabel("fin_Identifier");
         compiler.addInstruction(new BEQ(vrai));

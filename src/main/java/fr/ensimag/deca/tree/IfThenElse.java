@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -58,8 +59,8 @@ public class IfThenElse extends AbstractInst {
         Label elseLabel = compiler.labelTable.addLabel("elseLabel");
         Label endLabel = compiler.labelTable.addLabel("endLabel");
         condition.codeGenInst(compiler);
-        compiler.libererRegistre();
-        compiler.addInstruction(new CMP(0, compiler.getRegistreLibre()));
+
+        compiler.addInstruction(new CMP(0, codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BEQ(elseLabel));
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(endLabel));

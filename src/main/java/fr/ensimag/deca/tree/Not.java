@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -48,11 +49,11 @@ public class Not extends AbstractUnaryExpr {
 
     static void to_rename_function(DecacCompiler compiler, Label vrai, Label fin) {
 
-        compiler.addInstruction(new LOAD(1, compiler.getRegistreLibre()));
+        compiler.addInstruction(new LOAD(1, codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BRA(fin));
 
         compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(0, compiler.getRegistreLibre()));
+        compiler.addInstruction(new LOAD(0, codeGen.getCurrentRegistreUtilise()));
 
         compiler.addLabel(fin);
     }

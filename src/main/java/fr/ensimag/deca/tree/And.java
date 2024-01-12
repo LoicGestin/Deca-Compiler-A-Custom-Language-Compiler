@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
@@ -22,14 +23,10 @@ public class And extends AbstractOpBool {
         Label fin = compiler.labelTable.addLabel("fin_And");
 
         getLeftOperand().codeGenInst(compiler);
-        compiler.libererRegistre();
-        compiler.addInstruction(new CMP(0, compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new CMP(0, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(faux));
-        compiler.libererRegistre();
-
         getRightOperand().codeGenInst(compiler);
-        compiler.libererRegistre();
-        compiler.addInstruction(new CMP(0,compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new CMP(0,codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BEQ(faux));
         Not.to_rename_function(compiler, faux, fin);
     }

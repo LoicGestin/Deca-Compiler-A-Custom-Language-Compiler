@@ -1,10 +1,12 @@
-// Test UnaryMinus
-
+// Test UNARYMINUS
 
 {
     int a = -5;
-    float b = -a;
+    float b = -5.0;
 
     println(a);
+    println(-a);
+
     println(b);
+    println(-b);
 }

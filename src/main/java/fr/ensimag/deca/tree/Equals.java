@@ -38,7 +38,7 @@ public class Equals extends AbstractOpExactCmp {
         getLeftOperand().codeGenInst(compiler);
         getRightOperand().codeGenInst(compiler);
 
-        compiler.addInstruction(new CMP(codeGen.getCurrentRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new CMP(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));
         comparison(compiler, vrai, fin);
 

@@ -255,16 +255,19 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(this.getExpDefinition().isAddr() ? this.getExpDefinition().getOperand() : this.getExpDefinition().getGPRegister(), codeGen.getCurrentRegistreLibre()));
-        compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreLibre(), GPRegister.getR(1)));
-        if (definition.getType().isInt()) {
-            compiler.addInstruction(new WINT());
-        } else if (definition.getType().isFloat()) {
-            compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
-        } else if (definition.getType().isBoolean()) {
-            AbstractBinaryExpr.print_boolean(compiler);
-        } else {
-            throw new UnsupportedOperationException("Not supported yet.");
+        if(definition.getType().isBoolean()){
+            print_boolean(compiler);
+        }
+        else {
+            compiler.addInstruction(new LOAD(this.getExpDefinition().isAddr() ? this.getExpDefinition().getOperand() : this.getExpDefinition().getGPRegister(), codeGen.getCurrentRegistreLibre()));
+            compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreLibre(), GPRegister.getR(1)));
+            if (definition.getType().isInt()) {
+                compiler.addInstruction(new WINT());
+            } else if (definition.getType().isFloat()) {
+                compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
+            } else {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
         }
     }
 

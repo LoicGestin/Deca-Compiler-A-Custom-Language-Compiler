@@ -68,18 +68,18 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
 
     public void codeGenPrint(DecacCompiler compiler) {
         codeGenInst(compiler);
-        // On charge le registre contenant la valeur à afficher
-
-        compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), GPRegister.getR(1)));
-        // On affiche la valeur en fonction de son type
-        if (super.getType().isInt()) {
-            compiler.addInstruction(new WINT());
-        } else if (super.getType().isFloat()) {
-            compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
-        } else if (super.getType().isBoolean()) {
+        if(super.getType().isBoolean()){
             print_boolean(compiler);
-        } else {
-            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        else {
+            compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), GPRegister.getR(1)));
+            if (super.getType().isInt()) {
+                compiler.addInstruction(new WINT());
+            } else if (super.getType().isFloat()) {
+                compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
+            }else {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
         }
 
     }

@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -46,14 +47,13 @@ public class While extends AbstractInst {
 
         getCondition().codeGenInst(compiler);
 
-        compiler.addInstruction(new CMP(0, compiler.getRegistreLibre()));
+        compiler.addInstruction(new CMP(0, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(fin_while));
 
         getBody().codeGenListInst(compiler);
         compiler.addInstruction(new BRA(debut_while));
 
         compiler.addLabel(fin_while);
-        compiler.libererRegistre();
     }
 
     @Override

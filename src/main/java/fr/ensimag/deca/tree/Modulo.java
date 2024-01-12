@@ -45,7 +45,9 @@ public class Modulo extends AbstractOpArith {
         RValue.codeGenInst(compiler);
 
         compiler.addInstruction(new REM(codeGen.getRegistreUtilise(),  codeGen.getCurrentRegistreUtilise()));
-        compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+        if(!DecacCompiler.getNocheck()) {
+            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+        }
         compiler.addInstruction(new BRA(fin));
 
         compiler.addLabel(fin);

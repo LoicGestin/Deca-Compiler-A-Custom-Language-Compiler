@@ -22,7 +22,9 @@ public class Multiply extends AbstractOpArith {
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
         compiler.addInstruction(new MUL(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
-        compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+        if(!DecacCompiler.getNocheck()) {
+            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+        }
     }
 
 

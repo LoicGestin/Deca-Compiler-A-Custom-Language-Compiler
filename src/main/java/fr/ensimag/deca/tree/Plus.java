@@ -23,7 +23,9 @@ public class Plus extends AbstractOpArith {
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
         compiler.addInstruction(new ADD(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
-        compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+        if(!DecacCompiler.getNocheck()) {
+            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+        }
     }
 
 

@@ -30,11 +30,15 @@ public class Divide extends AbstractOpArith {
 
         if (LValue.getType().isInt() && RValue.getType().isInt()) {
             compiler.addInstruction(new QUO(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
-            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+            if(!DecacCompiler.getNocheck()) {
+                compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+            }
             compiler.addInstruction(new BRA(fin));
         } else {
             compiler.addInstruction(new DIV(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
-            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+            if(!DecacCompiler.getNocheck()) {
+                compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+            }
             compiler.addInstruction(new BRA(fin));
         }
 

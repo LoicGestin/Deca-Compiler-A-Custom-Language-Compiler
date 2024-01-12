@@ -41,6 +41,7 @@ public class CompilerOptions {
     private boolean printBanner = false;
 
     public boolean color = false;
+    public boolean nocheck = false;
 
     protected enum Step {PARSE, VERIF, ALL};
     protected Step maxStep = Step.ALL;
@@ -70,8 +71,7 @@ public class CompilerOptions {
                     throw new UnsupportedOperationException("Option " + arg + " incompatible avec -p");
                 }
             } else if (arg.equals("-n")) {
-                throw new UnsupportedOperationException("Option " + arg + " not yet implemented");
-                // TODO: ajouter l'option -n (no check)
+                nocheck = true;
             } else if (arg.startsWith("-r")) {
                 throw new UnsupportedOperationException("Option " + arg + " not yet implemented");
                 // TODO: ajouter l'option -r (registers)

@@ -43,6 +43,7 @@ public class DecacCompiler {
     private static final String nl = System.getProperty("line.separator", "\n");
 
     private static boolean color = false;
+    private static boolean nocheck = false;
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -50,6 +51,7 @@ public class DecacCompiler {
         this.source = source;
         if (compilerOptions != null) {
             color = compilerOptions.color;
+            nocheck = compilerOptions.nocheck;
         }
     }
 
@@ -136,6 +138,10 @@ public class DecacCompiler {
 
     public static boolean getColor() {
         return color;
+    }
+
+    public static boolean getNocheck() {
+        return nocheck;
     }
 
     /**

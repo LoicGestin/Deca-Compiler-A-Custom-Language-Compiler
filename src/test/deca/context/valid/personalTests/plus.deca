@@ -1,7 +1,7 @@
 // Test PLUS
 
 {
-    int a = 13;
+    int a = readInt();
     int b = 42;
 
     float c = 12.0;
@@ -17,6 +17,8 @@
 
     b = a + b;
     d = c + d;
+
+    println(-2);
 
     println(b);
     println(d);

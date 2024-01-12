@@ -25,4 +25,11 @@
     else {
         println("b == c");
     }
+
+    if(a != 3 && b != 3 && c != 3) {
+        println("a != 3 && b != 3 && c != 3");
+    }
+    else {
+        println("a == 3 || b == 3 || c == 3");
+    }
 }

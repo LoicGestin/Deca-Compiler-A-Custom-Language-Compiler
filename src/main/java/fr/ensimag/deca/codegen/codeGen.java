@@ -54,9 +54,12 @@ public class codeGen {
         return new RegisterOffset(indexPile, Register.GB);
     }
     public static GPRegister getGPRegisterVariable() {
-        GPRegister r = registresLibres.pop();
+
+        return registresLibres.peek();
+    }
+    public static void saveVariable(){
+        GPRegister r = registresUtilises.pop();
         registresVariables.push(r);
-        return r;
     }
     public static boolean isGPRegisterRestant() {
         return registresLibres.size() > 2;

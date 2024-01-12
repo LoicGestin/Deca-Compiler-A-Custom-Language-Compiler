@@ -59,7 +59,8 @@ public class Initialization extends AbstractInitialization {
             compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), var.getOperand()));
         }
         else{
-            compiler.addInstruction(new LOAD( codeGen.getRegistreUtilise(),var.getGPRegister()));
+            codeGen.saveVariable();
+            //compiler.addInstruction(new LOAD( codeGen.getRegistreUtilise(),var.getGPRegister()));
         }
 
     }

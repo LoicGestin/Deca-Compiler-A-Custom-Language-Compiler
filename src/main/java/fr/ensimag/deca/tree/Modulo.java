@@ -44,14 +44,9 @@ public class Modulo extends AbstractOpArith {
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
 
-        compiler.addInstruction(new CMP(new ImmediateInteger(0), codeGen.getCurrentRegistreUtilise()));
-        compiler.addInstruction(new BEQ(divByZero));
         compiler.addInstruction(new REM(codeGen.getRegistreUtilise(),  codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new BOV(compiler.getOverflow_error()));
         compiler.addInstruction(new BRA(fin));
-
-        compiler.addLabel(divByZero);
-        compiler.addInstruction(new WSTR("Erreur : division par 0"));
-        compiler.addInstruction(new HALT());
 
         compiler.addLabel(fin);
     }

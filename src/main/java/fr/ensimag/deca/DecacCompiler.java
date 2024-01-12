@@ -10,6 +10,9 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
 import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.ERROR;
+import fr.ensimag.ima.pseudocode.instructions.WNL;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -214,6 +217,17 @@ public class DecacCompiler {
         addComment("start main program");
         prog.codeGenProgram(this);
         addComment("end main program");
+
+        addLabel(getOverflow_error());
+        addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
+        addInstruction(new WNL());
+        addInstruction(new ERROR());
+
+        addLabel(getIo_error());
+        addInstruction(new WSTR("Error: Input/Output error"));
+        addInstruction(new WNL());
+        addInstruction(new ERROR());
+
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
 
@@ -296,5 +310,16 @@ public class DecacCompiler {
 
     public GPRegister getRegistreLibre() {
         return Register.getR(registreLibre );
+    }
+
+    private Label overflow_error = new Label("overflow_error");
+    private Label io_error = new Label("io_error");
+
+    public Label getOverflow_error() {
+        return overflow_error;
+    }
+
+    public Label getIo_error() {
+        return io_error;
     }
 }

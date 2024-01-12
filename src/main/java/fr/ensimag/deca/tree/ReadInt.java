@@ -3,6 +3,9 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.RINT;
 
 import java.io.PrintStream;
@@ -49,7 +52,8 @@ public class ReadInt extends AbstractReadExpr {
 
     public void codeGenInst(DecacCompiler compiler) {
         compiler.addInstruction(new RINT());
-        compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.PUSH(compiler.getRegister(1)));
+        compiler.addInstruction(new BOV(compiler.getIo_error()));
+        compiler.addInstruction(new LOAD(compiler.getRegister(1), compiler.getNextRegistreLibre()));
 
     }
 

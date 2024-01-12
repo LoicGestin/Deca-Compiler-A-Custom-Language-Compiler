@@ -31,20 +31,14 @@ public class Divide extends AbstractOpArith {
         int number = compiler.getNextRegistreLibre().getNumber();
 
         if (LValue.getType().isInt() && RValue.getType().isInt()) {
-            compiler.addInstruction(new CMP(new ImmediateInteger(0), compiler.getRegister(number)));
-            compiler.addInstruction(new BEQ(divByZero));
             compiler.addInstruction(new QUO(compiler.getRegister(number), compiler.getRegister(number - 1)));
+            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             compiler.addInstruction(new BRA(fin));
         } else {
-            compiler.addInstruction(new CMP(new ImmediateFloat(0), compiler.getRegister(number)));
-            compiler.addInstruction(new BEQ(divByZero));
             compiler.addInstruction(new DIV(compiler.getRegister(number), compiler.getRegister(number - 1)));
+            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             compiler.addInstruction(new BRA(fin));
         }
-
-        compiler.addLabel(divByZero);
-        compiler.addInstruction(new WSTR("Erreur : division par 0"));
-        compiler.addInstruction(new ERROR());
 
         compiler.addLabel(fin);
 

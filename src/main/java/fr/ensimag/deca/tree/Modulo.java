@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -42,14 +43,17 @@ public class Modulo extends AbstractOpArith {
 
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
-        int number = compiler.getNextRegistreLibre().getNumber();
 
-        compiler.addInstruction(new REM(compiler.getRegister(number-1), compiler.getRegister(number - 2)));
-        compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new BEQ(divByZero));
+        compiler.addInstruction(new REM(codeGen.getRegistreUtilise(),  codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BRA(fin));
 
+        compiler.addLabel(divByZero);
+        compiler.addInstruction(new WSTR("Erreur : division par 0"));
+        compiler.addInstruction(new HALT());
+
         compiler.addLabel(fin);
-        compiler.libererRegistre(2);
     }
 
 

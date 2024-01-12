@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -246,8 +247,8 @@ public class Identifier extends AbstractIdentifier {
     protected void codeGenPrint(DecacCompiler compiler) {
         DAddr dAddr = this.getExpDefinition().getOperand();
         //System.out.println(this);
-        compiler.addInstruction(new LOAD(dAddr, Register.getR(2)));
-        compiler.addInstruction(new LOAD(Register.getR(2), GPRegister.getR(1)));
+        compiler.addInstruction(new LOAD(dAddr, codeGen.getCurrentRegistreLibre()));
+        compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreLibre(), GPRegister.getR(1)));
         if (definition.getType().isInt()) {
             compiler.addInstruction(new WINT());
         } else if (definition.getType().isFloat()) {
@@ -262,7 +263,7 @@ public class Identifier extends AbstractIdentifier {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         DAddr dAddr = this.getExpDefinition().getOperand();
-        GPRegister register = compiler.getNextRegistreLibre();
+        GPRegister register = codeGen.getRegistreLibre();
         compiler.addInstruction(new LOAD(dAddr, register));
     }
 }

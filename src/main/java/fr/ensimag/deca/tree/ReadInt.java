@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
@@ -54,7 +55,7 @@ public class ReadInt extends AbstractReadExpr {
     public void codeGenInst(DecacCompiler compiler) {
         compiler.addInstruction(new RINT());
         compiler.addInstruction(new BOV(compiler.getIo_error()));
-        compiler.addInstruction(new LOAD(compiler.getRegister(1), codeGen.getRegistreLibre()));
+        compiler.addInstruction(new LOAD(GPRegister.getR(1), codeGen.getRegistreLibre()));
 
     }
 

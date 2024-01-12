@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
@@ -69,7 +70,7 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         codeGenInst(compiler);
         // On charge le registre contenant la valeur à afficher
 
-        compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreUtilise(), compiler.getRegister(1)));
+        compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreUtilise(), GPRegister.getR(1)));
         // On affiche la valeur en fonction de son type
         if (super.getType().isInt()) {
             compiler.addInstruction(new WINT());

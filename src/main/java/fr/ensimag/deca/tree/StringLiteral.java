@@ -57,7 +57,7 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     public void codeGenInst(DecacCompiler compiler) {
         //TO DO
-        compiler.addInstruction(new LOAD(new ImmediateInteger(stringToAsciiInt(value)), compiler.getRegister(2)));
+        //compiler.addInstruction(new LOAD(new ImmediateInteger(stringToAsciiInt(value)), codeGen.getRegistreLibre()));
     }
 
     @Override

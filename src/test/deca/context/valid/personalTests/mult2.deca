@@ -1,0 +1,89 @@
+{
+    int a = 1;
+    int b = 1;
+    int c = 1;
+    int d = 1;
+    int e = 1;
+    int f = 1;
+    int g = 1;
+    int h = 1;
+    int i = 1;
+    int j = 1;
+
+    float k = 1.0;
+    float l = 1.0;
+    float m = 1.0;
+    float n = 1.0;
+    float o = 1.0;
+    float p = 1.0;
+    float q = 1.0;
+    float r = 1.0;
+    float s = 1.0;
+    float t = 1.0;
+
+    a = a * b * c * d * e * f * g * h * i * j;
+    b = a * b * c * d * e * f * g * h * i * j;
+    c = a * b * c * d * e * f * g * h * i * j;
+    d = a * b * c * d * e * f * g * h * i * j;
+    e = a * b * c * d * e * f * g * h * i * j;
+    f = a * b * c * d * e * f * g * h * i * j;
+    g = a * b * c * d * e * f * g * h * i * j;
+    h = a * b * c * d * e * f * g * h * i * j;
+    i = a * b * c * d * e * f * g * h * i * j;
+    j = a * b * c * d * e * f * g * h * i * j;
+
+    k = k * l * m * n * o * p * q * r * s * t;
+    l = k * l * m * n * o * p * q * r * s * t;
+    m = k * l * m * n * o * p * q * r * s * t;
+    n = k * l * m * n * o * p * q * r * s * t;
+    o = k * l * m * n * o * p * q * r * s * t;
+    p = k * l * m * n * o * p * q * r * s * t;
+    q = k * l * m * n * o * p * q * r * s * t;
+    r = k * l * m * n * o * p * q * r * s * t;
+    s = k * l * m * n * o * p * q * r * s * t;
+    t = k * l * m * n * o * p * q * r * s * t;
+
+
+    println(a);
+    println(a * b * c * d * e * f * g * h * i * j);
+    println(b);
+    println(a * b * c * d * e * f * g * h * i * j);
+    println(c);
+    println(a * b * c * d * e * f * g * h * i * j);
+    println(d);
+    println(a * b * c * d * e * f * g * h * i * j);
+    println(e);
+    println(a * b * c * d * e * f * g * h * i * j);
+    println(f);
+    println(a * b * c * d * e * f * g * h * i * j);
+    println(g);
+    println(a * b * c * d * e * f * g * h * i * j);
+    println(h);
+    println(a * b * c * d * e * f * g * h * i * j);
+    println(i);
+    println(a * b * c * d * e * f * g * h * i * j);
+    println(j);
+    println(a * b * c * d * e * f * g * h * i * j);
+
+    println(k);
+    println(k * l * m * n * o * p * q * r * s * t);
+    println(l);
+    println(k * l * m * n * o * p * q * r * s * t);
+    println(m);
+    println(k * l * m * n * o * p * q * r * s * t);
+    println(n);
+    println(k * l * m * n * o * p * q * r * s * t);
+    println(o);
+    println(k * l * m * n * o * p * q * r * s * t);
+    println(p);
+    println(k * l * m * n * o * p * q * r * s * t);
+    println(q);
+    println(k * l * m * n * o * p * q * r * s * t);
+    println(r);
+    println(k * l * m * n * o * p * q * r * s * t);
+    println(s);
+    println(k * l * m * n * o * p * q * r * s * t);
+    println(t);
+    println(k * l * m * n * o * p * q * r * s * t);
+
+}

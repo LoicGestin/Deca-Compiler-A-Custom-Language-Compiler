@@ -1,0 +1,45 @@
+{
+    int a = 11;
+    int b = 13;
+    int c = 17;
+    int d = 19;
+    int e = 23;
+    int f = 29;
+    int g = 31;
+    int h = 37;
+    int i = 41;
+    int j = 43;
+
+    a = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+    b = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+    c = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+    d = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+    e = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+    f = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+    g = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+    h = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+    i = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+    j = a % b % c % d % e % f % g % h % i % j;
+    println(a % b % c % d % e % f % g % h % i % j);
+
+    println(a);
+    println(b);
+    println(c);
+    println(d);
+    println(e);
+    println(f);
+    println(g);
+    println(h);
+    println(i);
+    println(j);
+
+}

@@ -1,0 +1,10 @@
+{
+    int a = 1;
+    float b = 1.0;
+
+    a = a / 1;
+    b = b / 1.0;
+
+    println(a);
+    println(b);
+}

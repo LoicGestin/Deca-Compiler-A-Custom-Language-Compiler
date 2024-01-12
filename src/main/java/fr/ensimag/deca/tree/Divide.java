@@ -21,8 +21,6 @@ public class Divide extends AbstractOpArith {
     public void codeGenInst(DecacCompiler compiler) {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
-        Label divByZero = compiler.labelTable.addLabel("divByZero");
-        Label fin = compiler.labelTable.addLabel("fin");
 
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
@@ -33,16 +31,12 @@ public class Divide extends AbstractOpArith {
             if(!DecacCompiler.getNocheck()) {
                 compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             }
-            compiler.addInstruction(new BRA(fin));
         } else {
             compiler.addInstruction(new DIV(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
             if(!DecacCompiler.getNocheck()) {
                 compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             }
-            compiler.addInstruction(new BRA(fin));
         }
-
-        compiler.addLabel(fin);
     }
 
 

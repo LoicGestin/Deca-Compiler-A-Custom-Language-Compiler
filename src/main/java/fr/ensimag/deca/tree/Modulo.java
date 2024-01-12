@@ -38,9 +38,6 @@ public class Modulo extends AbstractOpArith {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
 
-        Label divByZero = compiler.labelTable.addLabel("divByZero");
-        Label fin = compiler.labelTable.addLabel("fin");
-
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
 
@@ -48,9 +45,7 @@ public class Modulo extends AbstractOpArith {
         if(!DecacCompiler.getNocheck()) {
             compiler.addInstruction(new BOV(compiler.getOverflow_error()));
         }
-        compiler.addInstruction(new BRA(fin));
 
-        compiler.addLabel(fin);
     }
 
 

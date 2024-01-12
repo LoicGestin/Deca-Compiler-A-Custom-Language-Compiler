@@ -5,7 +5,10 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 
+import java.util.Map;
 import java.util.Stack;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class codeGen {
     static final Stack<GPRegister> registresLibres = new Stack<>();
@@ -13,12 +16,15 @@ public class codeGen {
 
     static final Stack<GPRegister> registresVariables = new Stack<>();
 
+    static TreeMap<String, Integer> table = new TreeMap<>();
+
     static {
         for (int i = 15; i >= 2; i--) {
             registresLibres.push(Register.getR(i));
         }
     }
     static int indexPile = 0;
+
 
     public static void afficheStack(){
         System.out.println("registresLibres : ");
@@ -61,7 +67,32 @@ public class codeGen {
         GPRegister r = registresUtilises.pop();
         registresVariables.push(r);
     }
-    public static boolean isGPRegisterRestant() {
-        return registresLibres.size() > 2;
+
+    static Map<String, Integer> topNEntries;
+    public static boolean isGPRegisterRestant(String s) {
+        return registresLibres.size() > 2 && topNEntries.containsKey(s);
+    }
+    public static void genereTopNEntries() {
+        topNEntries = table.entrySet()
+                .stream()
+                .limit(13)
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        TreeMap::new
+                ));
+    }
+
+
+    public static void addVariableTable(String s) {
+        table.merge(s, 1, Integer::sum);
+    }
+    public static void afficheTable(){
+        System.out.println("table : ");
+        for (String s : table.keySet()) {
+            System.out.println(s + " : " + table.get(s));
+        }
+        System.out.println();
     }
 }

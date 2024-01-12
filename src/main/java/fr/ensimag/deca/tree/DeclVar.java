@@ -27,6 +27,7 @@ public class DeclVar extends AbstractDeclVar {
         this.type = type;
         this.varName = varName;
         this.initialization = initialization;
+        codeGen.addVariableTable(varName.getName().toString());
     }
 
     @Override
@@ -52,7 +53,7 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        if(codeGen.isGPRegisterRestant()){
+        if(codeGen.isGPRegisterRestant(varName.getName().toString())){
             varName.getExpDefinition().setGPRegister(codeGen.getGPRegisterVariable());
         }
         else{

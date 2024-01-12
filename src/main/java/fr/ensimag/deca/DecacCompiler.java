@@ -283,35 +283,6 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
-    public GPRegister getRegister(int i) {
-        return GPRegister.getR(i);
-    }
-
-    private int indexPile = 0;
-    public DAddr nextRegisterOffset() {
-        indexPile ++;
-        return new RegisterOffset(indexPile, Register.GB);
-    }
-
-    private int registreLibre = 2;
-    public GPRegister getNextRegistreLibre(){
-        if(registreLibre == 15){
-            throw new UnsupportedOperationException("Plus de registre libre");
-        }
-        return Register.getR(registreLibre ++);
-    }
-    public void libererRegistre(){
-        registreLibre --;
-    }
-
-    public void libererRegistre(int i){
-        registreLibre -= i;
-    }
-
-    public GPRegister getRegistreLibre() {
-        return Register.getR(registreLibre );
-    }
-
     private Label overflow_error = new Label("overflow_error");
     private Label io_error = new Label("io_error");
 

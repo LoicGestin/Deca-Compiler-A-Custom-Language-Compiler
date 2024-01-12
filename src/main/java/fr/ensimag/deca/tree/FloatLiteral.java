@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -47,13 +48,13 @@ public class FloatLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), Register.getR(2)));
-        compiler.addInstruction(new LOAD(Register.getR(2), GPRegister.getR(1)));
+        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), codeGen.getCurrentRegistreLibre()));
+        compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreLibre(), GPRegister.getR(1)));
         compiler.addInstruction( super.isHexa() ? new WFLOATX() : new WFLOAT());
     }
 
     public void codeGenInst(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), compiler.getNextRegistreLibre()));
+        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), codeGen.getRegistreLibre()));
     }
 
     @Override

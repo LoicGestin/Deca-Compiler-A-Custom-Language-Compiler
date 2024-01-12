@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.MUL;
 
@@ -20,10 +21,8 @@ public class Multiply extends AbstractOpArith {
         AbstractExpr RValue = this.getRightOperand();
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
-        int number = compiler.getNextRegistreLibre().getNumber();
-        compiler.addInstruction(new MUL(compiler.getRegister(number - 1), compiler.getRegister(number - 2)));
+        compiler.addInstruction(new MUL(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BOV(compiler.getOverflow_error()));
-        compiler.libererRegistre(2);
     }
 
 

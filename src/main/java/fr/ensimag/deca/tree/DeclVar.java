@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
@@ -52,7 +53,7 @@ public class DeclVar extends AbstractDeclVar {
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
         // var global
-        DAddr addr = compiler.nextRegisterOffset();
+        DAddr addr = codeGen.getRegistreVariable();
         varName.getExpDefinition().setOperand(addr);
         //System.out.println(varName);
         if (initialization instanceof Initialization) {

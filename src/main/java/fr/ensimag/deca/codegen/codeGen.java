@@ -18,7 +18,7 @@ public class codeGen {
 
     static TreeMap<String, Integer> table = new TreeMap<>();
 
-    static int nombreRegistres = 15;
+    static int nombreRegistres = 14;
 
     static int indexPile = 0;
 
@@ -28,6 +28,7 @@ public class codeGen {
         }
     }
     public static void setUpRegistres() {
+        System.out.println(nombreRegistres);
         for (int i = nombreRegistres + 1; i >= 2; i--) {
             registresLibres.push(Register.getR(i));
         }

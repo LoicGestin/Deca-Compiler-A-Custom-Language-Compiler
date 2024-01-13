@@ -28,7 +28,6 @@ public class codeGen {
         }
     }
     public static void setUpRegistres() {
-        System.out.println(nombreRegistres);
         for (int i = nombreRegistres + 1; i >= 2; i--) {
             registresLibres.push(Register.getR(i));
         }

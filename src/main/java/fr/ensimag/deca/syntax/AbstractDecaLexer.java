@@ -237,11 +237,12 @@ public abstract class AbstractDecaLexer extends Lexer {
         /**
          * Which stream to read from
          */
-        public CharStream input;
+        public final CharStream input;
         /**
          * Where in the stream was the <code>#include</code>
          */
-        public int line, charPositionInLine;
+        public final int line, charPositionInLine;
+
         IncludeSaveStruct(CharStream input, int line, int charPositionInline) {
             this.input = input;
             this.line = line;

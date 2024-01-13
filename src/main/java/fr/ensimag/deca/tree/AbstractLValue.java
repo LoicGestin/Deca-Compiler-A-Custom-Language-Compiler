@@ -14,6 +14,7 @@ public abstract class AbstractLValue extends AbstractExpr {
     public abstract SymbolTable.Symbol getName();
 
     public abstract DAddr getAddr();
+
     public abstract GPRegister getGPRegister();
 
     public abstract boolean isAddr();

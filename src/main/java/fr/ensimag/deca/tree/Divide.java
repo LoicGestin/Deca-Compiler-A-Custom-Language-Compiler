@@ -3,10 +3,9 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
-import fr.ensimag.ima.pseudocode.ImmediateFloat;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.DIV;
+import fr.ensimag.ima.pseudocode.instructions.QUO;
 
 /**
  * @author gl29
@@ -28,12 +27,12 @@ public class Divide extends AbstractOpArith {
 
         if (LValue.getType().isInt() && RValue.getType().isInt()) {
             compiler.addInstruction(new QUO(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
-            if(!DecacCompiler.getNocheck()) {
+            if (!DecacCompiler.getNocheck()) {
                 compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             }
         } else {
             compiler.addInstruction(new DIV(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
-            if(!DecacCompiler.getNocheck()) {
+            if (!DecacCompiler.getNocheck()) {
                 compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             }
         }

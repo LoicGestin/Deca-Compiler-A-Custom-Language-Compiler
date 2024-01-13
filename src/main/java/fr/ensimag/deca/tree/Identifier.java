@@ -8,7 +8,6 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -256,10 +255,9 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        if(definition.getType().isBoolean()){
+        if (definition.getType().isBoolean()) {
             print_boolean(compiler);
-        }
-        else {
+        } else {
             compiler.addInstruction(new LOAD(this.getExpDefinition().isAddr() ? this.getExpDefinition().getOperand() : this.getExpDefinition().getGPRegister(), codeGen.getCurrentRegistreLibre()));
             compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreLibre(), GPRegister.getR(1)));
             if (definition.getType().isInt()) {

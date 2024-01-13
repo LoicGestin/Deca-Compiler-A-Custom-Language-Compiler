@@ -19,6 +19,16 @@ public class Or extends AbstractOpBool {
         super(leftOperand, rightOperand);
     }
 
+    static void condition_branch(DecacCompiler compiler, Label vrai, Label fin) {
+        compiler.addInstruction(new LOAD(0, codeGen.getRegistreLibre()));
+        compiler.addInstruction(new BRA(fin));
+
+        compiler.addLabel(vrai);
+        compiler.addInstruction(new LOAD(1, codeGen.getCurrentRegistreUtilise()));
+
+        compiler.addLabel(fin);
+    }
+
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         Label vrai = compiler.labelTable.addLabel("vrai_Or");
@@ -31,16 +41,6 @@ public class Or extends AbstractOpBool {
         compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));
         condition_branch(compiler, vrai, fin);
-    }
-
-    static void condition_branch(DecacCompiler compiler, Label vrai, Label fin) {
-        compiler.addInstruction(new LOAD(0, codeGen.getRegistreLibre()));
-        compiler.addInstruction(new BRA(fin));
-
-        compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(1, codeGen.getCurrentRegistreUtilise()));
-
-        compiler.addLabel(fin);
     }
 
     @Override

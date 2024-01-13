@@ -23,6 +23,17 @@ public class Not extends AbstractUnaryExpr {
         super(operand);
     }
 
+    static void to_rename_function(DecacCompiler compiler, Label vrai, Label fin) {
+
+        compiler.addInstruction(new LOAD(1, codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new BRA(fin));
+
+        compiler.addLabel(vrai);
+        compiler.addInstruction(new LOAD(0, codeGen.getCurrentRegistreUtilise()));
+
+        compiler.addLabel(fin);
+    }
+
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
@@ -42,17 +53,6 @@ public class Not extends AbstractUnaryExpr {
         compiler.addInstruction(new BNE(vrai));
 
         to_rename_function(compiler, vrai, fin);
-    }
-
-    static void to_rename_function(DecacCompiler compiler, Label vrai, Label fin) {
-
-        compiler.addInstruction(new LOAD(1, codeGen.getCurrentRegistreUtilise()));
-        compiler.addInstruction(new BRA(fin));
-
-        compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(0, codeGen.getCurrentRegistreUtilise()));
-
-        compiler.addLabel(fin);
     }
 
     @Override

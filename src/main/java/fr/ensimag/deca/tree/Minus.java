@@ -34,7 +34,7 @@ public class Minus extends AbstractOpArith {
             LValue.codeGenInst(compiler);
             RValue.codeGenInst(compiler);
             compiler.addInstruction(new SUB(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
-            if(!DecacCompiler.getNocheck()) {
+            if (!DecacCompiler.getNocheck()) {
                 compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             }
         }

@@ -9,7 +9,6 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -50,7 +49,7 @@ public class FloatLiteral extends AbstractExpr {
     protected void codeGenPrint(DecacCompiler compiler) {
         compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), codeGen.getCurrentRegistreLibre()));
         compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreLibre(), GPRegister.getR(1)));
-        compiler.addInstruction( super.isHexa() ? new WFLOATX() : new WFLOAT());
+        compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
     }
 
     public void codeGenInst(DecacCompiler compiler) {

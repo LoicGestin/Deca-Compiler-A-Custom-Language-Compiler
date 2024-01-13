@@ -20,7 +20,7 @@ import java.io.PrintStream;
  * @date 01/01/2024
  */
 public abstract class AbstractDecaParser extends Parser {
-    Logger LOG = Logger.getLogger(AbstractDecaParser.class);
+    final Logger LOG = Logger.getLogger(AbstractDecaParser.class);
 
     private DecacCompiler decacCompiler;
 

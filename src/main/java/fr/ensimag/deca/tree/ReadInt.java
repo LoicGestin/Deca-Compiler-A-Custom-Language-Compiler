@@ -7,7 +7,6 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.RINT;
 
 import java.io.PrintStream;
@@ -42,6 +41,7 @@ public class ReadInt extends AbstractReadExpr {
         compiler.addInstruction(new fr.ensimag.ima.pseudocode.instructions.WINT());
 
     }
+
     @Override
     protected void iterChildren(TreeFunction f) {
         // leaf node => nothing to do

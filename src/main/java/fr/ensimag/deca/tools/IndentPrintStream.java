@@ -10,6 +10,7 @@ public class IndentPrintStream {
     private final PrintStream stream;
     private int indent = 0;
     private boolean indented = false;
+
     public IndentPrintStream(PrintStream stream) {
         this.stream = stream;
     }

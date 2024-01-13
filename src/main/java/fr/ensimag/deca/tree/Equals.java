@@ -9,9 +9,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 /**
  * @author gl29
@@ -21,6 +19,10 @@ public class Equals extends AbstractOpExactCmp {
 
     public Equals(AbstractExpr leftOperand, AbstractExpr rightOperand) {
         super(leftOperand, rightOperand);
+    }
+
+    static void comparison(DecacCompiler compiler, Label vrai, Label fin) {
+        Or.condition_branch(compiler, vrai, fin);
     }
 
     @Override
@@ -41,10 +43,6 @@ public class Equals extends AbstractOpExactCmp {
         compiler.addInstruction(new BEQ(vrai));
         comparison(compiler, vrai, fin);
 
-    }
-
-    static void comparison(DecacCompiler compiler, Label vrai, Label fin) {
-        Or.condition_branch(compiler, vrai, fin);
     }
 
     @Override

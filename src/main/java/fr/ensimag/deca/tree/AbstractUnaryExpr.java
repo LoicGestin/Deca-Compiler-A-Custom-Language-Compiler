@@ -35,17 +35,15 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
 
     public void codeGenPrint(DecacCompiler compiler) {
         codeGenInst(compiler);
-        if(super.getType().isBoolean()){
+        if (super.getType().isBoolean()) {
             print_boolean(compiler);
-        }
-        else{
+        } else {
             compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreUtilise(), GPRegister.getR(1)));
             if (super.getType().isInt()) {
                 compiler.addInstruction(new WINT());
             } else if (super.getType().isFloat()) {
                 compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
-            }
-             else {
+            } else {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         }

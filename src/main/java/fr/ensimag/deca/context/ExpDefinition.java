@@ -24,15 +24,22 @@ public abstract class ExpDefinition extends Definition {
     public DAddr getOperand() {
         return operand;
     }
-    public GPRegister getGPRegister() {return GPRegister;}
 
-    public boolean isAddr() {return isAddr;}
     public void setOperand(DAddr operand) {
         this.operand = operand;
     }
+
+    public GPRegister getGPRegister() {
+        return GPRegister;
+    }
+
     public void setGPRegister(GPRegister GPRegister) {
         this.isAddr = false;
         this.GPRegister = GPRegister;
+    }
+
+    public boolean isAddr() {
+        return isAddr;
     }
 
 }

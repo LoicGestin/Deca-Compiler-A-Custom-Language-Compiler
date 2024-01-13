@@ -10,7 +10,6 @@ import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
@@ -29,12 +28,27 @@ public abstract class AbstractExpr extends AbstractInst {
     private Type type;
     private boolean isHexa = false;
 
+    static void print_boolean(DecacCompiler compiler) {
+
+        compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
+        Label vrai = compiler.labelTable.addLabel("vrai_Identifier");
+        Label fin = compiler.labelTable.addLabel("fin_Identifier");
+        compiler.addInstruction(new BEQ(vrai));
+        compiler.addInstruction(new WSTR(new ImmediateString("false")));
+        compiler.addInstruction(new BRA(fin));
+        compiler.addLabel(vrai);
+        compiler.addInstruction(new WSTR(new ImmediateString("true")));
+        compiler.addLabel(fin);
+    }
+
     public boolean isHexa() {
         return isHexa;
     }
+
     public void setHexa(boolean hexa) {
         isHexa = hexa;
     }
+
     /**
      * @return true if the expression does not correspond to any concrete token
      * in the source code (and should be decompiled to the empty string).
@@ -60,19 +74,6 @@ public abstract class AbstractExpr extends AbstractInst {
         if (getType() == null) {
             throw new DecacInternalError("Expression " + decompile() + " has no Type decoration");
         }
-    }
-
-    static void print_boolean(DecacCompiler compiler) {
-
-        compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
-        Label vrai = compiler.labelTable.addLabel("vrai_Identifier");
-        Label fin = compiler.labelTable.addLabel("fin_Identifier");
-        compiler.addInstruction(new BEQ(vrai));
-        compiler.addInstruction(new WSTR(new ImmediateString("false")));
-        compiler.addInstruction(new BRA(fin));
-        compiler.addLabel(vrai);
-        compiler.addInstruction(new WSTR(new ImmediateString("true")));
-        compiler.addLabel(fin);
     }
 
     /**

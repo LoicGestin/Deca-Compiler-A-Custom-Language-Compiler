@@ -6,9 +6,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.REM;
 
 /**
  * @author gl29
@@ -41,8 +40,8 @@ public class Modulo extends AbstractOpArith {
         LValue.codeGenInst(compiler);
         RValue.codeGenInst(compiler);
 
-        compiler.addInstruction(new REM(codeGen.getRegistreUtilise(),  codeGen.getCurrentRegistreUtilise()));
-        if(!DecacCompiler.getNocheck()) {
+        compiler.addInstruction(new REM(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
+        if (!DecacCompiler.getNocheck()) {
             compiler.addInstruction(new BOV(compiler.getOverflow_error()));
         }
 

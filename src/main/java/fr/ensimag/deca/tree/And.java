@@ -26,7 +26,7 @@ public class And extends AbstractOpBool {
         compiler.addInstruction(new CMP(0, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(faux));
         getRightOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(0,codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new CMP(0, codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BEQ(faux));
         Not.to_rename_function(compiler, faux, fin);
     }

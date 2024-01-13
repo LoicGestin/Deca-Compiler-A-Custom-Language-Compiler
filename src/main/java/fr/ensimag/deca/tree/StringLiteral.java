@@ -3,9 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.ImmediateString;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 
@@ -56,7 +54,7 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     public void codeGenInst(DecacCompiler compiler) {
-        //TO DO
+        // TODO
         //compiler.addInstruction(new LOAD(new ImmediateInteger(stringToAsciiInt(value)), codeGen.getRegistreLibre()));
     }
 

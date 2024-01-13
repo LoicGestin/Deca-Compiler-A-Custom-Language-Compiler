@@ -2,7 +2,6 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
-import fr.ensimag.ima.pseudocode.DAddr;
 
 /**
  * Initialization (of variable, field, ...)

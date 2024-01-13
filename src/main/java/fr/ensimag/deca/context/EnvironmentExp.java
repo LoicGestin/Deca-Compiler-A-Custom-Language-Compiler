@@ -28,7 +28,7 @@ public class EnvironmentExp {
     // [DONE]
 
     private final HashMap<Symbol, ExpDefinition> envExp = new HashMap<>();
-    EnvironmentExp parentEnvironment;
+    final EnvironmentExp parentEnvironment;
 
 
     public EnvironmentExp(EnvironmentExp parentEnvironment) {

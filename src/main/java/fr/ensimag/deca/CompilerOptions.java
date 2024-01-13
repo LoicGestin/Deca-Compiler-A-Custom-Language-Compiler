@@ -20,6 +20,14 @@ public class CompilerOptions {
     public static final int INFO = 1;
     public static final int DEBUG = 2;
     public static final int TRACE = 3;
+    private final List<File> sourceFiles = new ArrayList<>();
+    public boolean color = false;
+    public boolean nocheck = false;
+    protected Step maxStep = Step.ALL;
+    private int debug = 0;
+    private boolean parallel = false;
+    private boolean printBanner = false;
+    private boolean warning = false;
 
     public int getDebug() {
         return debug;
@@ -37,26 +45,12 @@ public class CompilerOptions {
         return Collections.unmodifiableList(sourceFiles);
     }
 
-    private int debug = 0;
-    private boolean parallel = false;
-    private boolean printBanner = false;
-
-    public boolean color = false;
-    public boolean nocheck = false;
-
-    protected enum Step {PARSE, VERIF, ALL};
-    protected Step maxStep = Step.ALL;
-    private boolean warning = false;
-
-
-    private final List<File> sourceFiles = new ArrayList<>();
-
     public boolean getWarning() {
         return warning;
     }
 
     public void parseArgs(String[] args) throws CLIException {
-        for(int i = 0; i < args.length; i++){
+        for (int i = 0; i < args.length; i++) {
             String arg = args[i];
             if (arg.equals("-b")) {
                 printBanner = true;
@@ -76,12 +70,12 @@ public class CompilerOptions {
                 nocheck = true;
             } else if (arg.startsWith("-r")) {
                 int nombreRegistres = Integer.parseInt(args[i + 1]);
-                if(nombreRegistres < 4 || nombreRegistres > 16) {
+                if (nombreRegistres < 4 || nombreRegistres > 16) {
                     throw new UnsupportedOperationException("Option " + arg + " incompatible avec -p");
                 }
                 // - 2 car on ne compte pas R0 et R1
                 codeGen.setNombreRegistres(nombreRegistres - 2);
-                i ++;
+                i++;
             } else if (arg.equals("-d")) {
                 debug++;
             } else if (arg.equals("-P")) {
@@ -95,8 +89,7 @@ public class CompilerOptions {
                 color = true;
             } else if (arg.startsWith("-")) {
                 throw new UnsupportedOperationException("Option " + arg + " inconnue");
-            }
-            else {
+            } else {
                 sourceFiles.add(new File(arg));
             }
         }
@@ -147,7 +140,5 @@ public class CompilerOptions {
 
     }
 
-    public String getTeam() {
-        return "gl29";
-    }
+    protected enum Step {PARSE, VERIF, ALL}
 }

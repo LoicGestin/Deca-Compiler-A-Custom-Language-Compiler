@@ -9,7 +9,10 @@ import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
-import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.AbstractLine;
+import fr.ensimag.ima.pseudocode.IMAProgram;
+import fr.ensimag.ima.pseudocode.Instruction;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.ERROR;
 import fr.ensimag.ima.pseudocode.instructions.WNL;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
@@ -44,6 +47,20 @@ public class DecacCompiler {
 
     private static boolean color = false;
     private static boolean nocheck = false;
+    /**
+     * The global environment for types, the symbolTable and the labelTable
+     */
+    public final EnvironmentType environmentType = new EnvironmentType(this);
+    private final CompilerOptions compilerOptions;
+    private final File source;
+    /**
+     * The main program. Every instruction generated will eventually end up here.
+     */
+    private final IMAProgram program = new IMAProgram();
+    private final Label overflow_error = new Label("overflow_error");
+    private final Label io_error = new Label("io_error");
+    public SymbolTable symbolTable = new SymbolTable();
+    public final LabelTable labelTable = new LabelTable();
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -53,6 +70,14 @@ public class DecacCompiler {
             color = compilerOptions.color;
             nocheck = compilerOptions.nocheck;
         }
+    }
+
+    public static boolean getColor() {
+        return color;
+    }
+
+    public static boolean getNocheck() {
+        return nocheck;
     }
 
     /**
@@ -113,35 +138,11 @@ public class DecacCompiler {
         return program.display();
     }
 
-    private final CompilerOptions compilerOptions;
-    private final File source;
-    /**
-     * The main program. Every instruction generated will eventually end up here.
-     */
-    private final IMAProgram program = new IMAProgram();
-
-
-    /**
-     * The global environment for types, the symbolTable and the labelTable
-     */
-    public final EnvironmentType environmentType = new EnvironmentType(this);
-    public SymbolTable symbolTable = new SymbolTable();
-
-    public LabelTable labelTable = new LabelTable();
-
     public Symbol createSymbol(String name) {
         if (symbolTable == null) { // TODO : à enlever
             symbolTable = new SymbolTable();
         }
         return this.symbolTable.create(name);
-    }
-
-    public static boolean getColor() {
-        return color;
-    }
-
-    public static boolean getNocheck() {
-        return nocheck;
     }
 
     /**
@@ -288,9 +289,6 @@ public class DecacCompiler {
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
     }
-
-    private Label overflow_error = new Label("overflow_error");
-    private Label io_error = new Label("io_error");
 
     public Label getOverflow_error() {
         return overflow_error;

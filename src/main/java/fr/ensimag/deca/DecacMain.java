@@ -1,7 +1,8 @@
 package fr.ensimag.deca;
 
-import java.io.File;
 import org.apache.log4j.Logger;
+
+import java.io.File;
 
 /**
  * Main class for the command-line Deca compiler.
@@ -10,8 +11,8 @@ import org.apache.log4j.Logger;
  * @date 01/01/2024
  */
 public class DecacMain {
-    private static Logger LOG = Logger.getLogger(DecacMain.class);
-    
+    private static final Logger LOG = Logger.getLogger(DecacMain.class);
+
     public static void main(String[] args) {
         // example log4j message.
         LOG.info("Decac compiler started");
@@ -28,7 +29,7 @@ public class DecacMain {
         if (options.getPrintBanner()) {
             // affiche une bannière indiquant le nom de l'équipe
             // et les options utilisées
-            System.out.println("Team: " + options.getTeam());
+            System.out.println("Team: gl29");
         }
         if (options.getSourceFiles().isEmpty()) {
             options.displayUsage();

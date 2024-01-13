@@ -4,10 +4,10 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.ImmediateString;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -68,16 +68,15 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
 
     public void codeGenPrint(DecacCompiler compiler) {
         codeGenInst(compiler);
-        if(super.getType().isBoolean()){
+        if (super.getType().isBoolean()) {
             print_boolean(compiler);
-        }
-        else {
+        } else {
             compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), GPRegister.getR(1)));
             if (super.getType().isInt()) {
                 compiler.addInstruction(new WINT());
             } else if (super.getType().isFloat()) {
                 compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
-            }else {
+            } else {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         }

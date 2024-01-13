@@ -9,8 +9,8 @@ import fr.ensimag.deca.tree.Location;
  * @date 01/01/2024
  */
 public abstract class Definition {
-    private Location location;
     private final Type type;
+    private Location location;
 
     public Definition(Type type, Location location) {
         super();

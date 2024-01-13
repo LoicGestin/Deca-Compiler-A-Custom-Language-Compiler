@@ -38,7 +38,7 @@ do
     echo -ne "\r\t${RED}[FAILED]${NC}   : ${file##*/}                                \r\n"
     erreur_total=$((erreur_total + 1))
   else
-    echo -ne "\r\t${GREEN}[PASSED]${NC} : ${file##*/}                                    "
+    echo -ne "\r\t${GREEN}[PASSED]${NC}   : ${file##*/}                                    "
     passed=$((passed + 1))
   fi
   total=$((total + 1))
@@ -57,7 +57,7 @@ do
   | grep -q -e "token recognition error"
   then
     # print in red if the test failed and the name of the file without the path
-    echo -ne "\r\t${GREEN}[FAILED]${NC}   : ${file##*/}                                    "
+    echo -ne "\r\t${GREEN}[FAILED]${NC}     : ${file##*/}                                    "
     failed=$((failed + 1))
   else
     echo -ne "\r\t${RED}[PASSED]${NC}     : ${file##*/}                                \r\n"
@@ -82,7 +82,7 @@ do
     echo -ne "\r\t${RED}[FAILED]${NC}   : ${file##*/}                                \r\n"
     erreur_total=$((erreur_total + 1))
   else
-    echo -ne "\r\t${GREEN}[PASSED]${NC} : ${file##*/}                                    "
+    echo -ne "\r\t${GREEN}[PASSED]${NC}   : ${file##*/}                                    "
     passed=$((passed + 1))
   fi
   total=$((total + 1))
@@ -101,7 +101,7 @@ do
   | grep -q -e "org.antlr.v4.runtime.misc.ParseCancellationException"
   then
     # print in red if the test failed and the name of the file without the path
-    echo -ne "\r\t${GREEN}[FAILED]${NC}  : ${file##*/}                                    "
+    echo -ne "\r\t${GREEN}[FAILED]${NC}    : ${file##*/}                                    "
     failed=$((failed + 1))
   else
     echo -ne "\r\t${RED}[PASSED]${NC}    : ${file##*/}                                \r\n"
@@ -128,7 +128,7 @@ do
     echo -ne "\r\t${RED}[FAILED]${NC}   : ${file##*/}                                \r\n"
     erreur_total=$((erreur_total + 1))
   else
-    echo -ne "\r\t${GREEN}[PASSED]${NC} : ${file##*/}                                    "
+    echo -ne "\r\t${GREEN}[PASSED]${NC}   : ${file##*/}                                    "
     passed=$((passed + 1))
   fi
   total=$((total + 1))
@@ -147,7 +147,7 @@ do
   | grep -q -e "Exception"
   then
     # print in red if the test failed and the name of the file without the path
-    echo -ne "\r\t${GREEN}[FAILED]${NC}  : ${file##*/}                                    "
+    echo -ne "\r\t${GREEN}[FAILED]${NC}    : ${file##*/}                                    "
     failed=$((failed + 1))
   else
     echo -ne "\r\t${RED}[PASSED]${NC}    : ${file##*/}                                \r\n"
@@ -159,13 +159,36 @@ done
 
 echo -ne "\r\t[Total : $failed/$total]                                    \n"
 
+
 echo "====================   Etape C   ===================="
 
 echo "==> Test de génération du code assembleur"
 
 failed=0
 total=0
-# TODO : ajouter les tests de l'étape C
+
+for file in src/test/deca/codegen/valid/personalTests/run*.deca
+do
+  # Run decac on file, exec the .ass with ima and diff with the .expected output file
+  decac $file > /tmp/null
+  # Run ima on file with extention .ass
+  ima "${file%.*}.ass" > "${file%.*}.run"
+  DIFF=$(diff -qbBE "${file%.*}.exp" "${file%.*}.run")
+  if [ "$DIFF" == "" ]
+  then
+    echo -ne "\r\t${GREEN}[PASSED]${NC}    : ${file##*/}                                    "
+    failed=$((failed + 1))
+  else
+    echo -ne "\r\t${RED}[FAILED]${NC}    : ${file##*/}                                \r\n"
+    erreur_total=$((erreur_total + 1))
+
+  fi
+  total=$((total + 1))
+done
+
+rm src/test/deca/codegen/valid/personalTests/*.run
+rm src/test/deca/codegen/valid/personalTests/*.ass
+
 echo -ne "\r\t[Total : $failed/$total]                                    \n"
 
 echo "====================   Synthese  ===================="

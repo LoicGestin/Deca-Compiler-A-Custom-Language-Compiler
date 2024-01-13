@@ -1,0 +1,14 @@
+{
+    int a = 1;
+    int b = 2;
+    int c = 3;
+    int d = -1;
+
+    println(a / b);
+    println(a / b / c);
+    println(a / b / c / 1);
+    println(a / b / c / 1 / 2);
+    println(a / b / c / 1 / 2 / 3);
+    println(a / d);
+    println(a / d / d);
+}

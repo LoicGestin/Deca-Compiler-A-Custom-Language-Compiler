@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.codeGen;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -55,7 +56,8 @@ public class CompilerOptions {
     }
 
     public void parseArgs(String[] args) throws CLIException {
-        for (String arg : args) {
+        for(int i = 0; i < args.length; i++){
+            String arg = args[i];
             if (arg.equals("-b")) {
                 printBanner = true;
             } else if (arg.equals("-p")) {
@@ -73,8 +75,13 @@ public class CompilerOptions {
             } else if (arg.equals("-n")) {
                 nocheck = true;
             } else if (arg.startsWith("-r")) {
-                throw new UnsupportedOperationException("Option " + arg + " not yet implemented");
-                // TODO: ajouter l'option -r (registers)
+                int nombreRegistres = Integer.parseInt(args[i + 1]);
+                if(nombreRegistres < 4 || nombreRegistres > 16) {
+                    throw new UnsupportedOperationException("Option " + arg + " incompatible avec -p");
+                }
+                // - 2 car on ne compte pas R0 et R1
+                codeGen.setNombreRegistres(nombreRegistres - 2);
+                i ++;
             } else if (arg.equals("-d")) {
                 debug++;
             } else if (arg.equals("-P")) {

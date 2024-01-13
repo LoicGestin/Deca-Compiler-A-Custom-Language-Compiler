@@ -18,14 +18,20 @@ public class codeGen {
 
     static TreeMap<String, Integer> table = new TreeMap<>();
 
-    static {
-        for (int i = 15; i >= 2; i--) {
+    static int nombreRegistres = 15;
+
+    static int indexPile = 0;
+
+    public static void setNombreRegistres(int nombreRegistres) {
+        if(nombreRegistres >= 2){
+            codeGen.nombreRegistres = nombreRegistres;
+        }
+    }
+    public static void setUpRegistres() {
+        for (int i = nombreRegistres + 1; i >= 2; i--) {
             registresLibres.push(Register.getR(i));
         }
     }
-    static int indexPile = 0;
-
-
     public static void afficheStack(){
         System.out.println("registresLibres : ");
         for (GPRegister r : registresLibres) {
@@ -73,9 +79,12 @@ public class codeGen {
         return registresLibres.size() > 2 && topNEntries.containsKey(s);
     }
     public static void genereTopNEntries() {
+        if(nombreRegistres <= 2){
+            return;
+        }
         topNEntries = table.entrySet()
                 .stream()
-                .limit(13)
+                .limit(nombreRegistres - 2)
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,

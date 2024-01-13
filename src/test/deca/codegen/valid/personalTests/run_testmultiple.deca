@@ -1,0 +1,28 @@
+{
+    int x = 10;
+    int y = 5;
+    int z = 15;
+    int resultat;
+
+    if ((x + y > z) && (x - y < z)) {
+        println("La somme de x et y est supérieure à z, et la différence entre x et y est inférieure à z.");
+    } else {
+        println("La condition n'est pas satisfaite.");
+    }
+
+    if ((x >= y) || (z != y)) {
+        println("x est supérieur ou égal à y OU z n'est pas égal à y.");
+    }
+
+    if(x > y) {
+        resultat = x;
+    } else {
+        resultat = y;
+    }
+    println("Le plus grand entre x et y est : ", resultat);
+
+    if ((x * y == z) && (z % y == 0)) {
+        println("Le produit de x et y est égal à z, et z est divisible par y.");
+    }
+
+}

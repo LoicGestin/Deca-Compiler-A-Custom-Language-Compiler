@@ -1,7 +1,0 @@
-{
-    int a;
-
-    print("Entrez un nombre : ");
-    a = readInt();
-    println("Le nombre divise par 2 est : ", a/2);
-}

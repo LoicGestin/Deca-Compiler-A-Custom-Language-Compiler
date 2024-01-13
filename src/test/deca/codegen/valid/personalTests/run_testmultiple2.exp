@@ -1,0 +1,19 @@
+Exemple 1: a + b est égal à c
+Exemple 2: x est un multiple de y et le quotient est au moins 2
+Exemple 3: p est inférieur à q OU r est supérieur à q
+Exemple 4: m multiplié par n n'est pas égal à zéro et m est divisible par n
+Exemple 5: num1 n'est pas supérieur à num2
+Exemple 6: La valeur est entre 20 et 30 inclusivement
+Exemple 7: La personne est mineure
+Exemple 8: k modulo l est égal à 1 ou 2
+Exemple 9: La note est B
+Exemple 10: num3 est égal à num4
+Exemple 11: num5 n'est pas égal à num6
+Exemple 12: Le double de num7 est inférieur à num8
+Exemple 14: Le quotient de num12 par num13 est supérieur à 3 et num12 est divisible par num13
+Exemple 15: num14 n'est pas supérieur à num15
+Exemple 16: Le plus grand entre num16 et num17 est 7
+Exemple 17: Le produit de num18 et num19 est égal à 8 ou la somme est égale à 6
+Exemple 18: num20 est supérieur à num21 et son modulo par num21 est 1 ou 2
+Exemple 19: Le quotient de num22 par num23 est supérieur ou égal à 5 et son modulo par num23 est 1
+Exemple 20: La différence de num24 et num25 est supérieure à 2 et leur produit n'est pas égal à 24

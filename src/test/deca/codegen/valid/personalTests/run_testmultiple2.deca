@@ -1,0 +1,136 @@
+{
+    int a = 5;
+    int b = 10;
+    int c = 15;
+    int x = 8;
+    int y = 4;
+    int p = 3;
+    int q = 7;
+    int r = 10;
+    int m = 6;
+    int n = 2;
+    int num1 = 12;
+    int num2 = 18;
+    int value = 25;
+    int age = 16;
+    int k = 5;
+    int l = 2;
+    int score = 85;
+    int num3 = 7;
+    int num4 = 7;
+    int num5 = 14;
+    int num6 = 28;
+    int num7 = 3;
+    int num8 = 9;
+    int num9 = 5;
+    int num10 = 7;
+    int num11 = 8;
+    int num12 = 15;
+    int num13 = 3;
+    int num14 = 10;
+    int num15 = 20;
+    int num16 = 6;
+    int num17 = 7;
+    int max;
+    int num18 = 4;
+    int num19 = 2;
+    int num20 = 11;
+    int num21 = 3;
+    int num22 = 25;
+    int num23 = 4;
+    int num24 = 9;
+    int num25 = 3;
+
+    if (a + b == c){
+        println("Exemple 1: a + b est égal à c");
+    }
+
+
+    if (x / y >= 2 && x % y == 0){
+        println("Exemple 2: x est un multiple de y et le quotient est au moins 2");
+    }
+
+    if (p < q || r > q){
+        println("Exemple 3: p est inférieur à q OU r est supérieur à q");
+    }
+
+    if (m * n != 0 && m % n == 0){
+        println("Exemple 4: m multiplié par n n'est pas égal à zéro et m est divisible par n");
+    }
+
+    if (num1 > num2){
+        println("Exemple 5: num1 est supérieur à num2");
+    }else{
+        println("Exemple 5: num1 n'est pas supérieur à num2");
+    }
+
+    if (value >= 20 && value <= 30){
+        println("Exemple 6: La valeur est entre 20 et 30 inclusivement");
+    }
+
+    if (age < 18){
+        println("Exemple 7: La personne est mineure");
+    }else{
+        println("Exemple 7: La personne est majeure");
+    }
+
+    if (k % l == 1 || k % l == 2){
+        println("Exemple 8: k modulo l est égal à 1 ou 2");
+    }
+
+    if(score >= 90){
+        println("Exemple 9: La note est A");
+    }else if(score >= 80){
+        println("Exemple 9: La note est B");
+    }else{
+        println("Exemple 9: La note est C");
+    }
+
+    if (num3 == num4){
+        println("Exemple 10: num3 est égal à num4");
+    }
+
+    if (num5 != num6){
+        println("Exemple 11: num5 n'est pas égal à num6");
+    }
+
+    if (num7 * 2 < num8){
+        println("Exemple 12: Le double de num7 est inférieur à num8");
+    }
+
+    if (num9 + num10 == num11 && num9 != num10){
+        println("Exemple 13: La somme de num9 et num10 est égale à num11 et num9 n'est pas égal à num10");
+    }
+
+    if (num12 / num13 > 3 && num12 % num13 == 0){
+        println("Exemple 14: Le quotient de num12 par num13 est supérieur à 3 et num12 est divisible par num13");
+    }
+
+    if (!(num14 > num15)){
+        println("Exemple 15: num14 n'est pas supérieur à num15");
+    }
+
+    if(num16 > num17){
+        max = num16;
+    }else{
+        max = num17;
+    }
+    println("Exemple 16: Le plus grand entre num16 et num17 est ", max);
+
+    if (num18 * num19 == 8 || num18 + num19 == 6){
+        println("Exemple 17: Le produit de num18 et num19 est égal à 8 ou la somme est égale à 6");
+    }
+
+    if (num20 > num21 && (num20 % num21 == 2 || num20 % num21 == 1)){
+        println("Exemple 18: num20 est supérieur à num21 et son modulo par num21 est 1 ou 2");
+    }
+
+    if (num22 / num23 >= 5 && num22 % num23 == 1){
+        println("Exemple 19: Le quotient de num22 par num23 est supérieur ou égal à 5 et son modulo par num23 est 1");
+    }
+
+    if (num24 - num25 > 2 && num24 * num25 != 24){
+        println("Exemple 20: La différence de num24 et num25 est supérieure à 2 et leur produit n'est pas égal à 24");
+    }
+
+}

@@ -21,7 +21,9 @@ public class StringLiteral extends AbstractStringLiteral {
 
     public StringLiteral(String value) {
         Validate.notNull(value);
-        this.value = value.replace("\\\"", "\"").replace("\\\\", "\\");
+        // remove first " and last "
+        value = value.replace("\\\"", "\"").replace("\\\\", "\\");
+        this.value = value.substring(1, value.length() - 1);
 
     }
 

@@ -191,6 +191,37 @@ rm src/test/deca/codegen/valid/personalTests/*.ass
 
 echo -ne "\r\t[Total : $failed/$total]                                    \n"
 
+echo "==================  Décompilation  =================="
+
+echo "==> Test de décompilation des programmes deca"
+
+failed=0
+total=0
+
+for file in src/test/deca/codegen/valid/personalTests/*.deca
+do
+  # Run decac on file, exec the .ass with ima and diff with the .expected output file
+  decac -p $file > "/tmp/${file##*/}"
+  decac -p "/tmp/${file##*/}" > "/tmp/dup_${file##*/}"
+  # Run ima on file with extention .ass
+  DIFF=$(diff -qbBE "/tmp/${file##*/}" "/tmp/dup_${file##*/}")
+  if [ "$DIFF" == "" ]
+  then
+    echo -ne "\r\t${GREEN}[PASSED]${NC}    : ${file##*/}                                    "
+    failed=$((failed + 1))
+  else
+    echo -ne "\r\t${RED}[FAILED]${NC}    : ${file##*/}                                \r\n"
+    erreur_total=$((erreur_total + 1))
+
+  fi
+  rm "/tmp/${file##*/}" > "/tmp/dup_${file##*/}"
+  total=$((total + 1))
+done
+
+
+echo -ne "\r\t[Total : $failed/$total]                                    \n"
+
+
 echo "====================   Synthese  ===================="
 
 echo -e "Temps total d'exécution : $(echo "scale=3; ($(date +%s%N) - $temps_initial) / 1000000000" | bc) s"

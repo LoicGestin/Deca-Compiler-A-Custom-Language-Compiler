@@ -2,4 +2,9 @@
     println("\\033[1;31m Hello World \\033[0m");
     println("\"Hello World\"");
     println("toto");
+    println(" This
+               is
+               a
+               multiline
+               string");
 }

@@ -1,3 +1,8 @@
 \033[1;31m Hello World \033[0m
 "Hello World"
 toto
+ This
+               is
+               a
+               multiline
+               string

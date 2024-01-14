@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateString;
+import fr.ensimag.ima.pseudocode.instructions.WNL;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 
@@ -40,7 +41,14 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
         String val = value.substring(1, value.length() - 1).replace("\\\"", "\"").replace("\\\\", "\\");
-        compiler.addInstruction(new WSTR(new ImmediateString(val)));
+        // Print the string by splitting it into several WNL and WSTR beetwen \n and not wnl at the end
+        String[] split = val.split("\n");
+        for (int i = 0; i < split.length; i++) {
+            compiler.addInstruction(new WSTR(new ImmediateString(split[i])));
+            if (i != split.length - 1) {
+                compiler.addInstruction(new WNL());
+            }
+        }
     }
 
     @Override

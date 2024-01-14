@@ -31,7 +31,7 @@ public class DecacMain {
             // et les options utilisées
             System.out.println("Team: gl29");
         }
-        if (options.getSourceFiles().isEmpty()) {
+        if (options.getSourceFiles().isEmpty() && !options.getPrintBanner()) {
             options.displayUsage();
         }
         if (options.getParallel()) {

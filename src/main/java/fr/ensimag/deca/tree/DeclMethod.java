@@ -28,11 +28,12 @@ public class DeclMethod extends AbstractDeclMethod {
     public void decompile(IndentPrintStream s) {
         if (DecacCompiler.getColor()) s.print("\033[0;31m");
         type.decompile(s);
-        if (DecacCompiler.getColor()) s.print("\033[0m ");
+        if (DecacCompiler.getColor()) s.print("\033[0m");
+        s.print(" ");
         name.decompile(s);
         s.print("(");
         params.decompile(s);
-        s.print(")");
+        s.print(") ");
         body.decompile(s);
     }
 

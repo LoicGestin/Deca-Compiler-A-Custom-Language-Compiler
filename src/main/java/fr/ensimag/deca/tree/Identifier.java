@@ -32,24 +32,6 @@ public class Identifier extends AbstractIdentifier {
         this.name = name;
     }
 
-    private static String asciiIntToString(int asciiInt) {
-        String asciiString = Integer.toString(asciiInt);
-        StringBuilder reconstructedString = new StringBuilder();
-
-        String save = "";
-
-        for (int i = asciiString.length() - 1; i > 0; i--) {
-            save += asciiString.charAt(i);
-            int value = Integer.parseInt(save);
-            if (value > 32 && value < 127) {
-                reconstructedString.append((char) value);
-                save = "";
-            }
-        }
-        reconstructedString.append('\0');
-        return reconstructedString.toString();
-    }
-
     @Override
     protected void checkDecoration() {
         if (getDefinition() == null) {

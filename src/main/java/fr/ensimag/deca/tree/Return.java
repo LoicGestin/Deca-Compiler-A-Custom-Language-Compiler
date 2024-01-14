@@ -53,6 +53,11 @@ public class Return extends AbstractInst {
             s.print("return ");
         }
         expr.decompile(s);
+        if (DecacCompiler.getColor()) {
+            s.println(";", "purple");
+        } else {
+            s.println(";");
+        }
     }
 
     /**

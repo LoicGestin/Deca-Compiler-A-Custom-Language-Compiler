@@ -22,7 +22,8 @@ public class DeclParam extends AbstractDeclParam {
     public void decompile(IndentPrintStream s) {
         if (DecacCompiler.getColor()) s.print("\033[0;31m");
         type.decompile(s);
-        if (DecacCompiler.getColor()) s.print("\033[0m ");
+        if (DecacCompiler.getColor()) s.print("\033[0m");
+        s.print(" ");
         name.decompile(s);
     }
 

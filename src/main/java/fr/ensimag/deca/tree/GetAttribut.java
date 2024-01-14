@@ -1,15 +1,15 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
 
 import java.io.PrintStream;
 
-public class GetAttribut extends AbstractExpr {
+public class GetAttribut extends AbstractIdentifier {
     private final AbstractExpr expr;
     private final AbstractIdentifier attribut;
 
@@ -44,6 +44,66 @@ public class GetAttribut extends AbstractExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public ClassDefinition getClassDefinition() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public Definition getDefinition() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public void setDefinition(Definition definition) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public FieldDefinition getFieldDefinition() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public MethodDefinition getMethodDefinition() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public SymbolTable.Symbol getName() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public DAddr getAddr() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public GPRegister getGPRegister() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public boolean isAddr() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public ExpDefinition getExpDefinition() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public VariableDefinition getVariableDefinition() {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public Type verifyType(DecacCompiler compiler) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
     }
 }

@@ -218,6 +218,31 @@ do
   total=$((total + 1))
 done
 
+echo -ne "\r\t[Total : $failed/$total]                                    \n"
+
+echo "==================  Vérification  =================="
+
+echo "==> Test que la sortie avec -v des programmes deca est vide"
+
+failed=0
+total=0
+
+for file in src/test/deca/codegen/valid/personalTests/*.deca
+do
+  # Run decac on file, exec the .ass with ima and diff with the .expected output file
+  ret=$(decac -v $file)
+  if [ "$ret" == "" ]
+  then
+    echo -ne "\r\t${GREEN}[PASSED]${NC}    : ${file##*/}                                    "
+    failed=$((failed + 1))
+  else
+    echo -ne "\r\t${RED}[FAILED]${NC}    : ${file##*/}                                \r\n"
+    erreur_total=$((erreur_total + 1))
+
+  fi
+  total=$((total + 1))
+done
+
 
 echo -ne "\r\t[Total : $failed/$total]                                    \n"
 

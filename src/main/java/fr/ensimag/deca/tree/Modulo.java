@@ -26,7 +26,7 @@ public class Modulo extends AbstractOpArith {
         Type tR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
         setType(tL);
         if (!tL.isInt() || !tR.isInt()) {
-            throw new ContextualError("Invalid type for modulo : " + tL + "and " + tR, getLocation());
+            throw new ContextualError("Exception : Invalid type for modulo : " + tL + "and " + tR, getLocation());
         }
 
         return getType();

@@ -21,7 +21,8 @@ public class StringLiteral extends AbstractStringLiteral {
 
     public StringLiteral(String value) {
         Validate.notNull(value);
-        this.value = value.replace("\"", "");
+        this.value = value.replace("\\\"", "\"").replace("\\\\", "\\");
+
     }
 
     private static int stringToAsciiInt(String input) {

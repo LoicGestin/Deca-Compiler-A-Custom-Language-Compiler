@@ -278,32 +278,32 @@ eq_neq_expr returns[AbstractExpr tree]
     ;
 
 inequality_expr returns[AbstractExpr tree]
-    : e=sum_expr {
+    : e=binShift_expr {
             assert($e.tree != null);
             $tree = $e.tree;
         }
-    | e1=inequality_expr LEQ e2=sum_expr {
+    | e1=inequality_expr LEQ e2=binShift_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree = new LowerOrEqual($e1.tree, $e2.tree);
             setLocation($tree, $LEQ);
 
         }
-    | e1=inequality_expr GEQ e2=sum_expr {
+    | e1=inequality_expr GEQ e2=binShift_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree = new GreaterOrEqual($e1.tree, $e2.tree);
             setLocation($tree, $GEQ);
 
         }
-    | e1=inequality_expr GT e2=sum_expr {
+    | e1=inequality_expr GT e2=binShift_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree = new Greater($e1.tree, $e2.tree);
             setLocation($tree, $GT);
 
         }
-    | e1=inequality_expr LT e2=sum_expr {
+    | e1=inequality_expr LT e2=binShift_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree = new Lower($e1.tree, $e2.tree);
@@ -317,7 +317,24 @@ inequality_expr returns[AbstractExpr tree]
         }
     ;
 
-
+binShift_expr returns[AbstractExpr tree]
+    : e=sum_expr {
+             assert($e.tree != null);
+             $tree = $e.tree;
+        }
+    | e1=sum_expr BSL e2=sum_expr {
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new BinShift($e1.tree, $e2.tree, 0);
+            setLocation($tree, $BSL);
+        }
+    | e1=sum_expr BSR e2=sum_expr {
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new BinShift($e1.tree, $e2.tree, 1);
+            setLocation($tree, $BSR);
+        }
+    ;
 sum_expr returns[AbstractExpr tree]
     : e=mult_expr {
             assert($e.tree != null);

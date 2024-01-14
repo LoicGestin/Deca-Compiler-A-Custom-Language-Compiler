@@ -170,7 +170,7 @@ total=0
 for file in src/test/deca/codegen/valid/personalTests/run*.deca
 do
   # Run decac on file, exec the .ass with ima and diff with the .expected output file
-  decac $file > /tmp/null
+  decac $file > /tmp/null 2>/dev/null
   # Run ima on file with extention .ass
   ima "${file%.*}.ass" > "${file%.*}.run"
   DIFF=$(diff -qbBE "${file%.*}.exp" "${file%.*}.run")
@@ -201,8 +201,8 @@ total=0
 for file in src/test/deca/codegen/valid/personalTests/*.deca
 do
   # Run decac on file, exec the .ass with ima and diff with the .expected output file
-  decac -p $file > "/tmp/${file##*/}"
-  decac -p "/tmp/${file##*/}" > "/tmp/dup_${file##*/}"
+  decac -p $file > "/tmp/${file##*/}" 2>/dev/null
+  decac -p "/tmp/${file##*/}" > "/tmp/dup_${file##*/}" 2>/dev/null
   # Run ima on file with extention .ass
   DIFF=$(diff -qbBE "/tmp/${file##*/}" "/tmp/dup_${file##*/}")
   if [ "$DIFF" == "" ]
@@ -230,7 +230,7 @@ total=0
 for file in src/test/deca/codegen/valid/personalTests/*.deca
 do
   # Run decac on file, exec the .ass with ima and diff with the .expected output file
-  ret=$(decac -v $file)
+  ret=$(decac -v $file 2>/dev/null)
   if [ "$ret" == "" ]
   then
     echo -ne "\r\t${GREEN}[PASSED]${NC}    : ${file##*/}                                    "

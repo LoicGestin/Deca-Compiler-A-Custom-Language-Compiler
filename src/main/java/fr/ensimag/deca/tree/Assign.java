@@ -34,6 +34,13 @@ public class Assign extends AbstractBinaryExpr {
         // Vérification de la compatibilité des types
         Type type = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type type2 = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+        if(compiler.environmentType.compatible(type, type2)){
+            if(type.isFloat() && type2.isInt()){
+                type2 = new ConvFloat(getRightOperand()).verifyExpr(compiler, localEnv, currentClass);
+                setRightOperand(new ConvFloat(getRightOperand()));
+                getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+            }
+        }
         if (!type.sameType(type2)) {
             throw new ContextualError("Exception : Incompatible types in assign :" + type + " and " + type2, getLocation());
         }

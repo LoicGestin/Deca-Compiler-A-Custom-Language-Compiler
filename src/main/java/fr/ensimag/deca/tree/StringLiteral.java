@@ -21,20 +21,7 @@ public class StringLiteral extends AbstractStringLiteral {
 
     public StringLiteral(String value) {
         Validate.notNull(value);
-        // remove first " and last "
-        value = value.replace("\\\"", "\"").replace("\\\\", "\\");
-        this.value = value.substring(1, value.length() - 1);
-
-    }
-
-    private static int stringToAsciiInt(String input) {
-        StringBuilder asciiStringBuilder = new StringBuilder();
-
-        for (int i = 0; i < input.length(); i++) {
-            char c = input.charAt(i);
-            asciiStringBuilder.append((int) c);
-        }
-        return Integer.parseInt(asciiStringBuilder.toString());
+        this.value = value;
     }
 
     @Override
@@ -52,7 +39,8 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(new ImmediateString(value)));
+        String val = value.substring(1, value.length() - 1).replace("\\\"", "\"").replace("\\\\", "\\");
+        compiler.addInstruction(new WSTR(new ImmediateString(val)));
     }
 
     @Override
@@ -64,9 +52,9 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     public void decompile(IndentPrintStream s) {
         if (DecacCompiler.getColor()) {
-            s.print("\"" + value + "\"", "gray");
+            s.print(value, "gray");
         } else {
-            s.print("\"" + value + "\"");
+            s.print(value);
         }
     }
 

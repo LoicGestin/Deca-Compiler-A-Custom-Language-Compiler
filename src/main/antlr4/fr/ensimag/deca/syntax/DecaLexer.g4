@@ -52,6 +52,8 @@ RETURN : 'return' ;
 THIS : 'this' ;
 TRUE : 'true' ;
 WHILE : 'while' ;
+BSL: '<<' ;
+BSR : '>>' ;
 
 // =====================
 // Identifiers (not reserved words)

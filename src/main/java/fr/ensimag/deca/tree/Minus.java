@@ -31,9 +31,11 @@ public class Minus extends AbstractOpArith {
                 throw new RuntimeException(e);
             }
         } else {
+            codeGen.setAssignation(true);
             LValue.codeGenInst(compiler);
+            codeGen.setAssignation(false);
             RValue.codeGenInst(compiler);
-            compiler.addInstruction(new SUB(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
+            compiler.addInstruction(new SUB(codeGen.getRegistreCourant(compiler), codeGen.getCurrentRegistreUtilise()));
             if (!DecacCompiler.getNocheck()) {
                 compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             }

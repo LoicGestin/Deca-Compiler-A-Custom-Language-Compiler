@@ -24,7 +24,9 @@ public class GreaterOrEqual extends AbstractOpIneq {
         Label vrai = compiler.labelTable.addLabel("vrai_GreaterOrEqual");
         Label fin = compiler.labelTable.addLabel("fin_GreaterOrEqual");
 
+        codeGen.setAssignation(true);
         getLeftOperand().codeGenInst(compiler);
+        codeGen.setAssignation(true);
         getRightOperand().codeGenInst(compiler);
 
         compiler.addInstruction(new CMP(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));

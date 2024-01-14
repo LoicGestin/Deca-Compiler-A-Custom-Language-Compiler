@@ -20,10 +20,12 @@ public class Plus extends AbstractOpArith {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
 
+        codeGen.setAssignation(true);
         LValue.codeGenInst(compiler);
+        codeGen.setAssignation(false);
         RValue.codeGenInst(compiler);
-        compiler.addInstruction(new ADD(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
-        if (!DecacCompiler.getNocheck()) {
+        compiler.addInstruction(new ADD(codeGen.getRegistreCourant(compiler), codeGen.getCurrentRegistreUtilise()));
+        if(!DecacCompiler.getNocheck()) {
             compiler.addInstruction(new BOV(compiler.getOverflow_error()));
         }
     }

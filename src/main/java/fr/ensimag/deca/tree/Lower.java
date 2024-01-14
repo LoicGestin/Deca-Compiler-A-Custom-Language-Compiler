@@ -22,7 +22,9 @@ public class Lower extends AbstractOpIneq {
         Label vrai = compiler.labelTable.addLabel("vrai_Lower");
         Label fin = compiler.labelTable.addLabel("fin_Lower");
 
+        codeGen.setAssignation(true);
         getLeftOperand().codeGenInst(compiler);
+        codeGen.setAssignation(true);
         getRightOperand().codeGenInst(compiler);
 
         compiler.addInstruction(new CMP(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));

@@ -47,9 +47,10 @@ public class Main extends AbstractMain {
         codeGen.setUpRegistres();
         codeGen.genereTopNEntries();
 
-        compiler.addComment("variables:");
-        compiler.addComment("Beginning of main instructions:");
+        compiler.addComment("Beginning of variables declarations:");
+
         declVariables.codeGenListDeclVar(compiler);
+        compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler);
     }
 

@@ -53,7 +53,7 @@ public class FloatLiteral extends AbstractExpr {
     }
 
     public void codeGenInst(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), codeGen.getRegistreLibre()));
+        codeGen.setRegistreCourant(new ImmediateFloat(this.getValue()),compiler);
     }
 
     @Override

@@ -20,18 +20,19 @@ public class Divide extends AbstractOpArith {
     public void codeGenInst(DecacCompiler compiler) {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
-
+        codeGen.setAssignation(true);
         LValue.codeGenInst(compiler);
+        codeGen.setAssignation(false);
         RValue.codeGenInst(compiler);
 
 
         if (LValue.getType().isInt() && RValue.getType().isInt()) {
-            compiler.addInstruction(new QUO(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
+            compiler.addInstruction(new QUO(codeGen.getRegistreCourant(compiler), codeGen.getCurrentRegistreUtilise()));
             if (!DecacCompiler.getNocheck()) {
                 compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             }
         } else {
-            compiler.addInstruction(new DIV(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
+            compiler.addInstruction(new DIV(codeGen.getRegistreCourant(compiler), codeGen.getCurrentRegistreUtilise()));
             if (!DecacCompiler.getNocheck()) {
                 compiler.addInstruction(new BOV(compiler.getOverflow_error()));
             }

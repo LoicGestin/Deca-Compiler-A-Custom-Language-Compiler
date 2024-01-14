@@ -36,12 +36,13 @@ public class Modulo extends AbstractOpArith {
     public void codeGenInst(DecacCompiler compiler) {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
-
+        codeGen.setAssignation(true);
         LValue.codeGenInst(compiler);
+        codeGen.setAssignation(false);
         RValue.codeGenInst(compiler);
 
-        compiler.addInstruction(new REM(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
-        if (!DecacCompiler.getNocheck()) {
+        compiler.addInstruction(new REM(codeGen.getRegistreCourant(compiler),  codeGen.getCurrentRegistreUtilise()));
+        if(!DecacCompiler.getNocheck()) {
             compiler.addInstruction(new BOV(compiler.getOverflow_error()));
         }
 

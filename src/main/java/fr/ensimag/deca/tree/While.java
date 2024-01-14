@@ -44,12 +44,12 @@ public class While extends AbstractInst {
         Label fin_while = compiler.labelTable.addLabel("fin_while");
 
         compiler.addLabel(debut_while);
-
+        codeGen.setAssignation(true);
         getCondition().codeGenInst(compiler);
 
         compiler.addInstruction(new CMP(0, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(fin_while));
-
+        codeGen.setAssignation(true);
         getBody().codeGenListInst(compiler);
         compiler.addInstruction(new BRA(debut_while));
 

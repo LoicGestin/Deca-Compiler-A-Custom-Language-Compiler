@@ -52,12 +52,12 @@ public class Initialization extends AbstractInitialization {
 
     @Override
     public void codeGenInit(DecacCompiler compiler, ExpDefinition var) {
+        codeGen.setAssignation(true);
         expression.codeGenInst(compiler);
         if (var.isAddr()) {
             compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), var.getOperand()));
         } else {
             codeGen.saveVariable();
-            //compiler.addInstruction(new LOAD( codeGen.getRegistreUtilise(),var.getGPRegister()));
         }
 
     }

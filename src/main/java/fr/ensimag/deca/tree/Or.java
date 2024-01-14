@@ -34,9 +34,11 @@ public class Or extends AbstractOpBool {
         Label vrai = compiler.labelTable.addLabel("vrai_Or");
         Label fin = compiler.labelTable.addLabel("fin_Or");
 
+        codeGen.setAssignation(true);
         getLeftOperand().codeGenInst(compiler);
         compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));
+        codeGen.setAssignation(true);
         getRightOperand().codeGenInst(compiler);
         compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));

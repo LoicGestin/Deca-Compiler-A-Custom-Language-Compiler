@@ -37,9 +37,11 @@ public class Equals extends AbstractOpExactCmp {
         Label vrai = compiler.labelTable.addLabel("vrai_Equals");
         Label fin = compiler.labelTable.addLabel("fin_Equals");
 
+        codeGen.setAssignation(true);
         getLeftOperand().codeGenInst(compiler);
+        codeGen.setAssignation(false);
         getRightOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));
+        compiler.addInstruction(new CMP(codeGen.getRegistreCourant(compiler), codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(vrai));
         comparison(compiler, vrai, fin);
 

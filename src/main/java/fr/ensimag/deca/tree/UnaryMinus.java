@@ -6,6 +6,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.instructions.OPP;
 
 /**
@@ -32,6 +34,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        codeGen.setAssignation(true);
         this.getOperand().codeGenInst(compiler);
         compiler.addInstruction(new OPP(codeGen.getCurrentRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
 

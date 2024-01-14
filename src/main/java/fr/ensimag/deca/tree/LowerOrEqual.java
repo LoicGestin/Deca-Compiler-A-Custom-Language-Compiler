@@ -21,7 +21,9 @@ public class LowerOrEqual extends AbstractOpIneq {
         Label vrai = compiler.labelTable.addLabel("vrai_LowerOrEqual");
         Label fin = compiler.labelTable.addLabel("fin_LowerOrEqual");
 
+        codeGen.setAssignation(true);
         getLeftOperand().codeGenInst(compiler);
+        codeGen.setAssignation(true);
         getRightOperand().codeGenInst(compiler);
 
         compiler.addInstruction(new CMP(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));

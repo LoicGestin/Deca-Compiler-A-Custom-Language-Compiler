@@ -19,9 +19,11 @@ public class Multiply extends AbstractOpArith {
     public void codeGenInst(DecacCompiler compiler) {
         AbstractExpr LValue = this.getLeftOperand();
         AbstractExpr RValue = this.getRightOperand();
+        codeGen.setAssignation(true);
         LValue.codeGenInst(compiler);
+        codeGen.setAssignation(false);
         RValue.codeGenInst(compiler);
-        compiler.addInstruction(new MUL(codeGen.getRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new MUL(codeGen.getRegistreCourant(compiler), codeGen.getCurrentRegistreUtilise()));
         if (!DecacCompiler.getNocheck()) {
             compiler.addInstruction(new BOV(compiler.getOverflow_error()));
         }

@@ -22,9 +22,11 @@ public class And extends AbstractOpBool {
         Label faux = compiler.labelTable.addLabel("faux_And");
         Label fin = compiler.labelTable.addLabel("fin_And");
 
+        codeGen.setAssignation(true);
         getLeftOperand().codeGenInst(compiler);
         compiler.addInstruction(new CMP(0, codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BEQ(faux));
+        codeGen.setAssignation(true);
         getRightOperand().codeGenInst(compiler);
         compiler.addInstruction(new CMP(0, codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BEQ(faux));

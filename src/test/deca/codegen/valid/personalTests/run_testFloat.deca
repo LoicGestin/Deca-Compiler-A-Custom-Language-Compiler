@@ -3,8 +3,9 @@
 // ce test doit afficher "ok"
 
 
-float f ;
+
 {
+    float f ;
     print ("test que float f = 1 fait que f == 1.0");
     f = 1 ;
     if (f == 1.0) {

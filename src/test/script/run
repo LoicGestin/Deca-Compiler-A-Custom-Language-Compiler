@@ -1,0 +1,8 @@
+#! /bin/bash
+
+# Compile the program and run it with the given arguments.
+file=$1
+decac $file
+ima "${file%.*}.ass"
+rm "${file%.*}.ass" > /tmp/null
+exit 0

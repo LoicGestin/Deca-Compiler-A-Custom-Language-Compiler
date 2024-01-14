@@ -130,7 +130,7 @@ public class CompilerOptions {
 
         System.out.println("Usage: decac [[-p | -v] [-n] [-r X] [-d]* [-P] [-w] <fichier deca>...] | [-b]");
         System.out.println("  -b (banner)       : affiche une bannière indiquant le nom de l'équipe");
-        System.out.println("  -p (parse)        : arrête decac après l'étape de construction de l'arbre, et affiche la décompilation de ce dernier (i.e. s'il n'y a qu'un fichier source à compiler, la sortie doit être un programme deca syntaxiquement correct)");
+        System.out.println("  -p (parse)        : arrête decac après l'étape de construction de l'arbre, et affiche la décompilation de ce dernier (--color pour activer la coloration syntaxique)");
         System.out.println("  -v (verification) : arrête decac après l'étape de vérifications (ne produit aucune sortie en l'absence d'erreur)");
         System.out.println("  -n (no check)     : supprime les tests à l'exécution spécifiés dans les points 11.1 et 11.3 de la sémantique de Deca.");
         System.out.println("  -r X (registers)  : limite les registres banalisés disponibles à R0 ... R{X-1}, avec 4 <= X <= 16");

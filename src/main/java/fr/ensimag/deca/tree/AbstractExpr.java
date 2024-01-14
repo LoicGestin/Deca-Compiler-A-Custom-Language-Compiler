@@ -54,6 +54,9 @@ public abstract class AbstractExpr extends AbstractInst {
      * in the source code (and should be decompiled to the empty string).
      */
     boolean isImplicit() {
+        if (this instanceof Identifier) {
+            return ((Identifier) this).getName().getName().equals("this");
+        }
         return false;
     }
 
@@ -160,11 +163,13 @@ public abstract class AbstractExpr extends AbstractInst {
 
     @Override
     protected void decompileInst(IndentPrintStream s) {
-        decompile(s);
-        if (DecacCompiler.getColor()) {
-            s.print(";", "orange");
-        } else {
-            s.print(";");
+        if (! isImplicit()) {
+            decompile(s);
+            if (DecacCompiler.getColor()) {
+                s.print(";", "orange");
+            } else {
+                s.print(";");
+            }
         }
     }
 

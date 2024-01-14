@@ -32,17 +32,7 @@ public class codeGen {
             registresLibres.push(Register.getR(i));
         }
     }
-    public static void afficheStack(){
-        System.out.println("registresLibres : ");
-        for (GPRegister r : registresLibres) {
-            System.out.print(r + " ");
-        }
-        System.out.println("\nregistresUtilises : ");
-        for (GPRegister r : registresUtilises) {
-            System.out.print(r + " ");
-        }
-        System.out.println();
-    }
+
     public static GPRegister getCurrentRegistreLibre() {
         return registresLibres.peek();
     }
@@ -97,10 +87,24 @@ public class codeGen {
     public static void addVariableTable(String s) {
         table.merge(s, 1, Integer::sum);
     }
+    public static int getValueVariableTable(String s) {
+        return table.get(s);
+    }
     public static void afficheTable(){
         System.out.println("table : ");
         for (String s : table.keySet()) {
             System.out.println(s + " : " + table.get(s));
+        }
+        System.out.println();
+    }
+    public static void afficheStack(){
+        System.out.println("registresLibres : ");
+        for (GPRegister r : registresLibres) {
+            System.out.print(r + " ");
+        }
+        System.out.println("\nregistresUtilises : ");
+        for (GPRegister r : registresUtilises) {
+            System.out.print(r + " ");
         }
         System.out.println();
     }

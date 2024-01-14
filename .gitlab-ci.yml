@@ -20,7 +20,7 @@ build:
 test:
   stage: test
   script:
-    - ./src/test/script/run_all_tests.sh
+    - /bin/bash ./src/test/script/run_all_tests.sh
   when : on_success
 
 # Notify discord

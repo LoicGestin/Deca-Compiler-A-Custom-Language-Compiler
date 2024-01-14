@@ -6,11 +6,11 @@
 
 {
     float f ;
-    print ("test que float f = 1 fait que f == 1.0");
+    println("test que float f = 1 fait que f == 1.0");
     f = 1 ;
     if (f == 1.0) {
-        print("ok") ;
+        println("ok") ;
     } else {
-        print("ERRONE") ;
+        println("ERRONE") ;
     }
 }

@@ -481,6 +481,10 @@ literal returns[AbstractExpr tree]
             $tree = new StringLiteral($STRING.text);
             setLocation($tree, $STRING);
         }
+     | MULTI_LINE_STRING {
+            $tree = new StringLiteral($MULTI_LINE_STRING.text);
+            setLocation($tree, $MULTI_LINE_STRING);
+     }
     | TRUE {
             $tree = new BooleanLiteral(true);
             setLocation($tree, $TRUE);

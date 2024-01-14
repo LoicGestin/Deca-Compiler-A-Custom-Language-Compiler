@@ -215,6 +215,12 @@ assign_expr returns[AbstractExpr tree]
     : e=or_expr (
         /* condition: expression e must be a "LVALUE" */ {
             if (! ($e.tree instanceof AbstractLValue)) {
+                // For debugging purposes, we print type of expression e
+                // and its location
+                System.err.println("Error: expression is not a LVALUE");
+                System.err.println("Type of expression: " + $e.tree.getClass().getName());
+                System.err.println("Location of expression: " + $e.start);
+                // We throw an exception to stop the compilation
                 throw new InvalidLValue(this, $ctx);
             }
 
@@ -440,6 +446,7 @@ primary_expr returns[AbstractExpr tree]
     | NEW ident OPARENT CPARENT {
             assert($ident.tree != null);
             $tree = new New($ident.tree);
+            setLocation($tree, $NEW);
         }
     | cast=OPARENT type CPARENT OPARENT expr CPARENT {
             assert($type.tree != null);
@@ -450,6 +457,7 @@ primary_expr returns[AbstractExpr tree]
     | literal {
             assert($literal.tree != null);
             $tree = $literal.tree;
+            setLocation($tree, $literal.start);
         }
     ;
 
@@ -482,6 +490,8 @@ literal returns[AbstractExpr tree]
             setLocation($tree, $FALSE);
         }
     | THIS {
+            $tree = new This();
+            setLocation($tree, $THIS);
         }
     | NULL {
             $tree = new NullLiteral();

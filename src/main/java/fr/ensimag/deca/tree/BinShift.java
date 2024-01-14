@@ -23,7 +23,18 @@ public class BinShift extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Binary Shift verifyExpr not yet implemented");
+        Type typeL = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type typeR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        if (!typeR.isInt()){
+            throw new ContextualError("Exception : binary shift value must be int, is " + typeR, getLocation());
+        }
+        else if (!typeL.isFloat() && !typeL.isInt()){
+            throw new ContextualError("Exception : binary shift can only be applied to int or float, not " + typeL, getLocation());
+        }
+
+        setType(typeL);
+        return getType();
     }
 
     @Override

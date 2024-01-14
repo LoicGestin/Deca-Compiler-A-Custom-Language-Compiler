@@ -247,6 +247,38 @@ done
 echo -ne "\r\t[Total : $failed/$total]                                    \n"
 
 
+echo "====================   Registres   ===================="
+
+echo "==> Test de la limitation des registres"
+
+failed=0
+total=0
+
+for file in src/test/deca/codegen/valid/personalTests/run*.deca
+do
+  # Run decac on file, exec the .ass with ima and diff with the .expected output file
+  decac -r 4 $file > /tmp/null 2>/dev/null
+  # Run ima on file with extention .ass
+  ima "${file%.*}.ass" > "${file%.*}.run"
+  DIFF=$(diff -qbBE "${file%.*}.exp" "${file%.*}.run")
+  if [ "$DIFF" == "" ]
+  then
+    echo -ne "\r\t${GREEN}[PASSED]${NC}    : ${file##*/}                                    "
+    failed=$((failed + 1))
+  else
+    echo -ne "\r\t${RED}[FAILED]${NC}    : ${file##*/}                                \r\n"
+    erreur_total=$((erreur_total + 1))
+
+  fi
+  total=$((total + 1))
+done
+
+rm src/test/deca/codegen/valid/personalTests/*.run
+rm src/test/deca/codegen/valid/personalTests/*.ass
+
+echo -ne "\r\t[Total : $failed/$total]                                    \n"
+
+
 echo "====================   Synthese  ===================="
 
 echo -e "Temps total d'exécution : $(echo "scale=3; ($(date +%s%N) - $temps_initial) / 1000000000" | bc) s"

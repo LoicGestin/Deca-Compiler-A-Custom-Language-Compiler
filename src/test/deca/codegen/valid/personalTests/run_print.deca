@@ -1,0 +1,7 @@
+{
+    println("Hello World", 12, 3.4, true);
+    printlnx("Hello World", 12, 3.4, true);
+    print("Hello World", 12, 3.4, true);
+    println();
+    printx("Hello World", 12, 3.4, true);
+}

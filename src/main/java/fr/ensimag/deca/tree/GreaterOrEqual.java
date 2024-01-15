@@ -6,6 +6,8 @@ import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BGE;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.SGE;
+import fr.ensimag.ima.pseudocode.instructions.SGT;
 
 /**
  * Operator "x >= y"
@@ -20,19 +22,9 @@ public class GreaterOrEqual extends AbstractOpIneq {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = compiler.labelTable.addLabel("vrai_GreaterOrEqual");
-        Label fin = compiler.labelTable.addLabel("fin_GreaterOrEqual");
-
-        codeGen.setAssignation(true);
-        getLeftOperand().codeGenInst(compiler);
-        codeGen.setAssignation(false);
-        getRightOperand().codeGenInst(compiler);
-
+    public void codeGenOp(DecacCompiler compiler) {
         compiler.addInstruction(new CMP(codeGen.getRegistreCourant(compiler), codeGen.getRegistreUtilise()));
-        compiler.addInstruction(new BGE(vrai));
-
-        Equals.comparison(compiler, vrai, fin);
+        compiler.addInstruction(new SGE(codeGen.getRegistreLibre()));
     }
 
     @Override

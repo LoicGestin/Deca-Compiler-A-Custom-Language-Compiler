@@ -19,10 +19,6 @@ public class BinShift extends AbstractBinaryExpr {
         this.direction = direction;
     }
 
-    public int getDirection() {
-        return direction;
-    }
-
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
@@ -48,7 +44,9 @@ public class BinShift extends AbstractBinaryExpr {
         Label debut_bs = compiler.labelTable.addLabel("debut_bs");
         Label fin_bs = compiler.labelTable.addLabel("fin_bs");
 
+        codeGen.setAssignation(true);
         LValue.codeGenInst(compiler);
+        codeGen.setAssignation(false);
         RValue.codeGenInst(compiler);
 
         compiler.addLabel(debut_bs);
@@ -61,17 +59,17 @@ public class BinShift extends AbstractBinaryExpr {
 
         if (direction == 0){
             compiler.addInstruction(new SHL(codeGen.getCurrentRegistreUtilise()));
-            if (!DecacCompiler.getNocheck()) {
-                compiler.addInstruction(new BOV(compiler.getOverflow_error()));
-            }
 
         } else {
             compiler.addInstruction((new SHR(codeGen.getCurrentRegistreUtilise())));
         }
 
         compiler.addInstruction(new BRA(debut_bs));
-
         compiler.addLabel(fin_bs);
+
+        if (!DecacCompiler.getNocheck()) {
+            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+        }
 
     }
 

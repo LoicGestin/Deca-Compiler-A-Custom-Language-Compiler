@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 
 /**
@@ -38,6 +39,17 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         } else {
             throw new ContextualError("Exception : type incompatible : " + t1 + " and " + t2, this.getLocation());
         }
+    }
+
+    public abstract void codeGenOp(DecacCompiler compiler);
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        codeGen.setAssignation(true);
+        getLeftOperand().codeGenInst(compiler);
+        codeGen.setAssignation(true);
+        getRightOperand().codeGenInst(compiler);
+        codeGenOp(compiler);
     }
 
 

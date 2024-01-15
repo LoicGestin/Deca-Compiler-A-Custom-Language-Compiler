@@ -6,6 +6,7 @@ import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BGT;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.SGT;
 
 /**
  * @author gl29
@@ -18,18 +19,9 @@ public class Greater extends AbstractOpIneq {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = compiler.labelTable.addLabel("vrai_Greater");
-        Label fin = compiler.labelTable.addLabel("fin_Greater");
-        codeGen.setAssignation(true);
-        getLeftOperand().codeGenInst(compiler);
-        codeGen.setAssignation(false);
-        getRightOperand().codeGenInst(compiler);
-
+    public void codeGenOp(DecacCompiler compiler) {
         compiler.addInstruction(new CMP(codeGen.getRegistreCourant(compiler), codeGen.getRegistreUtilise()));
-        compiler.addInstruction(new BGT(vrai));
-
-        Equals.comparison(compiler, vrai, fin);
+        compiler.addInstruction(new SGT(codeGen.getRegistreLibre()));
     }
 
     @Override

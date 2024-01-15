@@ -4,10 +4,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  * @author gl29
@@ -20,28 +17,9 @@ public class NotEquals extends AbstractOpExactCmp {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = compiler.labelTable.addLabel("vrai_NotEquals");
-        Label fin = compiler.labelTable.addLabel("fin_NotEquals");
-
-        codeGen.setAssignation(true);
-        getLeftOperand().codeGenInst(compiler);
-        codeGen.setAssignation(false);
-        getRightOperand().codeGenInst(compiler);
-
-
+    public void codeGenOp(DecacCompiler compiler) {
         compiler.addInstruction(new CMP(codeGen.getRegistreCourant(compiler), codeGen.getRegistreUtilise()));
-        compiler.addInstruction(new BNE(vrai));
-
-
-        compiler.addInstruction(new LOAD(0, codeGen.getRegistreLibre()));
-        compiler.addInstruction(new BRA(fin));
-
-
-        compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(1, codeGen.getCurrentRegistreUtilise()));
-
-        compiler.addLabel(fin);
+        compiler.addInstruction(new SNE(codeGen.getRegistreLibre()));
     }
 
     @Override

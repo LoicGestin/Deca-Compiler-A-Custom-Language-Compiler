@@ -40,7 +40,12 @@ public class CallMethod extends AbstractExpr {
      */
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        return null;
+        Type type = expr.verifyExpr(compiler, localEnv, currentClass);
+        if (!type.isClass()) {
+            throw new ContextualError("CallMethod must be called on a class", getLocation());
+        }
+        setType(type);
+        return getType();
     }
 
     /**

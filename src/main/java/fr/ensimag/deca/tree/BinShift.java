@@ -6,10 +6,12 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
-public class BinShift extends AbstractBinaryExpr {
+public class BinShift extends AbstractOpArith {
 
     //0 = LEFT; 1 = RIGHT
     private final int direction;
@@ -37,38 +39,49 @@ public class BinShift extends AbstractBinaryExpr {
 
     @Override
     public void codeGenInst(DecacCompiler compiler) {
-        AbstractExpr LValue = this.getLeftOperand();
-        AbstractExpr RValue = this.getRightOperand();
-
-        Label debut_bs = compiler.labelTable.addLabel("debut_bs");
-        Label fin_bs = compiler.labelTable.addLabel("fin_bs");
-
         codeGen.setAssignation(true);
-        LValue.codeGenInst(compiler);
-        codeGen.setAssignation(false);
-        RValue.codeGenInst(compiler);
+        this.getLeftOperand().codeGenInst(compiler);
+        codeGen.setAssignation(true);
+        this.getRightOperand().codeGenInst(compiler);
 
-        compiler.addLabel(debut_bs);
-
-        compiler.addInstruction(new CMP(0, codeGen.getCurrentRegistreUtilise()));
-        compiler.addInstruction(new BEQ(fin_bs));
-
-        compiler.addInstruction(new SNE(codeGen.getRegistreLibre()));
-        compiler.addInstruction(new SUB(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));
-
-        if (direction == 0) {
-            compiler.addInstruction(new SHL(codeGen.getCurrentRegistreUtilise()));
-
-        } else {
-            compiler.addInstruction((new SHR(codeGen.getCurrentRegistreUtilise())));
-        }
-
-        compiler.addInstruction(new BRA(debut_bs));
-        compiler.addLabel(fin_bs);
+        codeGenOperator(compiler);
 
         if (!DecacCompiler.getNocheck()) {
             compiler.addInstruction(new BOV(compiler.getOverflow_error()));
         }
+    }
+
+    @Override
+    public void codeGenOperator(DecacCompiler compiler) {
+
+        codeGen.afficheStack();
+
+        // Create a loop that will shift the left operand by the right operand
+        Label debut_bs = compiler.labelTable.addLabel("debut_bs");
+        Label fin_bs = compiler.labelTable.addLabel("fin_bs");
+
+        GPRegister rgauche =  codeGen.getRegistreUtilise();        // 2
+        GPRegister rdroite =  codeGen.getCurrentRegistreUtilise(); // 8
+
+        compiler.addLabel(debut_bs);
+        // 8 << 2
+
+        // If the right operand is 0, we stop the loop
+        compiler.addInstruction(new CMP(0, rgauche));
+        compiler.addInstruction(new BEQ(fin_bs));
+
+        // else we shift the left operand by 1
+        if (direction == 0) {
+            compiler.addInstruction(new SHL(rdroite));
+        } else {
+            compiler.addInstruction(new SHR(rdroite));
+        }
+
+        // We decrement the right operand by 1
+        compiler.addInstruction(new SUB(new ImmediateInteger(1), rgauche));
+        compiler.addInstruction(new BRA(debut_bs));
+
+        compiler.addLabel(fin_bs);
 
     }
 

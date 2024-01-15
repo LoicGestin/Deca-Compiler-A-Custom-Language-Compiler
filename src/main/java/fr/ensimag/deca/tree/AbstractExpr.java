@@ -163,7 +163,7 @@ public abstract class AbstractExpr extends AbstractInst {
 
     @Override
     protected void decompileInst(IndentPrintStream s) {
-        if (! isImplicit()) {
+        if (!isImplicit()) {
             decompile(s);
             if (DecacCompiler.getColor()) {
                 s.print(";", "orange");

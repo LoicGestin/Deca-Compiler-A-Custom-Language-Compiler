@@ -4,7 +4,6 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -53,10 +52,10 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        if(codeGen.getValueVariableTable(varName.getName().toString()) > 1) {
+        if (codeGen.getValueVariableTable(varName.getName().toString()) > 1) {
             if (codeGen.isGPRegisterRestant(varName.getName().toString())) {
                 varName.getExpDefinition().setGPRegister(codeGen.getGPRegisterVariable());
-                if(initialization instanceof NoInitialization) {
+                if (initialization instanceof NoInitialization) {
                     codeGen.saveVariable2();
                 }
             } else {

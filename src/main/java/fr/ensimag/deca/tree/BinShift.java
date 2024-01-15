@@ -25,10 +25,9 @@ public class BinShift extends AbstractBinaryExpr {
         Type typeL = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type typeR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
-        if (!typeR.isInt()){
+        if (!typeR.isInt()) {
             throw new ContextualError("Exception : binary shift value must be int, is " + typeR, getLocation());
-        }
-        else if (!typeL.isInt()){
+        } else if (!typeL.isInt()) {
             throw new ContextualError("Exception : binary shift can only be applied to int not " + typeL, getLocation());
         }
 
@@ -57,7 +56,7 @@ public class BinShift extends AbstractBinaryExpr {
         compiler.addInstruction(new SNE(codeGen.getRegistreLibre()));
         compiler.addInstruction(new SUB(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));
 
-        if (direction == 0){
+        if (direction == 0) {
             compiler.addInstruction(new SHL(codeGen.getCurrentRegistreUtilise()));
 
         } else {

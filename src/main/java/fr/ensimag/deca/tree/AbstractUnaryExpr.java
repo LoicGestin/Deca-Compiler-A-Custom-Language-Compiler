@@ -4,10 +4,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
-import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
-import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -35,6 +33,7 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
 
     public void codeGenPrint(DecacCompiler compiler) {
         codeGenInst(compiler);
+
         if (super.getType().isBoolean()) {
             print_boolean(compiler);
         } else {
@@ -48,6 +47,7 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
             }
         }
     }
+
 
     @Override
     public void decompile(IndentPrintStream s) {

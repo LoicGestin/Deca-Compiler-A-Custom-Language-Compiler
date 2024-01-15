@@ -6,11 +6,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.SUB;
+import fr.ensimag.ima.pseudocode.Register;
 
 
 /**
@@ -21,17 +19,6 @@ public class Not extends AbstractUnaryExpr {
 
     public Not(AbstractExpr operand) {
         super(operand);
-    }
-
-    static void to_rename_function(DecacCompiler compiler, Label vrai, Label fin) {
-
-        compiler.addInstruction(new LOAD(1, codeGen.getCurrentRegistreUtilise()));
-        compiler.addInstruction(new BRA(fin));
-
-        compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(0, codeGen.getCurrentRegistreUtilise()));
-
-        compiler.addLabel(fin);
     }
 
     @Override
@@ -45,14 +32,11 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = compiler.labelTable.addLabel("vrai_Not");
-        Label fin = compiler.labelTable.addLabel("fin_Not");
-
+        codeGen.setAssignation(true);
         getOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(0, codeGen.getCurrentRegistreUtilise()));
-        compiler.addInstruction(new BNE(vrai));
-
-        to_rename_function(compiler, vrai, fin);
+        // We do 1 - the value of the operand
+        compiler.addInstruction(new LOAD(1, Register.getR(1)));
+        compiler.addInstruction(new SUB(Register.getR(1), codeGen.getCurrentRegistreUtilise()));
     }
 
     @Override

@@ -1,4 +1,0 @@
-{
-    float a = 3.14<<3;
-    println("Test">>2);
-}

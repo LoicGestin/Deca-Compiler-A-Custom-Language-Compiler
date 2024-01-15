@@ -1,5 +1,7 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 public class ListDeclParam extends TreeList<AbstractDeclParam> {
@@ -14,5 +16,11 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
             first = false;
         }
 
+    }
+
+    public void verifyListDeclParamMembers(DecacCompiler compiler) throws ContextualError {
+        for (AbstractDeclParam p : getList()) {
+            p.verifyParamMembers(compiler);
+        }
     }
 }

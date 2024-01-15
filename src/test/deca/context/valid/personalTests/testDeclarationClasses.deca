@@ -1,13 +1,13 @@
 // Test de déclaration d'une classe en deca
 
 class A{
-    public void getA(){
+    void getA(){
         return 1;
     }
 }
 
 class B{
-    public void getB(){
+    void getB(){
         return 2;
     }
 }

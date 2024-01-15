@@ -1,5 +1,9 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -49,5 +53,15 @@ public class MethodBody extends AbstractMethodBody {
     @Override
     protected void iterChildren(TreeFunction f) {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    protected void verifyMethodBody(DecacCompiler compiler) throws ContextualError {
+        if (stringLiteral != null) {
+            stringLiteral.verifyExpr(compiler, null, null);
+        } else {
+            declVars.verifyListDeclVariable(compiler, null);
+            insts.verifyListInst(compiler, null, null, null);
+        }
     }
 }

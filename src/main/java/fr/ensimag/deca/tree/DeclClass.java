@@ -1,8 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
@@ -22,7 +21,7 @@ public class DeclClass extends AbstractDeclClass {
 
     public DeclClass(AbstractIdentifier varName, AbstractIdentifier varSuper, ListDeclField listDeclField, ListDeclMethod listDeclMethod) {
         this.varName = varName;
-        this.varSuper = varSuper; // TODO : si pas de super, varSuper = Object
+        this.varSuper = varSuper;
         this.listDeclField = listDeclField;
         this.listDeclMethod = listDeclMethod;
     }
@@ -56,26 +55,44 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        Type tName = varName.verifyType(compiler);
-        Type tSuper = varSuper.verifyType(compiler);
-        if (!tName.isString()) {
-            throw new ContextualError("Exception : Wrong type for class name", varName.getLocation());
+        EnvironmentType environmentType = compiler.getEnvironmentType();
+        TypeDefinition typeDef = environmentType.defOfType(varName.getName());
+        TypeDefinition typeDefSuper = environmentType.defOfType(varSuper.getName());
+
+        if (typeDefSuper == null) {
+            throw new ContextualError("Exception : Super class " + varSuper.getName() + " doesn't exist", varSuper.getLocation());
+        }
+        if (typeDef == null) {
+            try {
+                environmentType.declareClass(varName.getName(), new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()));
+            } catch (EnvironmentExp.DoubleDefException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        if (!tSuper.isString()) {
-            throw new ContextualError("Exception : Wrong type for class name", varSuper.getLocation());
+        Type tName = varName.verifyType(compiler);
+        Type tSuper = varSuper.verifyType(compiler);
+
+        if (tName.getName().getName().equals(tSuper.getName().getName())) {
+            throw new ContextualError("Exception : Class name and super class name are the same", varName.getLocation());
         }
+
     }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-
+        listDeclField.verifyListDeclField(compiler);
+        listDeclMethod.verifyListDeclMethod(compiler);
+        listDeclMethod.verifyListDeclMethodMembers(compiler);
     }
 
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        varName.getClassDefinition().setNumberOfFields(listDeclField.getList().size());
+        varName.getClassDefinition().setNumberOfMethods(listDeclMethod.getList().size());
+        listDeclMethod.verifyListDeclMethodBody(compiler);
+        listDeclField.verifyListDeclFieldBody(compiler);
     }
 
 

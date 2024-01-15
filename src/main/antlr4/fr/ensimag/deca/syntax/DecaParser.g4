@@ -538,7 +538,8 @@ class_extension returns[AbstractIdentifier tree]
         }
     | /* epsilon */ {
 
-           $tree = null;
+           $tree = new Identifier(getDecacCompiler().symbolTable.create("Object"));
+           $tree.setLocation(Location.BUILTIN);
         }
     ;
 

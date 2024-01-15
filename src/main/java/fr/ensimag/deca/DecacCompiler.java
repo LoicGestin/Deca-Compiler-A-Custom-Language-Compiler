@@ -297,4 +297,8 @@ public class DecacCompiler {
     public Label getIo_error() {
         return io_error;
     }
+
+    public EnvironmentType getEnvironmentType() {
+        return environmentType;
+    }
 }

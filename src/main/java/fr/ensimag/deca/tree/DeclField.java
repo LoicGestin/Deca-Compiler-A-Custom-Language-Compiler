@@ -1,7 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -69,16 +69,18 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     protected void verifyField(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Type t = type.verifyType(compiler);
+        if (t.isVoid()) {
+            throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
+        }
+        field.setDefinition(new FieldDefinition(t, field.getLocation(), visibility, field.getClassDefinition(), field.getClassDefinition().getNumberOfFields()));
+        field.getClassDefinition().incNumberOfFields();
+        field.setType(t);
+        initialization.verifyInitialization(compiler, t, field.getClassDefinition().getMembers(), field.getClassDefinition());
     }
 
-    @Override
-    protected void verifyFieldMembers(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
     protected void verifyFieldBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
+        initialization.verifyInitialization(compiler, field.getType(), field.getClassDefinition().getMembers(), field.getClassDefinition());
     }
+
 }

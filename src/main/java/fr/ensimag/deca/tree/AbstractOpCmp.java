@@ -32,7 +32,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             throw new ContextualError("Exception : type incompatible : " + t1 + " and " + t2, this.getLocation());
         }
 
-        if (t1.isInt() || t1.isFloat() || t1.isBoolean() || t1.isString()) {
+        if (t1.isInt() || t1.isFloat() || t1.isBoolean()) {
             this.setType(new BooleanType(compiler.createSymbol("boolean")));
             return this.getType();
         } else {

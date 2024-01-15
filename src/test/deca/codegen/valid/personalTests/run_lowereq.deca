@@ -1,19 +1,13 @@
 {
-boolean a = true;
-boolean b = false;
+int a = 1;
+int b = 2;
 
 println(a <= b);
 println(b <= a);
 println(a <= a);
 println(b <= b);
-println(a <= (a <= b));
-println((a <= a) <= b);
-println((a <= b) <= a);
-println((a <= b) <= (a <= b));
-println((a <= b) <= (b <= a));
-println((a <= b) <= (a <= a));
-println(a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a);
-println(a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= a <= b);
-println(b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b);
-println(b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= b <= a);
+println((a+b) <= (a));
+println((a+b) <= (b));
+println((a) <= (a+b));
+println((b) <= (a+b));
 }

@@ -6,7 +6,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.REM;
 
 /**
@@ -28,23 +27,12 @@ public class Modulo extends AbstractOpArith {
         if (!tL.isInt() || !tR.isInt()) {
             throw new ContextualError("Exception : Invalid type for modulo : " + tL + "and " + tR, getLocation());
         }
-
         return getType();
     }
 
     @Override
-    public void codeGenInst(DecacCompiler compiler) {
-        AbstractExpr LValue = this.getLeftOperand();
-        AbstractExpr RValue = this.getRightOperand();
-        codeGen.setAssignation(true);
-        LValue.codeGenInst(compiler);
-        codeGen.setAssignation(false);
-        RValue.codeGenInst(compiler);
-
-        compiler.addInstruction(new REM(codeGen.getRegistreCourant(compiler),  codeGen.getCurrentRegistreUtilise()));
-        if(!DecacCompiler.getNocheck()) {
-            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
-        }
+    public void codeGenOperator(DecacCompiler compiler) {
+        compiler.addInstruction(new REM(codeGen.getRegistreCourant(compiler), codeGen.getCurrentRegistreUtilise()));
 
     }
 

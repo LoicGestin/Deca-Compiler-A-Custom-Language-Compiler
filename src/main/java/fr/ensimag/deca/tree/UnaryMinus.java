@@ -33,9 +33,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        codeGen.setAssignation(true);
-        this.getOperand().codeGenInst(compiler);
+    public void codeGenOp(DecacCompiler compiler) {
         compiler.addInstruction(new OPP(codeGen.getCurrentRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
     }
 

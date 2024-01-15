@@ -48,6 +48,15 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
         }
     }
 
+    public abstract void codeGenOp(DecacCompiler compiler);
+
+    @Override
+    public void codeGenInst(DecacCompiler compiler) {
+        codeGen.setAssignation(true);
+        getOperand().codeGenInst(compiler);
+        codeGenOp(compiler);
+    }
+
 
     @Override
     public void decompile(IndentPrintStream s) {

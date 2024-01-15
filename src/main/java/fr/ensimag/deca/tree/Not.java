@@ -31,9 +31,7 @@ public class Not extends AbstractUnaryExpr {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        codeGen.setAssignation(true);
-        getOperand().codeGenInst(compiler);
+    public void codeGenOp(DecacCompiler compiler) {
         // We do 1 - the value of the operand
         compiler.addInstruction(new LOAD(1, Register.getR(1)));
         compiler.addInstruction(new SUB(Register.getR(1), codeGen.getCurrentRegistreUtilise()));

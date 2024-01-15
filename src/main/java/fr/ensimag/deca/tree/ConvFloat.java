@@ -27,9 +27,7 @@ public class ConvFloat extends AbstractUnaryExpr {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        codeGen.setAssignation(true);
-        getOperand().codeGenInst(compiler);
+    public void codeGenOp(DecacCompiler compiler) {
         compiler.addInstruction(new FLOAT(codeGen.getCurrentRegistreUtilise(), codeGen.getCurrentRegistreUtilise()));
     }
 

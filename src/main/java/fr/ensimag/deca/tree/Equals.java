@@ -22,10 +22,6 @@ public class Equals extends AbstractOpExactCmp {
         super(leftOperand, rightOperand);
     }
 
-    static void comparison(DecacCompiler compiler, Label vrai, Label fin) {
-        Or.condition_branch(compiler, vrai, fin);
-    }
-
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
         if (!this.getLeftOperand().getType().isBoolean() || !this.getRightOperand().getType().isBoolean()) {
@@ -37,7 +33,6 @@ public class Equals extends AbstractOpExactCmp {
     public void codeGenOp(DecacCompiler compiler) {
         compiler.addInstruction(new CMP(codeGen.getRegistreCourant(compiler), codeGen.getRegistreUtilise()));
         compiler.addInstruction(new SEQ(codeGen.getRegistreLibre()));
-
     }
 
     @Override

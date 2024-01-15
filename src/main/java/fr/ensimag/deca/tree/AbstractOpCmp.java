@@ -47,7 +47,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     protected void codeGenInst(DecacCompiler compiler) {
         codeGen.setAssignation(true);
         getLeftOperand().codeGenInst(compiler);
-        codeGen.setAssignation(true);
+        codeGen.setAssignation(false);
         getRightOperand().codeGenInst(compiler);
         codeGenOp(compiler);
     }

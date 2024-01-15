@@ -4,10 +4,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  * @author gl29
@@ -19,30 +16,13 @@ public class Or extends AbstractOpBool {
         super(leftOperand, rightOperand);
     }
 
-    static void condition_branch(DecacCompiler compiler, Label vrai, Label fin) {
-        compiler.addInstruction(new LOAD(0, codeGen.getRegistreLibre()));
-        compiler.addInstruction(new BRA(fin));
-
-        compiler.addLabel(vrai);
-        compiler.addInstruction(new LOAD(1, codeGen.getCurrentRegistreUtilise()));
-
-        compiler.addLabel(fin);
-    }
-
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        Label vrai = compiler.labelTable.addLabel("vrai_Or");
-        Label fin = compiler.labelTable.addLabel("fin_Or");
-
-        codeGen.setAssignation(true);
-        getLeftOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
-        compiler.addInstruction(new BEQ(vrai));
-        codeGen.setAssignation(true);
-        getRightOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(1, codeGen.getRegistreUtilise()));
-        compiler.addInstruction(new BEQ(vrai));
-        condition_branch(compiler, vrai, fin);
+    public void codeGenOp(DecacCompiler compiler) {
+        // Add the value and compare it to 2
+        compiler.addInstruction(new ADD(codeGen.getRegistreCourant(compiler), codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new CMP(1, codeGen.getCurrentRegistreUtilise()));
+        // If the value is 2, then it's true
+        compiler.addInstruction(new SGE(codeGen.getCurrentRegistreUtilise()));
     }
 
     @Override

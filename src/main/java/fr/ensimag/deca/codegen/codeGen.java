@@ -116,6 +116,11 @@ public class codeGen {
         registresVariables.push(r);
     }
 
+    public static void saveVariable2() {
+        GPRegister r = registresLibres.pop();
+        registresVariables.push(r);
+    }
+
     // ----------------------------------------------------
     static Map<String, Integer> topNEntries;
 

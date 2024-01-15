@@ -26,7 +26,6 @@ public class Greater extends AbstractOpIneq {
         codeGen.setAssignation(false);
         getRightOperand().codeGenInst(compiler);
 
-        codeGen.afficheStack();
         compiler.addInstruction(new CMP(codeGen.getRegistreCourant(compiler), codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BGT(vrai));
 

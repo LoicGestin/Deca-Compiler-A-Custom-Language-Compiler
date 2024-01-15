@@ -52,8 +52,6 @@ RETURN : 'return' ;
 THIS : 'this' ;
 TRUE : 'true' ;
 WHILE : 'while' ;
-BSL: '<<' ;
-BSR : '>>' ;
 
 // =====================
 // Identifiers (not reserved words)
@@ -89,6 +87,8 @@ GEQ : '>=' ;
 LEQ : '<=' ;
 AND : '&&' ;
 OR : '||' ;
+BSL: '<<' ;
+BSR : '>>' ;
 
 // =====================
 // Integer literals

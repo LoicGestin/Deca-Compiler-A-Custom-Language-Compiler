@@ -1,10 +1,13 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 public class BinShift extends AbstractBinaryExpr {
 
@@ -39,7 +42,37 @@ public class BinShift extends AbstractBinaryExpr {
 
     @Override
     public void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Binary Shift codeGenInst not yet implemented");
+        AbstractExpr LValue = this.getLeftOperand();
+        AbstractExpr RValue = this.getRightOperand();
+
+        Label debut_bs = compiler.labelTable.addLabel("debut_bs");
+        Label fin_bs = compiler.labelTable.addLabel("fin_bs");
+
+        LValue.codeGenInst(compiler);
+        RValue.codeGenInst(compiler);
+
+        compiler.addLabel(debut_bs);
+
+        compiler.addInstruction(new CMP(0, codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new BEQ(fin_bs));
+
+        compiler.addInstruction(new SNE(codeGen.getRegistreLibre()));
+        compiler.addInstruction(new SUB(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));
+
+        if (direction == 0){
+            compiler.addInstruction(new SHL(codeGen.getCurrentRegistreUtilise()));
+            if (!DecacCompiler.getNocheck()) {
+                compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+            }
+
+        } else {
+            compiler.addInstruction((new SHR(codeGen.getCurrentRegistreUtilise())));
+        }
+
+        compiler.addInstruction(new BRA(debut_bs));
+
+        compiler.addLabel(fin_bs);
+
     }
 
     @Override

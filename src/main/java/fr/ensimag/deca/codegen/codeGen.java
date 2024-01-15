@@ -21,15 +21,16 @@ public class codeGen {
 
     static int nombreRegistres = 14;
 
-    static int indexPile =50;
+    static int indexPile = 50;
 
     static int nombrePileTamporaire = 0;
 
     public static void setNombreRegistres(int nombreRegistres) {
-        if(nombreRegistres >= 2){
-            codeGen.nombreRegistres = nombreRegistres ;
+        if (nombreRegistres >= 2) {
+            codeGen.nombreRegistres = nombreRegistres;
         }
     }
+
     public static void setUpRegistres() {
         for (int i = nombreRegistres + 1; i >= 2; i--) {
             registresLibres.push(Register.getR(i));
@@ -39,6 +40,7 @@ public class codeGen {
     public static GPRegister getCurrentRegistreLibre() {
         return registresLibres.peek();
     }
+
     public static GPRegister getCurrentRegistreUtilise() {
         return registresUtilises.peek();
     }
@@ -48,75 +50,86 @@ public class codeGen {
         registresUtilises.push(r);
         return r;
     }
+
     public static GPRegister getRegistreUtilise() {
         GPRegister r = registresUtilises.pop();
         registresLibres.push(r);
         return r;
     }
+
     static DVal registreCourant = null;
     static boolean assignation = false;
+
     public static void setRegistreCourant(DVal registreCourant, DecacCompiler compiler) {
-        if(assignation){
-            if(codeGen.registresLibres.empty()){
+        if (assignation) {
+            if (codeGen.registresLibres.empty()) {
                 compiler.addInstruction(new PUSH(codeGen.getRegistreUtilise()));
-                nbPush ++;
+                nbPush++;
             }
 
             compiler.addInstruction(new LOAD(registreCourant, codeGen.getRegistreLibre()));
 
 
-        }
-        else{
+        } else {
             codeGen.registreCourant = registreCourant;
         }
     }
-    static boolean useR0 = false;
+
     static int nbPush = 0;
+
     public static DVal getRegistreCourant(DecacCompiler compiler) {
-        if(registreCourant == null){
-            if(nbPush > 0){
+        if (registreCourant == null) {
+            if (nbPush > 0) {
                 compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreUtilise(), Register.getR(0)));
                 compiler.addInstruction(new POP(codeGen.getCurrentRegistreUtilise()));
-                nbPush --;
+                nbPush--;
                 return Register.getR(0);
             }
             else{
 
-                registreCourant = getRegistreUtilise();
-                useR0 = true;
-                return registreCourant;
+                return getRegistreUtilise();
             }
 
-        }
-        else{
+        } else {
             DVal dVal = registreCourant;
             registreCourant = null;
             return dVal;
         }
     }
+
     public static void setAssignation(boolean assignation) {
         codeGen.assignation = assignation;
     }
+
     public static DAddr getRegistreVariable() {
-        indexPile ++;
+        indexPile++;
         return new RegisterOffset(indexPile, Register.GB);
     }
+
     public static GPRegister getGPRegisterVariable() {
 
         return registresLibres.peek();
     }
-    public static void saveVariable(){
+
+    public static void saveVariable() {
         GPRegister r = registresUtilises.pop();
         registresVariables.push(r);
     }
+
+    public static void saveVariable2() {
+        GPRegister r = registresLibres.pop();
+        registresVariables.push(r);
+    }
+
     // ----------------------------------------------------
     static Map<String, Integer> topNEntries;
+
     public static boolean isGPRegisterRestant(String s) {
         return registresLibres.size() > 2 && topNEntries.containsKey(s);
     }
 
     public static void genereTopNEntries() {
-        if(nombreRegistres <= 2){
+        if (nombreRegistres <= 2) {
             return;
         }
         topNEntries = table.entrySet()
@@ -134,29 +147,33 @@ public class codeGen {
     public static void addVariableTable(String s) {
         table.merge(s, 1, Integer::sum);
     }
+
     public static int getValueVariableTable(String s) {
         return table.get(s);
     }
 
-    public static boolean isRegistreLibreEmpty(){
-        if(registresLibres.empty()) {
-            indexPile ++;
-            nombrePileTamporaire ++;
+    public static boolean isRegistreLibreEmpty() {
+        if (registresLibres.empty()) {
+            indexPile++;
+            nombrePileTamporaire++;
             return true;
         }
         return false;
     }
-    public static boolean isRegistreInPile(){
+
+    public static boolean isRegistreInPile() {
         return nombrePileTamporaire > 0;
     }
-    public static void afficheTable(){
+
+    public static void afficheTable() {
         System.out.println("table : ");
         for (String s : table.keySet()) {
             System.out.println(s + " : " + table.get(s));
         }
         System.out.println();
     }
-    public static void afficheStack(){
+
+    public static void afficheStack() {
         System.out.println("registresLibres : ");
         for (GPRegister r : registresLibres) {
             System.out.print(r + " ");
@@ -165,6 +182,8 @@ public class codeGen {
         for (GPRegister r : registresUtilises) {
             System.out.print(r + " ");
         }
+        System.out.println("\nRegistre courant : " + registreCourant);
+        System.out.println("--------------------");
         System.out.println();
     }
 }

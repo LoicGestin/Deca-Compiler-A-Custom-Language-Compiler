@@ -56,12 +56,16 @@ public class DeclVar extends AbstractDeclVar {
         if(codeGen.getValueVariableTable(varName.getName().toString()) > 1) {
             if (codeGen.isGPRegisterRestant(varName.getName().toString())) {
                 varName.getExpDefinition().setGPRegister(codeGen.getGPRegisterVariable());
+                if(initialization instanceof NoInitialization) {
+                    codeGen.saveVariable2();
+                }
             } else {
                 varName.getExpDefinition().setOperand(codeGen.getRegistreVariable());
             }
             if (initialization instanceof Initialization) {
                 initialization.codeGenInit(compiler, varName.getExpDefinition());
             }
+
         }
     }
 

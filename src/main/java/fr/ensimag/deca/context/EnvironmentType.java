@@ -22,12 +22,12 @@ public class EnvironmentType {
     public final IntType INT;
     public final FloatType FLOAT;
     public final BooleanType BOOLEAN;
+    public final NullType NULL;
     public final ClassType OBJECT;
     private final Map<Symbol, TypeDefinition> envTypes;
 
 
     public EnvironmentType(DecacCompiler compiler) {
-
         envTypes = new HashMap<>();
 
         Symbol intSymb = compiler.createSymbol("int");
@@ -45,6 +45,10 @@ public class EnvironmentType {
         Symbol booleanSymb = compiler.createSymbol("boolean");
         BOOLEAN = new BooleanType(booleanSymb);
         envTypes.put(booleanSymb, new TypeDefinition(BOOLEAN, Location.BUILTIN));
+
+        Symbol nullSymb = compiler.createSymbol("null");
+        NULL = new NullType(nullSymb);
+        envTypes.put(nullSymb, new TypeDefinition(NULL, Location.BUILTIN));
 
         Symbol objectSymb = compiler.createSymbol("Object");
         OBJECT = new ClassType(objectSymb, new Location(0, 0, "Object"), null);

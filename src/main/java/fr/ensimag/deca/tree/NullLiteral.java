@@ -12,7 +12,8 @@ import java.io.PrintStream;
 public class NullLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        return null;
+        setType(compiler.environmentType.NULL);
+        return getType();
     }
 
     @Override

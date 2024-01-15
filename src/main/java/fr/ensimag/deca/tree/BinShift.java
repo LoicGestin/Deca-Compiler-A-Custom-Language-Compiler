@@ -32,8 +32,8 @@ public class BinShift extends AbstractBinaryExpr {
         if (!typeR.isInt()){
             throw new ContextualError("Exception : binary shift value must be int, is " + typeR, getLocation());
         }
-        else if (!typeL.isFloat() && !typeL.isInt()){
-            throw new ContextualError("Exception : binary shift can only be applied to int or float, not " + typeL, getLocation());
+        else if (!typeL.isInt()){
+            throw new ContextualError("Exception : binary shift can only be applied to int not " + typeL, getLocation());
         }
 
         setType(typeL);

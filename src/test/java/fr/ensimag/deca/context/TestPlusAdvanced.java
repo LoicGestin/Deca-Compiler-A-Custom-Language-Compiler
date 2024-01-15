@@ -62,8 +62,8 @@ public class TestPlusAdvanced {
         assertTrue(t.getLeftOperand() instanceof ConvFloat);
         assertFalse(t.getRightOperand() instanceof ConvFloat);
         // check that the mocks have been called properly.
-        //verify(intexpr1).verifyExpr(compiler, null, null);
-        //verify(floatexpr1).verifyExpr(compiler, null, null); TODO : uncomment
+        verify(intexpr1).verifyExpr(compiler, null, null);
+        verify(floatexpr1).verifyExpr(compiler, null, null);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class TestPlusAdvanced {
         assertTrue(t.getRightOperand() instanceof ConvFloat);
         assertFalse(t.getLeftOperand() instanceof ConvFloat);
         // check that the mocks have been called properly.
-        //verify(intexpr1).verifyExpr(compiler, null, null);
-        //verify(floatexpr1).verifyExpr(compiler, null, null);
+        verify(intexpr1).verifyExpr(compiler, null, null);
+        verify(floatexpr1).verifyExpr(compiler, null, null);
     }
 }

@@ -26,10 +26,10 @@ public class GreaterOrEqual extends AbstractOpIneq {
 
         codeGen.setAssignation(true);
         getLeftOperand().codeGenInst(compiler);
-        codeGen.setAssignation(true);
+        codeGen.setAssignation(false);
         getRightOperand().codeGenInst(compiler);
 
-        compiler.addInstruction(new CMP(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));
+        compiler.addInstruction(new CMP(codeGen.getRegistreCourant(compiler), codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BGE(vrai));
 
         Equals.comparison(compiler, vrai, fin);

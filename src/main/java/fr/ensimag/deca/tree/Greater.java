@@ -23,10 +23,11 @@ public class Greater extends AbstractOpIneq {
         Label fin = compiler.labelTable.addLabel("fin_Greater");
         codeGen.setAssignation(true);
         getLeftOperand().codeGenInst(compiler);
-        codeGen.setAssignation(true);
+        codeGen.setAssignation(false);
         getRightOperand().codeGenInst(compiler);
 
-        compiler.addInstruction(new CMP(codeGen.getRegistreUtilise(), codeGen.getRegistreUtilise()));
+        codeGen.afficheStack();
+        compiler.addInstruction(new CMP(codeGen.getRegistreCourant(compiler), codeGen.getRegistreUtilise()));
         compiler.addInstruction(new BGT(vrai));
 
         Equals.comparison(compiler, vrai, fin);

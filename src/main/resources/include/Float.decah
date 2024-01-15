@@ -1,0 +1,19 @@
+class Float {
+
+    float POSITIVE_INFINITY;
+    float MIN_VALUE;
+
+    bool isInfinite(float f){
+    }
+
+    bool isNaN(float f){
+    }
+
+    //Renvoie l'entier dont la représentation binaire sur 32 bits est identique à celle du flottant
+    int floatToIntBits(float f){
+    }
+
+    //Renvoie le flottant dont la représentation binaire sur 32 bits est identique à celle de l'entier
+    float intBitsToFloat(int b){
+    }
+}

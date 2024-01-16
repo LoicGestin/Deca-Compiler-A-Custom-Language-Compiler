@@ -84,8 +84,7 @@ public class codeGen {
                 compiler.addInstruction(new POP(codeGen.getCurrentRegistreUtilise()));
                 nbPush--;
                 return Register.getR(0);
-            }
-            else{
+            } else {
 
                 return getRegistreUtilise();
             }
@@ -132,15 +131,10 @@ public class codeGen {
         if (nombreRegistres <= 2) {
             return;
         }
-        topNEntries = table.entrySet()
-                .stream()
+        topNEntries = table.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .limit(nombreRegistres - 2)
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        TreeMap::new
-                ));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, TreeMap::new));
     }
 
 

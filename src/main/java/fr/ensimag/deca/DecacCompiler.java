@@ -71,6 +71,9 @@ public class DecacCompiler {
             nocheck = compilerOptions.nocheck;
         }
     }
+    public static boolean getDebug() {
+        return false;
+    }
 
     public static boolean getColor() {
         return color;

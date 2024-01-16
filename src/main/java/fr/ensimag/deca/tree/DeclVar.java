@@ -50,22 +50,35 @@ public class DeclVar extends AbstractDeclVar {
         // TODO : To finish
     }
 
+
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        if (codeGen.getValueVariableTable(varName.getName().toString()) > 1) {
-            if (codeGen.isGPRegisterRestant(varName.getName().toString())) {
-                varName.getExpDefinition().setGPRegister(codeGen.getGPRegisterVariable());
-                if (initialization instanceof NoInitialization) {
-                    codeGen.saveVariable2();
-                }
+        int usageCount = codeGen.getValueVariableTable(varName.getName().toString());
+        boolean isGPRegisterRemaining = codeGen.isGPRegisterRestant(varName.getName().toString());
+
+        if (usageCount > 1) {
+            ExpDefinition expDefinition = varName.getExpDefinition();
+
+            if (isGPRegisterRemaining) {
+                expDefinition.setGPRegister(codeGen.getGPRegisterVariable());
             } else {
-                varName.getExpDefinition().setOperand(codeGen.getRegistreVariable());
-            }
-            if (initialization instanceof Initialization) {
-                initialization.codeGenInit(compiler, varName.getExpDefinition());
+                expDefinition.setOperand(codeGen.getRegistreVariable());
             }
 
+
+            if (DecacCompiler.getDebug()) {
+                if (initialization instanceof Initialization) {
+                    compiler.addComment("Declaration de la variable (" + usageCount + " usage) " + varName.getName() + " et initialisation" + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));
+                }
+                if (initialization instanceof NoInitialization) {
+                    compiler.addComment("Declaration de la variable (" + usageCount + " usage) " + varName.getName() + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));
+                }
+            }
+
+
+            initialization.codeGenInit(compiler, expDefinition);
         }
+
     }
 
 

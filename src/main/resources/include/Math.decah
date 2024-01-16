@@ -1,42 +1,23 @@
+// Grenoble INP - Ensimag projet GL -*- mode: java -*-
+// Library for class Math of Deca, coded in Deca
+
 class Math {
-
-    //Restranscription du code source de la classe Math de Java
-    //https://developer.classpath.org/doc/java/lang/Math-source.html, l.1014-1051
-    float ulp(float f){
-         if (Float.isNaN(f))
-           return f;
-         if (Float.isInfinite(f))
-           return Float.POSITIVE_INFINITY;
-         // This handles both +0.0 and -0.0.
-         if (f == 0.0)
-           return Float.MIN_VALUE;
-         int bits = Float.floatToIntBits(f);
-         final int mantissaBits = 23;
-         final int exponentBits = 8;
-         final int mantMask = (1 << mantissaBits) - 1;
-         int mantissa = bits & mantMask;
-         final int expMask = (1 << exponentBits) - 1;
-         int exponent = (bits >>> mantissaBits) & expMask;
-
-        // Denormal number, so the answer is easy.
-        if (exponent == 0)
-           {
-            int result = (exponent << mantissaBits) | 1;
-             return Float.intBitsToFloat(result);
-           }
-
-         // Conceptually we want to have '1' as the mantissa.  Then we would
-         // shift the mantissa over to make a normal number.  If this underflows
-         // the exponent, we will make a denormal result.
-         int newExponent = exponent - mantissaBits;
-         int newMantissa;
-         if (newExponent > 0)
-           newMantissa = 0;
-         else
-           {
-             newMantissa = 1 << -(newExponent - 1);
-             newExponent = 0;
-           }
-         return Float.intBitsToFloat((newExponent << mantissaBits) | newMantissa);
+    float sin(float f) {
+        println("sin(f) not yet implemented");
+    }
+    float cos(float f) {
+        println("cos(f) not yet implemented");
+    }
+    float asin(float f) {
+        println("asin(f) not yet implemented");
+    }
+    float atan(float f) {
+        println("atan(f) not yet implemented");
+    }
+    float ulp(float f) {
+        println("ulp(f) not yet implemented");
     }
 }
+
+
+// End of Deca Math library

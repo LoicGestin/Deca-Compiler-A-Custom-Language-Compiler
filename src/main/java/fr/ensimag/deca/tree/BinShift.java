@@ -53,9 +53,6 @@ public class BinShift extends AbstractOpArith {
 
     @Override
     public void codeGenOperator(DecacCompiler compiler) {
-
-        codeGen.afficheStack();
-
         // Create a loop that will shift the left operand by the right operand
         Label debut_bs = compiler.labelTable.addLabel("debut_bs");
         Label fin_bs = compiler.labelTable.addLabel("fin_bs");

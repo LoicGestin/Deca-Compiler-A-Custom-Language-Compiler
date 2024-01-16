@@ -21,7 +21,7 @@ public class codeGen {
 
     static int nombreRegistres = 14;
 
-    static int indexPile = 50;
+    static int indexPile = 0;
 
     static int nombrePileTamporaire = 0;
 
@@ -49,6 +49,25 @@ public class codeGen {
         GPRegister r = registresLibres.pop();
         registresUtilises.push(r);
         return r;
+    }
+
+    public static int tableSize() {
+        int size = 0;
+        for (String s : table.keySet()) {
+            if (table.get(s) > 1) {
+                size += 1;
+            }
+        }
+        if (topNEntries == null) {
+            return size;
+        }
+        int size2 = 0;
+        for (String s : topNEntries.keySet()) {
+            if (table.get(s) > 1) {
+                size2 += 1;
+            }
+        }
+        return size - size2;
     }
 
     public static GPRegister getRegistreUtilise() {
@@ -84,8 +103,7 @@ public class codeGen {
                 compiler.addInstruction(new POP(codeGen.getCurrentRegistreUtilise()));
                 nbPush--;
                 return Register.getR(0);
-            }
-            else{
+            } else {
 
                 return getRegistreUtilise();
             }
@@ -132,15 +150,10 @@ public class codeGen {
         if (nombreRegistres <= 2) {
             return;
         }
-        topNEntries = table.entrySet()
-                .stream()
+        topNEntries = table.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .limit(nombreRegistres - 2)
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        TreeMap::new
-                ));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, TreeMap::new));
     }
 
 

@@ -81,7 +81,9 @@ public class CallMethod extends AbstractExpr {
      */
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("not yet implemented");
+        expr.prettyPrint(s, prefix, false);
+        method.prettyPrint(s, prefix, false);
+        arguments.prettyPrint(s, prefix, false);
     }
 
     /**

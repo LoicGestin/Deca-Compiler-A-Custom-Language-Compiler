@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
+import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DAddr;
@@ -12,6 +13,8 @@ import java.io.PrintStream;
 public class GetAttribut extends AbstractIdentifier {
     private final AbstractExpr expr;
     private final AbstractIdentifier attribut;
+
+    private Definition definition;
 
     public GetAttribut(AbstractExpr expr, AbstractIdentifier attribut) {
         this.expr = expr;
@@ -66,7 +69,14 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public ClassDefinition getClassDefinition() {
-        throw new UnsupportedOperationException("not yet implemented");
+        try {
+            return (ClassDefinition) definition;
+        } catch (ClassCastException e) {
+            throw new DecacInternalError(
+                    "Identifier "
+                            + getName()
+                            + " is not a class identifier, you can't call getClassDefinition on it");
+        }
     }
 
     @Override
@@ -76,7 +86,7 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public void setDefinition(Definition definition) {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.definition = definition;
     }
 
     @Override

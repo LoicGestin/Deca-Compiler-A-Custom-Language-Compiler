@@ -50,7 +50,7 @@ public class DecacCompiler {
     /**
      * The global environment for types, the symbolTable and the labelTable
      */
-    public final EnvironmentType environmentType = new EnvironmentType(this);
+    public EnvironmentType environmentType = new EnvironmentType(this);
     private final CompilerOptions compilerOptions;
     private final File source;
     /**
@@ -59,6 +59,7 @@ public class DecacCompiler {
     private final IMAProgram program = new IMAProgram();
     private final Label overflow_error = new Label("overflow_error");
     private final Label io_error = new Label("io_error");
+    private final Label stack_overflow_error = new Label("stack_overflow_error");
     public SymbolTable symbolTable = new SymbolTable();
     public final LabelTable labelTable = new LabelTable();
 
@@ -301,4 +302,12 @@ public class DecacCompiler {
     public EnvironmentType getEnvironmentType() {
         return environmentType;
     }
+    public void setEnvironmentType(EnvironmentType environmentType) {
+        this.environmentType = environmentType;
+    }
+
+    public Label getStack_overflow_error() {
+        return stack_overflow_error;
+    }
+
 }

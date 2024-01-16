@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -61,12 +62,12 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler) throws ContextualError {
+    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
         if (stringLiteral != null) {
-            stringLiteral.verifyExpr(compiler, null, null);
+            stringLiteral.verifyExpr(compiler, localEnv, currentClass);
         } else {
-            declVars.verifyListDeclVariable(compiler, null);
-            insts.verifyListInst(compiler, null, null, null);
+            declVars.verifyListDeclVariable(compiler, localEnv);
+            insts.verifyListInst(compiler, localEnv, currentClass, returnType);
         }
     }
 }

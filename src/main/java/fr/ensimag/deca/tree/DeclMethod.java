@@ -58,8 +58,8 @@ public class DeclMethod extends AbstractDeclMethod {
         Type t = type.verifyType(compiler);
         Signature signature = params.verifyListDeclParamMembers(compiler);
 
-        name.setDefinition(new MethodDefinition(t, name.getLocation(), signature, name.getClassDefinition().getNumberOfMethods()));
-        name.getClassDefinition().incNumberOfMethods();
+        name.setDefinition(new MethodDefinition(t, name.getLocation(), signature, currentClass.getNumberOfMethods() + 1));
+        currentClass.incNumberOfMethods();
 
         try {
             currentClass.getMembers().declare(name.getName(), name.getExpDefinition());
@@ -70,7 +70,8 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler) throws ContextualError {
-        body.verifyMethodBody(compiler);
+    protected void verifyMethodBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
+        EnvironmentExp localEnv = currentClass.getMembers();
+        body.verifyMethodBody(compiler, localEnv, currentClass, type.getType());
     }
 }

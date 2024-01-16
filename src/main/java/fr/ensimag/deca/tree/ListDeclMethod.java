@@ -20,9 +20,9 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         }
     }
 
-    public void verifyListDeclMethodBody(DecacCompiler compiler) throws ContextualError {
+    public void verifyListDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         for (AbstractDeclMethod m : getList()) {
-            m.verifyMethodBody(compiler);
+            m.verifyMethodBody(compiler, currentClass);
         }
     }
 }

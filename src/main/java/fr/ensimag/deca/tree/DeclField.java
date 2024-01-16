@@ -58,6 +58,7 @@ public class DeclField extends AbstractDeclField {
         type.prettyPrint(s, prefix, true);
         field.prettyPrint(s, prefix, true);
         initialization.prettyPrint(s, prefix, true);
+        visibility.prettyPrint(s, prefix, true);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class DeclField extends AbstractDeclField {
             throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
         }
 
-        field.setDefinition(new FieldDefinition(t, field.getLocation(), visibility, field.getClassDefinition(), field.getClassDefinition().getNumberOfFields() + 1));
+        field.setDefinition(new FieldDefinition(t, field.getLocation(), visibility, currentClass, currentClass.getNumberOfFields() + 1));
 
         try {
             currentClass.getMembers().declare(field.getName(), field.getFieldDefinition());
@@ -82,12 +83,12 @@ public class DeclField extends AbstractDeclField {
             throw new ContextualError("Exception : Field " + field.getName() + " is already defined", field.getLocation());
         }
 
-        field.getClassDefinition().incNumberOfFields();
+        currentClass.incNumberOfFields();
 
     }
 
-    protected void verifyFieldBody(DecacCompiler compiler) throws ContextualError {
-        initialization.verifyInitialization(compiler, field.getType(), field.getClassDefinition().getMembers(), field.getClassDefinition());
+    protected void verifyFieldBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
+        initialization.verifyInitialization(compiler, field.getType(), currentClass.getMembers(), currentClass);
     }
 
 }

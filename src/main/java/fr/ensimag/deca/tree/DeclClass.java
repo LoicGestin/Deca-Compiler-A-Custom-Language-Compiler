@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 
@@ -20,10 +21,16 @@ public class DeclClass extends AbstractDeclClass {
     private final ListDeclMethod listDeclMethod;
 
     public DeclClass(AbstractIdentifier varName, AbstractIdentifier varSuper, ListDeclField listDeclField, ListDeclMethod listDeclMethod) {
+        Validate.notNull(varName);
+        Validate.notNull(varSuper);
+        Validate.notNull(listDeclField);
+        Validate.notNull(listDeclMethod);
         this.varName = varName;
         this.varSuper = varSuper;
         this.listDeclField = listDeclField;
         this.listDeclMethod = listDeclMethod;
+
+
     }
 
     @Override
@@ -72,10 +79,7 @@ public class DeclClass extends AbstractDeclClass {
 
         Type tName = varName.verifyType(compiler);
         Type tSuper = varSuper.verifyType(compiler);
-        compiler.setEnvironmentType(environmentType);
-        System.out.println(tName.isClass());
-        System.out.println(varName.getDefinition());
-
+        varName.setDefinition(new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()));
         if (tName.getName().getName().equals(tSuper.getName().getName())) {
             throw new ContextualError("Exception : Class name and super class name are the same", varName.getLocation());
         }
@@ -85,18 +89,14 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        System.out.println("Salut");
-        System.out.println(varName.getDefinition().isClass());
         listDeclField.verifyListDeclField(compiler, varName.getClassDefinition());
         listDeclMethod.verifyListDeclMethod(compiler, varName.getClassDefinition());
     }
 
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        varName.getClassDefinition().setNumberOfFields(listDeclField.getList().size());
-        varName.getClassDefinition().setNumberOfMethods(listDeclMethod.getList().size());
-        listDeclMethod.verifyListDeclMethodBody(compiler);
-        listDeclField.verifyListDeclFieldBody(compiler);
+        listDeclMethod.verifyListDeclMethodBody(compiler, varName.getClassDefinition());
+        listDeclField.verifyListDeclFieldBody(compiler, varName.getClassDefinition());
     }
 
 

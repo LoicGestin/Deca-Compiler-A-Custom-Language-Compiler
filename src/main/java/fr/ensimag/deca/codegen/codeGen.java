@@ -21,7 +21,7 @@ public class codeGen {
 
     static int nombreRegistres = 14;
 
-    static int indexPile = 50;
+    static int indexPile = 0;
 
     static int nombrePileTamporaire = 0;
 
@@ -49,6 +49,25 @@ public class codeGen {
         GPRegister r = registresLibres.pop();
         registresUtilises.push(r);
         return r;
+    }
+
+    public static int tableSize() {
+        int size = 0;
+        for (String s : table.keySet()) {
+            if (table.get(s) > 1) {
+                size += 1;
+            }
+        }
+        if (topNEntries == null) {
+            return size;
+        }
+        int size2 = 0;
+        for (String s : topNEntries.keySet()) {
+            if (table.get(s) > 1) {
+                size2 += 1;
+            }
+        }
+        return size - size2;
     }
 
     public static GPRegister getRegistreUtilise() {

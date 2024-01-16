@@ -79,12 +79,13 @@ public class DeclField extends AbstractDeclField {
 
         try {
             currentClass.getMembers().declare(field.getName(), field.getFieldDefinition());
-            EnvironmentExp env = currentClass.getMembers();
-            compiler.setEnvironmentExp(env);
+            compiler.environmentExp.declare(field.getName(), field.getFieldDefinition());
+            System.out.println("EnvironmentExp field : " );
+            compiler.environmentExp.afficher();
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Exception : Field " + field.getName() + " is already defined", field.getLocation());
         }
-
+        field.verifyExpr(compiler, currentClass.getMembers(), currentClass);
         currentClass.incNumberOfFields();
 
     }

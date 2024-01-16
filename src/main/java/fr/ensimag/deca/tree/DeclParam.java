@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.FieldDefinition;
-import fr.ensimag.deca.context.ParamDefinition;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
@@ -37,12 +34,20 @@ public class DeclParam extends AbstractDeclParam {
     }
 
     @Override
-    protected Type verifyParam(DecacCompiler compiler) throws ContextualError {
+    protected Type verifyParam(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
+
         if (t.isVoid()) {
             throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
         }
         name.setDefinition(new ParamDefinition(t, name.getLocation()));
+
+        try{
+            currentClass.getMembers().declare(name.getName(), name.getExpDefinition());
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Exception : Variable " + name.getName() + " already declared", name.getLocation());
+        }
+
         name.setType(t);
         return getType();
     }

@@ -56,15 +56,16 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyMethod(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
-        Signature signature = params.verifyListDeclParamMembers(compiler);
+        Signature signature = params.verifyListDeclParamMembers(compiler, currentClass);
 
         name.setDefinition(new MethodDefinition(t, name.getLocation(), signature, currentClass.getNumberOfMethods() + 1));
         currentClass.incNumberOfMethods();
 
         try {
             currentClass.getMembers().declare(name.getName(), name.getExpDefinition());
-            EnvironmentExp env = currentClass.getMembers();
-            compiler.setEnvironmentExp(env);
+            compiler.environmentExp.declare(name.getName(), name.getExpDefinition());
+            System.out.println("EnvironmentExp methode : ");
+            compiler.environmentExp.afficher();
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Exception : Method " + name.getName() + " already declared", name.getLocation());
         }

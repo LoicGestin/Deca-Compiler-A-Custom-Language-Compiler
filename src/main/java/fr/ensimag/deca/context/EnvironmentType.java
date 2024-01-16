@@ -25,10 +25,12 @@ public class EnvironmentType {
     public final NullType NULL;
     public final ClassType OBJECT;
     private final Map<Symbol, TypeDefinition> envTypes;
+    private final Map<Symbol, ClassDefinition> envClasses;
 
 
     public EnvironmentType(DecacCompiler compiler) {
         envTypes = new HashMap<>();
+        envClasses = new HashMap<>();
 
         Symbol intSymb = compiler.createSymbol("int");
         INT = new IntType(intSymb);
@@ -53,11 +55,8 @@ public class EnvironmentType {
         Symbol objectSymb = compiler.createSymbol("Object");
         OBJECT = new ClassType(objectSymb, new Location(0, 0, "Object"), null);
         envTypes.put(objectSymb, new TypeDefinition(OBJECT, Location.BUILTIN));
+        envClasses.put(objectSymb, new ClassDefinition(OBJECT, Location.BUILTIN, null));
 
-    }
-
-    public Map<Symbol, TypeDefinition> getEnvTypes() {
-        return envTypes;
     }
 
     public boolean compatible(Type t1, Type t2) {
@@ -68,10 +67,28 @@ public class EnvironmentType {
         return envTypes.get(s);
     }
 
-    public void declareClass(Symbol key, ClassDefinition value) throws EnvironmentExp.DoubleDefException {
+    public void declareClass(Symbol key, ClassDefinition value, ClassDefinition superClass) throws EnvironmentExp.DoubleDefException {
         if (envTypes.containsKey(key)) {
             throw new EnvironmentExp.DoubleDefException();
         }
+
+        if(envClasses.containsKey(key)) {
+            throw new EnvironmentExp.DoubleDefException();
+        }
+
         envTypes.put(key, new TypeDefinition(value.getType(), value.getLocation()));
+        envClasses.put(key, new ClassDefinition(value.getType(), value.getLocation(), superClass));
+    }
+
+    public ClassDefinition getClassDefinition(Symbol key) {
+    	return envClasses.get(key);
+    }
+
+    public void afficher() {
+    	System.out.println("Affichage de l'environnement : ");
+    	for (Symbol key : envTypes.keySet()) {
+    		System.out.println(key + " : " + envTypes.get(key));
+    	}
+    	System.out.println("Fin de l'affichage de l'environnement.");
     }
 }

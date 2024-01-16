@@ -40,9 +40,9 @@ public abstract class AbstractPrint extends AbstractInst {
 
         // Check that each argument is compatible with print type
         for (AbstractExpr a : getArguments().getList()) {
-            System.out.println(a);
+            System.out.println("Je suis a :"+a);
             Type t = a.verifyExpr(compiler, localEnv, currentClass);
-            System.out.println(t);
+            System.out.println("Je suis t :"+t);
             if (!t.isInt() && !t.isFloat() && !t.isString() && !t.isBoolean()) {
                 throw new ContextualError("Exception : Argument of print must be int, float, boolean or string", a.getLocation());
             }

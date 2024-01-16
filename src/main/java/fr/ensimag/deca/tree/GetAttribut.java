@@ -24,6 +24,7 @@ public class GetAttribut extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
+        System.out.println("Je suis passé dans GetAttribut");
         ClassType tClass = t.asClassType("GetAttribut on non-class type", expr.getLocation());
         Type tAttribut = attribut.verifyExpr(compiler, tClass.getDefinition().getMembers(), tClass.getDefinition());
 

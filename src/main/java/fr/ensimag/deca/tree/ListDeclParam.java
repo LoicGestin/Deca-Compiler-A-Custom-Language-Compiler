@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.context.Type;
@@ -20,10 +21,10 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
 
     }
 
-    public Signature verifyListDeclParamMembers(DecacCompiler compiler) throws ContextualError {
+    public Signature verifyListDeclParamMembers(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         Signature sig = new Signature();
         for (AbstractDeclParam p : getList()) {
-            Type t = p.verifyParam(compiler);
+            Type t = p.verifyParam(compiler, currentClass);
             sig.add(t);
         }
         return sig;

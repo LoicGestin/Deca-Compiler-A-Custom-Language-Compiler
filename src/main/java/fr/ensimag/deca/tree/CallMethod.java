@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
@@ -39,12 +36,30 @@ public class CallMethod extends AbstractExpr{
      * (corresponds to the "type" attribute)
      */
     @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        Type type = expr.verifyExpr(compiler, localEnv, currentClass);
-        Type type2 = method.verifyExpr(compiler, localEnv, currentClass);
-        System.out.println("callmethode"+ " "+ type);
-        System.out.println("callmethode :"+ " "+ type2);
-        setType(type2);
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError {
+        System.out.println("Je suis passé dans CallMethod");
+        Type typeExpr = expr.verifyExpr(compiler, localEnv, currentClass);
+        System.out.println("callmethode"+ " "+ typeExpr +" "+ expr.getClass().getName());
+        Type typeMeth = method.verifyExpr(compiler, localEnv, currentClass);
+        System.out.println("callmethode"+ " "+ typeMeth+ " "+method.getClass().getName());
+
+        Signature sig = method.getMethodDefinition().getSignature();
+        if(sig.size() != arguments.size()){
+            throw new ContextualError("Exception : Wrong number of arguments", method.getLocation());
+        }
+
+        int n;
+        for(n = 0; n < arguments.size(); n++){
+            AbstractExpr e = arguments.getList().get(n);
+            arguments.add(e.verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(n)));
+            n++;
+            System.out.println("Fin for CallMethod");
+        }
+        System.out.println("Sortie for CallMethod");
+
+        setType(typeMeth);
+        System.out.println("Je suis sorti de CallMethod");
         return method.getType();
     }
 

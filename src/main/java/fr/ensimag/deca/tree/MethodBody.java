@@ -63,9 +63,12 @@ public class MethodBody extends AbstractMethodBody {
 
     @Override
     protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
+        System.out.println("returnType : " +" " + returnType);
         if (stringLiteral != null) {
+            System.out.println("StringLiteral : ");
             stringLiteral.verifyExpr(compiler, localEnv, currentClass);
         } else {
+            System.out.println("DeclVars : ");
             declVars.verifyListDeclVariable(compiler, localEnv);
             insts.verifyListInst(compiler, localEnv, currentClass, returnType);
         }

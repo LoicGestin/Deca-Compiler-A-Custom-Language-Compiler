@@ -33,10 +33,8 @@ public class Main extends AbstractMain {
     protected void verifyMain(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify Main: start");
 
-        EnvironmentExp env = new EnvironmentExp(null);
-
-        this.declVariables.verifyListDeclVariable(compiler, env);
-        this.insts.verifyListInst(compiler, env, null, new VoidType(null));
+        this.declVariables.verifyListDeclVariable(compiler, compiler.environmentExp);
+        this.insts.verifyListInst(compiler, compiler.environmentExp, null, new VoidType(null));
 
         LOG.debug("verify Main: end");
     }
@@ -44,11 +42,8 @@ public class Main extends AbstractMain {
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
         // A FAIRE: traiter les déclarations de variables.
-        codeGen.setUpRegistres();
-        codeGen.genereTopNEntries();
 
-        compiler.addComment("Beginning of variables declarations:");
-
+        compiler.addComment("Beginning of variables declaration::");
         declVariables.codeGenListDeclVar(compiler);
         compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler);

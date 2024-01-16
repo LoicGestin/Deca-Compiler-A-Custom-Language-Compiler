@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -51,6 +52,7 @@ public class DecacCompiler {
      * The global environment for types, the symbolTable and the labelTable
      */
     public EnvironmentType environmentType = new EnvironmentType(this);
+    public EnvironmentExp environmentExp = new EnvironmentExp(null);
     private final CompilerOptions compilerOptions;
     private final File source;
     /**
@@ -302,8 +304,13 @@ public class DecacCompiler {
     public EnvironmentType getEnvironmentType() {
         return environmentType;
     }
+
     public void setEnvironmentType(EnvironmentType environmentType) {
         this.environmentType = environmentType;
+    }
+
+    public void setEnvironmentExp(EnvironmentExp environmentExp) {
+        this.environmentExp = environmentExp;
     }
 
     public Label getStack_overflow_error() {

@@ -63,6 +63,8 @@ public class DeclMethod extends AbstractDeclMethod {
 
         try {
             currentClass.getMembers().declare(name.getName(), name.getExpDefinition());
+            EnvironmentExp env = currentClass.getMembers();
+            compiler.setEnvironmentExp(env);
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Exception : Method " + name.getName() + " already declared", name.getLocation());
         }
@@ -72,6 +74,7 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyMethodBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         EnvironmentExp localEnv = currentClass.getMembers();
+        System.out.println("type méthode" +" "+ type.getType());
         body.verifyMethodBody(compiler, localEnv, currentClass, type.getType());
     }
 }

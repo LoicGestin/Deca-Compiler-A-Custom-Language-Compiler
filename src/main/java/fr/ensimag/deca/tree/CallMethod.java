@@ -10,7 +10,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 
-public class CallMethod extends AbstractExpr {
+public class CallMethod extends AbstractExpr{
 
 
     private final AbstractExpr expr;
@@ -41,11 +41,11 @@ public class CallMethod extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type type = expr.verifyExpr(compiler, localEnv, currentClass);
-        if (!type.isClass()) {
-            throw new ContextualError("CallMethod must be called on a class", getLocation());
-        }
-        setType(type);
-        return getType();
+        Type type2 = method.verifyExpr(compiler, localEnv, currentClass);
+        System.out.println("callmethode"+ " "+ type);
+        System.out.println("callmethode :"+ " "+ type2);
+        setType(type2);
+        return method.getType();
     }
 
     /**

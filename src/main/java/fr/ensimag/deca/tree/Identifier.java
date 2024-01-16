@@ -177,6 +177,7 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
+        System.out.println("SA");
         ExpDefinition expDef = localEnv.get(this.getName());
         codeGen.addVariableTable(this.getName().toString());
         if (expDef == null) {

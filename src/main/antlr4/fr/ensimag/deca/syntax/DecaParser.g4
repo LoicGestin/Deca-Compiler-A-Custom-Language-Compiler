@@ -25,6 +25,7 @@ options {
 // which packages should be imported?
 @header {
     import fr.ensimag.deca.tree.*;
+    import fr.ensimag.deca.context.*;
     import java.io.PrintStream;
 }
 
@@ -543,7 +544,8 @@ class_extension returns[AbstractIdentifier tree]
     | /* epsilon */ {
 
            $tree = new Identifier(getDecacCompiler().symbolTable.create("Object"));
-           $tree.setLocation(Location.BUILTIN);
+           setLocation($tree, $ctx.start);
+           $tree.setDefinition(new ClassDefinition(getDecacCompiler().environmentType.OBJECT,$tree.getLocation(), null));
         }
     ;
 

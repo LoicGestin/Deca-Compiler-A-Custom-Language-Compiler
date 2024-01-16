@@ -60,6 +60,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public ClassDefinition getClassDefinition() {
+        ClassDefinition classDefinition = (ClassDefinition) definition;
         try {
             return (ClassDefinition) definition;
         } catch (ClassCastException e) {
@@ -198,7 +199,9 @@ public class Identifier extends AbstractIdentifier {
         if (typeDef == null) {
             throw new ContextualError("Exception : Type " + this.getName() + " is not defined", this.getLocation());
         } else {
-            this.definition = typeDef;
+            if(!typeDef.getType().isClass()) {
+                this.definition = typeDef;
+            }
             setType(typeDef.getType());
         }
         return typeDef.getType();

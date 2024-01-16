@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.MethodDefinition;
-import fr.ensimag.deca.context.Signature;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -57,20 +54,19 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    protected void verifyMethod(DecacCompiler compiler) throws ContextualError {
+    protected void verifyMethod(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
-        Signature signature = new Signature();
-        for (AbstractDeclParam param : params.getList()) {
-            signature.add(param.getType());
-        }
+        Signature signature = params.verifyListDeclParamMembers(compiler);
+
         name.setDefinition(new MethodDefinition(t, name.getLocation(), signature, name.getClassDefinition().getNumberOfMethods()));
         name.getClassDefinition().incNumberOfMethods();
-        name.setType(t);
-    }
 
-    @Override
-    protected void verifyMethodMembers(DecacCompiler compiler) throws ContextualError {
-        params.verifyListDeclParamMembers(compiler);
+        try {
+            currentClass.getMembers().declare(name.getName(), name.getExpDefinition());
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Exception : Method " + name.getName() + " already declared", name.getLocation());
+        }
+        name.setType(t);
     }
 
     @Override

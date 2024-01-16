@@ -52,7 +52,12 @@ public class MethodBody extends AbstractMethodBody {
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (stringLiteral != null) {
+            stringLiteral.iter(f);
+        } else {
+            declVars.iter(f);
+            insts.iter(f);
+        }
     }
 
     @Override

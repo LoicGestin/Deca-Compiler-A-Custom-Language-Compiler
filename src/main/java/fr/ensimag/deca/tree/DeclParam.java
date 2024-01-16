@@ -2,6 +2,9 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.FieldDefinition;
+import fr.ensimag.deca.context.ParamDefinition;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
@@ -34,17 +37,13 @@ public class DeclParam extends AbstractDeclParam {
     }
 
     @Override
-    protected void verifyParam(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    protected void verifyParamMembers(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    protected void verifyParamBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
+    protected Type verifyParam(DecacCompiler compiler) throws ContextualError {
+        Type t = type.verifyType(compiler);
+        if (t.isVoid()) {
+            throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
+        }
+        name.setDefinition(new ParamDefinition(t, name.getLocation()));
+        name.setType(t);
+        return getType();
     }
 }

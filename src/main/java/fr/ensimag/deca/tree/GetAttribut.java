@@ -20,7 +20,24 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type t = expr.verifyExpr(compiler, localEnv, currentClass);
+        ClassType tClass = t.asClassType("GetAttribut on non-class type", expr.getLocation());
+        Type tAttribut = attribut.verifyExpr(compiler, tClass.getDefinition().getMembers(), tClass.getDefinition());
+
+        if(!attribut.getDefinition().isClass()){
+            throw new ContextualError("GetAttribut on non-class type", attribut.getLocation());
+        }
+
+        // si protected
+        FieldDefinition attributDef = attribut.getFieldDefinition();
+        if (attributDef.getVisibility() == Visibility.PROTECTED && (currentClass == null ||
+                !tClass.isSubClassOf(currentClass.getType()))) {
+            throw new ContextualError("The field is protected",attribut.getLocation());
+        }
+
+        setType(tAttribut);
+        return getType();
+
     }
 
     @Override
@@ -53,7 +70,7 @@ public class GetAttribut extends AbstractIdentifier {
     }
 
     @Override
-    public Definition getDefinition() {
+    public ExpDefinition getDefinition() {
         throw new UnsupportedOperationException("not yet implemented");
     }
 

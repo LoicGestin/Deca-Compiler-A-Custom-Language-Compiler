@@ -72,6 +72,9 @@ public class DeclClass extends AbstractDeclClass {
 
         Type tName = varName.verifyType(compiler);
         Type tSuper = varSuper.verifyType(compiler);
+        compiler.setEnvironmentType(environmentType);
+        System.out.println(tName.isClass());
+        System.out.println(varName.getDefinition());
 
         if (tName.getName().getName().equals(tSuper.getName().getName())) {
             throw new ContextualError("Exception : Class name and super class name are the same", varName.getLocation());
@@ -82,9 +85,10 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        listDeclField.verifyListDeclField(compiler);
-        listDeclMethod.verifyListDeclMethod(compiler);
-        listDeclMethod.verifyListDeclMethodMembers(compiler);
+        System.out.println("Salut");
+        System.out.println(varName.getDefinition().isClass());
+        listDeclField.verifyListDeclField(compiler, varName.getClassDefinition());
+        listDeclMethod.verifyListDeclMethod(compiler, varName.getClassDefinition());
     }
 
     @Override

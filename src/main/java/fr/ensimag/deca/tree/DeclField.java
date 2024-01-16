@@ -68,15 +68,22 @@ public class DeclField extends AbstractDeclField {
     }
 
     @Override
-    protected void verifyField(DecacCompiler compiler) throws ContextualError {
+    protected void verifyField(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
         if (t.isVoid()) {
             throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
         }
-        field.setDefinition(new FieldDefinition(t, field.getLocation(), visibility, field.getClassDefinition(), field.getClassDefinition().getNumberOfFields()));
+
+        field.setDefinition(new FieldDefinition(t, field.getLocation(), visibility, field.getClassDefinition(), field.getClassDefinition().getNumberOfFields() + 1));
+
+        try {
+            currentClass.getMembers().declare(field.getName(), field.getFieldDefinition());
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Exception : Field " + field.getName() + " is already defined", field.getLocation());
+        }
+
         field.getClassDefinition().incNumberOfFields();
-        field.setType(t);
-        initialization.verifyInitialization(compiler, t, field.getClassDefinition().getMembers(), field.getClassDefinition());
+
     }
 
     protected void verifyFieldBody(DecacCompiler compiler) throws ContextualError {

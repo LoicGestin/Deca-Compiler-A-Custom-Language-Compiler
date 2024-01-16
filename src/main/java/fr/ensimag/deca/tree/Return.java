@@ -1,17 +1,14 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
 
 public class Return extends AbstractInst {
 
-    private final AbstractExpr expr;
+    private AbstractExpr expr;
 
     public Return(AbstractExpr expr) {
         this.expr = expr;
@@ -27,7 +24,23 @@ public class Return extends AbstractInst {
      */
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type t = expr.verifyExpr(compiler, localEnv, currentClass);
+        if(t.isInt() && returnType.isFloat()) {
+            ConvFloat conv = new ConvFloat(expr);
+            conv.verifyExpr(compiler, localEnv, currentClass);
+            this.expr = conv;
+        } else if (t.isClass() && returnType.isClass()) {
+            ClassType tClass = t.asClassType("Return type is not a class", expr.getLocation());
+            ClassType returnTypeClass = returnType.asClassType("Return type is not a class", expr.getLocation());
+            if (!tClass.isSubClassOf(returnTypeClass)) {
+                throw new ContextualError("Return type is not a subclass of the method type", expr.getLocation());
+            }
+
+        }
+        if (!t.sameType(returnType)) {
+            throw new ContextualError("Return type is not the same as the method type", expr.getLocation());
+        }
+
     }
 
     /**
@@ -69,8 +82,20 @@ public class Return extends AbstractInst {
      */
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("not yet implemented");
+        expr.prettyPrint(s, prefix, true);
     }
+
+    @Override
+    protected void prettyPrintType(PrintStream s, String prefix) {
+        Type t = expr.getType();
+        if (t != null) {
+            s.print(prefix);
+            s.print("type: ");
+            s.print(t);
+            s.println();
+        }
+    }
+
 
     /**
      * Function used internally by {@link #iter(TreeFunction)}. Must call iter() on each

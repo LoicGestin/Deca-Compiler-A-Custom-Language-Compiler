@@ -157,6 +157,7 @@ inst returns[AbstractInst tree]
     | RETURN expr SEMI {
             assert($expr.tree != null);
             $tree = new Return($expr.tree);
+            setLocation($tree, $RETURN);
         }
     ;
 
@@ -414,10 +415,12 @@ select_expr returns[AbstractExpr tree]
         (o=OPARENT args=list_expr CPARENT {
             // we matched "e1.i(args)"
             $tree = new CallMethod($e1.tree, $i.tree, $args.tree);
+            setLocation($tree, $o);
         }
         | /* epsilon */ {
             // we matched "e.i"
             $tree = new GetAttribut($e1.tree, $i.tree);
+            setLocation($tree, $i.start);
         }
         )
     ;
@@ -528,6 +531,7 @@ class_decl returns[AbstractDeclClass tree]
     : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
             assert($name.tree != null);
             $tree = new DeclClass($name.tree, $superclass.tree, $class_body.field, $class_body.method);
+            setLocation($tree, $CLASS);
         }
     ;
 
@@ -599,10 +603,14 @@ decl_method returns[AbstractDeclMethod tree]
 
 }
     : type ident OPARENT params=list_params CPARENT (block {
-            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, new MethodBody($block.decls, $block.insts));
+            AbstractMethodBody block = new MethodBody($block.decls, $block.insts);
+            setLocation(block, $block.start);
+            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, block);
+            setLocation($tree, $type.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
             $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, new MethodBody(new StringLiteral($code.text)));
+            setLocation($tree, $type.start);
         }
       ) {
         }
@@ -611,11 +619,14 @@ decl_method returns[AbstractDeclMethod tree]
 list_params returns[ListDeclParam tree]
 @init {
         $tree = new ListDeclParam();
+        setLocation($tree, $ctx.start);
         }
     : (p1=param {
             $tree.add($p1.tree);
+            setLocation($tree, $p1.start);
         } (COMMA p2=param {
             $tree.add($p2.tree);
+            setLocation($tree, $p2.start);
         }
       )*)?
     ;
@@ -636,5 +647,6 @@ param  returns[AbstractDeclParam tree]
             assert($type.tree != null);
             assert($ident.tree != null);
             $tree = new DeclParam($type.tree, $ident.tree);
+            setLocation($tree, $type.start);
         }
     ;

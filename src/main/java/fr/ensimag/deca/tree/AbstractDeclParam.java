@@ -7,8 +7,8 @@ import org.apache.commons.lang.Validate;
 
 public abstract class AbstractDeclParam extends Tree {
 
-    private AbstractIdentifier type;
-    private AbstractIdentifier name;
+    protected AbstractIdentifier type;
+    protected AbstractIdentifier name;
 
     public AbstractDeclParam(AbstractIdentifier type, AbstractIdentifier name) {
         Validate.notNull(type);
@@ -28,12 +28,7 @@ public abstract class AbstractDeclParam extends Tree {
         return name;
     }
 
-    protected abstract void verifyParam(DecacCompiler compiler)
+    protected abstract Type verifyParam(DecacCompiler compiler)
             throws ContextualError;
 
-    protected abstract void verifyParamMembers(DecacCompiler compiler)
-            throws ContextualError;
-
-    protected abstract void verifyParamBody(DecacCompiler compiler)
-            throws ContextualError;
 }

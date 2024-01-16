@@ -1,8 +1,13 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.ima.pseudocode.instructions.HALT;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -38,6 +43,8 @@ public class Program extends AbstractProgram {
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         getClasses().verifyListClass(compiler);
+        getClasses().verifyListClassMembers(compiler);
+        getClasses().verifyListClassBody(compiler);
         getMain().verifyMain(compiler);
     }
 
@@ -52,7 +59,11 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
         compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(2, Register.GB)));
         */
-
+        codeGen.setUpRegistres();
+        codeGen.genereTopNEntries();
+        //compiler.addInstruction(new TSTO(codeGen.tableSize()));
+        //compiler.addInstruction(new BOV(compiler.getStack_overflow_error()));
+        //compiler.addInstruction(new ADDSP(codeGen.tableSize()));
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
     }

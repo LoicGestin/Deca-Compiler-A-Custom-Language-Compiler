@@ -1,4 +1,16 @@
 {
+    int a = 1;
+    int b = 2;
+    int c = 3;
+    int d = 4;
+    int e;
+    int f;
+    int g;
+
     println(1 + (1 + (1 + (1 + (1 + (1 + (1)))))));
     println(((((((1) + 1) + 1) + 1) + 1) + 1) + 1);
+
+    println(a + (b + (c + (d + (5 + (6 + a))))));
+    e = a + (b + (c + (d + (5 + (6 + a)))));
+    println(e);
 }

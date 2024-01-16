@@ -1,9 +1,10 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.instructions.HALT;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -27,6 +28,7 @@ public class Program extends AbstractProgram {
         this.main = main;
     }
 
+
     public ListDeclClass getClasses() {
         return classes;
     }
@@ -43,6 +45,12 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
+        codeGen.setUpRegistres();
+        codeGen.genereTopNEntries();
+        int taille = codeGen.tableSize();
+        compiler.addInstruction(new TSTO(taille));
+        compiler.addInstruction(new BOV(compiler.getStack_Overflow_error()));
+        compiler.addInstruction(new ADDSP(taille));
         // A FAIRE: compléter ce squelette très rudimentaire de code
         compiler.addComment("start main program");
         /*
@@ -55,6 +63,22 @@ public class Program extends AbstractProgram {
 
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+
+        compiler.addLabel(compiler.getOverflow_error());
+        compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
+
+        compiler.addLabel(compiler.getIo_error());
+        compiler.addInstruction(new WSTR("Error: Input/Output error"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
+
+        compiler.addLabel(compiler.getStack_Overflow_error());
+        compiler.addInstruction(new WSTR("Error: Stack overflow"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
+
     }
 
     @Override

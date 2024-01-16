@@ -59,6 +59,8 @@ public class DecacCompiler {
     private final IMAProgram program = new IMAProgram();
     private final Label overflow_error = new Label("overflow_error");
     private final Label io_error = new Label("io_error");
+    private final Label stack_overflow_error = new Label("stack_overflow_error");
+
     public SymbolTable symbolTable = new SymbolTable();
     public final LabelTable labelTable = new LabelTable();
 
@@ -72,7 +74,7 @@ public class DecacCompiler {
         }
     }
     public static boolean getDebug() {
-        return false;
+        return true;
     }
 
     public static boolean getColor() {
@@ -228,15 +230,6 @@ public class DecacCompiler {
         prog.codeGenProgram(this);
         addComment("end main program");
 
-        addLabel(getOverflow_error());
-        addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
-        addInstruction(new WNL());
-        addInstruction(new ERROR());
-
-        addLabel(getIo_error());
-        addInstruction(new WSTR("Error: Input/Output error"));
-        addInstruction(new WNL());
-        addInstruction(new ERROR());
 
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
@@ -291,6 +284,10 @@ public class DecacCompiler {
         DecaParser parser = new DecaParser(tokens);
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
+    }
+
+    public Label getStack_Overflow_error() {
+        return stack_overflow_error;
     }
 
     public Label getOverflow_error() {

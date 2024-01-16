@@ -18,5 +18,4 @@ mvn clean
 mvn -Djacoco.skip=false verify -Dmaven.test.failure.ignore
 mvn -q -f $POM -Djacoco.skip=false jacoco:restore-instrumented-classes
 mvn -f $POM -Djacoco.skip=false jacoco:report $args
-cd ../../../
 firefox target/site/jacoco/index.html

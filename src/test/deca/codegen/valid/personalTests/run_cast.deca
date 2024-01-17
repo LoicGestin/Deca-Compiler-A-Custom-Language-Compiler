@@ -1,0 +1,6 @@
+{
+    int b = 3;
+    float a = (float) (b);
+    int c = (int) (3.14);
+    println(a, " ", c);
+}

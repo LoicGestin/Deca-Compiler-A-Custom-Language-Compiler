@@ -47,12 +47,7 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        codeGen.setUpRegistres();
-        codeGen.genereTopNEntries();
-        int taille = codeGen.tableSize();
-        compiler.addInstruction(new TSTO(taille));
-        compiler.addInstruction(new BOV(compiler.getStack_Overflow_error()));
-        compiler.addInstruction(new ADDSP(taille));
+        codeGen.init_registres(compiler);
 
 
         // A FAIRE: compléter ce squelette très rudimentaire de code
@@ -65,8 +60,6 @@ public class Program extends AbstractProgram {
         */
 
 
-
-
         compiler.addComment("start main program");
         LOG.trace("start main program");
         main.codeGenMain(compiler);
@@ -74,20 +67,22 @@ public class Program extends AbstractProgram {
         compiler.addComment("end main program");
         LOG.trace("end main program");
 
-        compiler.addLabel(compiler.getOverflow_error());
-        compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
-        compiler.addInstruction(new WNL());
-        compiler.addInstruction(new ERROR());
+        if (!DecacCompiler.getNocheck()) {
+            compiler.addLabel(compiler.getOverflow_error());
+            compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
 
-        compiler.addLabel(compiler.getIo_error());
-        compiler.addInstruction(new WSTR("Error: Input/Output error"));
-        compiler.addInstruction(new WNL());
-        compiler.addInstruction(new ERROR());
+            compiler.addLabel(compiler.getIo_error());
+            compiler.addInstruction(new WSTR("Error: Input/Output error"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
 
-        compiler.addLabel(compiler.getStack_Overflow_error());
-        compiler.addInstruction(new WSTR("Error: Stack overflow"));
-        compiler.addInstruction(new WNL());
-        compiler.addInstruction(new ERROR());
+            compiler.addLabel(compiler.getStack_Overflow_error());
+            compiler.addInstruction(new WSTR("Error: Stack overflow"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+        }
     }
 
     @Override

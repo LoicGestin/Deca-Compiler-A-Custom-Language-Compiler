@@ -74,8 +74,6 @@ public class DeclVar extends AbstractDeclVar {
                     compiler.addComment("Declaration de la variable (" + usageCount + " usage) " + varName.getName() + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));
                 }
             }
-
-
             initialization.codeGenInit(compiler, expDefinition);
         }
 

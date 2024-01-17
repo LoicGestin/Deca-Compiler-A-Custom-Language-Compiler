@@ -13,7 +13,23 @@ class Float {
     }
 
     bool isNaN(float f){
-        return f==Float.Nan;
+        return f==Float.NaN;
+    }
+
+    int sign(float f){
+        if (f<0){
+            return -1;
+        }
+        return 1;
+    }
+
+    float abs(float f){
+        if (f>=0){
+            return f;
+        }
+        else{
+            return -f;
+        }
     }
 
     //Renvoie l'entier dont la représentation binaire sur 32 bits est identique à celle du flottant

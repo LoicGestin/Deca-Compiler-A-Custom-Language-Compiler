@@ -1,20 +1,63 @@
 // Description:
-//    Programme minimaliste utilisant int.
+//    Programme final des sans-objets.
 //
 // Resultats:
-//    i = 5
+//    Le PGCD de 2730 et 5610 est 30. En divisant par 30, on obtient 91 et 187.
+//    En multipliant 91 par 187, on obtient 17017.
+//    Le reste de la division de 17017 par 100 est 17.
 //
 // Historique:
 //    cree le 01/01/2024
 
 {
-        int i = 5;
-        int j = -i;
-        j = j + 1;
-        if(i == 5){
-                println("Salut");
+        int a;
+        int b;
+        int c;
+        int d;
+        a = 2730;
+        b = 5610;
+        c = a;
+        d = b;
+        while (c != d) {
+                if (c > d) {
+                        c = c - d;
+                } else {
+                        d = d - c;
+                }
         }
-        else{
-                println("Aurevoir");
-        }
+        print(" Le PGCD de ");
+        print(a);
+        print(" et ");
+        print(b);
+        print(" est ");
+        print(c);
+        print(".");
+
+        a = a / c;
+        b = b / c;
+
+        print(" En divisant par ");
+        print(c);
+        print(", on obtient ");
+        print(a);
+        print(" et ");
+        print(b);
+        println(".");
+
+        c = a * b;
+
+        print(" En multipliant ");
+        print(a);
+        print(" par ");
+        print(b);
+        print(", on obtient ");
+        print(c);
+        println(".");
+
+        print(" Le reste de la division de ");
+        print(c);
+        print(" par 100 est ");
+        print(c % 100);
+        print(".");
+
 }

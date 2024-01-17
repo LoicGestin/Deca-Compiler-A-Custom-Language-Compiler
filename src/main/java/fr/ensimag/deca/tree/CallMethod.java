@@ -7,7 +7,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 
-public class CallMethod extends AbstractExpr{
+public class CallMethod extends AbstractExpr {
 
 
     private final AbstractExpr expr;
@@ -38,26 +38,21 @@ public class CallMethod extends AbstractExpr{
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        System.out.println("Je suis passé dans CallMethod");
-        Type typeExpr = expr.verifyExpr(compiler, localEnv, currentClass);
-        System.out.println("callmethode"+ " "+ typeExpr +" "+ expr.getClass().getName());
-        Type typeMeth = method.verifyExpr(compiler, localEnv, currentClass);
-        System.out.println("callmethode"+ " "+ typeMeth+ " "+method.getClass().getName());
 
+        expr.verifyExpr(compiler, localEnv, currentClass);
+        Type typeMeth = method.verifyExpr(compiler, localEnv, currentClass);
         Signature sig = method.getMethodDefinition().getSignature();
-        if(sig.size() != arguments.size()){
-            throw new ContextualError("Exception : Wrong number of arguments", method.getLocation());
+
+        if (sig.size() != arguments.size()) {
+            throw new ContextualError("Exception : Wrong number of arguments in method call : " + sig.size() + " expected, " + arguments.size() + " given", getLocation());
         }
-        int n;
-        for(n = 0; n < sig.size(); n++){
+
+        for (int n = 0; n < sig.size(); n++) {
             AbstractExpr e = arguments.getList().get(n);
             e.verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(n));
-            System.out.println("Fin for CallMethod");
         }
-        System.out.println("Sortie for CallMethod");
 
         setType(typeMeth);
-        System.out.println("Je suis sorti de CallMethod");
         return method.getType();
     }
 

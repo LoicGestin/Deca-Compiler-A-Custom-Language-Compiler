@@ -37,7 +37,7 @@ public class Assign extends AbstractBinaryExpr {
         if (compiler.environmentType.compatible(type_gauche, type_droite)) {
             if (type_gauche.isFloat() && type_droite.isInt()) {
                 setRightOperand(new ConvFloat(getRightOperand()));
-                type_droite = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+                getRightOperand().verifyExpr(compiler, localEnv, currentClass);
             }
         }
         else{

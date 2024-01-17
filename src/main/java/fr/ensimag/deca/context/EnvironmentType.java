@@ -60,13 +60,11 @@ public class EnvironmentType {
     }
 
     public boolean subType(EnvironmentType envTypes, Type t1, Type t2) {
-        System.out.println("Je suis entré dans subType");
-        if(t1.sameType(t2) && !t1.isClassOrNull() && !t2.isClassOrNull()) {
+        if(t1.sameType(t2)) {
             return true;
         }
 
     	if (t1.isClass() && t2.isClassOrNull()) {
-            System.out.println("Je suis entré dans subType 2");
             if(t1.isClass() && t2.isNull()) {
                 return true;
             }
@@ -77,17 +75,13 @@ public class EnvironmentType {
 
     		ClassDefinition def1 = envTypes.getClassDefinition(t1.getName());
     		ClassDefinition def2 = envTypes.getClassDefinition(t2.getName());
-            System.out.println("type def1 : "+def1.getType() + " type def2 : "+def2.getType());
-            System.out.println("Salut " + def1.getType().isSubClassOf(def2.getType()));
             return def1.getType().isSubClassOf(def2.getType());
     	}
-        System.out.println("Je suis sorti de subType");
     	return false;
     }
 
     public boolean compatible(Type t1, Type t2) {
-        System.out.println("Je suis entré dans compatible");
-        return t1.isFloat() && t2.isInt() || subType(this, t1, t2);
+        return t1.isFloat() && t2.isInt() || t1.isInt() && t2.isFloat() || subType(this, t1, t2);
     }
 
     public TypeDefinition defOfType(Symbol s) {

@@ -114,7 +114,6 @@ public abstract class AbstractExpr extends AbstractInst {
                                      Type expectedType)
             throws ContextualError {
         Type cour = verifyExpr(compiler, localEnv, currentClass);
-        System.out.println("verifyRValue"+ " "+ cour +" "+ expectedType);
         if (!compiler.environmentType.compatible(expectedType, cour)) {
             throw new ContextualError("Exception : Incompatible types in assignment", getLocation());
         }

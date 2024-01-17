@@ -25,22 +25,20 @@ public class Return extends AbstractInst {
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
-        System.out.println("type "+ " "+ t);
-        System.out.println("return type "+ " "+ returnType);
         if(t.isInt() && returnType.isFloat()) {
             ConvFloat conv = new ConvFloat(expr);
             conv.verifyExpr(compiler, localEnv, currentClass);
             this.expr = conv;
         } else if (t.isClass() && returnType.isClass()) {
-            ClassType tClass = t.asClassType("Return type is not a class", expr.getLocation());
+            ClassType tClass = t.asClassType("Exception : Return type is not a class", expr.getLocation());
             ClassType returnTypeClass = returnType.asClassType("Return type is not a class", expr.getLocation());
             if (!tClass.isSubClassOf(returnTypeClass)) {
-                throw new ContextualError("Return type is not a subclass of the method type", expr.getLocation());
+                throw new ContextualError("Exception : Return type is not a subclass of the method type", expr.getLocation());
             }
 
         }
         if (!t.sameType(returnType)) {
-            throw new ContextualError("Return type is not the same as the method type", expr.getLocation());
+            throw new ContextualError("Exception : Return type is not the same as the method type", expr.getLocation());
         }
 
         expr.setType(returnType);

@@ -181,9 +181,7 @@ public class Identifier extends AbstractIdentifier {
         if (expDef == null) {
             throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
         } else {
-            System.out.println("expDef : "+expDef);
             setDefinition(expDef);
-            System.out.println("identifier envexpr"+ " "+definition);
             setType(expDef.getType());
         }
         return expDef.getType();
@@ -197,20 +195,18 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
         TypeDefinition typeDef = compiler.environmentType.defOfType(this.getName());
-        System.out.println("Je suis dans Identifier voici mon nom : "+this.getName()+" et ma def : "+typeDef);
-        if (typeDef == null) {
+        if (typeDef == null)
             throw new ContextualError("Exception : Type " + this.getName() + " is not defined", this.getLocation());
-        } else {
-            if(!typeDef.getType().isClass()) {
-                setDefinition(typeDef);
-            }
-            else{
-                ClassDefinition classDef = compiler.environmentType.getClassDefinition(this.getName());
-                setDefinition(classDef);
-            }
 
-            setType(typeDef.getType());
+        if (!typeDef.getType().isClass()) {
+            setDefinition(typeDef);
+        } else {
+            ClassDefinition classDef = compiler.environmentType.getClassDefinition(this.getName());
+            setDefinition(classDef);
         }
+
+        setType(typeDef.getType());
+
         return typeDef.getType();
     }
 

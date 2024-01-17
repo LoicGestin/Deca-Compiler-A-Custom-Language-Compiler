@@ -4,9 +4,6 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.NullOperand;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -56,8 +53,9 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new TSTO(taille));
         compiler.addInstruction(new BOV(compiler.getStack_Overflow_error()));
         compiler.addInstruction(new ADDSP(taille));
+
+
         // A FAIRE: compléter ce squelette très rudimentaire de code
-        compiler.addComment("start main program");
         /*
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
         compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(1, Register.GB)));
@@ -70,9 +68,11 @@ public class Program extends AbstractProgram {
 
 
         compiler.addComment("start main program");
+        LOG.trace("start main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
         compiler.addComment("end main program");
+        LOG.trace("end main program");
 
         compiler.addLabel(compiler.getOverflow_error());
         compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));

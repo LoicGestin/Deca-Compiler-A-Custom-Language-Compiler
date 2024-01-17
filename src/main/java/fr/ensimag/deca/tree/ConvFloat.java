@@ -14,16 +14,14 @@ public class ConvFloat extends AbstractUnaryExpr {
     }
 
     @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-                           ClassDefinition currentClass) throws ContextualError {
-        Type typeOp = getOperand().getType();
-        if (typeOp.isInt()) {
-            setType(compiler.environmentType.FLOAT);
-            return getType();
-        } else {
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+
+        if (!getOperand().getType().isInt()) {
             throw new ContextualError("Conversion vers un flottant d'un non entier", getLocation());
         }
 
+        setType(compiler.environmentType.FLOAT);
+        return getType();
     }
 
     @Override

@@ -2,7 +2,9 @@
 //    Programme final des sans-objets.
 //
 // Resultats:
-//    Le PGCD de 2730 et 5610 est 30.
+//    Le PGCD de 2730 et 5610 est 30. En divisant par 30, on obtient 91 et 187.
+//    En multipliant 91 par 187, on obtient 17017.
+//    Le reste de la division de 17017 par 100 est 17.
 //
 // Historique:
 //    cree le 01/01/2024
@@ -10,16 +12,54 @@
 {
         int a;
         int b;
+        int c;
+        int d;
         a = 2730;
         b = 5610;
-        while (a != b) {
-                if (a > b) {
-                        a = a - b;
+        c = a;
+        d = b;
+        while (c != d) {
+                if (c > d) {
+                        c = c - d;
                 } else {
-                        b = b - a;
+                        d = d - c;
                 }
         }
-        print("Le PGCD de 2730 et 5610 est ");
+        print("Le PGCD de ");
         print(a);
+        print(" et ");
+        print(b);
+        print(" est ");
+        print(c);
         print(".");
+
+        a = a / c;
+        b = b / c;
+
+        print(" En divisant par ");
+        print(c);
+        print(", on obtient ");
+        print(a);
+        print(" et ");
+        print(b);
+        print(".");
+
+        c = a * b;
+
+        print(" En multipliant ");
+        print(a);
+        print(" par ");
+        print(b);
+        print(", on obtient ");
+        print(c);
+        print(".");
+
+        c = c % 100;
+
+        print(" Le reste de la division de ");
+        print(c);
+        print(" par 100 est ");
+        print(c);
+        print(".");
+
 }

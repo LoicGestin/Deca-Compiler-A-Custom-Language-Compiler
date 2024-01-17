@@ -13,9 +13,11 @@ public class ClassDefinition extends TypeDefinition {
 
 
     private EnvironmentExp members;
+    private EnvironmentExp params;
     private ClassDefinition superClass;
     private int numberOfFields = 0;
     private int numberOfMethods = 0;
+    private boolean estThis = false;
 
     public ClassDefinition(ClassType type, Location location, ClassDefinition superClass) {
         super(type, location);
@@ -26,6 +28,7 @@ public class ClassDefinition extends TypeDefinition {
             parent = null;
         }
         members = new EnvironmentExp(parent);
+        params = new EnvironmentExp(null);
         this.superClass = superClass;
     }
 
@@ -70,8 +73,20 @@ public class ClassDefinition extends TypeDefinition {
         return members;
     }
 
+    public EnvironmentExp getParams() {
+        return params;
+    }
+
     public void setMembers(EnvironmentExp members) {
         this.members = members;
+    }
+
+    public void setisThis() {
+        estThis = true;
+    }
+
+    public boolean isThis() {
+        return estThis;
     }
 
 }

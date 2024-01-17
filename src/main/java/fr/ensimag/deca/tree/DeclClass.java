@@ -74,7 +74,7 @@ public class DeclClass extends AbstractDeclClass {
         }
         if (typeDef == null) {
             try {
-                environmentType.declareClass(varName.getName(), new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()), varSuper.getClassDefinition());
+                environmentType.declareClass(varName.getName(), new ClassDefinition(new ClassType(varName.getName(), this.getLocation(), varSuper.getClassDefinition()), this.getLocation(), varSuper.getClassDefinition()), varSuper.getClassDefinition());
             } catch (EnvironmentExp.DoubleDefException e) {
                 throw new ContextualError("Exception : Class " + varName.getName() + " already exists", varName.getLocation());
             }
@@ -87,7 +87,6 @@ public class DeclClass extends AbstractDeclClass {
         varName.getClassDefinition().setSuperClass(varSuper.getClassDefinition());
 
         if(varSuper.getClassDefinition().getType() != compiler.environmentType.OBJECT){
-            compiler.environmentExpClass.afficher();
             varName.getClassDefinition().setMembers(compiler.environmentExpClass );
         }
 

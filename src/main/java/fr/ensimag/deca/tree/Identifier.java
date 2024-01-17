@@ -176,8 +176,26 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
-        ExpDefinition expDef = localEnv.get(this.getName());
+        ExpDefinition expDef;
+        if(currentClass == null) {
+            expDef = localEnv.get(this.getName());
+       }
+        else {
+            if(currentClass.isThis()){
+                expDef = currentClass.getMembers().get(this.getName());
+            }
+            else if(currentClass.getParams().get(this.name) != null) {
+                expDef = currentClass.getParams().get(this.name);
+            }
+            else if(currentClass.getMembers().get(this.getName()) != null)
+                expDef = currentClass.getMembers().get(this.name);
+            else
+                throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
+
+        }
         codeGen.addVariableTable(this.getName().toString());
+        System.out.println("Current class : " + currentClass);
+        System.out.println("ExpDef : " + expDef);
         if (expDef == null) {
             throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
         } else {

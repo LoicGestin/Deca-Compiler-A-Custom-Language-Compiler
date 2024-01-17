@@ -63,11 +63,14 @@ public class DeclMethod extends AbstractDeclMethod {
 
         try {
             currentClass.getMembers().declare(name.getName(), name.getExpDefinition());
+            if(currentClass.getSuperClass().getType() == compiler.environmentType.OBJECT){
+                compiler.environmentExpClass.declare(name.getName(), name.getExpDefinition());
+            }
             compiler.environmentExp.declare(name.getName(), name.getExpDefinition());
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Exception : Method " + name.getName() + " already declared", name.getLocation());
         }
-        name.setType(t);
+        name.verifyExpr(compiler, currentClass.getMembers(), currentClass);
     }
 
     @Override

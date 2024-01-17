@@ -43,7 +43,7 @@ public class DeclParam extends AbstractDeclParam {
         name.setDefinition(new ParamDefinition(t, name.getLocation()));
 
         try {
-            currentClass.getMembers().declare(name.getName(), name.getExpDefinition());
+            currentClass.getParams().declare(name.getName(), name.getExpDefinition());
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Exception : Variable " + name.getName() + " already declared", name.getLocation());
         }

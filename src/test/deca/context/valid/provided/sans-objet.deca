@@ -25,7 +25,7 @@
                         d = d - c;
                 }
         }
-        print("Le PGCD de ");
+        print(" Le PGCD de ");
         print(a);
         print(" et ");
         print(b);
@@ -42,7 +42,7 @@
         print(a);
         print(" et ");
         print(b);
-        print(".");
+        println(".");
 
         c = a * b;
 
@@ -52,14 +52,12 @@
         print(b);
         print(", on obtient ");
         print(c);
-        print(".");
-
-        c = c % 100;
+        println(".");
 
         print(" Le reste de la division de ");
         print(c);
         print(" par 100 est ");
-        print(c);
+        print(c % 100);
         print(".");
 
 }

@@ -2,9 +2,7 @@ package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.POP;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.util.Map;
 import java.util.Stack;
@@ -14,16 +12,10 @@ import java.util.stream.Collectors;
 public class codeGen {
     static final Stack<GPRegister> registresLibres = new Stack<>();
     static final Stack<GPRegister> registresUtilises = new Stack<>();
-
     static final Stack<GPRegister> registresVariables = new Stack<>();
-
     static TreeMap<String, Integer> table = new TreeMap<>();
-
     static int nombreRegistres = 14;
-
     static int indexPile = 0;
-
-    static int nombrePileTamporaire = 0;
 
     public static void setNombreRegistres(int nombreRegistres) {
         if (nombreRegistres >= 2) {
@@ -37,6 +29,17 @@ public class codeGen {
         }
     }
 
+    public static void init_registres(DecacCompiler compiler) {
+        setUpRegistres();
+        genereTopNEntries();
+        int taille = codeGen.tableSize();
+        if (taille != 0) {
+            compiler.addInstruction(new TSTO(taille));
+            compiler.addInstruction(new BOV(compiler.getStack_Overflow_error()));
+            compiler.addInstruction(new ADDSP(taille));
+        }
+    }
+
     public static GPRegister getCurrentRegistreLibre() {
         return registresLibres.peek();
     }
@@ -46,29 +49,25 @@ public class codeGen {
     }
 
     public static GPRegister getRegistreLibre() {
-        GPRegister r = registresLibres.pop();
-        registresUtilises.push(r);
-        return r;
+        return registresUtilises.push(registresLibres.pop());
     }
 
     public static int tableSize() {
-        int size = 0;
-        for (String s : table.keySet()) {
-            if (table.get(s) > 1) {
-                size += 1;
-            }
-        }
-        if (topNEntries == null) {
-            return size;
-        }
-        int size2 = 0;
-        for (String s : topNEntries.keySet()) {
-            if (table.get(s) > 1) {
-                size2 += 1;
-            }
-        }
+        int size = countEntries(table);
+        int size2 = (topNEntries == null) ? 0 : countEntries(topNEntries);
         return size - size2;
     }
+
+    private static int countEntries(Map<String, Integer> entryMap) {
+        int count = 0;
+        for (int value : entryMap.values()) {
+            if (value > 1) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 
     public static GPRegister getRegistreUtilise() {
         GPRegister r = registresUtilises.pop();
@@ -103,16 +102,13 @@ public class codeGen {
                 compiler.addInstruction(new POP(codeGen.getCurrentRegistreUtilise()));
                 nbPush--;
                 return Register.getR(0);
-            } else {
-
-                return getRegistreUtilise();
             }
+            return getRegistreUtilise();
 
-        } else {
-            DVal dVal = registreCourant;
-            registreCourant = null;
-            return dVal;
         }
+        DVal dVal = registreCourant;
+        registreCourant = null;
+        return dVal;
     }
 
     public static void setAssignation(boolean assignation) {
@@ -125,7 +121,6 @@ public class codeGen {
     }
 
     public static GPRegister getGPRegisterVariable() {
-
         return registresLibres.peek();
     }
 
@@ -163,19 +158,6 @@ public class codeGen {
 
     public static int getValueVariableTable(String s) {
         return table.get(s);
-    }
-
-    public static boolean isRegistreLibreEmpty() {
-        if (registresLibres.empty()) {
-            indexPile++;
-            nombrePileTamporaire++;
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean isRegistreInPile() {
-        return nombrePileTamporaire > 0;
     }
 
     public static void afficheTable() {

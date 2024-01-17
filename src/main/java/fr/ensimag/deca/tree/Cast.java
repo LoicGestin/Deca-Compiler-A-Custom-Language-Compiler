@@ -12,7 +12,7 @@ import java.io.PrintStream;
 
 public class Cast extends AbstractExpr {
     private final AbstractIdentifier type;
-    private final AbstractExpr expr;
+    private AbstractExpr expr;
 
     public Cast(AbstractIdentifier type, AbstractExpr expr) {
         Validate.notNull(type);
@@ -26,9 +26,20 @@ public class Cast extends AbstractExpr {
         Type t = type.verifyType(compiler);
         Type e = expr.verifyExpr(compiler, localEnv, currentClass);
         if (t.isFloat() && e.isInt()) {
-            ConvFloat conv = new ConvFloat(expr);
-            conv.setType(t);
-            conv.setLocation(expr.getLocation());
+            this.expr = new ConvFloat(expr);
+            t = this.expr.verifyExpr(compiler, localEnv, currentClass);
+            this.expr.setLocation(getLocation());
+            setType(t);
+            return t;
+        }
+        if (t.isInt() && e.isFloat()) {
+            this.expr = new ConvInt(expr);
+            t = this.expr.verifyExpr(compiler, localEnv, currentClass);
+            this.expr.setLocation(getLocation());
+            setType(t);
+            return t;
+        }
+        if (t.sameType(e)){
             setType(t);
             return t;
         }
@@ -46,6 +57,11 @@ public class Cast extends AbstractExpr {
         s.print("(");
         expr.decompile(s);
         s.print(")");
+    }
+
+    @Override
+    public void codeGenInst(DecacCompiler compiler) {
+        expr.codeGenInst(compiler);
     }
 
     @Override

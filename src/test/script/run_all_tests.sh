@@ -122,10 +122,9 @@ total=0
 
 for file in src/test/deca/context/valid/personalTests/*.deca
 do
-  if test_context $file 2>&1 \
-  | grep -q -e "Exception"
+  if test_context $file 2>&1  | grep -q -e "Exception"
   then
-    echo -ne "\r\t${RED}[FAILED]${NC}   : ${file##*/}                                \r\n"
+    echo -ne "\r\t${RED}[FAILED]${NC}  : ${file##*/}                                \r\n"
     erreur_total=$((erreur_total + 1))
   else
     echo -ne "\r\t${GREEN}[PASSED]${NC}   : ${file##*/}                                    "

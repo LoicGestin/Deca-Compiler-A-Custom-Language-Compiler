@@ -12,31 +12,21 @@ class Math {
         return pow(f, exp-1);
     }
 
-    protected float sinHornerFactor(float x0, int n, float num, float denom){
+    protected float sinHornerFactor(float x2, int n, float inv_fact){
 
-        float an;
+        inv_fact = inv_fact/(2*n*(2*n+1))
 
-        num = -num;
-        denom = denom*(n+1)*(n+2);
-        an = an +(num/denom);
-
-        if (n==256){
-            return an;
+        if (n==255){
+            return x2*inv_fact;
         }
 
-        else if (n==0){
-            an=0;
-        }
-
-        return an+x0*sinHornerFactor(x0,n+1,num,denom);
+        return inv_fact-x2*sinHornerFactor(x0,n+1,fact);
     }
 
     float sin(float f) {
 
-        int n=0;
-        float num = f;
-        float denom = 1;
-        float x0 = Math.pow(f,2);
+        float x2 = Math.pow(f,2);
+        float inter_res;
 
         if (Float.isNaN(f) || Float.isInfinite){
             return Float.NaN;
@@ -46,29 +36,49 @@ class Math {
             return 0;
         }
 
-        return sinHornerFactor(f,0,num,denom);
+        inter_res=1-x2*sinHornerFactor(x2,1,1)
+
+        return f*inter_res;
+    }
+
+    float cosHornerFactor(float x2, int n, float_inv_fact){
+
+        inv_fact = inv_fact/((2*n+1)*(2*n+2));
+
+        if (n==255){
+            return x2*inv_fact;
+        }
+
+        return inv_fact - x2*cosHornerFactor(x2,n+1,inv_fact);
     }
 
     float cos(float f) {
+
+        float x2 = Math.pow(f,2);
+
         if (Float.isNaN(f) || Float.abs(f)>1){
             return Float.NaN;
         }
 
-        int n=0;
-        float num = 1;
-        float denom = 1;
-        float res = 1;
-        while (n<256){
-            num = -num*Math.pow(f,2);
-            denom = denom*(denom+1)*(denom+2);
-            res = res + (num/denom);
-            n=n+1;
+        return cosHornerFactor(x2,0,1);
+    }
+
+    float asinHornerFactor(float x2, int n, float sqrt_num, float denom){
+
+        sqrt_num = sqrt_num*(sqrt_num+1);
+        denom = denom*2*n*(2*n+1);
+
+        if (n==255){
+            return Math.pow(sqrt_num,2)*x2/denom;
         }
 
-        return res;
+        return Math.pow(sqrt_num,2)/denom + x2*asinHornerFactor(x2,n+1,sqrt_num,denom);
     }
 
     float asin(float f) {
+        float x2 = Math.pow(f,2);
+        float inter_res;
+
         if (Float.isNaN(f) || Float.abs(f)>1){
             return Float.NaN;
         }
@@ -77,18 +87,24 @@ class Math {
             return 0;
         }
 
-        int n=0;
-        float num = f;
-        float denom = 1;
-        float res = f;
-        while (n<256){
+        inter_res = asinHornerFactor(x2,1,1,1)
+        return f*;
+    }
 
+
+    float atantHornerFactor(float x2, int n){
+
+        if (n==255){
+            return x2/(2*n+1);
         }
 
-        return res;
+        return atanHornerFactor(x2, n+1);
     }
 
     float atan(float f) {
+
+        float x2 = Math.pow(f,2);
+
         if (Float.isNaN(f)){
             return Float.NaN;
         }
@@ -97,18 +113,7 @@ class Math {
             return 0;
         }
 
-        int n=0;
-        float num = f;
-        float denom = 1;
-        float res = f;
-        while (n<256){
-            num = -num*Math.pow(f,2);
-            denom = 2*n+1;
-            res = res+(num/denom);
-            n=n+1;
-        }
-
-        return res;
+        return f*atanHornerFactor(x2,0):
     }
 
     //Restranscription du code source de la classe Math de Java

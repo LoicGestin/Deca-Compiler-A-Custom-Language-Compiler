@@ -1,9 +1,9 @@
 class Float {
 
-    float POSITIVE_INFINITY = Float.intBitsToFloat(0x7f800000);
-    float NEGATIVE_INFINITY =  Float.intBitsToFloat(0xff800000);
+    float POSITIVE_INFINITY = Math.pow(2,255);
+    float NEGATIVE_INFINITY =  -this.POSITIVE_INFINITY;
 
-    float NaN = Float.intBitsToFloat(0x7fc00000);
+    float NaN = Math.pow(2,255)*(1+0.5);
 
     float MAX_VALUE = 0x1.fffffep127;
     float MIN_VALUE = 0x0.000002p-126 ;
@@ -32,9 +32,4 @@ class Float {
         }
     }
 
-    //Renvoie l'entier dont la représentation binaire sur 32 bits est identique à celle du flottant
-    int floatToIntBits(float f) asm("")
-
-    //Renvoie le flottant dont la représentation binaire sur 32 bits est identique à celle de l'entier
-    float intBitsToFloat(int b) asm("")
 }

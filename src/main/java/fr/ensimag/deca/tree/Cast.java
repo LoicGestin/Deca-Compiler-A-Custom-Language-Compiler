@@ -53,8 +53,7 @@ public class Cast extends AbstractExpr {
         if (DecacCompiler.getColor()) s.print("\033[35m");
         type.decompile(s);
         if (DecacCompiler.getColor()) s.print("\033[0m");
-        s.print(") ");
-        s.print("(");
+        s.print(") (");
         expr.decompile(s);
         s.print(")");
     }

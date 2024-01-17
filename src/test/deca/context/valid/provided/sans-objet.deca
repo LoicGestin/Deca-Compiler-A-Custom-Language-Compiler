@@ -2,7 +2,7 @@
 //    Programme final des sans-objets.
 //
 // Resultats:
-//    Le PGCD est 30.
+//    Le PGCD de 2730 et 5610 est 30.
 //
 // Historique:
 //    cree le 01/01/2024
@@ -19,7 +19,7 @@
                         b = b - a;
                 }
         }
-        print("Le PGCD est ");
+        print("Le PGCD de 2730 et 5610 est ");
         print(a);
         print(".");
 }

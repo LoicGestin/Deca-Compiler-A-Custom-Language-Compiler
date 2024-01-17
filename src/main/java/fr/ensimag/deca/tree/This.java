@@ -9,11 +9,19 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 
 import java.io.PrintStream;
 
-public class This extends AbstractIdentifier {
+public class This extends AbstractExpr {
+
+    private final boolean value;
+
+    public This(boolean value) {
+        this.value = value;
+    }
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
+        System.out.println("Je suis passé dans This");
+        setType(compiler.environmentType.BOOLEAN);
+        return getType();
     }
 
     @Override
@@ -31,65 +39,5 @@ public class This extends AbstractIdentifier {
     @Override
     protected void iterChildren(TreeFunction f) {
         // Leaf node => nothing to do.
-    }
-
-    @Override
-    public ClassDefinition getClassDefinition() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public Definition getDefinition() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public void setDefinition(Definition definition) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public FieldDefinition getFieldDefinition() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public MethodDefinition getMethodDefinition() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public SymbolTable.Symbol getName() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public DAddr getAddr() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public GPRegister getGPRegister() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public boolean isAddr() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public ExpDefinition getExpDefinition() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public VariableDefinition getVariableDefinition() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

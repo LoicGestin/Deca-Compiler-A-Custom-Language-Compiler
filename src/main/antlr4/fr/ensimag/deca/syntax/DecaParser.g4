@@ -498,7 +498,7 @@ literal returns[AbstractExpr tree]
             setLocation($tree, $FALSE);
         }
     | THIS {
-            $tree = new This();
+            $tree = new This(true);
             setLocation($tree, $THIS);
         }
     | NULL {

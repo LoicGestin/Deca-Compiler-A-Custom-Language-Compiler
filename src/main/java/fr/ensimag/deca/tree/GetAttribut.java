@@ -25,17 +25,16 @@ public class GetAttribut extends AbstractIdentifier {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
         System.out.println("Je suis passé dans GetAttribut");
-        ClassType tClass = t.asClassType("GetAttribut on non-class type", expr.getLocation());
-        Type tAttribut = attribut.verifyExpr(compiler, tClass.getDefinition().getMembers(), tClass.getDefinition());
+        Type tAttribut = attribut.verifyExpr(compiler, localEnv, currentClass);
 
-        if(!attribut.getDefinition().isClass()){
-            throw new ContextualError("GetAttribut on non-class type", attribut.getLocation());
+        if(attribut.getDefinition().isClass()){
+            throw new ContextualError("GetAttribut on class type", attribut.getLocation());
         }
 
         // si protected
         FieldDefinition attributDef = attribut.getFieldDefinition();
         if (attributDef.getVisibility() == Visibility.PROTECTED && (currentClass == null ||
-                !tClass.isSubClassOf(currentClass.getType()))) {
+                !currentClass.getType().isSubClassOf(currentClass.getSuperClass().getType()))) {
             throw new ContextualError("The field is protected",attribut.getLocation());
         }
 

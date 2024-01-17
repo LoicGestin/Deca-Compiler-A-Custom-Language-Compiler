@@ -1,11 +1,10 @@
 // Test la declaration d'un objet avec un bloc d'initialisation et l'appel d'une methode
 
 class A {
-
+    int a;
     void m() {
         println("m");
     }
-    int a;
 }
 
 class B extends A {
@@ -15,6 +14,6 @@ class B extends A {
 }
 
 {
-    B a;
+    B b;
     b = new A();
 }

@@ -1,7 +1,7 @@
 // Test la declaration d'un objet avec un bloc d'initialisation et l'appel d'une methode
 
 class A {
-
+    int a;
     void m() {
         println("m");
     }
@@ -9,9 +9,6 @@ class A {
     void n() {
         println(this.a);
     }
-
-    int a;
-    println("init");
 }
 
 {

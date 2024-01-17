@@ -44,10 +44,10 @@ public class DeclVar extends AbstractDeclVar {
         varName.setType(t);
         try {
             localEnv.declare(varName.getName(), varName.getExpDefinition());
-            System.out.println("Je sui sla variable : "+varName.getExpDefinition());
-            System.out.println("envexpr declvar :"+localEnv.envExp.size());
+            System.out.println("Je sui sla variable : " + varName.getExpDefinition());
+            System.out.println("envexpr declvar :" + localEnv.envExp.size());
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Exception : Variable " + varName.getName() + " already declared", varName.getLocation());
+            throw new ContextualError("Exception : Variable already declared", varName.getLocation());
         }
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);
 

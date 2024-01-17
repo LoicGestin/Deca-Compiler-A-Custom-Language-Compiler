@@ -1,11 +1,10 @@
 // Test la declaration d'un objet avec un bloc d'initialisation
 
 class A {
-    void m(int a) {
+    int a;
+    void m(int s) {
         println("m");
     }
-
-    int a;
 }
 
 {

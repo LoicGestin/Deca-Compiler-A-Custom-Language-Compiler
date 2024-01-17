@@ -48,12 +48,10 @@ public class CallMethod extends AbstractExpr{
         if(sig.size() != arguments.size()){
             throw new ContextualError("Exception : Wrong number of arguments", method.getLocation());
         }
-
         int n;
-        for(n = 0; n < arguments.size() - 1; n++){
+        for(n = 0; n < sig.size(); n++){
             AbstractExpr e = arguments.getList().get(n);
-            arguments.add(e.verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(n)));
-            n++;
+            e.verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(n));
             System.out.println("Fin for CallMethod");
         }
         System.out.println("Sortie for CallMethod");

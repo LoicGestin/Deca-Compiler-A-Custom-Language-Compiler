@@ -69,8 +69,12 @@ public class DeclClass extends AbstractDeclClass {
         if (typeDefSuper == null) {
             throw new ContextualError("Exception : Super class " + varSuper.getName() + " doesn't exist", varSuper.getLocation());
         }
+        else if(compiler.environmentType.defOfClass(varSuper.getName()) != compiler.environmentType.defOfClass(compiler.environmentType.OBJECT.getName())) {
+             varSuper.setDefinition(compiler.environmentType.defOfClass(varSuper.getName()));
+        }
         if (typeDef == null) {
             try {
+                System.out.println("Je suis entré dans le if "+ varSuper.getClassDefinition());
                 environmentType.declareClass(varName.getName(), new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()), varSuper.getClassDefinition());
             } catch (EnvironmentExp.DoubleDefException e) {
                 throw new RuntimeException(e);

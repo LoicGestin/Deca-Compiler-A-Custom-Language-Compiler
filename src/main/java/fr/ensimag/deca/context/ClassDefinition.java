@@ -13,7 +13,7 @@ public class ClassDefinition extends TypeDefinition {
 
 
     private final EnvironmentExp members;
-    private final ClassDefinition superClass;
+    private ClassDefinition superClass;
     private int numberOfFields = 0;
     private int numberOfMethods = 0;
 
@@ -69,6 +69,10 @@ public class ClassDefinition extends TypeDefinition {
 
     public ClassDefinition getSuperClass() {
         return superClass;
+    }
+
+    public void setSuperClass(ClassDefinition superClass) {
+        this.superClass = superClass;
     }
 
     public EnvironmentExp getMembers() {

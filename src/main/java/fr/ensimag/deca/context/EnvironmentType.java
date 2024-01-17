@@ -78,8 +78,8 @@ public class EnvironmentType {
     		ClassDefinition def1 = envTypes.getClassDefinition(t1.getName());
     		ClassDefinition def2 = envTypes.getClassDefinition(t2.getName());
             System.out.println("type def1 : "+def1.getType() + " type def2 : "+def2.getType());
-            System.out.println("Salut " + def2.getType().isSubClassOf(def1.getType()));
-            return def2.getType().isSubClassOf(def1.getType());
+            System.out.println("Salut " + def1.getType().isSubClassOf(def2.getType()));
+            return def1.getType().isSubClassOf(def2.getType());
     	}
         System.out.println("Je suis sorti de subType");
     	return false;

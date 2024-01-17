@@ -71,6 +71,7 @@ public class DeclClass extends AbstractDeclClass {
         }
         else if(compiler.environmentType.defOfClass(varSuper.getName()) != compiler.environmentType.defOfClass(compiler.environmentType.OBJECT.getName())) {
              varSuper.setDefinition(compiler.environmentType.defOfClass(varSuper.getName()));
+
         }
         if (typeDef == null) {
             try {
@@ -83,7 +84,10 @@ public class DeclClass extends AbstractDeclClass {
 
         Type tName = varName.verifyType(compiler);
         Type tSuper = varSuper.verifyType(compiler);
+        System.out.println("Je suis entré dans verifyClass "+ varSuper.getClassDefinition());
         varName.setDefinition(new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()));
+        varName.getClassDefinition().setSuperClass(varSuper.getClassDefinition());
+        System.out.println("voici ma super classe : "+varName.getClassDefinition().getSuperClass());
 
         if (tName.getName().getName().equals(tSuper.getName().getName())) {
             throw new ContextualError("Exception : Class name and super class name are the same", varName.getLocation());

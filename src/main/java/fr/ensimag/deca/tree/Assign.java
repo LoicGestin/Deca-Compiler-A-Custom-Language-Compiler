@@ -40,7 +40,7 @@ public class Assign extends AbstractBinaryExpr {
                 type_droite = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
             }
         }
-        if (!type_gauche.sameType(type_droite)) {
+        else{
             throw new ContextualError("Exception : Incompatible types in assign :" + type_gauche + " and " + type_droite, getLocation());
         }
         setType(type_gauche);

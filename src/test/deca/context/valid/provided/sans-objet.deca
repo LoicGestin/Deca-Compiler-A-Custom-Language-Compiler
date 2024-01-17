@@ -2,19 +2,24 @@
 //    Programme minimaliste utilisant int.
 //
 // Resultats:
-//    i = 5
+//    Le PGCD est 30.
 //
 // Historique:
 //    cree le 01/01/2024
 
 {
-        int i = 5;
-        int j = -i;
-        j = j + 1;
-        if(i == 5){
-                println("Salut");
+        int a;
+        int b;
+        a = 2730;
+        b = 5610;
+        while (a != b) {
+                if (a > b) {
+                        a = a - b;
+                } else {
+                        b = b - a;
+                }
         }
-        else{
-                println("Aurevoir");
-        }
+        print("Le PGCD est ");
+        print(a);
+        print(".");
 }

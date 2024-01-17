@@ -74,6 +74,7 @@ public class DeclClass extends AbstractDeclClass {
         }
         if (typeDef == null) {
             try {
+                varName.getClassDefinition().setSuperClass(varSuper.getClassDefinition());
                 environmentType.declareClass(varName.getName(), new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()), varSuper.getClassDefinition());
             } catch (EnvironmentExp.DoubleDefException e) {
                 throw new ContextualError("Exception : Class " + varName.getName() + " already exists", varName.getLocation());
@@ -82,8 +83,9 @@ public class DeclClass extends AbstractDeclClass {
 
         Type tName = varName.verifyType(compiler);
         Type tSuper = varSuper.verifyType(compiler);
+
         varName.setDefinition(new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()));
-        varName.getClassDefinition().setSuperClass(varSuper.getClassDefinition());
+
 
         if (tName.getName().getName().equals(tSuper.getName().getName())) {
             throw new ContextualError("Exception : Class name and super class name are the same", varName.getLocation());

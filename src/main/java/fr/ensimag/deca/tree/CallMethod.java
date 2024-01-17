@@ -50,7 +50,7 @@ public class CallMethod extends AbstractExpr{
         }
 
         int n;
-        for(n = 0; n < arguments.size(); n++){
+        for(n = 0; n < arguments.size() - 1; n++){
             AbstractExpr e = arguments.getList().get(n);
             arguments.add(e.verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(n)));
             n++;

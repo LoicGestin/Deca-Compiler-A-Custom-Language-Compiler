@@ -17,4 +17,6 @@ class B{
 {
     A a = new A();
     B b = new B();
+    println(a.getA());
+    b.getB();
 }

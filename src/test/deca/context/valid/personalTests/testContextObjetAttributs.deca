@@ -3,7 +3,7 @@
 class A {
     int a;
     void m(int s) {
-        println("m");
+        println(s);
     }
 }
 

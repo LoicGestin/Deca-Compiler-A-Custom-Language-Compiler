@@ -23,8 +23,7 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        Type t = expr.verifyExpr(compiler, localEnv, currentClass);
-        System.out.println("Je suis passé dans GetAttribut");
+        expr.verifyExpr(compiler, localEnv, currentClass);
         Type tAttribut = attribut.verifyExpr(compiler, localEnv, currentClass);
 
         if(attribut.getDefinition().isClass()){
@@ -80,8 +79,8 @@ public class GetAttribut extends AbstractIdentifier {
     }
 
     @Override
-    public ExpDefinition getDefinition() {
-        throw new UnsupportedOperationException("not yet implemented");
+    public Definition getDefinition() {
+        return definition;
     }
 
     @Override
@@ -91,17 +90,31 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public FieldDefinition getFieldDefinition() {
-        throw new UnsupportedOperationException("not yet implemented");
+        try {
+            return (FieldDefinition) definition;
+        } catch (ClassCastException e) {
+            throw new DecacInternalError(
+                    "Identifier "
+                            + getName()
+                            + " is not a field identifier, you can't call getFieldDefinition on it");
+        }
     }
 
     @Override
     public MethodDefinition getMethodDefinition() {
-        throw new UnsupportedOperationException("not yet implemented");
+        try {
+            return (MethodDefinition) definition;
+        } catch (ClassCastException e) {
+            throw new DecacInternalError(
+                    "Identifier "
+                            + getName()
+                            + " is not a method identifier, you can't call getMethodDefinition on it");
+        }
     }
 
     @Override
     public SymbolTable.Symbol getName() {
-        throw new UnsupportedOperationException("not yet implemented");
+        return attribut.getName();
     }
 
     @Override
@@ -121,12 +134,26 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public ExpDefinition getExpDefinition() {
-        throw new UnsupportedOperationException("not yet implemented");
+        try {
+            return (ExpDefinition) definition;
+        } catch (ClassCastException e) {
+            throw new DecacInternalError(
+                    "Identifier "
+                            + getName()
+                            + " is not a Exp identifier, you can't call getExpDefinition on it");
+        }
     }
 
     @Override
     public VariableDefinition getVariableDefinition() {
-        throw new UnsupportedOperationException("not yet implemented");
+        try {
+            return (VariableDefinition) definition;
+        } catch (ClassCastException e) {
+            throw new DecacInternalError(
+                    "Identifier "
+                            + getName()
+                            + " is not a variable identifier, you can't call getVariableDefinition on it");
+        }
     }
 
     @Override

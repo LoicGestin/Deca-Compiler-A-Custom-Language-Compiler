@@ -53,6 +53,7 @@ public class DecacCompiler {
      */
     public EnvironmentType environmentType = new EnvironmentType(this);
     public EnvironmentExp environmentExp = new EnvironmentExp(null);
+    public EnvironmentExp environmentExpClass = new EnvironmentExp(null);
     private final CompilerOptions compilerOptions;
     private final File source;
     /**

@@ -58,6 +58,7 @@ public class ClassType extends Type {
      */
     public boolean isSubClassOf(ClassType potentialSuperClass) {
         ClassDefinition superClass = this.getDefinition().getSuperClass();
+        System.out.println("Je suis entré dans isSubClassOf "+ superClass);
         while (superClass != null) {
             if (superClass.getType().sameType(potentialSuperClass)) return true;
             superClass = superClass.getSuperClass();

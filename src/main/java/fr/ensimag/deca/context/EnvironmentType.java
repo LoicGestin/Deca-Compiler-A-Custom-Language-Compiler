@@ -59,12 +59,43 @@ public class EnvironmentType {
 
     }
 
+    public boolean subType(EnvironmentType envTypes, Type t1, Type t2) {
+        System.out.println("Je suis entré dans subType");
+        if(t1.sameType(t2) && !t1.isClassOrNull() && !t2.isClassOrNull()) {
+            return true;
+        }
+
+    	if (t1.isClass() && t2.isClassOrNull()) {
+            System.out.println("Je suis entré dans subType 2");
+            if(t1.isClass() && t2.isNull()) {
+                return true;
+            }
+
+            if(t1.isClass() && !t2.isClass()){
+                return false;
+            }
+
+    		ClassDefinition def1 = envTypes.getClassDefinition(t1.getName());
+    		ClassDefinition def2 = envTypes.getClassDefinition(t2.getName());
+            System.out.println("type def1 : "+def1.getType() + " type def2 : "+def2.getType());
+            System.out.println("Salut " + def2.getType().isSubClassOf(def1.getType()));
+            return def2.getType().isSubClassOf(def1.getType());
+    	}
+        System.out.println("Je suis sorti de subType");
+    	return false;
+    }
+
     public boolean compatible(Type t1, Type t2) {
-        return t1.isFloat() && t2.isInt() || t1.isInt() && t2.isFloat() || t1.sameType(t2);
+        System.out.println("Je suis entré dans compatible");
+        return t1.isFloat() && t2.isInt() || subType(this, t1, t2);
     }
 
     public TypeDefinition defOfType(Symbol s) {
         return envTypes.get(s);
+    }
+
+    public ClassDefinition defOfClass(Symbol s) {
+    	return envClasses.get(s);
     }
 
     public void declareClass(Symbol key, ClassDefinition value, ClassDefinition superClass) throws EnvironmentExp.DoubleDefException {

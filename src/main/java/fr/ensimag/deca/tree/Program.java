@@ -8,7 +8,6 @@ import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.*;
-import fr.ensimag.ima.pseudocode.instructions.HALT;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -32,6 +31,7 @@ public class Program extends AbstractProgram {
         this.main = main;
     }
 
+
     public ListDeclClass getClasses() {
         return classes;
     }
@@ -50,6 +50,12 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
+        codeGen.setUpRegistres();
+        codeGen.genereTopNEntries();
+        int taille = codeGen.tableSize();
+        compiler.addInstruction(new TSTO(taille));
+        compiler.addInstruction(new BOV(compiler.getStack_Overflow_error()));
+        compiler.addInstruction(new ADDSP(taille));
         // A FAIRE: compléter ce squelette très rudimentaire de code
         compiler.addComment("start main program");
         /*
@@ -59,13 +65,29 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
         compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(2, Register.GB)));
         */
-        codeGen.setUpRegistres();
-        codeGen.genereTopNEntries();
-        //compiler.addInstruction(new TSTO(codeGen.tableSize()));
-        //compiler.addInstruction(new BOV(compiler.getStack_overflow_error()));
-        //compiler.addInstruction(new ADDSP(codeGen.tableSize()));
+
+
+
+
+        compiler.addComment("start main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+        compiler.addComment("end main program");
+
+        compiler.addLabel(compiler.getOverflow_error());
+        compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
+
+        compiler.addLabel(compiler.getIo_error());
+        compiler.addInstruction(new WSTR("Error: Input/Output error"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
+
+        compiler.addLabel(compiler.getStack_Overflow_error());
+        compiler.addInstruction(new WSTR("Error: Stack overflow"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
     }
 
     @Override

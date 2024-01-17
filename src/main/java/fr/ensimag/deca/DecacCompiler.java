@@ -227,19 +227,7 @@ public class DecacCompiler {
             return false;
         }
 
-        addComment("start main program");
         prog.codeGenProgram(this);
-        addComment("end main program");
-
-        addLabel(getOverflow_error());
-        addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
-        addInstruction(new WNL());
-        addInstruction(new ERROR());
-
-        addLabel(getIo_error());
-        addInstruction(new WSTR("Error: Input/Output error"));
-        addInstruction(new WNL());
-        addInstruction(new ERROR());
 
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
@@ -296,6 +284,10 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
+    public Label getStack_Overflow_error() {
+        return stack_overflow_error;
+    }
+
     public Label getOverflow_error() {
         return overflow_error;
     }
@@ -314,10 +306,6 @@ public class DecacCompiler {
 
     public void setEnvironmentExp(EnvironmentExp environmentExp) {
         this.environmentExp = environmentExp;
-    }
-
-    public Label getStack_overflow_error() {
-        return stack_overflow_error;
     }
 
 }

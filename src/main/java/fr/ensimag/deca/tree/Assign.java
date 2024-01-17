@@ -32,20 +32,19 @@ public class Assign extends AbstractBinaryExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
         // Vérification de la compatibilité des types
-        Type type = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
-        Type type2 = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
-        if (compiler.environmentType.compatible(type, type2)) {
-            if (type.isFloat() && type2.isInt()) {
-                type2 = new ConvFloat(getRightOperand()).verifyExpr(compiler, localEnv, currentClass);
+        Type type_gauche = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type type_droite = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+        if (compiler.environmentType.compatible(type_gauche, type_droite)) {
+            if (type_gauche.isFloat() && type_droite.isInt()) {
                 setRightOperand(new ConvFloat(getRightOperand()));
-                getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+                type_droite = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
             }
         }
-        if (!type.sameType(type2)) {
-            throw new ContextualError("Exception : Incompatible types in assign :" + type + " and " + type2, getLocation());
+        if (!type_gauche.sameType(type_droite)) {
+            throw new ContextualError("Exception : Incompatible types in assign :" + type_gauche + " and " + type_droite, getLocation());
         }
-        setType(type);
-        return type;
+        setType(type_gauche);
+        return type_gauche;
     }
 
     @Override

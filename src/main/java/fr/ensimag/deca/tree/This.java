@@ -33,7 +33,7 @@ public class This extends AbstractExpr {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        s.print("this");
+        // Leaf node => nothing to do.
     }
 
     @Override

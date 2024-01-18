@@ -25,7 +25,7 @@ public class Return extends AbstractInst {
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
-        if(t.isInt() && returnType.isFloat()) {
+        if (t.isInt() && returnType.isFloat()) {
             ConvFloat conv = new ConvFloat(expr);
             conv.verifyExpr(compiler, localEnv, currentClass);
             this.expr = conv;

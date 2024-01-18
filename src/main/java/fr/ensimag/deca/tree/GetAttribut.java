@@ -12,10 +12,10 @@ import org.apache.log4j.Logger;
 import java.io.PrintStream;
 
 public class GetAttribut extends AbstractIdentifier {
+    private static final Logger LOG = Logger.getLogger(Main.class);
     private final AbstractExpr expr;
     private final AbstractIdentifier attribut;
     private Definition definition;
-    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public GetAttribut(AbstractExpr expr, AbstractIdentifier attribut) {
         this.expr = expr;
@@ -25,22 +25,22 @@ public class GetAttribut extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
-        if (! t.isClass()){
+        if (!t.isClass()) {
             throw new ContextualError("L'expression n'est pas de type classe", this.getLocation());
         }
 
         ClassDefinition c;
-        if (expr instanceof This){
+        if (expr instanceof This) {
             c = currentClass;
         } else {
-             c = compiler.environmentType.defOfClass(t.getName());
+            c = compiler.environmentType.defOfClass(t.getName());
         }
         FieldDefinition e = (FieldDefinition) c.getMembers().get(attribut.getName());
-        if (! e.isField()){
+        if (!e.isField()) {
             throw new ContextualError("L'attribut n'est pas un champ de la classe", this.getLocation());
         }
         // Si c'est protected impossible d'y accéder depuis une autre classe
-        if (e.getVisibility() == Visibility.PROTECTED && ! (expr instanceof This)){
+        if (e.getVisibility() == Visibility.PROTECTED && !(expr instanceof This)) {
             throw new ContextualError("L'attribut est protected, impossible d'y accéder depuis une autre classe", this.getLocation());
         }
         attribut.setDefinition(e);

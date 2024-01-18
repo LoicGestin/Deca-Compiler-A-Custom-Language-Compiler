@@ -57,8 +57,8 @@ public class BinShift extends AbstractOpArith {
         Label debut_bs = compiler.labelTable.addLabel("debut_bs");
         Label fin_bs = compiler.labelTable.addLabel("fin_bs");
 
-        GPRegister rgauche =  codeGen.getRegistreUtilise();        // 2
-        GPRegister rdroite =  codeGen.getCurrentRegistreUtilise(); // 8
+        GPRegister rgauche = codeGen.getRegistreUtilise();        // 2
+        GPRegister rdroite = codeGen.getCurrentRegistreUtilise(); // 8
 
         compiler.addLabel(debut_bs);
         // 8 << 2

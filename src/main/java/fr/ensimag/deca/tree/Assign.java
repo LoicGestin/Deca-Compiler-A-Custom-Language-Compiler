@@ -39,8 +39,7 @@ public class Assign extends AbstractBinaryExpr {
                 setRightOperand(new ConvFloat(getRightOperand()));
                 getRightOperand().verifyExpr(compiler, localEnv, currentClass);
             }
-        }
-        else{
+        } else {
             throw new ContextualError("Exception : Incompatible types in assign :" + type_gauche + " and " + type_droite, getLocation());
         }
         setType(type_gauche);

@@ -42,7 +42,7 @@ public class CallMethod extends AbstractExpr {
         LOG.debug("verify CallMethod: start");
 
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
-        if (! t.isClass()){
+        if (!t.isClass()) {
             throw new ContextualError("L'expression n'est pas de type classe", this.getLocation());
         }
 
@@ -50,14 +50,11 @@ public class CallMethod extends AbstractExpr {
 
         Definition def = c.getMembers().get(method.getName());
 
-        if (! def.isMethod()){
+        if (!def.isMethod()) {
             throw new ContextualError("L'identificateur n'est pas une méthode", this.getLocation());
         }
 
         MethodDefinition method = (MethodDefinition) def;
-
-
-
 
 
         Signature sig = method.getSignature();

@@ -9,8 +9,8 @@ import org.apache.commons.lang.Validate;
 
 public abstract class AbstractDeclParam extends Tree {
 
-    protected AbstractIdentifier type;
-    protected AbstractIdentifier name;
+    protected final AbstractIdentifier type;
+    protected final AbstractIdentifier name;
 
     public AbstractDeclParam(AbstractIdentifier type, AbstractIdentifier name) {
         Validate.notNull(type);
@@ -26,6 +26,7 @@ public abstract class AbstractDeclParam extends Tree {
     public AbstractIdentifier getTypeIdent() {
         return type;
     }
+
     public AbstractIdentifier getName() {
         return name;
     }

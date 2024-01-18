@@ -9,11 +9,11 @@ import org.apache.log4j.Logger;
 import java.io.PrintStream;
 
 public class DeclField extends AbstractDeclField {
+    private static final Logger LOG = Logger.getLogger(Main.class);
     private final AbstractIdentifier type;
     private final AbstractIdentifier field;
     private final AbstractInitialization initialization;
     private final Visibility visibility;
-    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public DeclField(AbstractIdentifier type, AbstractIdentifier field, AbstractInitialization initialization, Visibility visibility) {
         Validate.notNull(type);
@@ -38,6 +38,15 @@ public class DeclField extends AbstractDeclField {
                 s.print("protected ");
             }
         }
+        print_def_variable(s, type, field, initialization);
+        if (DecacCompiler.getColor()) {
+            s.print(";", "orange");
+        } else {
+            s.println(";");
+        }
+    }
+
+    protected static void print_def_variable(IndentPrintStream s, AbstractIdentifier type, AbstractIdentifier field, AbstractInitialization initialization) {
         if (DecacCompiler.getColor()) s.print("\033[0;31m");
         type.decompile(s);
         if (DecacCompiler.getColor()) s.print("\033[0m");
@@ -47,11 +56,6 @@ public class DeclField extends AbstractDeclField {
             s.print(" = ");
             initialization.decompile(s);
         }
-        if (DecacCompiler.getColor()) {
-            s.print(";", "orange");
-        } else {
-            s.println(";");
-        }
     }
 
     @Override
@@ -60,9 +64,10 @@ public class DeclField extends AbstractDeclField {
         field.prettyPrint(s, prefix, true);
         initialization.prettyPrint(s, prefix, true);
     }
+
     @Override
     protected String prettyPrintNode() {
-        if(visibility == Visibility.PROTECTED) {
+        if (visibility == Visibility.PROTECTED) {
             return "[visibility=PROTECTED] DeclField";
         }
         return "";

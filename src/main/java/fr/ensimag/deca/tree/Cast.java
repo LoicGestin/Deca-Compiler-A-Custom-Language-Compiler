@@ -39,7 +39,7 @@ public class Cast extends AbstractExpr {
             setType(t);
             return t;
         }
-        if (t.sameType(e)){
+        if (t.sameType(e)) {
             setType(t);
             return t;
         }

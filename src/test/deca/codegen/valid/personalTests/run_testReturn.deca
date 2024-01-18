@@ -1,0 +1,33 @@
+// Test Return
+
+class A{
+    protected int x;
+
+    int m(int x){
+        return x;
+    }
+
+    float n(){
+        return 1.0;
+    }
+
+    boolean o(){
+        return true;
+    }
+
+    A p(){
+        return this;
+    }
+}
+
+{
+    A a = new A();
+    int x = a.m(1);
+    float y = a.n();
+    boolean z = a.o();
+    A b = a.p();
+    println(x);
+    println(y);
+    println(z);
+    println(b);
+}

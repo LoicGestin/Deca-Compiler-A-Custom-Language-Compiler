@@ -1,0 +1,32 @@
+// Test Return Conversion
+
+class A{
+    protected int a = 12;
+    int b;
+
+    float f(){
+        return a;
+    }
+
+    float g(){
+        return b;
+    }
+}
+
+class B extends A{
+    A h(){
+        return this;
+    }
+
+}
+
+{
+    B b = new B();
+    float f = b.f();
+    float g = b.g();
+    A a = b.h();
+    a.b = 2;
+    println(a.b);
+    println(a.f());
+    println(a.g());
+}

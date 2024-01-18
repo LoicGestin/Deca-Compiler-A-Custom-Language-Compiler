@@ -1,0 +1,15 @@
+// Test Return
+
+class A {
+    int a;
+
+    void f(){
+        return 1;
+    }
+}
+
+{
+    A a;
+    a = new A();
+    a.f();
+}

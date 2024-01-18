@@ -1,0 +1,16 @@
+// Test Return Field
+
+class A {
+    int a;
+
+    float f(){
+        return a;
+    }
+}
+
+{
+    A a;
+    a = new A();
+    a.f();
+    println(a.f());
+}

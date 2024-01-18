@@ -1,11 +1,12 @@
 package fr.ensimag.trigo;
+//Fichier destiné à devenir Math.decah, utilisé ici pour tester les algorithmes
 
 public class UMath {
 
-    float POSITIVE_INFINITY = pow(2,255);
+    float POSITIVE_INFINITY = pow(2,128);
     float NEGATIVE_INFINITY =  -this.POSITIVE_INFINITY;
 
-    float NaN = pow(2,255)*(1+(float)0.5);
+    float NaN = pow(2,128)*(float)1.5;
 
     float MAX_VALUE = 0x1.fffffep127F;
     float MIN_VALUE = 0x0.000002p-126F;
@@ -37,10 +38,13 @@ public class UMath {
     }
 
     float pow(float f, int exp) {
-        if (exp == 1) {
-            return f;
+        if (exp == 0) {
+            return 1;
         }
-        return f*pow(f, exp - 1);
+        if (exp>0) {
+            return f * pow(f, exp - 1);
+        }
+        return pow(f,exp+1)/f;
     }
 
     protected float sinHornerFactor(float x2, int n, float inv_fact) {
@@ -72,7 +76,7 @@ public class UMath {
 
     protected float cosHornerFactor(float x2, int n, float inv_fact) {
 
-        inv_fact = inv_fact /(n*(n+1));
+        inv_fact = inv_fact/(2*n*(2*n+1));
 
         if (n == 255) {
             return x2 * inv_fact;
@@ -106,6 +110,7 @@ public class UMath {
     }
 
     float asin(float f) {
+        f=f%(2*(float)Math.PI);
         float x2 = pow(f, 2);
         float inter_res;
 
@@ -141,50 +146,31 @@ public class UMath {
 
         return f * atanHornerFactor(x2, 0);
     }
-}
-    /*
-    //Restranscription du code source de la classe Math de Java
-    //https://developer.classpath.org/doc/java/lang/Math-source.html, l.1014-1051
+
     float ulp(float f){
+        int e = -1;
+        int continu = 1;
+        float fabs = abs(f);
+        float p=1;
+
         if (Float.isNaN(f))
             return f;
         if (Float.isInfinite(f))
-            return Float.POSITIVE_INFINITY;
+            return POSITIVE_INFINITY;
         // This handles both +0.0 and -0.0.
         if (f == 0.0)
-            return Float.MIN_VALUE;
-        int bits = Float.floatToIntBits(f);
-        final int mantissaBits = 23;
-        final int exponentBits = 8;
-        final int mantMask = (1 << mantissaBits) - 1;
-        int mantissa = bits & mantMask;
-        final int expMask = (1 << exponentBits) - 1;
-        int exponent = (bits >>> mantissaBits) & expMask;
+            return MIN_VALUE;
 
-        // Denormal number, so the answer is easy.
-        if (exponent == 0)
-        {
-            int result = (exponent << mantissaBits) | 1;
-            return Float.intBitsToFloat(result);
-        }
+        while (continu==1 && e!=255) {
+            e=e+1;
+            if (p < fabs && fabs <= 2*p){
+                continu = 0;
+            }
+            p=2*p;
 
-        // Conceptually we want to have '1' as the mantissa.  Then we would
-        // shift the mantissa over to make a normal number.  If this underflows
-        // the exponent, we will make a denormal result.
-        int newExponent = exponent - mantissaBits;
-        int newMantissa;
-        if (newExponent > 0)
-            newMantissa = 0;
-        else
-        {
-            newMantissa = 1 << -(newExponent - 1);
-            newExponent = 0;
         }
-        return Float.intBitsToFloat((newExponent << mantissaBits) | newMantissa);
+        return pow(2,e-23);
     }
 }
 
-     */
 
-
-// End of Deca Math library

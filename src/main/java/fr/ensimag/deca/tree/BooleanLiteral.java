@@ -38,17 +38,17 @@ public class BooleanLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(new ImmediateString(Boolean.toString(value))));
+        compiler.addInstruction(new WSTR(new ImmediateString(Boolean.toString(getValue()))));
     }
 
     public void codeGenInst(DecacCompiler compiler) {
-        codeGen.setRegistreCourant(new ImmediateInteger(this.value ? 1 : 0), compiler);
+        codeGen.setRegistreCourant(new ImmediateInteger(getValue() ? 1 : 0), compiler);
 
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print(Boolean.toString(value));
+        s.print(Boolean.toString(getValue()));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class BooleanLiteral extends AbstractExpr {
 
     @Override
     String prettyPrintNode() {
-        return "BooleanLiteral (" + value + ")";
+        return "BooleanLiteral (" + getValue() + ")";
     }
 
 }

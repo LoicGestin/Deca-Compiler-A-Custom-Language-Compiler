@@ -52,12 +52,6 @@ public class StringLiteral extends AbstractStringLiteral {
     }
 
     @Override
-    public void codeGenInst(DecacCompiler compiler) {
-        // TODO
-        //compiler.addInstruction(new LOAD(new ImmediateInteger(stringToAsciiInt(value)), codeGen.getRegistreLibre()));
-    }
-
-    @Override
     public void decompile(IndentPrintStream s) {
         if (DecacCompiler.getColor()) {
             s.print(getValue(), "gray");

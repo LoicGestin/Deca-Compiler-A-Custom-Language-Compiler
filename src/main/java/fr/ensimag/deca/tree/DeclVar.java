@@ -82,15 +82,7 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        if (DecacCompiler.getColor()) s.print("\033[0;31m");
-        type.decompile(s);
-        if (DecacCompiler.getColor()) s.print("\033[0m");
-        s.print(" ");
-        varName.decompile(s);
-        if (!(initialization instanceof NoInitialization)) {
-            s.print(" = ");
-            initialization.decompile(s);
-        }
+        DeclField.print_def_variable(s, type, varName, initialization);
         if (DecacCompiler.getColor()) {
             s.println(";", "orange");
         } else {

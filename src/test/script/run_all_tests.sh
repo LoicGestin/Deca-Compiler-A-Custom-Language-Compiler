@@ -202,6 +202,7 @@ do
   # Run decac on file, exec the .ass with ima and diff with the .expected output file
   decac -p $file > "/tmp/${file##*/}" 2>/dev/null
   decac -p "/tmp/${file##*/}" > "/tmp/dup_${file##*/}" 2>/dev/null
+  decac -p --color $file > /dev/null
   # Run ima on file with extention .ass
   DIFF=$(diff -qbBE "/tmp/${file##*/}" "/tmp/dup_${file##*/}")
   if [ "$DIFF" == "" ]

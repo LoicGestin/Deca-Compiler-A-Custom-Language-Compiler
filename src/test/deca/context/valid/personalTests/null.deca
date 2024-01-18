@@ -1,0 +1,8 @@
+class A {}
+class B extends A {}
+
+{
+A a = null;
+a = new A();
+
+}

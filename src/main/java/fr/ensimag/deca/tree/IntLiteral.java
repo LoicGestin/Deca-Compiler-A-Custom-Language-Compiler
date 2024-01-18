@@ -11,6 +11,7 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
+import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 
@@ -24,6 +25,8 @@ public class IntLiteral extends AbstractExpr {
     private final int value;
 
     public IntLiteral(int value) {
+        Validate.isTrue(value >= -2147483648 && value <= 2147483647,
+                "literal values must fit in an int");
         this.value = value;
     }
 

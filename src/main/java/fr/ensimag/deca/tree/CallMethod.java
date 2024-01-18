@@ -46,7 +46,13 @@ public class CallMethod extends AbstractExpr {
             throw new ContextualError("L'expression n'est pas de type classe", this.getLocation());
         }
 
-        ClassDefinition c = compiler.environmentType.defOfClass(t.getName());
+
+        ClassDefinition c;
+        if (expr instanceof This) {
+            c = currentClass;
+        } else {
+            c = compiler.environmentType.defOfClass(t.getName());
+        }
 
         Definition def = c.getMembers().get(method.getName());
 

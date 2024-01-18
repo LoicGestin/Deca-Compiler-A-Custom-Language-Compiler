@@ -9,12 +9,12 @@ import org.apache.log4j.Logger;
 import java.io.PrintStream;
 
 public class DeclMethod extends AbstractDeclMethod {
+    private static final Logger LOG = Logger.getLogger(Main.class);
     private final AbstractIdentifier type;
     private final AbstractIdentifier name;
     private final ListDeclParam params;
     private final EnvironmentExp envParam;
     private final AbstractMethodBody body;
-    private static final Logger LOG = Logger.getLogger(Main.class);
 
 
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier name, ListDeclParam params, AbstractMethodBody body) {

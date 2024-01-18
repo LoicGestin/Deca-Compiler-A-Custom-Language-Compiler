@@ -5,15 +5,19 @@ class A {
 
 class B extends A {
     int a = 12;
-    void getA() {
+    void B() {
+        println("B");
+    }
+    int getA() {
         int a = 10;
         println(a);
         println(this.a);
         println(this.b);
+        this.B();
+        return this.a;
     }
 }
 {
 B b = new B();
 b.getA();
-
 }

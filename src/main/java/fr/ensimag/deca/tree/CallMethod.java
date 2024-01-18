@@ -39,9 +39,28 @@ public class CallMethod extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
 
-        expr.verifyExpr(compiler, localEnv, currentClass);
-        Type typeMeth = method.verifyExpr(compiler, localEnv, currentClass);
-        Signature sig = method.getMethodDefinition().getSignature();
+        LOG.debug("verify CallMethod: start");
+
+        Type t = expr.verifyExpr(compiler, localEnv, currentClass);
+        if (! t.isClass()){
+            throw new ContextualError("L'expression n'est pas de type classe", this.getLocation());
+        }
+
+        ClassDefinition c = compiler.environmentType.defOfClass(t.getName());
+
+        Definition def = c.getMembers().get(method.getName());
+
+        if (! def.isMethod()){
+            throw new ContextualError("L'identificateur n'est pas une méthode", this.getLocation());
+        }
+
+        MethodDefinition method = (MethodDefinition) def;
+
+
+
+
+
+        Signature sig = method.getSignature();
 
         if (sig.size() != arguments.size()) {
             throw new ContextualError("Exception : Wrong number of arguments in method call : " + sig.size() + " expected, " + arguments.size() + " given", getLocation());
@@ -52,7 +71,10 @@ public class CallMethod extends AbstractExpr {
             e.verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(n));
         }
 
-        setType(typeMeth);
+        setType(method.getType());
+
+        LOG.debug("verify CallMethod: end");
+
         return method.getType();
     }
 

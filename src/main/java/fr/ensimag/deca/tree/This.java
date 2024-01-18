@@ -19,7 +19,7 @@ public class This extends AbstractExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        setType(compiler.environmentType.BOOLEAN);
+        this.setType(currentClass.getType());
         return getType();
     }
 

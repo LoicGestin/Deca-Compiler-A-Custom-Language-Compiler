@@ -12,10 +12,11 @@ import org.apache.commons.lang.Validate;
 public class ClassDefinition extends TypeDefinition {
 
 
-    private final EnvironmentExp members;
+    private EnvironmentExp members;
     private ClassDefinition superClass;
     private int numberOfFields = 0;
     private int numberOfMethods = 0;
+    private boolean estThis = false;
 
     public ClassDefinition(ClassType type, Location location, ClassDefinition superClass) {
         super(type, location);
@@ -32,9 +33,8 @@ public class ClassDefinition extends TypeDefinition {
     public int getNumberOfFields() {
         return numberOfFields;
     }
-
-    public void setNumberOfFields(int numberOfFields) {
-        this.numberOfFields = numberOfFields;
+    public void setNumberOfFields(int i) {
+        this.numberOfFields = i;
     }
 
     public void incNumberOfFields() {
@@ -45,9 +45,8 @@ public class ClassDefinition extends TypeDefinition {
         return numberOfMethods;
     }
 
-    public void setNumberOfMethods(int n) {
-        Validate.isTrue(n >= 0);
-        numberOfMethods = n;
+    public void setNumberOfMethods(int i) {
+        this.numberOfMethods = i;
     }
 
     public int incNumberOfMethods() {
@@ -77,6 +76,18 @@ public class ClassDefinition extends TypeDefinition {
 
     public EnvironmentExp getMembers() {
         return members;
+    }
+
+    public void setMembers(EnvironmentExp members) {
+        this.members = members;
+    }
+
+    public void setisThis() {
+        estThis = true;
+    }
+
+    public boolean isThis() {
+        return estThis;
     }
 
 }

@@ -23,21 +23,31 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        expr.verifyExpr(compiler, localEnv, currentClass);
-        Type tAttribut = attribut.verifyExpr(compiler, localEnv, currentClass);
+        LOG.debug("Je suis dans get attribut");
 
-        if(attribut.getDefinition().isClass()){
-            throw new ContextualError("GetAttribut on class type", attribut.getLocation());
+        Type t = expr.verifyExpr(compiler, localEnv, currentClass);
+        if (! t.isClass()){
+            throw new ContextualError("L'expression n'est pas de type classe", this.getLocation());
         }
 
-        // si protected
-        FieldDefinition attributDef = attribut.getFieldDefinition();
-        if (attributDef.getVisibility() == Visibility.PROTECTED && (currentClass == null ||
-                !currentClass.getType().isSubClassOf(currentClass.getSuperClass().getType()))) {
-            throw new ContextualError("The field is protected",attribut.getLocation());
+        ClassDefinition c;
+        if (expr instanceof This){
+            c = currentClass;
+        } else {
+             c = compiler.environmentType.defOfClass(t.getName());
         }
+        FieldDefinition e = (FieldDefinition) c.getMembers().get(attribut.getName());
+        if (! e.isField()){
+            throw new ContextualError("L'attribut n'est pas un champ de la classe", this.getLocation());
+        }
+        // Si c'est protected impossible d'y accéder depuis une autre classe
+        if (e.getVisibility() == Visibility.PROTECTED && ! (expr instanceof This)){
+            throw new ContextualError("L'attribut est protected, impossible d'y accéder depuis une autre classe", this.getLocation());
+        }
+        attribut.setDefinition(e);
+        setType(e.getType());
 
-        setType(tAttribut);
+        LOG.trace("Je suis sortie de get attribut");
         return getType();
 
     }

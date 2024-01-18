@@ -40,8 +40,7 @@ public class EnvironmentExp {
      * symbol is undefined.
      */
     public ExpDefinition get(Symbol key) {
-        if (envExp.containsKey(key)) {
-            return envExp.get(key);
+        if (envExp.containsKey(key)) {         return envExp.get(key);
         } else if (parentEnvironment != null) {
             return parentEnvironment.get(key);
         }

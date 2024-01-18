@@ -63,32 +63,25 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
         EnvironmentType environmentType = compiler.getEnvironmentType();
-        TypeDefinition typeDef = environmentType.defOfType(varName.getName());
-        TypeDefinition typeDefSuper = environmentType.defOfType(varSuper.getName());
-
+        ClassDefinition typeDefSuper = environmentType.defOfClass(varSuper.getName());
         if (typeDefSuper == null) {
             throw new ContextualError("Exception : Super class " + varSuper.getName() + " doesn't exist", varSuper.getLocation());
-        } else if (compiler.environmentType.defOfClass(varSuper.getName()) != compiler.environmentType.defOfClass(compiler.environmentType.OBJECT.getName())) {
-            varSuper.setDefinition(compiler.environmentType.defOfClass(varSuper.getName()));
-
-        }
-        if (typeDef == null) {
-            try {
-                environmentType.declareClass(varName.getName(), new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()), varSuper.getClassDefinition());
-            } catch (EnvironmentExp.DoubleDefException e) {
-                throw new ContextualError("Exception : Class " + varName.getName() + " already exists", varName.getLocation());
-            }
         }
 
-        Type tName = varName.verifyType(compiler);
-        Type tSuper = varSuper.verifyType(compiler);
+        varSuper.setDefinition(typeDefSuper);
+
+        try {
+            environmentType.declareClass(varName.getName(), new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()), varSuper.getClassDefinition());
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Exception : Class " + varName.getName() + " already exists", varName.getLocation());
+        }
+
         varName.setDefinition(new ClassDefinition(new ClassType(varName.getName(), varName.getLocation(), varSuper.getClassDefinition()), varName.getLocation(), varSuper.getClassDefinition()));
-        varName.getClassDefinition().setSuperClass(varSuper.getClassDefinition());
 
-        if (tName.getName().getName().equals(tSuper.getName().getName())) {
-            throw new ContextualError("Exception : Class name and super class name are the same", varName.getLocation());
-        }
+        varName.verifyType(compiler);
+        varSuper.verifyType(compiler);
 
+        LOG.debug("[PASSE 1] : [FIN]");
     }
 
     @Override

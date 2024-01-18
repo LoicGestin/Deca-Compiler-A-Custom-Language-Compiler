@@ -1,15 +1,17 @@
 class A {
     int a;
+    float b;
 
     float f(){
         return a;
     }
+
+    int g(){
+        return (int) (b);
+    }
 }
 
 {
-
-
-
     A a;
     a = new A();
     a.f();

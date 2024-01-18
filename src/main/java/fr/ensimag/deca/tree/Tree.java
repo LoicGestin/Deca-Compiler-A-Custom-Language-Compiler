@@ -19,7 +19,7 @@ import java.io.PrintStream;
  */
 public abstract class Tree {
 
-    private static final Logger LOG = Logger.getLogger(Main.class);
+    protected static final Logger LOG = Logger.getLogger(Main.class);
     private Location location;
 
     public Location getLocation() {

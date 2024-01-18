@@ -14,6 +14,7 @@ public class DeclMethod extends AbstractDeclMethod {
     private final EnvironmentExp envParam;
     private final AbstractMethodBody body;
 
+
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier name, ListDeclParam params, AbstractMethodBody body) {
         Validate.notNull(type);
         Validate.notNull(name);

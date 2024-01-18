@@ -23,8 +23,6 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        LOG.debug("Je suis dans get attribut");
-
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
         if (! t.isClass()){
             throw new ContextualError("L'expression n'est pas de type classe", this.getLocation());
@@ -47,7 +45,6 @@ public class GetAttribut extends AbstractIdentifier {
         attribut.setDefinition(e);
         setType(e.getType());
 
-        LOG.trace("Je suis sortie de get attribut");
         return getType();
 
     }

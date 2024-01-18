@@ -178,8 +178,6 @@ public class Identifier extends AbstractIdentifier {
                            ClassDefinition currentClass) throws ContextualError {
         ExpDefinition expDef = localEnv.get(this.getName());
         codeGen.addVariableTable(this.getName().toString());
-        System.out.println("Current class : " + currentClass);
-        System.out.println("ExpDef : " + expDef);
         if (expDef == null) {
             throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
         } else {

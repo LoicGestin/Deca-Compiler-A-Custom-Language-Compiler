@@ -301,12 +301,4 @@ public class DecacCompiler {
         return environmentType;
     }
 
-    public void setEnvironmentType(EnvironmentType environmentType) {
-        this.environmentType = environmentType;
-    }
-
-    public void setEnvironmentExp(EnvironmentExp environmentExp) {
-        this.environmentExp = environmentExp;
-    }
-
 }

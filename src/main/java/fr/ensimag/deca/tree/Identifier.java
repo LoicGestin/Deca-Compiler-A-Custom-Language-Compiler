@@ -179,6 +179,9 @@ public class Identifier extends AbstractIdentifier {
         ExpDefinition expDef = localEnv.get(this.getName());
         codeGen.addVariableTable(this.getName().toString());
         if (expDef == null) {
+            expDef = currentClass.getMembers().get(this.getName());
+        }
+        if (expDef == null) {
             expDef=currentClass.getMembers().get(this.getName());
             if(expDef != null){
                 setDefinition(expDef);
@@ -186,10 +189,12 @@ public class Identifier extends AbstractIdentifier {
             }else {
                 throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
             }
-        } else {
-            setDefinition(expDef);
-            setType(expDef.getType());
         }
+
+
+        setDefinition(expDef);
+        setType(expDef.getType());
+
         return expDef.getType();
     }
 

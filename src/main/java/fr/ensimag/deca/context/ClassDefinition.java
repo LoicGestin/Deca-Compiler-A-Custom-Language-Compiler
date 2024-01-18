@@ -1,7 +1,6 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
-import org.apache.commons.lang.Validate;
 
 /**
  * Definition of a class.
@@ -16,7 +15,6 @@ public class ClassDefinition extends TypeDefinition {
     private ClassDefinition superClass;
     private int numberOfFields = 0;
     private int numberOfMethods = 0;
-    private boolean estThis = false;
 
     public ClassDefinition(ClassType type, Location location, ClassDefinition superClass) {
         super(type, location);
@@ -33,10 +31,6 @@ public class ClassDefinition extends TypeDefinition {
     public int getNumberOfFields() {
         return numberOfFields;
     }
-    public void setNumberOfFields(int i) {
-        this.numberOfFields = i;
-    }
-
     public void incNumberOfFields() {
         this.numberOfFields++;
     }
@@ -45,13 +39,8 @@ public class ClassDefinition extends TypeDefinition {
         return numberOfMethods;
     }
 
-    public void setNumberOfMethods(int i) {
-        this.numberOfMethods = i;
-    }
-
-    public int incNumberOfMethods() {
+    public void incNumberOfMethods() {
         numberOfMethods++;
-        return numberOfMethods;
     }
 
     @Override
@@ -70,24 +59,8 @@ public class ClassDefinition extends TypeDefinition {
         return superClass;
     }
 
-    public void setSuperClass(ClassDefinition superClass) {
-        this.superClass = superClass;
-    }
-
     public EnvironmentExp getMembers() {
         return members;
-    }
-
-    public void setMembers(EnvironmentExp members) {
-        this.members = members;
-    }
-
-    public void setisThis() {
-        estThis = true;
-    }
-
-    public boolean isThis() {
-        return estThis;
     }
 
 }

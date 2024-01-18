@@ -30,15 +30,15 @@ public class Return extends AbstractInst {
             conv.verifyExpr(compiler, localEnv, currentClass);
             this.expr = conv;
         } else if (t.isClass() && returnType.isClass()) {
-            ClassType tClass = t.asClassType("Exception : Return type is not a class", expr.getLocation());
-            ClassType returnTypeClass = returnType.asClassType("Return type is not a class", expr.getLocation());
+            ClassType tClass = t.asClassType("Exception : Return type is not a class", this.getLocation());
+            ClassType returnTypeClass = returnType.asClassType("Return type is not a class", this.getLocation());
             if (!tClass.isSubClassOf(returnTypeClass)) {
-                throw new ContextualError("Exception : Return type is not a subclass of the method type", expr.getLocation());
+                throw new ContextualError("Exception : Return type is not a subclass of the method type", this.getLocation());
             }
 
         }
-        if (!t.sameType(returnType)) {
-            throw new ContextualError("Exception : Return type is not the same as the method type", expr.getLocation());
+        if (!expr.getType().sameType(returnType)) {
+            throw new ContextualError("Exception : Return type is not the same as the method type", this.getLocation());
         }
 
         expr.setType(returnType);

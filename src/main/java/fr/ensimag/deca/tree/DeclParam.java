@@ -36,7 +36,6 @@ public class DeclParam extends AbstractDeclParam {
     @Override
     protected Type verifyParam(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
-
         if (t.isVoid()) {
             throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
         }

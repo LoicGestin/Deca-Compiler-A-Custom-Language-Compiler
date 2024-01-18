@@ -11,10 +11,7 @@ import java.io.PrintStream;
 
 public class This extends AbstractExpr {
 
-    private final boolean value;
-
     public This(boolean value) {
-        this.value = value;
     }
 
     @Override

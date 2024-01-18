@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
 
@@ -11,8 +12,8 @@ public class DeclField extends AbstractDeclField {
     private final AbstractIdentifier type;
     private final AbstractIdentifier field;
     private final AbstractInitialization initialization;
-
     private final Visibility visibility;
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public DeclField(AbstractIdentifier type, AbstractIdentifier field, AbstractInitialization initialization, Visibility visibility) {
         Validate.notNull(type);
@@ -77,6 +78,7 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     protected void verifyField(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
+        LOG.debug("\t[PASSE 2] : \t Field");
         Type t = type.verifyType(compiler);
         if (t.isVoid()) {
             throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
@@ -92,12 +94,14 @@ public class DeclField extends AbstractDeclField {
 
         field.verifyExpr(compiler, currentClass.getMembers(), currentClass);
         currentClass.incNumberOfFields();
-
+        LOG.debug("\t[PASSE 2] : \t [FIN]");
     }
 
 
     protected void verifyFieldBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
+        LOG.debug("\t[PASSE 3] : \t Field");
         initialization.verifyInitialization(compiler, field.getType(), currentClass.getMembers(), currentClass);
+        LOG.debug("\t[PASSE 3] : \t [FIN]");
     }
 
 }

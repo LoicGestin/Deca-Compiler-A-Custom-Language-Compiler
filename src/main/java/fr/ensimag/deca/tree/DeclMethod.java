@@ -15,6 +15,7 @@ public class DeclMethod extends AbstractDeclMethod {
     private final ListDeclParam params;
     private final EnvironmentExp envParam;
     private final AbstractMethodBody body;
+    private boolean isOverride = false;
 
 
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier name, ListDeclParam params, AbstractMethodBody body) {
@@ -61,11 +62,32 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyMethod(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("\t[PASSE 2] : \t Méthode " + this.name.getName());
+
         Type t = type.verifyType(compiler);
         Signature signature = params.verifyListDeclParamMembers(compiler, this.envParam, currentClass);
 
-        name.setDefinition(new MethodDefinition(t, name.getLocation(), signature, currentClass.getNumberOfMethods() + 1));
-        currentClass.incNumberOfMethods();
+        int index = currentClass.getNumberOfMethods() + 1;
+        EnvironmentExp envSuper = currentClass.getSuperClass().getMembers();
+
+        if(envSuper.get(name.getName()) != null){
+            if(envSuper.get(name.getName()).isMethod()){
+                MethodDefinition methodDef = (MethodDefinition) envSuper.get(name.getName());
+                if(methodDef.getSignature().size() !=(signature.size())){
+                    throw new ContextualError("Exception : Signature of method " + name.getName() + " is not the same", name.getLocation());
+                }
+                if(!compiler.environmentType.subType(compiler.environmentType, t, methodDef.getType())){
+                    throw new ContextualError("Exception : Type of method " + name.getName() + " is not the same", name.getLocation());
+                }
+                isOverride = true;
+                index = methodDef.getIndex();
+            }
+        }
+
+        name.setDefinition(new MethodDefinition(t, name.getLocation(), signature, index));
+
+        if(!isOverride){
+            currentClass.incNumberOfMethods();
+        }
 
         try {
             currentClass.getMembers().declare(name.getName(), name.getExpDefinition());

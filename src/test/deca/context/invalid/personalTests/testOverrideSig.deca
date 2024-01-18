@@ -1,0 +1,24 @@
+// Test Override
+
+class A {
+    protected int a = 3;
+
+    void m1() {
+        println(a);
+    }
+}
+
+class B extends A {
+    void m1(int b) {
+        println(a + b);
+    }
+}
+
+{
+    A a = new A();
+    B b = new B();
+    a.m1();
+    b.m1(1);
+    println(a.m1());
+    println(b.m1(1));
+}

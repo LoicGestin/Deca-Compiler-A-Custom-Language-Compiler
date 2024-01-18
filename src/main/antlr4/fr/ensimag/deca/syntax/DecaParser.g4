@@ -27,6 +27,7 @@ options {
     import fr.ensimag.deca.tree.*;
     import fr.ensimag.deca.context.*;
     import java.io.PrintStream;
+
 }
 
 @members {
@@ -545,7 +546,6 @@ class_extension returns[AbstractIdentifier tree]
 
            $tree = new Identifier(getDecacCompiler().symbolTable.create("Object"));
            setLocation($tree, $ctx.start);
-           $tree.setDefinition(new ClassDefinition(getDecacCompiler().environmentType.OBJECT,$tree.getLocation(), null));
         }
     ;
 

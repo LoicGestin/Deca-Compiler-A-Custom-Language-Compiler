@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
 
@@ -15,6 +16,7 @@ import java.io.PrintStream;
  */
 public class DeclClass extends AbstractDeclClass {
 
+    private static final Logger LOG = Logger.getLogger(Main.class);
     private final AbstractIdentifier varName;
     private final AbstractIdentifier varSuper;
     private final ListDeclField listDeclField;
@@ -62,6 +64,9 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
+
+        LOG.debug("[PASSE 1] : Classe " + this.varName.getName());
+
         EnvironmentType environmentType = compiler.getEnvironmentType();
         ClassDefinition typeDefSuper = environmentType.defOfClass(varSuper.getName());
         if (typeDefSuper == null) {
@@ -87,14 +92,20 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
+        LOG.debug("[PASSE 2] : Classe " + this.varName.getName());
+
         listDeclField.verifyListDeclField(compiler, varName.getClassDefinition());
         listDeclMethod.verifyListDeclMethod(compiler, varName.getClassDefinition());
+        LOG.debug("[PASSE 2] : [FIN]");
     }
 
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        listDeclMethod.verifyListDeclMethodBody(compiler, varName.getClassDefinition());
+        LOG.debug("[PASSE 3] : Classe " + this.varName.getName());
+
         listDeclField.verifyListDeclFieldBody(compiler, varName.getClassDefinition());
+        listDeclMethod.verifyListDeclMethodBody(compiler, varName.getClassDefinition());
+        LOG.debug("[PASSE 3] : [FIN]");
     }
 
 

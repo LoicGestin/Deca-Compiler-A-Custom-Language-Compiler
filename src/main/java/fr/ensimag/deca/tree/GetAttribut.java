@@ -7,14 +7,15 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
 
 public class GetAttribut extends AbstractIdentifier {
     private final AbstractExpr expr;
     private final AbstractIdentifier attribut;
-
     private Definition definition;
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public GetAttribut(AbstractExpr expr, AbstractIdentifier attribut) {
         this.expr = expr;

@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
 
@@ -13,6 +14,7 @@ public class DeclMethod extends AbstractDeclMethod {
     private final ListDeclParam params;
     private final EnvironmentExp envParam;
     private final AbstractMethodBody body;
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier name, ListDeclParam params, AbstractMethodBody body) {
         Validate.notNull(type);
@@ -57,6 +59,7 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void verifyMethod(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
+        LOG.debug("\t[PASSE 2] : \t Méthode " + this.name.getName());
         Type t = type.verifyType(compiler);
         Signature signature = params.verifyListDeclParamMembers(compiler, this.envParam, currentClass);
 
@@ -69,6 +72,7 @@ public class DeclMethod extends AbstractDeclMethod {
             throw new ContextualError("Exception : Method " + name.getName() + " already declared", name.getLocation());
         }
         name.verifyExpr(compiler, currentClass.getMembers(), currentClass);
+        LOG.debug("\t[PASSE 2] : \t [FIN]");
     }
 
     @Override

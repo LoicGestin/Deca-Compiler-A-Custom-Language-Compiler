@@ -4,6 +4,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.Identifier;
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.deca.tree.Main;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,9 @@ import java.util.Map;
  * @date 01/01/2024
  */
 public class EnvironmentType {
+
+    protected static final Logger LOG = Logger.getLogger(Main.class);
+
     public final VoidType VOID;
     public final IntType INT;
     public final FloatType FLOAT;

@@ -1,4 +1,6 @@
 {
+printlnx(-1.0);
+println(!true);
 println(-1);
 println(- -1);
 println(- - -1);

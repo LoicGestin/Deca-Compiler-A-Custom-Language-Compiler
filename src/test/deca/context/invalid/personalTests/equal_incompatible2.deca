@@ -1,0 +1,5 @@
+{
+    boolean a = true;
+    int i = 5;
+    a =  i == true;
+}

@@ -1,4 +1,6 @@
 {
+    println(0.5 + 0.5);
+    printlnx(0.5 + 0.5);
     println("Hello World", 12, 3.4, true);
     printlnx("Hello World", 12, 3.4, true);
     print("Hello World", 12, 3.4, true);

@@ -60,10 +60,10 @@ public class CallMethod extends AbstractExpr {
             throw new ContextualError("L'identificateur n'est pas une méthode", this.getLocation());
         }
 
-        MethodDefinition method = (MethodDefinition) def;
+        MethodDefinition methodDefinition = (MethodDefinition) def;
+        method.setDefinition(methodDefinition);
 
-
-        Signature sig = method.getSignature();
+        Signature sig = methodDefinition.getSignature();
 
         if (sig.size() != arguments.size()) {
             throw new ContextualError("Exception : Wrong number of arguments in method call : " + sig.size() + " expected, " + arguments.size() + " given", getLocation());
@@ -74,11 +74,11 @@ public class CallMethod extends AbstractExpr {
             e.verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(n));
         }
 
-        setType(method.getType());
+        setType(methodDefinition.getType());
 
         LOG.debug("verify CallMethod: end");
 
-        return method.getType();
+        return methodDefinition.getType();
     }
 
     /**

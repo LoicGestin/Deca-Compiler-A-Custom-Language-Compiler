@@ -34,7 +34,7 @@ public class DeclParam extends AbstractDeclParam {
     }
 
     @Override
-    protected Type verifyParam(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
+    protected Type verifyParam(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
 
         if (t.isVoid()) {
@@ -43,7 +43,7 @@ public class DeclParam extends AbstractDeclParam {
         name.setDefinition(new ParamDefinition(t, name.getLocation()));
 
         try {
-            currentClass.getParams().declare(name.getName(), name.getExpDefinition());
+            localEnv.declare(name.getName(), name.getExpDefinition());
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Exception : Variable " + name.getName() + " already declared", name.getLocation());
         }

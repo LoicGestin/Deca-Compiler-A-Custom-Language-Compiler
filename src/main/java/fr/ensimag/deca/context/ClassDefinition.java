@@ -13,7 +13,6 @@ public class ClassDefinition extends TypeDefinition {
 
 
     private EnvironmentExp members;
-    private EnvironmentExp params;
     private ClassDefinition superClass;
     private int numberOfFields = 0;
     private int numberOfMethods = 0;
@@ -28,12 +27,14 @@ public class ClassDefinition extends TypeDefinition {
             parent = null;
         }
         members = new EnvironmentExp(parent);
-        params = new EnvironmentExp(null);
         this.superClass = superClass;
     }
 
     public int getNumberOfFields() {
         return numberOfFields;
+    }
+    public void setNumberOfFields(int i) {
+        this.numberOfFields = i;
     }
 
     public void incNumberOfFields() {
@@ -42,6 +43,10 @@ public class ClassDefinition extends TypeDefinition {
 
     public int getNumberOfMethods() {
         return numberOfMethods;
+    }
+
+    public void setNumberOfMethods(int i) {
+        this.numberOfMethods = i;
     }
 
     public int incNumberOfMethods() {
@@ -71,10 +76,6 @@ public class ClassDefinition extends TypeDefinition {
 
     public EnvironmentExp getMembers() {
         return members;
-    }
-
-    public EnvironmentExp getParams() {
-        return params;
     }
 
     public void setMembers(EnvironmentExp members) {

@@ -54,7 +54,7 @@ public class EnvironmentType {
 
         Symbol objectSymb = compiler.createSymbol("Object");
         OBJECT = new ClassType(objectSymb, new Location(0, 0, "Object"), null);
-        envTypes.put(objectSymb, new TypeDefinition(OBJECT, Location.BUILTIN));
+        envTypes.put(objectSymb, new ClassDefinition(OBJECT, Location.BUILTIN, null));
         envClasses.put(objectSymb, new ClassDefinition(OBJECT, Location.BUILTIN, null));
 
     }

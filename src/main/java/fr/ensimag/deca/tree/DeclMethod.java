@@ -11,6 +11,7 @@ public class DeclMethod extends AbstractDeclMethod {
     private final AbstractIdentifier type;
     private final AbstractIdentifier name;
     private final ListDeclParam params;
+    private final EnvironmentExp envParam;
     private final AbstractMethodBody body;
 
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier name, ListDeclParam params, AbstractMethodBody body) {
@@ -21,6 +22,7 @@ public class DeclMethod extends AbstractDeclMethod {
         this.type = type;
         this.name = name;
         this.params = params;
+        this.envParam = new EnvironmentExp(null);
         this.body = body;
     }
 
@@ -56,17 +58,13 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyMethod(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
-        Signature signature = params.verifyListDeclParamMembers(compiler, currentClass);
+        Signature signature = params.verifyListDeclParamMembers(compiler, this.envParam, currentClass);
 
         name.setDefinition(new MethodDefinition(t, name.getLocation(), signature, currentClass.getNumberOfMethods() + 1));
         currentClass.incNumberOfMethods();
 
         try {
             currentClass.getMembers().declare(name.getName(), name.getExpDefinition());
-            if(currentClass.getSuperClass().getType() == compiler.environmentType.OBJECT){
-                compiler.environmentExpClass.declare(name.getName(), name.getExpDefinition());
-            }
-            compiler.environmentExp.declare(name.getName(), name.getExpDefinition());
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Exception : Method " + name.getName() + " already declared", name.getLocation());
         }
@@ -75,7 +73,8 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void verifyMethodBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
-        EnvironmentExp localEnv = currentClass.getMembers();
-        body.verifyMethodBody(compiler, localEnv, currentClass, type.getType());
+        LOG.debug("\t[PASSE 3] : \t Méthode " + this.name.getName());
+        body.verifyMethodBody(compiler, this.envParam, currentClass, type.getType());
+        LOG.debug("\t[PASSE 3] : \t [FIN]");
     }
 }

@@ -76,7 +76,7 @@ public class DecacCompiler {
         }
     }
     public static boolean getDebug() {
-        return false;
+        return true;
     }
 
     public static boolean getColor() {

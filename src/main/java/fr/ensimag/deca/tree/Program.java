@@ -4,6 +4,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.ima.pseudocode.instructions.ERROR;
 import fr.ensimag.ima.pseudocode.instructions.HALT;
 import fr.ensimag.ima.pseudocode.instructions.WNL;
@@ -53,20 +55,27 @@ public class Program extends AbstractProgram {
         codeGen.init_registres(compiler);
 
 
-        // A FAIRE: compléter ce squelette très rudimentaire de code
-        /*
-        compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(1, Register.GB)));
 
-        compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(2, Register.GB)));
-        */
+
+        // PASSE 1
+        //— construction du tableau des étiquettes des méthodes.
+        //— génération de code permettant de construire la table des méthodes.
+        //classes.codeGenListClassPasseOne(compiler);
 
 
         compiler.addComment("start main program");
         LOG.trace("start main program");
+        // PASSE 2
+        //— codage du programme principal (déclarations et instructions)
+        //— codage des champs de chaque classe (initialisation) ;
+        //— codage des méthodes de chaque classe (déclarations et instructions) ;
+
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+        //classes.codeGenListClassPasseTwo(compiler);
+
+
+
         compiler.addComment("end main program");
         LOG.trace("end main program");
 

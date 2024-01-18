@@ -22,10 +22,7 @@ public abstract class AbstractOpIneq extends AbstractOpCmp {
 
         if (t1.isInt() || t1.isFloat()) {
             this.setType(new BooleanType(compiler.createSymbol("boolean")));
-            return this.getType();
-        } else {
-            throw new ContextualError("Exception : type incompatible : " + t1 + " and " + t2, this.getLocation());
         }
-
+        return this.getType();
     }
 }

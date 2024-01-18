@@ -27,7 +27,7 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
                               AbstractExpr rightOperand) {
         Validate.notNull(leftOperand, "left operand cannot be null");
         Validate.notNull(rightOperand, "right operand cannot be null");
-        Validate.isTrue(leftOperand != rightOperand, "Sharing subtrees is forbidden");
+        //Validate.isTrue(leftOperand != rightOperand, "Sharing subtrees is forbidden");
         this.leftOperand = leftOperand;
         this.rightOperand = rightOperand;
     }
@@ -76,11 +76,8 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
                 compiler.addInstruction(new WINT());
             } else if (super.getType().isFloat()) {
                 compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
-            } else {
-                throw new UnsupportedOperationException("Not supported yet.");
             }
         }
-
     }
 
     abstract protected String getOperatorName();
@@ -98,7 +95,5 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Not implem");
-    }
+    protected abstract void codeGenInst(DecacCompiler compiler);
 }

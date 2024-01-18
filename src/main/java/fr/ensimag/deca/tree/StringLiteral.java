@@ -60,9 +60,9 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     public void decompile(IndentPrintStream s) {
         if (DecacCompiler.getColor()) {
-            s.print(value, "gray");
+            s.print(getValue(), "gray");
         } else {
-            s.print(value);
+            s.print(getValue());
         }
     }
 

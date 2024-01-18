@@ -19,14 +19,6 @@ public class Equals extends AbstractOpExactCmp {
     public Equals(AbstractExpr leftOperand, AbstractExpr rightOperand) {
         super(leftOperand, rightOperand);
     }
-
-    @Override
-    protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
-        if (!this.getLeftOperand().getType().isBoolean() || !this.getRightOperand().getType().isBoolean()) {
-            throw new ContextualError("Boolean expected", this.getLocation());
-        }
-    }
-
     @Override
     public void codeGenOp(DecacCompiler compiler) {
         compiler.addInstruction(new CMP(codeGen.getRegistreCourant(compiler), codeGen.getRegistreUtilise()));

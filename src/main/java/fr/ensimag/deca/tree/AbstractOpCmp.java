@@ -19,13 +19,11 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
                            ClassDefinition currentClass) throws ContextualError {
         Type t1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type t2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
-        if (compiler.environmentType.compatible(t1, t2)) {
+        if (compiler.environmentType.compatible(t1, t2) && (t1.isInt() || t1.isFloat() || t1.isBoolean())) {
             if (t1.isFloat() && t2.isInt()) {
-                t2 = new ConvFloat(getRightOperand()).verifyExpr(compiler, localEnv, currentClass);
                 setRightOperand(new ConvFloat(getRightOperand()));
                 getRightOperand().verifyExpr(compiler, localEnv, currentClass);
             } else if (t1.isInt() && t2.isFloat()) {
-                t1 = new ConvFloat(getLeftOperand()).verifyExpr(compiler, localEnv, currentClass);
                 setLeftOperand(new ConvFloat(getLeftOperand()));
                 getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
             }
@@ -33,12 +31,8 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             throw new ContextualError("Exception : type incompatible : " + t1 + " and " + t2, this.getLocation());
         }
 
-        if (t1.isInt() || t1.isFloat() || t1.isBoolean()) {
-            this.setType(new BooleanType(compiler.createSymbol("boolean")));
-            return this.getType();
-        } else {
-            throw new ContextualError("Exception : type incompatible : " + t1 + " and " + t2, this.getLocation());
-        }
+        this.setType(compiler.environmentType.BOOLEAN);
+        return this.getType();
     }
 
     public abstract void codeGenOp(DecacCompiler compiler);

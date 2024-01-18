@@ -17,12 +17,11 @@ public abstract class AbstractOpIneq extends AbstractOpCmp {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         super.verifyExpr(compiler, localEnv, currentClass);
-        Type t1 = this.getLeftOperand().getType();
-        Type t2 = this.getRightOperand().getType();
-
-        if (t1.isInt() || t1.isFloat()) {
-            this.setType(new BooleanType(compiler.createSymbol("boolean")));
+        if (!this.getLeftOperand().getType().isInt() && !this.getLeftOperand().getType().isFloat()) {
+            throw new ContextualError("Exception : type incompatible : " + this.getLeftOperand().getType() + " and " + this.getRightOperand().getType(), this.getLocation());
         }
+
+        this.setType(compiler.environmentType.BOOLEAN);
         return this.getType();
     }
 }

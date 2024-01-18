@@ -76,7 +76,7 @@ public class DecacCompiler {
         }
     }
     public static boolean getDebug() {
-        return false;
+        return true;
     }
 
     public static boolean getColor() {
@@ -299,14 +299,6 @@ public class DecacCompiler {
 
     public EnvironmentType getEnvironmentType() {
         return environmentType;
-    }
-
-    public void setEnvironmentType(EnvironmentType environmentType) {
-        this.environmentType = environmentType;
-    }
-
-    public void setEnvironmentExp(EnvironmentExp environmentExp) {
-        this.environmentExp = environmentExp;
     }
 
 }

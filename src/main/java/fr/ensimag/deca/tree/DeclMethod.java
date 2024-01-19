@@ -8,8 +8,10 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -129,8 +131,41 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     public void codeGenMethodPasseOne(DecacCompiler compiler) {
-        Label objectLabel = compiler.labelTable.addLabel("code." + name.getName());
+        Label objectLabel = compiler.classLabel.addLabel("code." + name.getName());
         compiler.addInstruction(new LOAD(new LabelOperand(objectLabel), Register.getR(0)));
         compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(codeGen.addIndexPile(), Register.GB)));
+    }
+
+
+
+    public void codeGenMethodPasseTwo(DecacCompiler compiler) {
+        /*
+
+        code.A.m:
+        TSTO #d1 ; taille maximale de la pile
+        BOV pile_pleine
+        ADDSP #d2 ; variables locales
+        ; Code de la sauvegarde des registres
+        ; Code de la méthode
+        ; Message d'erreur si on sort d'une méthode retournant un résultat de type
+        ; différent de void autrement que par une instruction return
+        ERROR
+        fin.A.m:
+        ; Code de la restauration des registres
+        RTS
+         */
+
+        // code.A.m:
+        Label objectLabel = compiler.classLabel.addLabel("code." + name.getName());
+        compiler.addLabel(objectLabel);
+
+        // TSTO #d1 ; taille maximale de la pile
+        compiler.addInstruction(new TSTO(100)); // TODO : taille maximale de la pile
+
+        // BOV pile_pleine
+        compiler.addInstruction(new BOV(compiler.getStack_Overflow_error()));
+
+        // ADDSP #d2 ; variables locales
+        
     }
 }

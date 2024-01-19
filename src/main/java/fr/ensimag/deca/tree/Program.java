@@ -81,21 +81,23 @@ public class Program extends AbstractProgram {
         LOG.trace("end main program");
 
         if (!DecacCompiler.getNocheck()) {
-            compiler.addLabel(compiler.getOverflow_error());
+            compiler.addLabel(new Label("overflow_error"));
             compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
 
-            compiler.addLabel(compiler.getIo_error());
+            compiler.addLabel(new Label("io_error"));
             compiler.addInstruction(new WSTR("Error: Input/Output error"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
 
-            compiler.addLabel(compiler.getStack_Overflow_error());
+            compiler.addLabel(new Label("stack_overflow_error"));
             compiler.addInstruction(new WSTR("Error: Stack overflow"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
         }
+
+
     }
 
     @Override

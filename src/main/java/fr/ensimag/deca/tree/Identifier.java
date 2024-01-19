@@ -182,15 +182,8 @@ public class Identifier extends AbstractIdentifier {
             expDef = currentClass.getMembers().get(this.getName());
         }
         if (expDef == null) {
-            expDef=currentClass.getMembers().get(this.getName());
-            if(expDef != null){
-                setDefinition(expDef);
-                setType(expDef.getType());
-            }else {
-                throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
-            }
+            throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
         }
-
 
         setDefinition(expDef);
         setType(expDef.getType());

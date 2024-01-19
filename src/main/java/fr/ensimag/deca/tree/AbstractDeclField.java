@@ -11,4 +11,7 @@ public abstract class AbstractDeclField extends Tree {
             throws ContextualError;
 
     protected abstract void verifyFieldBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError;
+
+    public void codeGenFieldPasseTwo(DecacCompiler compiler, ClassDefinition classDefinition) {
+    }
 }

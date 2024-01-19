@@ -1,12 +1,12 @@
 package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.tree.DeclClass;
+import fr.ensimag.deca.tree.DeclMethod;
 import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
-import java.util.Map;
-import java.util.Stack;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class codeGen {
@@ -14,8 +14,11 @@ public class codeGen {
     static final Stack<GPRegister> registresUtilises = new Stack<>();
     static final Stack<GPRegister> registresVariables = new Stack<>();
     static TreeMap<String, Integer> table = new TreeMap<>();
+
+    static Label objectLabel;
     static int nombreRegistres = 14;
-    static int indexPile = 0;
+
+    static int indexPile = 3;
 
     public static void setNombreRegistres(int nombreRegistres) {
         if (nombreRegistres >= 2) {
@@ -56,6 +59,10 @@ public class codeGen {
         int size = countEntries(table);
         int size2 = (topNEntries == null) ? 0 : countEntries(topNEntries);
         return size - size2;
+    }
+
+    public static int getIndexPile() {
+        return indexPile;
     }
 
     private static int countEntries(Map<String, Integer> entryMap) {
@@ -180,5 +187,49 @@ public class codeGen {
         System.out.println("\nRegistre courant : " + registreCourant);
         System.out.println("--------------------");
         System.out.println();
+    }
+
+    public static void setObjectLabel(Label label) {
+        objectLabel = label;
+    }
+    public static Label getObjectLabel() {
+        return objectLabel;
+    }
+
+    public static int addIndexPile(){
+        return indexPile ++;
+    }
+
+    public static  Map<String, Map<Integer, String>> tableDesMethodes;
+    public static Map<String,  Map<Integer, String>> construireTableDesMethodes(List<DeclClass> classList){
+        tableDesMethodes = new HashMap<>();
+
+        for(DeclClass c : classList){
+            Map<Integer, String>  table = new HashMap<>();
+
+            if(c.getVarSuper().getName().getName().equals("Object")) {
+                table.put(0, "code.Object.equals");
+            }
+            else {
+                Map<Integer, String> parentTable = tableDesMethodes.get(c.getVarSuper().getName().getName());
+                table.putAll(parentTable);
+            }
+            int index = table.size();
+            List<DeclMethod> methodeList = c.getListDeclMethod().getList();
+            for (DeclMethod declMethod : methodeList) {
+                if (declMethod.isOverride())
+                    table.put(declMethod.getMethodDefinition().getIndex(),"code."+ c.getClassName() + "." + declMethod.getName().getName());
+                else {
+                    table.put(declMethod.getMethodDefinition().getIndex() + index - 1, "code."+ c.getClassName() + "." + declMethod.getName().getName());
+                }
+            }
+            tableDesMethodes.put(c.getClassName(), table);
+        }
+
+        return tableDesMethodes;
+    }
+
+    public static Map<Integer,String> getTableDesMethodes(String s){
+        return tableDesMethodes.get(s);
     }
 }

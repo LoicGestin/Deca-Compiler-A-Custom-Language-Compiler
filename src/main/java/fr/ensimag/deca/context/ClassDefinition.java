@@ -16,6 +16,8 @@ public class ClassDefinition extends TypeDefinition {
     private int numberOfFields = 0;
     private int numberOfMethods = 0;
 
+    private int adressTable = 0;
+
     public ClassDefinition(ClassType type, Location location, ClassDefinition superClass) {
         super(type, location);
         EnvironmentExp parent;
@@ -41,6 +43,14 @@ public class ClassDefinition extends TypeDefinition {
 
     public void incNumberOfMethods() {
         numberOfMethods++;
+    }
+
+    public int getAdressTable() {
+        return adressTable;
+    }
+
+    public void setAdressTable(int adressTable) {
+        this.adressTable = adressTable;
     }
 
     @Override

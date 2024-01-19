@@ -23,7 +23,7 @@ public class LabelOperand extends DVal {
 
     @Override
     public String toString() {
-        return label.toString();
+        return label.toString2();
     }
 
 }

@@ -5,22 +5,22 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
-public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
+public class ListDeclMethod extends TreeList<DeclMethod> {
     @Override
     public void decompile(IndentPrintStream s) {
-        for (AbstractDeclMethod m : getList()) {
+        for (DeclMethod m : getList()) {
             m.decompile(s);
         }
     }
 
     public void verifyListDeclMethod(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
-        for (AbstractDeclMethod m : getList()) {
+        for (DeclMethod m : getList()) {
             m.verifyMethod(compiler, currentClass);
         }
     }
 
     public void verifyListDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
-        for (AbstractDeclMethod m : getList()) {
+        for (DeclMethod m : getList()) {
             m.verifyMethodBody(compiler, currentClass);
         }
     }

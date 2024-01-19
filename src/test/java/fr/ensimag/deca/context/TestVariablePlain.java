@@ -30,5 +30,9 @@ public class TestVariablePlain {
         Main main = new Main(l, new ListInst());
         Program prog = new Program(new ListDeclClass(), main);
         prog.verifyProgram(compiler);
+        DecacCompiler.setDebug(true);
+        DecacCompiler.setColor(true);
+        DecacCompiler.setNocheck(true);
+        prog.codeGenProgram(compiler);
     }
 }

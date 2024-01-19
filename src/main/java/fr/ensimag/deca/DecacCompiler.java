@@ -4,6 +4,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
+import fr.ensimag.deca.tools.ClassLabel;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.LabelTable;
 import fr.ensimag.deca.tools.SymbolTable;
@@ -66,6 +67,8 @@ public class DecacCompiler {
     public SymbolTable symbolTable = new SymbolTable();
     public final LabelTable labelTable = new LabelTable();
 
+    public final ClassLabel classLabel = new ClassLabel();
+
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
@@ -75,6 +78,7 @@ public class DecacCompiler {
             nocheck = compilerOptions.nocheck;
         }
     }
+    public static boolean debug = false;
     public static boolean getDebug() {
         return true;
     }
@@ -82,9 +86,15 @@ public class DecacCompiler {
     public static boolean getColor() {
         return color;
     }
+    public static void setColor(boolean col) {
+        color = col;
+    }
 
     public static boolean getNocheck() {
         return nocheck;
+    }
+    public static void setNocheck(boolean noch) {
+        nocheck = noch;
     }
 
     /**
@@ -245,7 +255,10 @@ public class DecacCompiler {
 
         program.display(new PrintStream(fstream));
         LOG.info("Compilation of " + sourceName + " successful.");
-        return false;
+        return debug;
+    }
+    public static void setDebug(boolean deb) {
+        debug = deb;
     }
 
     /**

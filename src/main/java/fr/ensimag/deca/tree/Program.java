@@ -60,7 +60,8 @@ public class Program extends AbstractProgram {
         // PASSE 1
         //— construction du tableau des étiquettes des méthodes.
         //— génération de code permettant de construire la table des méthodes.
-        //classes.codeGenListClassPasseOne(compiler);
+        codeGen.construireTableDesMethodes(classes.getList());
+        classes.codeGenListClassPasseOne(compiler);
 
 
         compiler.addComment("start main program");

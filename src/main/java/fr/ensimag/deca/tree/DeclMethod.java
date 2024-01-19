@@ -1,8 +1,15 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -28,6 +35,21 @@ public class DeclMethod extends AbstractDeclMethod {
         this.params = params;
         this.envParam = new EnvironmentExp(null);
         this.body = body;
+    }
+
+    public EnvironmentExp getEnvParam() {
+        return envParam;
+    }
+    public MethodDefinition getMethodDefinition(){
+        return (MethodDefinition) name.getExpDefinition();
+    }
+
+    public boolean isOverride() {
+        return isOverride;
+    }
+
+    public AbstractIdentifier getName() {
+        return name;
     }
 
     @Override
@@ -103,5 +125,12 @@ public class DeclMethod extends AbstractDeclMethod {
         LOG.debug("\t[PASSE 3] : \t Méthode " + this.name.getName());
         body.verifyMethodBody(compiler, this.envParam, currentClass, type.getType());
         LOG.debug("\t[PASSE 3] : \t [FIN]");
+    }
+
+    @Override
+    public void codeGenMethodPasseOne(DecacCompiler compiler) {
+        Label objectLabel = compiler.labelTable.addLabel("code." + name.getName());
+        compiler.addInstruction(new LOAD(new LabelOperand(objectLabel), Register.getR(0)));
+        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(codeGen.addIndexPile(), Register.GB)));
     }
 }

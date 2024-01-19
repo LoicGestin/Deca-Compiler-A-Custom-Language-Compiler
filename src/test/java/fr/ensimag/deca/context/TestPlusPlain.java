@@ -1,8 +1,8 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.tree.AbstractExpr;
-import fr.ensimag.deca.tree.Plus;
+import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.deca.tree.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mockito;

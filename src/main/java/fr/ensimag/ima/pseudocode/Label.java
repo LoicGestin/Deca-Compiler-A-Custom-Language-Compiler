@@ -16,6 +16,10 @@ public class Label extends Operand {
         return type+typeIndex;
     }
 
+    public String toString2() {
+        return type;
+    }
+
     public Label(String type, int typeIndex) {
         super();
         String name = type+typeIndex;

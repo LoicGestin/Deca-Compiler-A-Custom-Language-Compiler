@@ -529,7 +529,7 @@ list_classes returns[ListDeclClass tree]
       )*
     ;
 
-class_decl returns[AbstractDeclClass tree]
+class_decl returns[DeclClass tree]
     : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
             assert($name.tree != null);
             $tree = new DeclClass($name.tree, $superclass.tree, $class_body.field, $class_body.method);
@@ -600,7 +600,7 @@ decl_field[AbstractIdentifier t, Visibility v] returns[AbstractDeclField tree]
         }
     ;
 
-decl_method returns[AbstractDeclMethod tree]
+decl_method returns[DeclMethod tree]
 @init {
 
 }

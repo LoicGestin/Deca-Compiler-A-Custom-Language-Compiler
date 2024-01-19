@@ -1,12 +1,24 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -33,6 +45,18 @@ public class DeclClass extends AbstractDeclClass {
         this.listDeclMethod = listDeclMethod;
 
 
+    }
+
+    public String getClassName() {
+        return varName.getName().getName();
+    }
+
+    public AbstractIdentifier getVarSuper() {
+        return varSuper;
+    }
+
+    public ListDeclMethod getListDeclMethod() {
+        return listDeclMethod;
     }
 
     @Override
@@ -125,4 +149,17 @@ public class DeclClass extends AbstractDeclClass {
         listDeclMethod.iter(f);
     }
 
+    @Override
+    public void codeGenClassPasseOne(DecacCompiler compiler) {
+        compiler.addComment("Code de la table des méthodes de " + varName.getName() + ";");
+        varName.getClassDefinition().setAdressTable(codeGen.getIndexPile());
+        compiler.addInstruction(new LEA(new RegisterOffset( varSuper.getName().getName().equals("Object") ? 1 : varSuper.getClassDefinition().getAdressTable(), Register.GB), Register.getR(0)));
+        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(codeGen.addIndexPile(), Register.GB)));
+
+        Map<Integer,String> hashMap = codeGen.getTableDesMethodes(getClassName());
+        for (Map.Entry<Integer, String> entry : hashMap.entrySet()) {
+            compiler.addInstruction(new LOAD(new LabelOperand(compiler.classLabel.addLabel(entry.getValue())), Register.getR(0)));
+            compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(codeGen.addIndexPile(), Register.GB)));
+        }
+    }
 }

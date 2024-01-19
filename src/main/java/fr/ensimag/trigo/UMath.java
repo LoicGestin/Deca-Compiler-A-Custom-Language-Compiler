@@ -98,16 +98,15 @@ public class UMath {
         return 1-x2*cosHornerFactor(x2, 1, 1);
     }
 
-    float asinHornerFactor(float x2, int n, int num, int recDenom) {
+    float asinHornerFactor(float x2, int n, float recN) {
 
-        num = num*(2*n-1)*2*n;
-        recDenom = recDenom*n*4;
+      recN = recN*(n-(float)0.5);
 
         if (n == 255) {
-            return pow(num, 2) * x2 / (recDenom*(2*n+1));
+            return recN * x2/(2*n+1);
         }
 
-        return pow(num, 2) / (recDenom*(2*n+1)) + x2 * asinHornerFactor(x2, n + 1, num, recDenom);
+        return recN/(2*n+1) + x2 * asinHornerFactor(x2, n + 1,recN);
     }
 
     float asin(float f) {
@@ -121,18 +120,16 @@ public class UMath {
             return 0;
         }
 
-        inter_res = 1+x2 * asinHornerFactor(x2, 1, 1, 1);
+        inter_res = asinHornerFactor(x2, 1, 1);
         return f*inter_res;
     }
 
-
-    float atanHornerFactor(float x2, int n) {
-
-        if (n == 255) {
-            return x2 / (2 * n + 1);
+    float atanHF(float x2, int n){
+        if (n==255){
+            return x2/(2*n+1);
         }
 
-        return atanHornerFactor(x2, n + 1);
+        return (1/(2*n+1)) - x2*atanHF(x2,n+1);
     }
 
     float atan(float f) {
@@ -145,7 +142,7 @@ public class UMath {
             return 0;
         }
 
-        return f * atanHornerFactor(x2, 0);
+        return f*atanHF(x2,0);
     }
 
     float ulp(float f){

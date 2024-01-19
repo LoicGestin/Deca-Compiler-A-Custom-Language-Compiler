@@ -6,25 +6,41 @@ public class TestUMath{
 
     public static void main(String args[]){
         UMath m = new UMath();
-        
-        System.out.println("3.5² = "+m.pow((float)3.5,2) +" " + (float)Math.pow((float)3.5,2));
-        System.out.println("5.32^-3 = "+m.pow((float)3.5,-3) +" " + (float)Math.pow((float)3.5,-3));
 
-        System.out.println("+inf = " + m.POSITIVE_INFINITY + " " + Float.POSITIVE_INFINITY);
-        System.out.println("-inf = " + m.NEGATIVE_INFINITY + " " + Float.NEGATIVE_INFINITY);
-        System.out.println("NaN = " + m.NaN + " " + Float.NaN);
-        System.out.println("Max = " + m.MAX_VALUE + " " + Float.MAX_VALUE);
-        System.out.println("Min = " + m.MIN_VALUE + " " + Float.MIN_VALUE);
+        System.out.println("Test de la bibliothèque UMath: \n\tcomputed | Expected ");
+        System.out.println("Test de la fonction pow: ");
+        System.out.println("\t3.5² = "+m.pow((float)3.5,2) +"\t|\t" + (float)Math.pow((float)3.5,2));
+        System.out.println("\t5.32^-3 = "+m.pow((float)3.5,-3) +"\t|\t" + (float)Math.pow((float)3.5,-3));
+        System.out.println("----------------------------------------------------------------------------");
 
-        System.out.println("Signe de -132: " + m.sign(-1));
-        System.out.println("Signe de 0: " + m.sign(0));
+        System.out.println("Test des constantes: ");
+        System.out.println("\t+inf = \t" + m.POSITIVE_INFINITY + "\t|\t" + Float.POSITIVE_INFINITY);
+        System.out.println("\t-inf = \t" + m.NEGATIVE_INFINITY + "\t|\t" + Float.NEGATIVE_INFINITY);
+        System.out.println("\tNaN = \t" + m.NaN + "\t|\t" + Float.NaN);
+        System.out.println("\tMax = \t" + m.MAX_VALUE + "\t|\t" + Float.MAX_VALUE);
+        System.out.println("\tMin = \t" + m.MIN_VALUE + "\t|\t" + Float.MIN_VALUE);
+        System.out.println("\tMin = \t" + m.MIN_VALUE + "\t|\t" + Float.MIN_VALUE);
+        System.out.println("\tPi = \t" + m.PI + "\t|\t" + (float)Math.PI);
+        System.out.println("----------------------------------------------------------------------------");
 
-        System.out.println("|-32.584| = " + m.abs((float)-32.584));
+        System.out.println("Test de la fonction sig: ");
+        System.out.println("\tSigne de -132: " + m.sign(-1));
+        System.out.println("\tSigne de 0: " + m.sign(0));
+        System.out.println("----------------------------------------------------------------------------");
 
-        System.out.println("sin(3.12) = " + m.sin(((float)3.12)) + " " + (float)Math.sin((float)3.12));
-        System.out.println("cos(65.3265) = " + m.cos(((float)65.3265)) + " " + (float)Math.cos((float)65.3265));
-        System.out.println("asin(0.84) = " + m.asin(((float)0.84)) + " " + (float)Math.asin((float)0.84));
-        System.out.println("atan(32.684) = " + m.atan(((float)32.684)) + " " + (float)Math.atan((float)32.684));
-        System.out.println("ulp(75.61) = " + m.ulp((float)75.61) + " " + Math.ulp((float)75.61));
+        System.out.println("Test de la fonction abs: ");
+        System.out.println("\t|-32.584| = " + m.abs((float)-32.584));
+        System.out.println("----------------------------------------------------------------------------");
+
+        System.out.println("Test des fonctions trigo: ");
+        System.out.println("\tsin(3.12) = " + m.sin(((float)3.12)) + "\t|\t" + (float)Math.sin((float)3.12));
+        System.out.println("\tcos(65.3265) = " + m.cos(((float)65.3265)) + "\t|\t" + (float)Math.cos((float)65.3265));
+        System.out.println("\tasin(0.84) = " + m.asin(((float)0.84)) + "\t|\t" + (float)Math.asin((float)0.84));
+        System.out.println("\tatan(1) = " + m.atan(((float)1)) + "\t|\t" + (float)Math.atan((float)1));
+        System.out.println("----------------------------------------------------------------------------");
+
+        System.out.println("Test de la fonction ulp: ");
+        System.out.println("\tulp(75.61) = " + m.ulp((float)75.61) + "\t|\t" + Math.ulp((float)75.61));
+        System.out.println("----------------------------------------------------------------------------");
     }
 }

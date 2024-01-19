@@ -99,13 +99,15 @@ public class UMath {
     }
 
     float asinHornerFactor(float x2, int n, float recN) {
+        recN = recN*(n-(float)0.5);
 
-      recN = recN*(n-(float)0.5);
-
-        if (n == 255) {
+        if (n == 3) {
+            System.out.print(recN/(2*n+1)+"x²)");
+            for (int i=0;i<n;i++) System.out.print(")");
             return recN * x2/(2*n+1);
         }
 
+        System.out.print(recN/(2*n+1)+"+x²(");
         return recN/(2*n+1) + x2 * asinHornerFactor(x2, n + 1,recN);
     }
 
@@ -115,12 +117,13 @@ public class UMath {
         float inter_res;
 
         if (isNaN(f) || abs(f) > 1) {
-            return Float.NaN;
+            return NaN;
         } else if (f == 0) {
             return 0;
         }
 
-        inter_res = asinHornerFactor(x2, 1, 1);
+        System.out.print("x(1+x²(");
+        inter_res = 1+x2*asinHornerFactor(x2, 1, (float)1);
         return f*inter_res;
     }
 
@@ -129,7 +132,7 @@ public class UMath {
             return x2/(2*n+1);
         }
 
-        return (1/(2*n+1)) - x2*atanHF(x2,n+1);
+        return (float)1/(2*n+1) - x2*atanHF(x2,n+1);
     }
 
     float atan(float f) {

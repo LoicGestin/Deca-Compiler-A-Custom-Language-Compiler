@@ -60,6 +60,7 @@ public class UMath {
 
     float sin(float f) {
 
+        f= f%(2*(float)Math.PI);
         float x2 = pow(f, 2);
         float inter_res;
 
@@ -76,7 +77,7 @@ public class UMath {
 
     protected float cosHornerFactor(float x2, int n, float inv_fact) {
 
-        inv_fact = inv_fact/(2*n*(2*n+1));
+        inv_fact = inv_fact/(2*n*(2*n-1));
 
         if (n == 255) {
             return x2 * inv_fact;
@@ -87,30 +88,30 @@ public class UMath {
 
     float cos(float f) {
 
-        f=f%(2*(float)Math.PI);
+        f= f%(2*(float)Math.PI);
         float x2 = pow(f, 2);
 
         if (isNaN(f) || isInfinite(f)) {
             return Float.NaN;
         }
 
-        return 1-cosHornerFactor(x2, 1, 1);
+        return 1-x2*cosHornerFactor(x2, 1, 1);
     }
 
-    float asinHornerFactor(float x2, int n, float sqrt_num, float denom) {
+    float asinHornerFactor(float x2, int n, int num, int recDenom) {
 
-        sqrt_num = sqrt_num * (sqrt_num + 1);
-        denom = denom * 2 * n * (2 * n + 1);
+        num = num*(2*n-1)*2*n;
+        recDenom = recDenom*n*4;
 
         if (n == 255) {
-            return pow(sqrt_num, 2) * x2 / denom;
+            return pow(num, 2) * x2 / (recDenom*(2*n+1));
         }
 
-        return pow(sqrt_num, 2) / denom + x2 * asinHornerFactor(x2, n + 1, sqrt_num, denom);
+        return pow(num, 2) / (recDenom*(2*n+1)) + x2 * asinHornerFactor(x2, n + 1, num, recDenom);
     }
 
     float asin(float f) {
-        f=f%(2*(float)Math.PI);
+
         float x2 = pow(f, 2);
         float inter_res;
 
@@ -120,7 +121,7 @@ public class UMath {
             return 0;
         }
 
-        inter_res = asinHornerFactor(x2, 1, 1, 1);
+        inter_res = 1+x2 * asinHornerFactor(x2, 1, 1, 1);
         return f*inter_res;
     }
 

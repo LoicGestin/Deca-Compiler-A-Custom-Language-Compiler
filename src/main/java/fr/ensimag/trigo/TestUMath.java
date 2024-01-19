@@ -23,7 +23,7 @@ public class TestUMath{
 
         System.out.println("sin(3.12) = " + m.sin(((float)3.12)) + " " + (float)Math.sin((float)3.12));
         System.out.println("cos(65.3265) = " + m.cos(((float)65.3265)) + " " + (float)Math.cos((float)65.3265));
-        System.out.println("asin(1.0) = " + m.asin(((float)1.0)) + " " + (float)Math.asin((float)1.0));
+        System.out.println("asin(0.84) = " + m.asin(((float)0.84)) + " " + (float)Math.asin((float)0.84));
         System.out.println("atan(32.684) = " + m.atan(((float)32.684)) + " " + (float)Math.atan((float)32.684));
         System.out.println("ulp(75.61) = " + m.ulp((float)75.61) + " " + Math.ulp((float)75.61));
     }

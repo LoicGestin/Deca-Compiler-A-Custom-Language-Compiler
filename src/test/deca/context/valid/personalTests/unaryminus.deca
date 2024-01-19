@@ -2,11 +2,6 @@
 
 {
     int a = -5;
-    float b = -5.0;
-
     println(a);
     println(-a);
-
-    println(b);
-    println(-b);
 }

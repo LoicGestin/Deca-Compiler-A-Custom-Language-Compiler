@@ -13,18 +13,16 @@ public class InstanceOf extends AbstractOpExactCmp {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        System.out.println("InstanceOf");
         Type t1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
-        System.out.println("InstanceOf 1");
-        System.out.println("RightOperand : " + this.getRightOperand());
         Type t2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+        System.out.println("t1 : " + t1);
+        System.out.println("t2 : " + t2);
 
         if(!(t1.isClassOrNull() && t2.isClass())) {
-            throw new ContextualError("Exception : type incompatible : " + t1 + " and " + t2, this.getLocation());
+            throw new ContextualError("Exception : type incompatible : " + t1 + " and " + t2, getLeftOperand().getLocation());
         }
 
         setType(compiler.environmentType.BOOLEAN);
-        System.out.println("InstanceOf fini");
         return getType();
     }
 

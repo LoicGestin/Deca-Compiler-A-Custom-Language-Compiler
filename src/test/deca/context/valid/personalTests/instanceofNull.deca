@@ -1,0 +1,9 @@
+// Test InstanceOf avec Null
+
+class A{
+    int a;
+}
+
+{
+    println(null instanceof A);
+}

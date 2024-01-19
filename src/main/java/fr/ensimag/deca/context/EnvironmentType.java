@@ -60,8 +60,20 @@ public class EnvironmentType {
 
         Symbol objectSymb = compiler.createSymbol("Object");
         OBJECT = new ClassType(objectSymb, new Location(0, 0, "Object"), null);
-        envTypes.put(objectSymb, new ClassDefinition(OBJECT, Location.BUILTIN, null));
-        envClasses.put(objectSymb, new ClassDefinition(OBJECT, Location.BUILTIN, null));
+        ClassDefinition def = new ClassDefinition(OBJECT, Location.BUILTIN, null);
+        envTypes.put(objectSymb, def);
+        envClasses.put(objectSymb, def);
+
+        EnvironmentExp envObjet = def.getMembers();
+        Signature sigObjet = new Signature();
+        sigObjet.add(OBJECT);
+        try {
+            envObjet.declare(compiler.createSymbol("equals"), new MethodDefinition(BOOLEAN, Location.BUILTIN, sigObjet, 1));
+        } catch (EnvironmentExp.DoubleDefException e) {
+            LOG.error("Erreur dans l'environnement de Object");
+        }
+        def.incNumberOfMethods();
+
 
     }
 

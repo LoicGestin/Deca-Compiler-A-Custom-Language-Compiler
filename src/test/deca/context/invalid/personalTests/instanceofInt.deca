@@ -1,0 +1,13 @@
+class A{
+    int a;
+}
+
+{
+    int a = 10;
+    if(a instanceof A){
+        println("true");
+    }
+    else{
+        println("false");
+    }
+}

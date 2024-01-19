@@ -1,0 +1,13 @@
+// Test Method Asm
+
+class A{
+    int a = 10;
+
+    int m() asm("LOAD #1, R1
+                WINT R1");
+}
+
+{
+    A a = new A();
+    a.m();
+}

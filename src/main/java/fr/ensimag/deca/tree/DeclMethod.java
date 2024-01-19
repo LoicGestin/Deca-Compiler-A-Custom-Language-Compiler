@@ -104,6 +104,8 @@ public class DeclMethod extends AbstractDeclMethod {
                 }
                 isOverride = true;
                 index = methodDef.getIndex();
+            } else if (envSuper.get(name.getName()).isField()) {
+                throw new ContextualError("Exception : Method " + name.getName() + " is already defined as a field in SuperClass", name.getLocation());
             }
         }
 

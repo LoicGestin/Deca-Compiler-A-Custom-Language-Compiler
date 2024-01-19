@@ -96,6 +96,14 @@ public class DeclField extends AbstractDeclField {
             throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
         }
 
+        EnvironmentExp envSuper = currentClass.getSuperClass().getMembers();
+
+        if(envSuper.get(field.getName()) != null){
+                if(envSuper.get(field.getName()).isMethod()){
+                    throw new ContextualError("Exception : Field " + field.getName() + " is already defined as a method in SuperClass", field.getLocation());
+                }
+        }
+
         field.setDefinition(new FieldDefinition(t, field.getLocation(), visibility, currentClass, currentClass.getNumberOfFields() + 1));
 
         try {

@@ -30,7 +30,9 @@ public class MethodBody extends AbstractMethodBody {
     @Override
     public void decompile(IndentPrintStream s) {
         if (stringLiteral != null) {
+            s.print(" asm(");
             stringLiteral.decompile(s);
+            s.print(")");
         } else {
             s.println("{");
             s.indent();

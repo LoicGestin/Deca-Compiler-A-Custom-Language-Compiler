@@ -27,7 +27,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         Type typeL = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type typeR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
-        if (compiler.environmentType.compatible(typeL, typeR)) {
+        if (compiler.environmentType.cast_compatible(typeL, typeR)) {
             if (typeL.isFloat() && typeR.isInt()) {
                 setRightOperand(new ConvFloat(getRightOperand()));
                 typeR = getRightOperand().verifyExpr(compiler, localEnv, currentClass);

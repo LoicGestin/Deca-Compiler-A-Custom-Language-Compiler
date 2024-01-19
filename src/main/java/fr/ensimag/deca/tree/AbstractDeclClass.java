@@ -37,4 +37,8 @@ public abstract class AbstractDeclClass extends Tree {
     public void codeGenClassPasseOne(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");
     }
+
+    public void codeGenClassPasseTwo(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
 }

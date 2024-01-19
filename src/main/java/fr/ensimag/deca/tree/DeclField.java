@@ -1,8 +1,15 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -107,6 +114,29 @@ public class DeclField extends AbstractDeclField {
         LOG.debug("\t[PASSE 3] : \t Field");
         initialization.verifyInitialization(compiler, field.getType(), currentClass.getMembers(), currentClass);
         LOG.debug("\t[PASSE 3] : \t [FIN]");
+    }
+
+    @Override
+    public void codeGenFieldPasseTwo(DecacCompiler compiler, ClassDefinition classDefinition) {
+
+        FieldDefinition fieldDefinition = field.getFieldDefinition();
+        fieldDefinition.setOperand(new RegisterOffset(fieldDefinition.getIndex(), Register.LB));
+
+        // Generate the code for the field
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+
+        if (initialization instanceof NoInitialization){
+            if (field.getType().isInt() || field.getType().isBoolean()){
+                compiler.addInstruction(new LOAD(new ImmediateInteger(0), codeGen.getRegistreLibre()));
+            } else if (field.getType().isFloat() ){
+                compiler.addInstruction(new LOAD(new ImmediateInteger(0), codeGen.getRegistreLibre()));
+            } else if (field.getType().isClass()){
+                compiler.addInstruction(new LOAD(new NullOperand(), codeGen.getRegistreLibre()));
+            }
+            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), fieldDefinition.getOperand()));
+        }
+        // Generate the code for the initialization
+        initialization.codeGenInit(compiler, field.getFieldDefinition());
     }
 
 }

@@ -178,17 +178,24 @@ public class Identifier extends AbstractIdentifier {
                            ClassDefinition currentClass) throws ContextualError {
         ExpDefinition expDef = localEnv.get(this.getName());
         codeGen.addVariableTable(this.getName().toString());
-        if (expDef == null) {
+        if (expDef == null && currentClass != null) {
             expDef = currentClass.getMembers().get(this.getName());
         }
-        if (expDef == null) {
-            expDef=currentClass.getMembers().get(this.getName());
-            if(expDef != null){
-                setDefinition(expDef);
-                setType(expDef.getType());
-            }else {
+
+        if (expDef == null && currentClass == null) {
+            ClassDefinition exp = compiler.environmentType.defOfClass(this.getName());
+            if(exp != null){
+                setDefinition(exp);
+                setType(exp.getType());
+                return exp.getType();
+            }
+            else {
                 throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
             }
+        }
+
+        if(expDef == null){
+            throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
         }
 
 

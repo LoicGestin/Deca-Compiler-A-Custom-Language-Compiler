@@ -25,23 +25,24 @@ public class Cast extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
         Type e = expr.verifyExpr(compiler, localEnv, currentClass);
-        if (t.isFloat() && e.isInt()) {
-            this.expr = new ConvFloat(expr);
-            t = this.expr.verifyExpr(compiler, localEnv, currentClass);
-            this.expr.setLocation(getLocation());
-            setType(t);
-            return t;
-        }
-        if (t.isInt() && e.isFloat()) {
-            this.expr = new ConvInt(expr);
-            t = this.expr.verifyExpr(compiler, localEnv, currentClass);
-            this.expr.setLocation(getLocation());
-            setType(t);
-            return t;
-        }
-        if (t.sameType(e)) {
-            setType(t);
-            return t;
+
+        if(compiler.environmentType.cast_compatible(t, e)) {
+            if (t.isFloat() && e.isInt()) {
+                this.expr = new ConvFloat(expr);
+                t = this.expr.verifyExpr(compiler, localEnv, currentClass);
+                this.expr.setLocation(getLocation());
+                setType(t);
+                return t;
+            }else if (t.isInt() && e.isFloat()) {
+                this.expr = new ConvInt(expr);
+                t = this.expr.verifyExpr(compiler, localEnv, currentClass);
+                this.expr.setLocation(getLocation());
+                setType(t);
+                return t;
+            } else if (compiler.environmentType.subType(compiler.environmentType, e, t)) {
+                setType(t);
+                return t;
+            }
         }
 
         throw new ContextualError("Exception : cast error, you can't cast " + t + " to " + e, getLocation());

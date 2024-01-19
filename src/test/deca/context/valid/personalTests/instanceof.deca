@@ -1,0 +1,21 @@
+class A{
+    int a;
+
+}
+
+class B extends A{
+    int b;
+}
+
+{
+    A a = new A();
+    B b = new B();
+
+    if(a instanceof A){
+        println("a is instance of A");
+    }
+
+    if(b instanceof B){
+        println("b is instance of B");
+    }
+}

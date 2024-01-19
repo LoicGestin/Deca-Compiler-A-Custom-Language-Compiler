@@ -2,7 +2,7 @@ class A {}
 class B extends A {}
 
 {
-null;
 A a = null;
+null;
 a = new A();
 }

@@ -19,7 +19,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
                            ClassDefinition currentClass) throws ContextualError {
         Type t1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type t2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
-        if (compiler.environmentType.compatible(t1, t2) && (t1.isInt() || t1.isFloat() || t1.isBoolean())) {
+        if (compiler.environmentType.cast_compatible(t1, t2) && (t1.isInt() || t1.isFloat() || t1.isBoolean())) {
             if (t1.isFloat() && t2.isInt()) {
                 setRightOperand(new ConvFloat(getRightOperand()));
                 getRightOperand().verifyExpr(compiler, localEnv, currentClass);

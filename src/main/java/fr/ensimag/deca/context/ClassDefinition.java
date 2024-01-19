@@ -37,6 +37,10 @@ public class ClassDefinition extends TypeDefinition {
         this.numberOfFields++;
     }
 
+    public void setNumberOfFields(int numberOfFields) {
+        this.numberOfFields = numberOfFields;
+    }
+
     public int getNumberOfMethods() {
         return numberOfMethods;
     }

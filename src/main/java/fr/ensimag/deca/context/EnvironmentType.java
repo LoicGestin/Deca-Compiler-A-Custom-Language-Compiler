@@ -70,12 +70,12 @@ public class EnvironmentType {
             return true;
         }
 
-    	if (t1.isClass() && t2.isClassOrNull()) {
-            if(t1.isClass() && t2.isNull()) {
+    	if (t1.isClassOrNull() && t2.isClass()) {
+            if(t1.isNull() && t2.isClass()) {
                 return true;
             }
 
-            if(t1.isClass() && !t2.isClass()){
+            if(!t1.isClass() && t2.isClass()){
                 return false;
             }
 
@@ -87,7 +87,11 @@ public class EnvironmentType {
     }
 
     public boolean compatible(Type t1, Type t2) {
-        return t1.isFloat() && t2.isInt() || t1.isInt() && t2.isFloat() || subType(this, t1, t2);
+        return t1.isFloat() && t2.isInt() || subType(this, t2, t1);
+    }
+
+    public boolean cast_compatible(Type t1, Type t2) {
+    	return compatible(t1, t2) || compatible(t2, t1);
     }
 
     public TypeDefinition defOfType(Symbol s) {

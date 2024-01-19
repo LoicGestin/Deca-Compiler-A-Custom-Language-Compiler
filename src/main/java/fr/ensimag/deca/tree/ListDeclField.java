@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.*;
@@ -37,12 +38,20 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         // On Load les fields de la classe super s'il y en as
         if (currentClass.getSuperClass().getNumberOfFields() != 0) {
             if (DecacCompiler.getDebug()){
-                compiler.addComment("Chargement des champs hérités de la classe " + currentClass.getSuperClass().getType().getName());
+                compiler.addComment("\tChargement des champs hérités de la classe " + currentClass.getSuperClass().getType().getName());
             }
+
+            compiler.addInstruction(new TSTO(currentClass.getSuperClass().getNumberOfFields() + 1));
+            compiler.addInstruction(new BOV(new Label("overflow_error")));
+
             compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(1)));
             compiler.addInstruction(new PUSH(Register.getR(1)));
             compiler.addInstruction(new BSR(compiler.classLabel.addLabel("init." + currentClass.getSuperClass().getType().getName())));
             compiler.addInstruction(new ADDSP(1));
+        }
+
+        if (DecacCompiler.getDebug()){
+            compiler.addComment("\tChargement des champs propres de la classe " + currentClass.getType().getName());
         }
 
 

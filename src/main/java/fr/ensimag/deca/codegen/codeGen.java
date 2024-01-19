@@ -236,17 +236,34 @@ public class codeGen {
     }
 
     public static void protect_registres(DecacCompiler compiler){
-        registresSauvegardes.empty();
-        for (GPRegister r : registresUtilises) {
-            compiler.addInstruction(new PUSH(registresUtilises.pop()));
-            registresSauvegardes.push(r);
+        for (int i = 0; i < nombreRegistres; i++) {
+            compiler.addInstruction(new PUSH(Register.getR(i)));
         }
+        int registreUtilise = registresUtilises.size();
+        for(int i =0; i < registreUtilise; i ++){
+            GPRegister r = getCurrentRegistreUtilise();
+            registresSauvegardes.push(r);
+            registresLibres.push(r);
+            registresUtilises.remove(r);
+        }
+
     }
 
     public static void unprotect_registres(DecacCompiler compiler){
-        for (GPRegister r : registresSauvegardes) {
-            compiler.addInstruction(new POP(registresSauvegardes.pop()));
-            registresUtilises.push(r);
+        for (int i = nombreRegistres - 1; i >= 0; i--) {
+            compiler.addInstruction(new POP(Register.getR(i)));
         }
+        for (GPRegister r : registresSauvegardes) {
+            registresUtilises.push(r);
+            registresLibres.remove(r);
+            registresSauvegardes.remove(r);
+        }
+    }
+    public static String currentMethod;
+    public static void setCurrentMethod(String s){
+        currentMethod = s;
+    }
+    public static String getCurrentMethod(){
+        return currentMethod;
     }
 }

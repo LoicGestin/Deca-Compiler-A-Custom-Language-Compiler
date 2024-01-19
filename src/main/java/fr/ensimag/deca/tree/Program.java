@@ -73,12 +73,12 @@ public class Program extends AbstractProgram {
 
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
-        //classes.codeGenListClassPasseTwo(compiler);
-
-
-
         compiler.addComment("end main program");
         LOG.trace("end main program");
+
+        classes.codeGenListClassPasseTwo(compiler);
+
+
 
         if (!DecacCompiler.getNocheck()) {
             compiler.addLabel(new Label("overflow_error"));
@@ -95,6 +95,12 @@ public class Program extends AbstractProgram {
             compiler.addInstruction(new WSTR("Error: Stack overflow"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
+
+            compiler.addLabel(new Label("deferencement.null"));
+            compiler.addInstruction(new WSTR("Error: deferencement of null pointer"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+
         }
 
 

@@ -8,10 +8,7 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
-import fr.ensimag.ima.pseudocode.instructions.TSTO;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -129,16 +126,10 @@ public class DeclMethod extends AbstractDeclMethod {
         LOG.debug("\t[PASSE 3] : \t [FIN]");
     }
 
-    @Override
-    public void codeGenMethodPasseOne(DecacCompiler compiler) {
-        Label objectLabel = compiler.classLabel.addLabel("code." + name.getName());
-        compiler.addInstruction(new LOAD(new LabelOperand(objectLabel), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(codeGen.addIndexPile(), Register.GB)));
-    }
 
 
 
-    public void codeGenMethodPasseTwo(DecacCompiler compiler) {
+    public void codeGenMethodPasseTwo(DecacCompiler compiler, ClassDefinition currentClass) {
         /*
 
         code.A.m:
@@ -156,8 +147,7 @@ public class DeclMethod extends AbstractDeclMethod {
          */
 
         // code.A.m:
-        Label objectLabel = compiler.classLabel.addLabel("code." + name.getName());
-        compiler.addLabel(objectLabel);
+        compiler.addLabel(compiler.classLabel.addLabel("code." + currentClass.getType().getName() + "." + name.getName()));
 
         // TSTO #d1 ; taille maximale de la pile
         compiler.addInstruction(new TSTO(100)); // TODO : taille maximale de la pile
@@ -165,7 +155,34 @@ public class DeclMethod extends AbstractDeclMethod {
         // BOV pile_pleine
         compiler.addInstruction(new BOV(new Label("pile_pleine")));
 
-        // ADDSP #d2 ; variables locales
+        if (DecacCompiler.getDebug()){
+            compiler.addComment("\tSauvegarde des registres");
+        }
+
+        codeGen.protect_registres(compiler);
+
+
+        compiler.addInstruction(new ADDSP(params.size() + 1)); // TODO : variables locales
+
+        // Code de la méthode
+        codeGen.setCurrentMethod(currentClass.getType().getName() + "." + this.getName().getName().getName());
+        body.codeGenMethodBody(compiler, currentClass, this.envParam, type.getType());
+
+
+
+
+
+        compiler.addLabel(compiler.classLabel.addLabel("fin." + getName().getName() + "." + name.getName()));
+        codeGen.unprotect_registres(compiler);
+        compiler.addInstruction(new RTS());
+
+
+
+
+
+
+
+
         
     }
 }

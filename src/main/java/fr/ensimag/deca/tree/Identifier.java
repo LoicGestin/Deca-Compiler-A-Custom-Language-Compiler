@@ -159,7 +159,7 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
-    public DAddr getAddr() {
+    public DAddr getAddr(DecacCompiler compiler) {
         return this.getExpDefinition().getOperand();
     }
 
@@ -169,7 +169,7 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
-    public boolean isAddr() {
+    public boolean isAddr(DecacCompiler compiler) {
         return this.getExpDefinition().isAddr();
     }
 

@@ -1,12 +1,14 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
@@ -71,7 +73,7 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        codeGen.setRegistreCourant(this.getAddr(compiler), compiler);
     }
 
     @Override
@@ -126,8 +128,15 @@ public class GetAttribut extends AbstractIdentifier {
     }
 
     @Override
-    public DAddr getAddr() {
-        throw new UnsupportedOperationException("not yet implemented");
+    public DAddr getAddr(DecacCompiler compiler) {
+        codeGen.setAssignation(true);
+        expr.codeGenInst(compiler);
+
+        compiler.addInstruction(new CMP(new NullOperand(), codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
+
+        return new RegisterOffset(getFieldDefinition().getIndex(), codeGen.getRegistreUtilise());
+
     }
 
     @Override
@@ -136,8 +145,8 @@ public class GetAttribut extends AbstractIdentifier {
     }
 
     @Override
-    public boolean isAddr() {
-        throw new UnsupportedOperationException("not yet implemented");
+    public boolean isAddr(DecacCompiler compiler) {
+        return true;
     }
 
     @Override

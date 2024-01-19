@@ -1,14 +1,18 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
 
 import java.io.PrintStream;
 
 public class Return extends AbstractInst {
 
     private AbstractExpr expr;
+    private String method;
 
     public Return(AbstractExpr expr) {
         this.expr = expr;
@@ -46,7 +50,6 @@ public class Return extends AbstractInst {
         }
 
         expr.setType(returnType);
-
     }
 
     /**
@@ -56,7 +59,10 @@ public class Return extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        expr.codeGenInst(compiler);
+
+        // Get the name of the method
+        compiler.addInstruction(new BRA(new Label("fin." + codeGen.getCurrentMethod())));
     }
 
     /**

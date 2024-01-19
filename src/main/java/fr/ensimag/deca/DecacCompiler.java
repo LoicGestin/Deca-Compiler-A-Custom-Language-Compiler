@@ -61,9 +61,6 @@ public class DecacCompiler {
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
-    private final Label overflow_error = new Label("overflow_error");
-    private final Label io_error = new Label("io_error");
-    private final Label stack_overflow_error = new Label("stack_overflow_error");
     public SymbolTable symbolTable = new SymbolTable();
     public final LabelTable labelTable = new LabelTable();
 
@@ -296,18 +293,6 @@ public class DecacCompiler {
         DecaParser parser = new DecaParser(tokens);
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
-    }
-
-    public Label getStack_Overflow_error() {
-        return stack_overflow_error;
-    }
-
-    public Label getOverflow_error() {
-        return overflow_error;
-    }
-
-    public Label getIo_error() {
-        return io_error;
     }
 
     public EnvironmentType getEnvironmentType() {

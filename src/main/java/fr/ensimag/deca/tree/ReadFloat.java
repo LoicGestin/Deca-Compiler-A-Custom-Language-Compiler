@@ -5,6 +5,7 @@ import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.RFLOAT;
@@ -27,7 +28,7 @@ public class ReadFloat extends AbstractReadExpr {
     @Override
     public void codeGenInst(DecacCompiler compiler) {
         compiler.addInstruction(new RFLOAT());
-        compiler.addInstruction(new BOV(compiler.getIo_error()));
+        compiler.addInstruction(new BOV(new Label("io_error")));
         compiler.addInstruction(new LOAD(GPRegister.getR(1), codeGen.getRegistreLibre()));
     }
 

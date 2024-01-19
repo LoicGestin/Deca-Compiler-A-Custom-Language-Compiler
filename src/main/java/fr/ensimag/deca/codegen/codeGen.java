@@ -40,7 +40,7 @@ public class codeGen {
         int taille = codeGen.tableSize();
         if (taille != 0) {
             compiler.addInstruction(new TSTO(taille));
-            compiler.addInstruction(new BOV(compiler.getStack_Overflow_error()));
+            compiler.addInstruction(new BOV(new Label("pile_pleine")));
             compiler.addInstruction(new ADDSP(taille));
         }
     }

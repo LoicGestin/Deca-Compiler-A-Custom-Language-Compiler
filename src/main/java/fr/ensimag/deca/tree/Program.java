@@ -91,7 +91,7 @@ public class Program extends AbstractProgram {
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
 
-            compiler.addLabel(new Label("stack_overflow_error"));
+            compiler.addLabel(new Label("pile_pleine"));
             compiler.addInstruction(new WSTR("Error: Stack overflow"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());

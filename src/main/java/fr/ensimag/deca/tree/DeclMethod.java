@@ -163,7 +163,7 @@ public class DeclMethod extends AbstractDeclMethod {
         compiler.addInstruction(new TSTO(100)); // TODO : taille maximale de la pile
 
         // BOV pile_pleine
-        compiler.addInstruction(new BOV(compiler.getStack_Overflow_error()));
+        compiler.addInstruction(new BOV(new Label("pile_pleine")));
 
         // ADDSP #d2 ; variables locales
         

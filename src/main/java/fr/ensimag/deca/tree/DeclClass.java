@@ -117,7 +117,7 @@ public class DeclClass extends AbstractDeclClass {
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
         LOG.debug("[PASSE 2] : Classe " + this.varName.getName());
-
+        varName.getClassDefinition().setNumberOfFields(varSuper.getClassDefinition().getNumberOfFields());
         listDeclField.verifyListDeclField(compiler, varName.getClassDefinition());
         listDeclMethod.verifyListDeclMethod(compiler, varName.getClassDefinition());
         LOG.debug("[PASSE 2] : [FIN]");
@@ -151,6 +151,7 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     public void codeGenClassPasseOne(DecacCompiler compiler) {
+        LOG.trace("Ecriture du code de la table des méthodes de " + varName.getName());
         compiler.addComment("Code de la table des méthodes de " + varName.getName() + ";");
         varName.getClassDefinition().setAdressTable(codeGen.getIndexPile());
         compiler.addInstruction(new LEA(new RegisterOffset( varSuper.getName().getName().equals("Object") ? 1 : varSuper.getClassDefinition().getAdressTable(), Register.GB), Register.getR(0)));
@@ -161,5 +162,27 @@ public class DeclClass extends AbstractDeclClass {
             compiler.addInstruction(new LOAD(new LabelOperand(compiler.classLabel.addLabel(entry.getValue())), Register.getR(0)));
             compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(codeGen.addIndexPile(), Register.GB)));
         }
+    }
+
+    @Override
+    public void codeGenClassPasseTwo(DecacCompiler compiler) {
+        /*
+        ; Initialisation des champs de C
+init.C :
+; Initialisation de x
+LOAD #0, R0
+LOAD -2(LB), R1 ; R1 contient l'adresse de l'objet
+STORE R0, 1(R1) ; 1(R1) est l'adresse de
+         */
+
+        Label objectLabel = compiler.classLabel.addLabel("init." + varName.getName());
+        if (DecacCompiler.getDebug()){
+            compiler.addComment("Initialisation des champs de " + varName.getName());
+        }
+        // init.A
+        compiler.addLabel(objectLabel);
+        listDeclField.codeGenFieldPasseTwo(compiler, varName.getClassDefinition());
+
+
     }
 }

@@ -13,6 +13,8 @@ public class codeGen {
     static final Stack<GPRegister> registresLibres = new Stack<>();
     static final Stack<GPRegister> registresUtilises = new Stack<>();
     static final Stack<GPRegister> registresVariables = new Stack<>();
+
+    static final Stack<GPRegister> registresSauvegardes = new Stack<>();
     static TreeMap<String, Integer> table = new TreeMap<>();
 
     static Label objectLabel;
@@ -231,5 +233,20 @@ public class codeGen {
 
     public static Map<Integer,String> getTableDesMethodes(String s){
         return tableDesMethodes.get(s);
+    }
+
+    public static void protect_registres(DecacCompiler compiler){
+        registresSauvegardes.empty();
+        for (GPRegister r : registresUtilises) {
+            compiler.addInstruction(new PUSH(registresUtilises.pop()));
+            registresSauvegardes.push(r);
+        }
+    }
+
+    public static void unprotect_registres(DecacCompiler compiler){
+        for (GPRegister r : registresSauvegardes) {
+            compiler.addInstruction(new POP(registresSauvegardes.pop()));
+            registresUtilises.push(r);
+        }
     }
 }

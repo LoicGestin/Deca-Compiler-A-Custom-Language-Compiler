@@ -7,7 +7,7 @@ public class TestUMath{
     public static void main(String args[]){
         UMath m = new UMath();
 
-        System.out.println("Test de la bibliothèque UMath: \n\tcomputed | Expected ");
+        System.out.println("Test de la bibliothèque UMath: \n\tComputed | Expected ");
         System.out.println("Test de la fonction pow: ");
         System.out.println("\t3.5² = "+m.pow((float)3.5,2) +"\t|\t" + (float)Math.pow((float)3.5,2));
         System.out.println("\t5.32^-3 = "+m.pow((float)3.5,-3) +"\t|\t" + (float)Math.pow((float)3.5,-3));
@@ -18,7 +18,6 @@ public class TestUMath{
         System.out.println("\t-inf = \t" + m.NEGATIVE_INFINITY + "\t|\t" + Float.NEGATIVE_INFINITY);
         System.out.println("\tNaN = \t" + m.NaN + "\t|\t" + Float.NaN);
         System.out.println("\tMax = \t" + m.MAX_VALUE + "\t|\t" + Float.MAX_VALUE);
-        System.out.println("\tMin = \t" + m.MIN_VALUE + "\t|\t" + Float.MIN_VALUE);
         System.out.println("\tMin = \t" + m.MIN_VALUE + "\t|\t" + Float.MIN_VALUE);
         System.out.println("\tPi = \t" + m.PI + "\t|\t" + (float)Math.PI);
         System.out.println("----------------------------------------------------------------------------");

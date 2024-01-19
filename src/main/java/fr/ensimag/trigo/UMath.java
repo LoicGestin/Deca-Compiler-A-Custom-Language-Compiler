@@ -99,15 +99,12 @@ public class UMath {
     }
 
     float asinHornerFactor(float x2, int n, float recN) {
-        recN = recN*(n-(float)0.5);
+        recN = recN*(1-(float)1/(2*n));
 
-        if (n == 3) {
-            System.out.print(recN/(2*n+1)+"x²)");
-            for (int i=0;i<n;i++) System.out.print(")");
+        if (n == 255) {
             return recN * x2/(2*n+1);
         }
 
-        System.out.print(recN/(2*n+1)+"+x²(");
         return recN/(2*n+1) + x2 * asinHornerFactor(x2, n + 1,recN);
     }
 
@@ -122,7 +119,6 @@ public class UMath {
             return 0;
         }
 
-        System.out.print("x(1+x²(");
         inter_res = 1+x2*asinHornerFactor(x2, 1, (float)1);
         return f*inter_res;
     }

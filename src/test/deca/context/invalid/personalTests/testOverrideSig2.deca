@@ -1,0 +1,21 @@
+class A{
+    int a ;
+    void m(){
+        println("m in A");
+    }
+}
+
+class B extends A{
+    int b;
+}
+
+class C extends B{
+    int c;
+    void m(int a){
+        println("m in C");
+    }
+}
+
+{
+    C c = new C();
+}

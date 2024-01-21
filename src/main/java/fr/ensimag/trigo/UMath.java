@@ -47,6 +47,13 @@ public class UMath {
         return pow(f,exp+1)/f;
     }
 
+    float fact(int n){
+        if (n==0){
+            return 1;
+        }
+        return fact(n-1);
+    }
+
     protected float sinHornerFactor(float x2, int n, float inv_fact) {
 
         inv_fact = inv_fact / (2 * n * (2 * n + 1));
@@ -75,6 +82,15 @@ public class UMath {
         return f * inter_res;
     }
 
+    float cosNaif(float f){
+        float somme = 0;
+        int n =0;
+        while (n != 2550) {
+            somme = somme + pow(-1,n)*pow(f, 2*n)/fact(2*n);
+            n=n+1;
+        }
+        return somme;
+    }
     protected float cosHornerFactor(float x2, int n, float inv_fact) {
 
         inv_fact = inv_fact/(2*n*(2*n-1));

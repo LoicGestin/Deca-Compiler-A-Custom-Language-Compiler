@@ -1,0 +1,33 @@
+class A{
+    int a = 0;
+
+    int b(){
+        return a;
+    }
+}
+
+class B extends A{
+    int c(int a){
+        return this.a + a;
+    }
+}
+
+class C extends B{
+    int d(int a){
+         return this.a + a;
+    }
+
+}
+
+{
+   A a = new A();
+   B b = new B();
+   C c = new C();
+   println(a.b());
+   println(b.b());
+   println(b.c(1));
+   println(c.b());
+   println(c.c(1));
+   println(c.d(2));
+
+}

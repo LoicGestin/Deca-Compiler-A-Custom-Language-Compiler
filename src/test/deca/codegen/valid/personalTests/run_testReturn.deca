@@ -29,5 +29,4 @@ class A{
     println(x);
     println(y);
     println(z);
-    println(b);
 }

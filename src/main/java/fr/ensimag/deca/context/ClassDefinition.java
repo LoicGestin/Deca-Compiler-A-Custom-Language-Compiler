@@ -49,6 +49,10 @@ public class ClassDefinition extends TypeDefinition {
         numberOfMethods++;
     }
 
+    public void setNumberOfMethods(int numberOfMethods) {
+        this.numberOfMethods = numberOfMethods;
+    }
+
     public int getAdressTable() {
         return adressTable;
     }

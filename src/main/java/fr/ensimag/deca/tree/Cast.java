@@ -42,6 +42,9 @@ public class Cast extends AbstractExpr {
             } else if (compiler.environmentType.subType(compiler.environmentType, e, t)) {
                 setType(t);
                 return t;
+            }else if(compiler.environmentType.subType(compiler.environmentType, t, e)){
+                setType(t);
+                return t;
             }
         }
 

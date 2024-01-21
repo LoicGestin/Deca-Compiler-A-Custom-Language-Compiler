@@ -1,0 +1,16 @@
+// Test Cast Objet
+
+class A {
+    int a;
+}
+
+class B extends A {
+    int b;
+}
+
+{
+    A a = new A();
+    B b = new B();
+    B c = (B) (a);
+    A d = (A) (b);
+}

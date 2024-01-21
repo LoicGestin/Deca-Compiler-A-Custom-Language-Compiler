@@ -1,0 +1,18 @@
+class A {
+    int a;
+    void m() {
+        println("m");
+    }
+}
+
+class B extends A {
+    void n() {
+        println("n");
+    }
+}
+
+{
+    A b;
+    b = new B();
+    b.m();
+}

@@ -1,0 +1,29 @@
+class A {
+
+    void m() {
+        println("m");
+    }
+    protected int a;
+}
+
+class B extends A {
+    void n() {
+        println("n");
+    }
+}
+
+class C extends B {
+    void o() {
+        println("o");
+    }
+}
+
+{
+    B b = new B();
+    C c = new C();
+    b.m();
+    b.n();
+    c.m();
+    c.n();
+    c.o();
+}

@@ -1,0 +1,13 @@
+class A {
+    int a;
+    void m(int s) {
+        println(s);
+    }
+}
+
+{
+    A a;
+    a = new A();
+    a.m(12);
+    println("ok");
+}

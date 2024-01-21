@@ -1,0 +1,9 @@
+class A {
+    int a;
+}
+
+{
+    A a;
+    a = new A();
+    println("ok");
+}

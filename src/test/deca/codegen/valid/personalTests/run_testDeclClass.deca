@@ -1,0 +1,22 @@
+class A{
+    protected int a;
+
+    int getA(){
+        return 1;
+    }
+}
+
+class B{
+    protected int b;
+
+    int getB(){
+        return 2;
+    }
+}
+
+{
+    A a = new A();
+    B b = new B();
+    println(a.getA());
+    println(b.getB());
+}

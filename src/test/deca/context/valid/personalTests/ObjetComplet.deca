@@ -1,29 +1,26 @@
-class A {
-    int b;
+class C {
+int x;
+int y=1;
+int getX() {
+return x;
 }
-class B extends A {
-    int a = 12;
-    void B() {
-        println("B");
-    }
-    int getA() {
-        int a = 10;
-        if(a == 1){
-            return 1;
-        }
-        else if(a == 2){
-            println(a);
-            println(this.a);
-            println(this.b);
-            this.B();
-            return this.a;
-        }
-        else{
+void incrX() {
+x = x + 1;
+}
+}
 
-        }
-    }
+class D extends C {
+int x=3;
+int z;
 }
+
+
+
 {
-B b = new B();
-b.getA();
+D c = new D();
+println(c.x);
+println(c.y);
+println(c.z);
+c.incrX();
+println(c.x);
 }

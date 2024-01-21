@@ -1,11 +1,16 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -61,5 +66,16 @@ public class New extends AbstractExpr {
         }
         setType(t);
         return getType();
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        compiler.addInstruction(new NEW(type.getClassDefinition().getNumberOfFields() + 1, codeGen.getRegistreLibre()));
+        compiler.addInstruction(new BOV(new Label("pile_pleine")));
+        compiler.addInstruction(new LEA(new RegisterOffset(type.getClassDefinition().getAdressTable(), Register.GB), Register.R0));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(0, codeGen.getCurrentRegistreUtilise())));
+        compiler.addInstruction(new PUSH(codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new BSR(new Label("init." + type.getName().getName())));
+        compiler.addInstruction(new POP(codeGen.getCurrentRegistreUtilise()));
     }
 }

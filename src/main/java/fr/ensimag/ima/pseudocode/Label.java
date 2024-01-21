@@ -13,7 +13,7 @@ public class Label extends Operand {
 
     @Override
     public String toString() {
-        return type+typeIndex;
+        return (typeIndex == -1) ? type : type+typeIndex;
     }
 
     public String toString2() {
@@ -34,6 +34,7 @@ public class Label extends Operand {
         Validate.isTrue(name.length() <= 1024, "Label name too long, not supported by IMA");
         Validate.isTrue(name.matches("^[a-zA-Z][a-zA-Z0-9_.]*$"), "Invalid label name " + name);
         this.type = name;
+        this.typeIndex=-1;
     }
 
     public String getType() {

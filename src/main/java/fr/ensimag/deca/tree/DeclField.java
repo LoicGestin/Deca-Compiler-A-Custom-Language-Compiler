@@ -128,7 +128,7 @@ public class DeclField extends AbstractDeclField {
     public void codeGenFieldPasseTwo(DecacCompiler compiler, ClassDefinition classDefinition) {
 
         FieldDefinition fieldDefinition = field.getFieldDefinition();
-        fieldDefinition.setOperand(new RegisterOffset(fieldDefinition.getIndex(), Register.LB));
+        fieldDefinition.setOperand(new RegisterOffset(fieldDefinition.getIndex(), Register.R1));
 
         // Generate the code for the field
         compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));

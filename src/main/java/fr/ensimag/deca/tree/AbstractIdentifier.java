@@ -26,6 +26,11 @@ public abstract class AbstractIdentifier extends AbstractLValue {
 
     public abstract void setDefinition(Definition definition);
 
+    @Override
+    public boolean isField(DecacCompiler compiler) {
+        return true;
+    }
+
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * FieldDefinition.

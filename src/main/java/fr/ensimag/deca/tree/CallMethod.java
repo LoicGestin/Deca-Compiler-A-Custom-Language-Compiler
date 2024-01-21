@@ -145,17 +145,19 @@ public class CallMethod extends AbstractExpr {
         compiler.addInstruction(new ADDSP(arguments.size() + 1));
 
         // On empile le parametre implicite (this) dans SP
+        codeGen.setAssignation(true);
         expr.codeGenInst(compiler);
         compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(0, Register.SP)));
 
         // On empile les parametres dans SP dans une boucle
         for (int i = 0; i < arguments.size(); i++) {
+            codeGen.setAssignation(true);
             arguments.getList().get(i).codeGenInst(compiler);
             compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(i + 1, Register.SP)));
         }
 
         // On récupère le parametre implicite (this) dans SP
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), codeGen.getRegistreLibre()));
 
         // On teste si le parametre implicite est null
         compiler.addInstruction(new CMP(new NullOperand(), codeGen.getCurrentRegistreUtilise()));

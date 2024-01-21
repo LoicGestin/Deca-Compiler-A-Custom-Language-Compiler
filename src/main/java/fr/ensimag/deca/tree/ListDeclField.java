@@ -32,6 +32,9 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     }
 
     public void codeGenFieldPasseTwo(DecacCompiler compiler, ClassDefinition currentClass) {
+
+
+        compiler.addLabel(new Label("init." + currentClass.getType().getName()));
         // Protect the registers
         codeGen.protect_registres(compiler);
 
@@ -42,12 +45,12 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
             }
 
             compiler.addInstruction(new TSTO(currentClass.getSuperClass().getNumberOfFields() + 1));
-            compiler.addInstruction(new BOV(new Label("overflow_error")));
+            compiler.addInstruction(new BOV(new Label("pile_pleine")));
 
             compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(1)));
             compiler.addInstruction(new PUSH(Register.getR(1)));
             compiler.addInstruction(new BSR(compiler.classLabel.addLabel("init." + currentClass.getSuperClass().getType().getName())));
-            compiler.addInstruction(new ADDSP(1));
+            compiler.addInstruction(new SUBSP(1));
         }
 
         if (DecacCompiler.getDebug()){
@@ -61,5 +64,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
 
         // Unprotect the registers
         codeGen.unprotect_registres(compiler);
+
+        compiler.addInstruction(new RTS());
     }
 }

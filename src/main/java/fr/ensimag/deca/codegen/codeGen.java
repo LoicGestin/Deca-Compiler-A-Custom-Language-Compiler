@@ -14,7 +14,8 @@ public class codeGen {
     static final Stack<GPRegister> registresUtilises = new Stack<>();
     static final Stack<GPRegister> registresVariables = new Stack<>();
 
-    static final Stack<GPRegister> registresSauvegardes = new Stack<>();
+    static final Stack<GPRegister> registresSauvegardes_variable = new Stack<>();
+    static final Stack<GPRegister> registresSauvegardes_utlisee = new Stack<>();
     static TreeMap<String, Integer> table = new TreeMap<>();
 
     static Label objectLabel;
@@ -37,9 +38,11 @@ public class codeGen {
     public static void init_registres(DecacCompiler compiler) {
         setUpRegistres();
         genereTopNEntries();
-        int taille = codeGen.tableSize();
+        int taille = codeGen.tableSize() + getTailleTableDesMethodes();
+
+
         if (taille != 0) {
-            compiler.addInstruction(new TSTO(taille));
+            compiler.addInstruction(new TSTO(taille + 50)); // +50 pour laisser de la place pour les variables locales
             compiler.addInstruction(new BOV(new Label("pile_pleine")));
             compiler.addInstruction(new ADDSP(taille));
         }
@@ -169,6 +172,7 @@ public class codeGen {
         return table.get(s);
     }
 
+
     public static void afficheTable() {
         System.out.println("table : ");
         for (String s : table.keySet()) {
@@ -231,33 +235,43 @@ public class codeGen {
         return tableDesMethodes;
     }
 
+    public static int getTailleTableDesMethodes(){
+        int taille = 0;
+        for(String s : tableDesMethodes.keySet()) {
+            taille += tableDesMethodes.get(s).size() + 1;
+        }
+        return taille + 2;
+    }
+
     public static Map<Integer,String> getTableDesMethodes(String s){
         return tableDesMethodes.get(s);
     }
 
     public static void protect_registres(DecacCompiler compiler){
+        if (DecacCompiler.getDebug()){
+            compiler.addComment("\tSauvegarde des registres");
+        }
+
+        compiler.addInstruction(new TSTO(nombreRegistres + 50)); // +50 pour laisser de la place pour les variables locales
+        compiler.addInstruction(new BOV(new Label("pile_pleine")));
+        compiler.addInstruction(new ADDSP(nombreRegistres));
+
         for (int i = 0; i < nombreRegistres; i++) {
             compiler.addInstruction(new PUSH(Register.getR(i)));
-        }
-        int registreUtilise = registresUtilises.size();
-        for(int i =0; i < registreUtilise; i ++){
-            GPRegister r = getCurrentRegistreUtilise();
-            registresSauvegardes.push(r);
-            registresLibres.push(r);
-            registresUtilises.remove(r);
         }
 
     }
 
     public static void unprotect_registres(DecacCompiler compiler){
+        if (DecacCompiler.getDebug()){
+            compiler.addComment("\tRestauration des registres");
+        }
+
         for (int i = nombreRegistres - 1; i >= 0; i--) {
             compiler.addInstruction(new POP(Register.getR(i)));
         }
-        for (GPRegister r : registresSauvegardes) {
-            registresUtilises.push(r);
-            registresLibres.remove(r);
-            registresSauvegardes.remove(r);
-        }
+        compiler.addInstruction(new SUBSP(nombreRegistres));
+
     }
     public static String currentMethod;
     public static void setCurrentMethod(String s){
@@ -265,5 +279,15 @@ public class codeGen {
     }
     public static String getCurrentMethod(){
         return currentMethod;
+    }
+
+    public static void clear_registres(DecacCompiler compiler) {
+        while (!registresUtilises.empty()) {
+           registresUtilises.pop();
+        }
+        while (!registresLibres.empty()) {
+            registresLibres.pop();
+        }
+        setUpRegistres();
     }
 }

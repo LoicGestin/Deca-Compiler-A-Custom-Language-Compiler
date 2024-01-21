@@ -3,6 +3,8 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 
 import java.io.PrintStream;
 
@@ -50,4 +52,10 @@ public class DeclParam extends AbstractDeclParam {
         name.setType(t);
         return getType();
     }
+
+    @Override
+    public void codeGenParam(DecacCompiler compiler, ClassDefinition currentClass, EnvironmentExp envParam, int i) {
+        name.getExpDefinition().setOperand(new RegisterOffset(-2 - i, Register.LB));
+    }
+
 }

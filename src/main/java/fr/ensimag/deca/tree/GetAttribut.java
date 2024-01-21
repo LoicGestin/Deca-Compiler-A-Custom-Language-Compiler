@@ -7,8 +7,7 @@ import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
@@ -74,6 +73,24 @@ public class GetAttribut extends AbstractIdentifier {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         codeGen.setRegistreCourant(this.getAddr(compiler), compiler);
+    }
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        if (getType().isBoolean()) {
+            compiler.addInstruction(new LOAD(this.getAddr(compiler), codeGen.getRegistreLibre()));
+            print_boolean(compiler);
+        } else {
+            compiler.addInstruction(new LOAD(this.getAddr(compiler), codeGen.getCurrentRegistreLibre()));
+            compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreLibre(), GPRegister.getR(1)));
+            if (getType().isInt()) {
+                compiler.addInstruction(new WINT());
+            } else if (getType().isFloat()) {
+                compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
+            } else {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        }
     }
 
     @Override
@@ -146,6 +163,11 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public boolean isAddr(DecacCompiler compiler) {
+        return false;
+    }
+
+    @Override
+    public boolean isField(DecacCompiler compiler) {
         return true;
     }
 

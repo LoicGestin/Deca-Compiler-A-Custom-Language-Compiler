@@ -169,13 +169,13 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     public void codeGenClassPasseTwo(DecacCompiler compiler) {
 
+        LOG.trace("Ecriture du code de la classe " + varName.getName());
+
         compiler.addComment("Code de la classe " + varName.getName() + ";");
-        Label objectLabel = compiler.classLabel.addLabel("init." + varName.getName());
         if (DecacCompiler.getDebug()){
             compiler.addComment("Initialisation des champs de " + varName.getName());
         }
         // init.A
-        compiler.addLabel(objectLabel);
         listDeclField.codeGenFieldPasseTwo(compiler, varName.getClassDefinition());
         listDeclMethod.codeGenListDeclMethod(compiler, varName.getClassDefinition());
 

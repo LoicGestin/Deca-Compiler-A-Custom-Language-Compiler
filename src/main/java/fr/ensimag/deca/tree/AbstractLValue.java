@@ -19,4 +19,7 @@ public abstract class AbstractLValue extends AbstractExpr {
     public abstract GPRegister getGPRegister();
 
     public abstract boolean isAddr(DecacCompiler compiler);
+
+    public abstract boolean isField(DecacCompiler compiler);
+
 }

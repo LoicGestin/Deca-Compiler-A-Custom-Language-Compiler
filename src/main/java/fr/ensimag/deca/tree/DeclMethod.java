@@ -4,11 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.LabelOperand;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -36,10 +32,7 @@ public class DeclMethod extends AbstractDeclMethod {
         this.body = body;
     }
 
-    public EnvironmentExp getEnvParam() {
-        return envParam;
-    }
-    public MethodDefinition getMethodDefinition(){
+    public MethodDefinition getMethodDefinition() {
         return (MethodDefinition) name.getExpDefinition();
     }
 
@@ -90,13 +83,13 @@ public class DeclMethod extends AbstractDeclMethod {
         int index = currentClass.getNumberOfMethods() + 1;
         EnvironmentExp envSuper = currentClass.getSuperClass().getMembers();
 
-        if(envSuper.get(name.getName()) != null){
-            if(envSuper.get(name.getName()).isMethod()){
+        if (envSuper.get(name.getName()) != null) {
+            if (envSuper.get(name.getName()).isMethod()) {
                 MethodDefinition methodDef = (MethodDefinition) envSuper.get(name.getName());
-                if(methodDef.getSignature().size() !=(signature.size())){
+                if (methodDef.getSignature().size() != (signature.size())) {
                     throw new ContextualError("Exception : Signature of method " + name.getName() + " is not the same", name.getLocation());
                 }
-                if(!compiler.environmentType.subType(compiler.environmentType, t, methodDef.getType())){
+                if (!compiler.environmentType.subType(compiler.environmentType, t, methodDef.getType())) {
                     throw new ContextualError("Exception : Type of method " + name.getName() + " is not the same", name.getLocation());
                 }
                 isOverride = true;
@@ -108,7 +101,7 @@ public class DeclMethod extends AbstractDeclMethod {
 
         name.setDefinition(new MethodDefinition(t, name.getLocation(), signature, index));
 
-        if(!isOverride){
+        if (!isOverride) {
             currentClass.incNumberOfMethods();
         }
 
@@ -129,8 +122,6 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
 
-
-
     public void codeGenMethodPasseTwo(DecacCompiler compiler, ClassDefinition currentClass) {
         /*
 
@@ -148,43 +139,22 @@ public class DeclMethod extends AbstractDeclMethod {
         RTS
          */
 
+        LOG.trace("Ecriture du code de la méthode " + name.getName());
+
         // code.A.m:
         compiler.addLabel(compiler.classLabel.addLabel("code." + currentClass.getType().getName() + "." + name.getName()));
 
-        // TSTO #d1 ; taille maximale de la pile
-        compiler.addInstruction(new TSTO(100)); // TODO : taille maximale de la pile
-
-        // BOV pile_pleine
-        compiler.addInstruction(new BOV(new Label("pile_pleine")));
-
-        if (DecacCompiler.getDebug()){
-            compiler.addComment("\tSauvegarde des registres");
-        }
-
+        codeGen.setCurrentMethod(currentClass.getType().getName() + "." + name.getName());
         codeGen.protect_registres(compiler);
 
-
-        compiler.addInstruction(new ADDSP(params.size() + 1)); // TODO : variables locales
-
-        // Code de la méthode
-        codeGen.setCurrentMethod(currentClass.getType().getName() + "." + this.getName().getName().getName());
+        params.codeGenListDeclParam(compiler, currentClass, this.envParam);
         body.codeGenMethodBody(compiler, currentClass, this.envParam, type.getType());
 
 
-
-
-
-        compiler.addLabel(compiler.classLabel.addLabel("fin." + getName().getName() + "." + name.getName()));
+        compiler.addLabel(compiler.classLabel.addLabel("fin." + currentClass.getType().getName() + "." + name.getName()));
         codeGen.unprotect_registres(compiler);
         compiler.addInstruction(new RTS());
 
 
-
-
-
-
-
-
-        
     }
 }

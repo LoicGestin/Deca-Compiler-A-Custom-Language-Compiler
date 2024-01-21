@@ -45,6 +45,11 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
+    public boolean isField(DecacCompiler compiler) {
+        return true;
+    }
+
+    @Override
     public void setDefinition(Definition definition) {
         this.definition = definition;
     }

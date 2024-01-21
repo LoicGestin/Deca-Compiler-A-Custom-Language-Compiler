@@ -52,7 +52,6 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        codeGen.init_registres(compiler);
 
 
 
@@ -61,6 +60,7 @@ public class Program extends AbstractProgram {
         //— construction du tableau des étiquettes des méthodes.
         //— génération de code permettant de construire la table des méthodes.
         codeGen.construireTableDesMethodes(classes.getList());
+        codeGen.init_registres(compiler);
         classes.codeGenListClassPasseOne(compiler);
 
 
@@ -75,6 +75,8 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new HALT());
         compiler.addComment("end main program");
         LOG.trace("end main program");
+
+        codeGen.clear_registres(compiler);
 
         classes.codeGenListClassPasseTwo(compiler);
 
@@ -96,12 +98,19 @@ public class Program extends AbstractProgram {
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
 
-            compiler.addLabel(new Label("deferencement.null"));
+            compiler.addLabel(new Label("dereferencement.null"));
             compiler.addInstruction(new WSTR("Error: deferencement of null pointer"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
 
         }
+        compiler.addLabel(new Label("code.object.equals"));
+        // this == other
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(0)));
+        compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), Register.getR(1)));
+        compiler.addInstruction(new CMP(Register.getR(1), Register.getR(0)));
+        compiler.addInstruction(new SEQ(Register.getR(0)));
+        compiler.addInstruction(new RTS());
 
 
     }

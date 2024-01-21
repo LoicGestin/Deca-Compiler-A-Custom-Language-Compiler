@@ -1,8 +1,15 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.*;
+
 
 import java.io.PrintStream;
 
@@ -131,4 +138,37 @@ public class CallMethod extends AbstractExpr {
         method.iterChildren(f);
         arguments.iterChildren(f);
     }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        // On reserve de la place pour les parametres
+        compiler.addInstruction(new ADDSP(arguments.size() + 1));
+
+        // On empile le parametre implicite (this) dans SP
+        expr.codeGenInst(compiler);
+        compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(0, Register.SP)));
+
+        // On empile les parametres dans SP dans une boucle
+        for (int i = 0; i < arguments.size(); i++) {
+            arguments.getList().get(i).codeGenInst(compiler);
+            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(i + 1, Register.SP)));
+        }
+
+        // On récupère le parametre implicite (this) dans SP
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), codeGen.getCurrentRegistreUtilise()));
+
+        // On teste si le parametre implicite est null
+        compiler.addInstruction(new CMP(new NullOperand(), codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
+
+        // On récupère l'adresse de la méthode dans le VMT
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, codeGen.getCurrentRegistreUtilise()), codeGen.getCurrentRegistreUtilise()));
+
+        // On appelle la méthode
+        compiler.addInstruction(new BSR(new RegisterOffset(method.getMethodDefinition().getIndex(), codeGen.getCurrentRegistreUtilise())));
+
+        // On dépile les parametres
+        compiler.addInstruction(new SUBSP(arguments.size() + 1));
+    }
+
 }

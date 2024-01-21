@@ -135,7 +135,7 @@ public class GetAttribut extends AbstractIdentifier {
         compiler.addInstruction(new CMP(new NullOperand(), codeGen.getCurrentRegistreUtilise()));
         compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
 
-        return new RegisterOffset(getFieldDefinition().getIndex(), codeGen.getRegistreUtilise());
+        return new RegisterOffset(this.attribut.getFieldDefinition().getIndex(), codeGen.getRegistreUtilise());
 
     }
 

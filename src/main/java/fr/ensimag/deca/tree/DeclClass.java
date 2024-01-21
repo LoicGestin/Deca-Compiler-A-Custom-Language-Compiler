@@ -93,6 +93,7 @@ public class DeclClass extends AbstractDeclClass {
 
         EnvironmentType environmentType = compiler.getEnvironmentType();
         ClassDefinition typeDefSuper = environmentType.defOfClass(varSuper.getName());
+
         if (typeDefSuper == null) {
             throw new ContextualError("Exception : Super class " + varSuper.getName() + " doesn't exist", varSuper.getLocation());
         }
@@ -118,6 +119,7 @@ public class DeclClass extends AbstractDeclClass {
             throws ContextualError {
         LOG.debug("[PASSE 2] : Classe " + this.varName.getName());
         varName.getClassDefinition().setNumberOfFields(varSuper.getClassDefinition().getNumberOfFields());
+        varName.getClassDefinition().setNumberOfMethods(varSuper.getClassDefinition().getNumberOfMethods());
         listDeclField.verifyListDeclField(compiler, varName.getClassDefinition());
         listDeclMethod.verifyListDeclMethod(compiler, varName.getClassDefinition());
         LOG.debug("[PASSE 2] : [FIN]");

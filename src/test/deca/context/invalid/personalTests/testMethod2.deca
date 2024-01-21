@@ -1,0 +1,22 @@
+class A{
+    int a = 0;
+
+    void b(){
+        println("A");
+    }
+}
+
+class B extends A{
+
+}
+
+class C extends B{
+    int b = 0;
+
+}
+
+{
+   A a = new A();
+   B b = new B();
+   C c = new C();
+}

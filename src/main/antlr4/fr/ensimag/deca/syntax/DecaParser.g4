@@ -368,12 +368,13 @@ mult_expr returns[AbstractExpr tree]
             assert($e.tree != null);
             $tree = $e.tree;
         }
+        /*
     | e1=mult_expr TIMES e3=mad_expr {
                 assert($e1.tree != null);
                 assert($e2.tree != null);
                 $tree = new Multiply($e1.tree, $e2.tree);
                 setLocation($tree, $TIMES);
-            }
+            }*/
     | e1=mult_expr TIMES e2=unary_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);

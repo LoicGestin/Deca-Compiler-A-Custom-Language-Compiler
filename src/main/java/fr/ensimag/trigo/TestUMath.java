@@ -41,5 +41,16 @@ public class TestUMath{
         System.out.println("Test de la fonction ulp: ");
         System.out.println("\tulp(75.61) = " + m.ulp((float)75.61) + "\t|\t" + Math.ulp((float)75.61));
         System.out.println("----------------------------------------------------------------------------");
+
+        System.out.println("Test de la fonction cos naïve: ");
+        long start = System.nanoTime();
+        float calc = m.cos((float)2.1445);
+        long end = System.nanoTime();
+        System.out.println("\tUMath: cos(2.1445) = " + calc + "\t|\t" + (end-start) + " ns");
+        long start2 = System.nanoTime();
+        float calc2 = (float)Math.cos((float)2.1445);
+        long end2 = System.nanoTime();
+        System.out.println("\tMath cos(2.1445) = " + calc2 + "\t|\t" + (end2-start2) + " ns");
+        System.out.println("----------------------------------------------------------------------------");
     }
 }

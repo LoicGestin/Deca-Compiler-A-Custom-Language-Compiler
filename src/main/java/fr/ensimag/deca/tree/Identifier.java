@@ -8,6 +8,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -46,7 +48,7 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public boolean isField(DecacCompiler compiler) {
-        return true;
+        return false;
     }
 
     @Override
@@ -284,6 +286,10 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        if (this.getExpDefinition().isField()) {
+            // Generate the code for the field
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+        }
         codeGen.setRegistreCourant(this.getExpDefinition().isAddr() ? this.getExpDefinition().getOperand() : this.getExpDefinition().getGPRegister(), compiler);
     }
 }

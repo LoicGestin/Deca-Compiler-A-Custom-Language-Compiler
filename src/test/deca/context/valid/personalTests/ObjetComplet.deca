@@ -14,13 +14,24 @@ int x=3;
 int z;
 }
 
+class P {
+int x;
+int y;
+void move(int a, int b) {
+x = x + a;
+y = y + b;
+}
+}
+
 
 
 {
-D c = new D();
+C c = new C();
 println(c.x);
 println(c.y);
-println(c.z);
+c.incrX();
+c.incrX();
+c.incrX();
 c.incrX();
 println(c.x);
 }

@@ -256,7 +256,7 @@ public class codeGen {
         compiler.addInstruction(new BOV(new Label("pile_pleine")));
         compiler.addInstruction(new ADDSP(nombreRegistres));
 
-        for (int i = 0; i < nombreRegistres; i++) {
+        for (int i = 2; i < nombreRegistres; i++) {
             compiler.addInstruction(new PUSH(Register.getR(i)));
         }
 
@@ -267,7 +267,7 @@ public class codeGen {
             compiler.addComment("\tRestauration des registres");
         }
 
-        for (int i = nombreRegistres - 1; i >= 0; i--) {
+        for (int i = nombreRegistres - 1; i >= 2; i--) {
             compiler.addInstruction(new POP(Register.getR(i)));
         }
         compiler.addInstruction(new SUBSP(nombreRegistres));

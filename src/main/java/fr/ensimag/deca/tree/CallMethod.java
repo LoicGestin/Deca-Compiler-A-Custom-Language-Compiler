@@ -171,6 +171,26 @@ public class CallMethod extends AbstractExpr {
 
         // On dépile les parametres
         compiler.addInstruction(new SUBSP(arguments.size() + 1));
+
+        // Si la méthode n'est pas void, on récupère le résultat dans un registre
+        if (!method.getMethodDefinition().getType().isVoid()) {
+            compiler.addInstruction(new LOAD(Register.R0, codeGen.getRegistreLibre()));
+        }
+    }
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        codeGenInst(compiler);
+        compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), Register.R1));
+        if (getType().isInt()) {
+            compiler.addInstruction(new WINT());
+        } else if (getType().isFloat()) {
+            compiler.addInstruction(new WFLOAT());
+        } else if (getType().isBoolean()) {
+            print_boolean(compiler);
+        } else {
+            throw new UnsupportedOperationException("Not supposed to be called");
+        }
     }
 
 }

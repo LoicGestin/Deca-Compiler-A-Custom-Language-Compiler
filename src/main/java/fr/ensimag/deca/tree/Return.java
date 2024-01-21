@@ -5,7 +5,9 @@ import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 import java.io.PrintStream;
 
@@ -60,6 +62,8 @@ public class Return extends AbstractInst {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         expr.codeGenInst(compiler);
+        // On met le résultat dans le registre R0
+        compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), Register.R0));
 
         // Get the name of the method
         compiler.addInstruction(new BRA(new Label("fin." + codeGen.getCurrentMethod())));

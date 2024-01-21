@@ -4,12 +4,10 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.*;
-import fr.ensimag.ima.pseudocode.instructions.ERROR;
-import fr.ensimag.ima.pseudocode.instructions.HALT;
-import fr.ensimag.ima.pseudocode.instructions.WNL;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -54,18 +52,12 @@ public class Program extends AbstractProgram {
     public void codeGenProgram(DecacCompiler compiler) {
 
 
-
-
         // PASSE 1
         //— construction du tableau des étiquettes des méthodes.
         //— génération de code permettant de construire la table des méthodes.
-        if (!classes.isEmpty()) {
-            codeGen.construireTableDesMethodes(classes.getList());
-        }
+        codeGen.construireTableDesMethodes(classes.getList());
         codeGen.init_registres(compiler);
-        if (!classes.isEmpty()) {
-            classes.codeGenListClassPasseOne(compiler);
-        }
+        classes.codeGenListClassPasseOne(compiler);
 
 
         compiler.addComment("start main program");
@@ -83,7 +75,6 @@ public class Program extends AbstractProgram {
         codeGen.clear_registres(compiler);
 
         classes.codeGenListClassPasseTwo(compiler);
-
 
 
         if (!DecacCompiler.getNocheck()) {

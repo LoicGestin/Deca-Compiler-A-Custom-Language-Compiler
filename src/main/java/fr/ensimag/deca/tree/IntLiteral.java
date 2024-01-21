@@ -47,6 +47,11 @@ public class IntLiteral extends AbstractExpr {
         codeGen.setRegistreCourant(new ImmediateInteger(this.getValue()), compiler);
     }
 
+    public void codeGenPrint(DecacCompiler compiler) {
+        codeGen.setRegistreCourant(new ImmediateInteger(this.getValue()), compiler);
+        compiler.addInstruction(new WINT());
+    }
+
     @Override
     String prettyPrintNode() {
         return "Int (" + getValue() + ")";

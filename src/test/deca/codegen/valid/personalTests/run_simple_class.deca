@@ -4,12 +4,18 @@ class C {
     int getX() {
         return x;
     }
-    void incrX() {
+    void incrX(int a) {
         x = x + 1;
+        x = x + a;
     }
 }
 
 class D extends C {
     int x=3;
     int z;
+}
+{
+int a = 5 + 7;
+int b = 5 * 7;
+println(a, b);
 }

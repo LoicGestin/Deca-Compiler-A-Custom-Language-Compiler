@@ -50,8 +50,8 @@ public class Assign extends AbstractBinaryExpr {
     protected void codeGenInst(DecacCompiler compiler) {
         codeGen.setAssignation(true);
         getRightOperand().codeGenInst(compiler);
-        if (getLeftOperand().isAddr()) {
-            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), getLeftOperand().getAddr()));
+        if (getLeftOperand().isAddr(compiler)) {
+            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), getLeftOperand().getAddr(compiler)));
         } else {
             compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), getLeftOperand().getGPRegister()));
         }

@@ -24,4 +24,10 @@ public class ListDeclMethod extends TreeList<DeclMethod> {
             m.verifyMethodBody(compiler, currentClass);
         }
     }
+
+    public void codeGenListDeclMethod(DecacCompiler compiler, ClassDefinition currentClass) {
+        for (DeclMethod m : getList()) {
+            m.codeGenMethodPasseTwo(compiler, currentClass);
+        }
+    }
 }

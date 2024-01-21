@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DAddr;
 
 /**
  * @author gl29
@@ -48,6 +49,8 @@ public abstract class AbstractIdentifier extends AbstractLValue {
     public abstract MethodDefinition getMethodDefinition();
 
     public abstract SymbolTable.Symbol getName();
+
+    public abstract DAddr getAddr(DecacCompiler compiler);
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.

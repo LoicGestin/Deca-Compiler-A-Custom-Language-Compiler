@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 
 /**
@@ -58,7 +59,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         codeGenOperator(compiler);
 
         if (!DecacCompiler.getNocheck()) {
-            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+            compiler.addInstruction(new BOV(new Label("overflow_error")));
         }
     }
 

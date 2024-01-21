@@ -168,15 +168,8 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     public void codeGenClassPasseTwo(DecacCompiler compiler) {
-        /*
-        ; Initialisation des champs de C
-init.C :
-; Initialisation de x
-LOAD #0, R0
-LOAD -2(LB), R1 ; R1 contient l'adresse de l'objet
-STORE R0, 1(R1) ; 1(R1) est l'adresse de
-         */
 
+        compiler.addComment("Code de la classe " + varName.getName() + ";");
         Label objectLabel = compiler.classLabel.addLabel("init." + varName.getName());
         if (DecacCompiler.getDebug()){
             compiler.addComment("Initialisation des champs de " + varName.getName());
@@ -184,7 +177,7 @@ STORE R0, 1(R1) ; 1(R1) est l'adresse de
         // init.A
         compiler.addLabel(objectLabel);
         listDeclField.codeGenFieldPasseTwo(compiler, varName.getClassDefinition());
-
+        listDeclMethod.codeGenListDeclMethod(compiler, varName.getClassDefinition());
 
     }
 }

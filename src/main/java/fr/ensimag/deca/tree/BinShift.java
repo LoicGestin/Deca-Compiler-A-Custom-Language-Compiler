@@ -47,7 +47,7 @@ public class BinShift extends AbstractOpArith {
         codeGenOperator(compiler);
 
         if (!DecacCompiler.getNocheck()) {
-            compiler.addInstruction(new BOV(compiler.getOverflow_error()));
+            compiler.addInstruction(new BOV(new Label("overflow_error")));
         }
     }
 

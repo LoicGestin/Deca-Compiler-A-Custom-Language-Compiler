@@ -1,0 +1,189 @@
+class Math {
+
+    float POSITIVE_INFINITY = this.pow(2,128);
+    float NEGATIVE_INFINITY =  -this.POSITIVE_INFINITY;
+
+    float NaN = this.pow(2,128)*1.5;
+
+    float MAX_VALUE = 0x1.fffffep127F;
+    float MIN_VALUE = 0x0.000002p-126F;
+
+    //float PI = 4 * this.atan(1);
+
+    boolean isInfinite(float f){
+        return (f==POSITIVE_INFINITY || f== NEGATIVE_INFINITY);
+    }
+
+    boolean isNaN(float f){
+        return f==NaN;
+    }
+
+    int sign(float f){
+        if (f<0){
+            return -1;
+        }
+        return 1;
+    }
+
+    float abs(float f){
+        if (f>=0){
+            return f;
+        }
+        else{
+            return -f;
+        }
+    }
+
+    float pow(float f, int exp) {
+        if (exp == 0) {
+            return 1;
+        }
+        if (exp>0) {
+            return f * this.pow(f, exp - 1);
+        }
+        return this.pow(f,exp+1)/f;
+    }
+
+    float fact(int n){
+        if (n==0){
+            return 1;
+        }
+        return this.fact(n-1);
+    }
+
+    float sinHorner(float x2, int n, float inv_fact) {
+
+        inv_fact = inv_fact / (2 * n * (2 * n + 1));
+
+        if (n == 255) {
+            return x2 * inv_fact;
+        }
+
+        return inv_fact - x2 * this.sinHorner(x2, n + 1, inv_fact);
+    }
+
+    float sin(float f) {
+
+        float x2 = 0;//this.pow(f,2);
+        float inter_res;
+
+        if (this.isNaN(f) || this.isInfinite(f)) {
+            return NaN;
+        } else if (f == 0) {
+            return 0;
+        }
+
+        inter_res = 1 - x2 * this.sinHorner(x2, 1, 1);
+
+        return f * inter_res;
+    }
+
+    float cosNaif(float f){
+        float somme = 0;
+        int n =0;
+        while (n != 2550) {
+            somme = somme + this.pow(-1,n)*this.pow(f, 2*n)/this.fact(2*n);
+            n=n+1;
+        }
+        return somme;
+    }
+
+    float cosHorner(float x2, int n, float inv_fact) {
+
+        inv_fact = inv_fact/(2*n*(2*n-1));
+
+        if (n == 255) {
+            return x2 * inv_fact;
+        }
+
+        return inv_fact - x2 * this.cosHorner(x2, n + 1, inv_fact);
+    }
+
+    float cos(float f) {
+
+        float x2 = 0;//this.pow(f, 2);
+
+        if (this.isNaN(f) || this.isInfinite(f)) {
+            return NaN;
+        }
+
+        return 1-x2*this.cosHorner(x2, 1, 1);
+    }
+
+    float asinHorner(float x2, int n, float recN) {
+        recN = recN*(1-1/(2*n));
+
+        if (n == 255) {
+            return recN * x2/(2*n+1);
+        }
+
+        return recN/(2*n+1) + x2 * this.asinHorner(x2, n + 1,recN);
+    }
+
+    float asin(float f) {
+
+        float x2 = 0;//pow(f, 2);
+        float inter_res;
+
+        if (this.isNaN(f) || this.abs(f) > 1) {
+            return NaN;
+        } else if (f == 0) {
+            return 0;
+        }
+
+        inter_res = 1+x2*this.asinHorner(x2, 1, 1);
+        return f*inter_res;
+    }
+
+    float atanH(float x2, int n){
+        if (n==255){
+            return x2/(2*n+1);
+        }
+
+        return 1/(2*n+1) - x2*this.atanH(x2,n+1);
+    }
+
+    float atan(float f) {
+
+        float x2 = 0;//pow(f, 2);
+
+        if (this.isNaN(f)) {
+            return NaN;
+        } else if (f == 0) {
+            return 0;
+        }
+
+        return f*this.atanH(x2,0);
+    }
+
+    float ulp(float f){
+        int e = -1;
+        int continu = 1;
+        float fabs = 0;//this.abs(f);
+        float p=1;
+
+        if (this.isNaN(f)){
+            return f;
+        }
+        if (this.isInfinite(f)){
+            return POSITIVE_INFINITY;
+        }
+        // This handles both +0.0 and -0.0.
+        if (f == 0.0){
+            return MIN_VALUE;
+        }
+
+        while (continu==1 && e!=255) {
+            e=e+1;
+            if (p < fabs && fabs <= 2*p){
+                continu = 0;
+            }
+            p=2*p;
+
+        }
+
+        return 0;//this.pow(2,e-23);
+    }
+}
+
+

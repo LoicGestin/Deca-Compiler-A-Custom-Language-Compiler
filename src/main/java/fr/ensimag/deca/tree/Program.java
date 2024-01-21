@@ -59,9 +59,13 @@ public class Program extends AbstractProgram {
         // PASSE 1
         //— construction du tableau des étiquettes des méthodes.
         //— génération de code permettant de construire la table des méthodes.
-        codeGen.construireTableDesMethodes(classes.getList());
+        if (!classes.isEmpty()) {
+            codeGen.construireTableDesMethodes(classes.getList());
+        }
         codeGen.init_registres(compiler);
-        classes.codeGenListClassPasseOne(compiler);
+        if (!classes.isEmpty()) {
+            classes.codeGenListClassPasseOne(compiler);
+        }
 
 
         compiler.addComment("start main program");
@@ -105,7 +109,6 @@ public class Program extends AbstractProgram {
 
         }
         compiler.addLabel(new Label("code.object.equals"));
-        // this == other
         compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(0)));
         compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), Register.getR(1)));
         compiler.addInstruction(new CMP(Register.getR(1), Register.getR(0)));

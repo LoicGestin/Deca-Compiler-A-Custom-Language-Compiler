@@ -55,7 +55,7 @@ public class DeclParam extends AbstractDeclParam {
 
     @Override
     public void codeGenParam(DecacCompiler compiler, ClassDefinition currentClass, EnvironmentExp envParam, int i) {
-        name.getExpDefinition().setOperand(new RegisterOffset(-2 - i, Register.LB));
+        name.getExpDefinition().setOperand(new RegisterOffset(-3 - i, Register.LB));
     }
 
 }

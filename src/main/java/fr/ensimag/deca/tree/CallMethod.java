@@ -153,7 +153,7 @@ public class CallMethod extends AbstractExpr {
         for (int i = 0; i < arguments.size(); i++) {
             codeGen.setAssignation(true);
             arguments.getList().get(i).codeGenInst(compiler);
-            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(i + 1, Register.SP)));
+            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(-i - 1, Register.SP)));
         }
 
         // On récupère le parametre implicite (this) dans SP

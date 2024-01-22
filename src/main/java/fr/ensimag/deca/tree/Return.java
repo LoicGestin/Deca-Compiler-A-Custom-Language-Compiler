@@ -61,6 +61,7 @@ public class Return extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        codeGen.setAssignation(true);
         expr.codeGenInst(compiler);
         // On met le résultat dans le registre R0
         compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), Register.R0));

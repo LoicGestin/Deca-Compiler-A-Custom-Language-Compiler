@@ -1,2 +1,3 @@
 a is instance of A
 b is instance of B
+a is not instance of B

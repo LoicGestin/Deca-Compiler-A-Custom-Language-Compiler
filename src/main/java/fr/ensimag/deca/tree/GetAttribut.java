@@ -158,7 +158,7 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public GPRegister getGPRegister() {
-        throw new UnsupportedOperationException("not yet implemented");
+        return null;
     }
 
     @Override
@@ -185,6 +185,6 @@ public class GetAttribut extends AbstractIdentifier {
 
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        return null;
     }
 }

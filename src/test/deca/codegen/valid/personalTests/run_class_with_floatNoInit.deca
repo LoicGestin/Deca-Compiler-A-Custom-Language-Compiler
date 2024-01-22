@@ -1,0 +1,18 @@
+class A {
+    float a;
+    void m() {
+        println("m");
+    }
+
+    void n() {
+        println(this.a);
+    }
+}
+
+{
+    A a;
+    a = new A();
+    a.m();
+    a.n();
+
+}

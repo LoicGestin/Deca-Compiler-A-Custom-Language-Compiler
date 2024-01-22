@@ -34,7 +34,7 @@ public class TestUMath{
         System.out.println("Test des fonctions trigo: ");
         System.out.println("\tsin(128.32) = " + m.sin(((float)128.32)) + "\t|\t" + (float)Math.sin((float)128.32));
         System.out.println("\tcos(65.3265) = " + m.cos(((float)65.3265)) + "\t|\t" + (float)Math.cos((float)65.3265));
-        System.out.println("\tasin(0.84) = " + m.asin(((float)0.84)) + "\t|\t" + (float)Math.asin((float)0.84));
+        System.out.println("\tasin(0.9) = " + m.asin(((float)0.012)) + "\t|\t" + (float)Math.asin((float)0.012));
         System.out.println("\tatan(1) = " + m.atan(((float)1)) + "\t|\t" + (float)Math.atan((float)1));
         System.out.println("----------------------------------------------------------------------------");
 

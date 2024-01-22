@@ -1,0 +1,13 @@
+class A {
+    protected void x ;
+    int getX() {
+        return x ;
+    }
+    int getX() {
+        return x ;
+    }
+}
+
+{
+    A a = new A() ;
+}

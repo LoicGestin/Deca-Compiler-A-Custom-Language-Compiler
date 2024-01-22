@@ -182,15 +182,16 @@ public class CallMethod extends AbstractExpr {
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
         codeGenInst(compiler);
-        compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), Register.R1));
-        if (getType().isInt()) {
-            compiler.addInstruction(new WINT());
-        } else if (getType().isFloat()) {
-            compiler.addInstruction(new WFLOAT());
-        } else if (getType().isBoolean()) {
+        if(getType().isBoolean()){
             print_boolean(compiler);
-        } else {
-            throw new UnsupportedOperationException("Not supposed to be called");
+        }
+        else {
+            compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), Register.R1));
+            if (getType().isInt()) {
+                compiler.addInstruction(new WINT());
+            } else if (getType().isFloat()) {
+                compiler.addInstruction(new WFLOAT());
+            }
         }
     }
 

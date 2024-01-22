@@ -1,0 +1,11 @@
+class A {
+    protected int x ;
+    int getX(int y,int z) {
+        return x ;
+    }
+}
+
+{
+    A a = new A() ;
+    a.getX(1) ;
+}

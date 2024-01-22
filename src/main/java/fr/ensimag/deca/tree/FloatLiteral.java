@@ -29,8 +29,9 @@ public class FloatLiteral extends AbstractExpr {
     public FloatLiteral(float value) {
         Validate.isTrue(!Float.isInfinite(value),
                 "literal values cannot be infinite");
-        Validate.isTrue(!Float.isNaN(value),
-                "literal values cannot be NaN");
+        // TO DO, voir si on peut pas mettre des NaN
+       // Validate.isTrue(!Float.isNaN(value),
+       //         "literal values cannot be NaN");
         this.value = value;
     }
 

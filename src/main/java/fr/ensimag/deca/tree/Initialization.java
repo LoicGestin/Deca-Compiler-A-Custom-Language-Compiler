@@ -22,15 +22,6 @@ public class Initialization extends AbstractInitialization {
         this.expression = expression;
     }
 
-    public AbstractExpr getExpression() {
-        return expression;
-    }
-
-    public void setExpression(AbstractExpr expression) {
-        Validate.notNull(expression);
-        this.expression = expression;
-    }
-
     @Override
     protected void verifyInitialization(DecacCompiler compiler, Type t,
                                         EnvironmentExp localEnv, ClassDefinition currentClass)

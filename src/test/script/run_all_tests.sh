@@ -276,7 +276,7 @@ do
 done
 
 decac -r 4 src/test/deca/codegen/valid/personalTests/readint.deca > /tmp/null 2>/dev/null
-echo -e "12\n13.45" > ima src/test/deca/codegen/valid/personalTests/readint.ass
+echo -e "12\n13.45\n12\13.45" > ima src/test/deca/codegen/valid/personalTests/readint.ass
 
 rm src/test/deca/codegen/valid/personalTests/*.run
 rm src/test/deca/codegen/valid/personalTests/*.ass

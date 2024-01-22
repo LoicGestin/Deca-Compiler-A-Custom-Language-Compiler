@@ -232,8 +232,6 @@ public class Identifier extends AbstractIdentifier {
                 compiler.addInstruction(new WINT());
             } else if (definition.getType().isFloat()) {
                 compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
-            } else {
-                throw new UnsupportedOperationException("Not supported yet.");
             }
         }
     }

@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
+import java.io.PrintStream;
+
 /**
  * Test for the Plus node using mockito, using @Mock and @Before annotations.
  *
@@ -79,6 +81,68 @@ public class TestPlusAdvanced {
         //verify(floatexpr1).verifyExpr(compiler, null, null);
     }
     @Test
+    public void getAttributTest1() throws ContextualError{
+        SymbolTable t = compiler.symbolTable;
+        Identifier identifierX = new Identifier(t.create("x"));
+        GetAttribut getAttribut = new GetAttribut(new This(true), identifierX);
+        getAttribut.setDefinition(new TypeDefinition(new IntType(null), null));
+        getAttribut.getClassDefinition();
+    }
+    @Test
+    public void getAttributTest2() throws ContextualError{
+        SymbolTable t = compiler.symbolTable;
+        Identifier identifierX = new Identifier(t.create("x"));
+        GetAttribut getAttribut = new GetAttribut(new This(true), identifierX);
+        getAttribut.setDefinition(new TypeDefinition(new IntType(null), null));
+        getAttribut.getFieldDefinition();
+    }
+    @Test
+    public void getAttributTest3() throws ContextualError{
+        SymbolTable t = compiler.symbolTable;
+        Identifier identifierX = new Identifier(t.create("x"));
+        GetAttribut getAttribut = new GetAttribut(new This(true), identifierX);
+        getAttribut.setDefinition(new TypeDefinition(new IntType(null), null));
+        getAttribut.getMethodDefinition();
+    }
+    @Test
+    public void getAttributTest4() throws ContextualError{
+        SymbolTable t = compiler.symbolTable;
+        Identifier identifierX = new Identifier(t.create("x"));
+        GetAttribut getAttribut = new GetAttribut(new This(true), identifierX);
+        getAttribut.setDefinition(new TypeDefinition(new IntType(null), null));
+        getAttribut.getExpDefinition();
+    }
+    @Test
+    public void getAttributTest5() throws ContextualError{
+        SymbolTable t = compiler.symbolTable;
+        Identifier identifierX = new Identifier(t.create("x"));
+        Tree tree2 = identifierX;
+        tree2.checkAllDecorations();
+    }
+
+    @Test
+    public void getAttributTest6() throws ContextualError{
+        SymbolTable t = compiler.symbolTable;
+        Identifier identifierX = new Identifier(t.create("x"));
+        identifierX.verifyExpr(compiler,new EnvironmentExp(null), new ClassDefinition(new ClassType(t.create("Object"), null, null), null, null));
+
+    }
+
+    @Test
+    public void getAttributTest7() throws ContextualError{
+        Location location = Location.BUILTIN;
+        location.toString();
+        Location location2 = new Location(1, 1, null);
+        location2.getFilename();
+    }
+
+    @Test
+    public void getAttributTest8() throws ContextualError{
+        LocationException locationException = new LocationException("test", null);
+        locationException.display(new PrintStream(System.out));
+    }
+
+    @Test
     public void testType() throws ContextualError {
         DecacCompiler compiler = new DecacCompiler(null, null);
         SymbolTable t = compiler.symbolTable;
@@ -97,11 +161,19 @@ public class TestPlusAdvanced {
         tree.checkAllDecorations();
         tree.checkAllLocations();
         tree.prettyPrint(System.out);
+        String uwu = tree.prettyPrint();
+
         tree.setLocation(null);
 
 
+
+
+
+
+
+        GetAttribut getAttribut = new GetAttribut(new This(true), identifierX);
         try {
-            GetAttribut getAttribut = new GetAttribut(new This(true), identifierX);
+
             getAttribut.getExpDefinition();
             getAttribut.getClassDefinition();
             getAttribut.getFieldDefinition();
@@ -111,28 +183,71 @@ public class TestPlusAdvanced {
             getAttribut.getGPRegister();
             getAttribut.verifyType(compiler);
 
+
         }
         catch (Exception ignored) {
         }
+
+
+
+
+        InstanceOf instanceOf = new InstanceOf(new This(true), identifierInt);
+        instanceOf.codeGenOp(compiler);
+
         AbstractMain emptyMain2 = new EmptyMain();
         emptyMain2.decompile((IndentPrintStream) null);
 
+        Identifier identifierABA = new Identifier(t.create("ABA"));
+
+
+
+        AbstractExpr expr = new Identifier(t.create("dz"));
+        ListInst listInst = new ListInst();
+        listInst.add(expr);
+        listInst.decompile(new IndentPrintStream(System.out));
+
+
+
+        AbstractExpr expr2 = new This(true);
+        ListInst listInst2 = new ListInst();
+        listInst2.add(expr2);
+        try {
+            listInst2.codeGenListInst(compiler);
+        }
+        catch (Exception ignored) {
+        }
+
+
+
         EmptyMain emptyMain = new EmptyMain();
         emptyMain.decompile((IndentPrintStream) null);
-
         DeclVar varX = new DeclVar(identifierInt, identifierX, initializationOne);
         ListDeclVar l = new ListDeclVar();
-        l.set(0, varX);
         l.iterator();
         l.add(varX);
+        l.set(0, varX);
         Main main = new Main(l, new ListInst());
-
         Program prog = new Program(new ListDeclClass(), main);
         prog.verifyProgram(compiler);
         DecacCompiler.setDebug(true);
         DecacCompiler.setColor(true);
         DecacCompiler.setNocheck(true);
+
+        AbstractUnaryExpr convFloat = new ConvFloat(intLiteralOne);
+        convFloat.decompile((new IndentPrintStream(System.out)));
+        AbstractUnaryExpr convInt= new ConvInt(intLiteralOne);
+        convInt.decompile((new IndentPrintStream(System.out)));
+
         prog.codeGenProgram(compiler);
 
+        Program prog2 = new Program(new ListDeclClass(), emptyMain);
+        prog2.verifyProgram(compiler);
+        prog2.codeGenProgram(compiler);
+
+
+        ListDeclField listDeclField = new ListDeclField();
+        ListDeclMethod listDeclMethod = new ListDeclMethod();
+        DeclClass declClass = new DeclClass(identifierABA,new Identifier(t.create("Object")), listDeclField, listDeclMethod);
+        declClass.codeGenClassPasseTwo(compiler);
     }
 }

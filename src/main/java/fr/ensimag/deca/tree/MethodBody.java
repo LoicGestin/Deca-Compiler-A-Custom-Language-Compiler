@@ -77,7 +77,7 @@ public class MethodBody extends AbstractMethodBody {
         if (stringLiteral != null) {
             stringLiteral.codeGenInst(compiler);
         } else {
-            declVars.codeGenListDeclVar(compiler, currentClass);
+            declVars.codeGenListDeclVar(compiler);
             insts.codeGenListInst(compiler, currentClass);
         }
     }

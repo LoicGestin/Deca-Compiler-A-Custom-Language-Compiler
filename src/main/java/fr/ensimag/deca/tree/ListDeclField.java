@@ -39,9 +39,9 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
 
         // On Load les fields de la classe super s'il y en as
         if (currentClass.getSuperClass().getNumberOfFields() != 0) {
-            if (DecacCompiler.getDebug()) {
-                compiler.addComment("\tChargement des champs hérités de la classe " + currentClass.getSuperClass().getType().getName());
-            }
+           // if (DecacCompiler.getDebug()) {
+           //     compiler.addComment("\tChargement des champs hérités de la classe " + currentClass.getSuperClass().getType().getName());
+           // }
 
             compiler.addInstruction(new TSTO(currentClass.getSuperClass().getNumberOfFields() + 1));
             compiler.addInstruction(new BOV(new Label("pile_pleine")));
@@ -52,9 +52,9 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
             compiler.addInstruction(new SUBSP(1));
         }
 
-        if (DecacCompiler.getDebug()) {
-            compiler.addComment("\tChargement des champs propres de la classe " + currentClass.getType().getName());
-        }
+       // if (DecacCompiler.getDebug()) {
+       //     compiler.addComment("\tChargement des champs propres de la classe " + currentClass.getType().getName());
+       // }
 
 
         for (AbstractDeclField f : getList()) {

@@ -127,15 +127,6 @@ public abstract class Tree {
         // Nothing by default
     }
 
-    /**
-     * Pretty-print the definition of the tree, if applicable
-     */
-    protected void prettyPrintDefinition(PrintStream s, String newPrefix) {
-        s.print(newPrefix);
-        s.print("  ");
-        s.print("Definition: ");
-        s.println();
-    }
 
     /**
      * Print the node information on a single line.

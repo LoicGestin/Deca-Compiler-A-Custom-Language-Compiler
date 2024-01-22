@@ -3,4 +3,6 @@ int a = readInt();
 float b = readFloat();
 println(a);
 println(b);
+println(readInt());
+println(readFloat());
 }

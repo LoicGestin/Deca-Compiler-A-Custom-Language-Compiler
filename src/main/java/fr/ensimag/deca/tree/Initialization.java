@@ -29,14 +29,6 @@ public class Initialization extends AbstractInitialization {
         // Vérification de la compatibilité des types
         Type type = expression.verifyRValue(compiler, localEnv, currentClass, t).getType();
         expression.setType(type);
-        if (compiler.environmentType.compatible(t, type)) {
-            if (type.isFloat() && t.isInt()) {
-                expression = new ConvFloat(expression);
-                expression.setType(expression.verifyExpr(compiler, localEnv, currentClass));
-            }
-        } else {
-            throw new ContextualError("Exception : Incompatible types in initialisation :" + t + " and " + type, getLocation());
-        }
     }
 
 

@@ -14,8 +14,6 @@ public class codeGen {
     static final Stack<GPRegister> registresUtilises = new Stack<>();
     static final Stack<GPRegister> registresVariables = new Stack<>();
 
-    static final Stack<GPRegister> registresSauvegardes_variable = new Stack<>();
-    static final Stack<GPRegister> registresSauvegardes_utlisee = new Stack<>();
     static TreeMap<String, Integer> table = new TreeMap<>();
 
     static Label objectLabel;
@@ -281,7 +279,7 @@ public class codeGen {
         return currentMethod;
     }
 
-    public static void clear_registres(DecacCompiler compiler) {
+    public static void clear_registres() {
         while (!registresUtilises.empty()) {
            registresUtilises.pop();
         }
@@ -290,4 +288,11 @@ public class codeGen {
         }
         setUpRegistres();
     }
+
+    public static void free_reg() {
+        while (!registresUtilises.empty()) {
+            registresLibres.push(registresUtilises.pop());
+        }
+    }
+
 }

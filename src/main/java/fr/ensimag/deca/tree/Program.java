@@ -72,7 +72,7 @@ public class Program extends AbstractProgram {
         compiler.addComment("end main program");
         LOG.trace("end main program");
 
-        codeGen.clear_registres(compiler);
+        codeGen.clear_registres();
 
         classes.codeGenListClassPasseTwo(compiler);
 

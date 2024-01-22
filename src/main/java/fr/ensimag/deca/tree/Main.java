@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.VoidType;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -31,6 +32,7 @@ public class Main extends AbstractMain {
     protected void verifyMain(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify Main: start");
 
+        codeGen.setMethod("Main");
         this.declVariables.verifyListDeclVariable(compiler, compiler.environmentExp);
         this.insts.verifyListInst(compiler, compiler.environmentExp, null, new VoidType(null));
 
@@ -41,6 +43,7 @@ public class Main extends AbstractMain {
     protected void codeGenMain(DecacCompiler compiler) {
         if (DecacCompiler.getDebug())
             compiler.addComment("Beginning of main variables declarations:");
+        codeGen.setMethod("Main");
         declVariables.codeGenListDeclVar(compiler);
         compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler);

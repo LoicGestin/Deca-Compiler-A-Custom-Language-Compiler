@@ -16,10 +16,14 @@ public class codeGen {
 
     static TreeMap<String, Integer> table = new TreeMap<>();
 
+    static HashMap<String, TreeMap<String, Integer>> tableDesDeclaration = new HashMap<>();
+
     static Label objectLabel;
     static int nombreRegistres = 14;
 
     static int indexPile = 3;
+
+    static String methode = "";
 
     public static void setNombreRegistres(int nombreRegistres) {
         if (nombreRegistres >= 2) {
@@ -34,13 +38,13 @@ public class codeGen {
     }
 
     public static void init_registres(DecacCompiler compiler) {
+        setMethod("Main");
         setUpRegistres();
         genereTopNEntries();
-        int taille = codeGen.tableSize() + getTailleTableDesMethodes();
-
+        int taille = tableSize() + getTailleTableDesMethodes();
 
         if (taille != 0) {
-            compiler.addInstruction(new TSTO(taille + 50)); // +50 pour laisser de la place pour les variables locales
+            compiler.addInstruction(new TSTO(taille +  + 50)); // +50 pour laisser de la place pour les variables locales
             compiler.addInstruction(new BOV(new Label("pile_pleine")));
             compiler.addInstruction(new ADDSP(taille));
         }
@@ -58,10 +62,21 @@ public class codeGen {
         return registresUtilises.push(registresLibres.pop());
     }
 
+
     public static int tableSize() {
-        int size = countEntries(table);
-        int size2 = (topNEntries == null) ? 0 : countEntries(topNEntries);
-        return size - size2;
+        return (topNEntries == null) ? 0 : (topNEntries.get(methode) == null) ? 0 : countEntries(topNEntries.get(methode));
+    }
+
+    public static void addtableDesDeclaration(String nom_methode, String nom_variable){
+        if(tableDesDeclaration.containsKey(nom_methode)){
+            TreeMap<String, Integer> table = tableDesDeclaration.get(nom_methode);
+            table.merge(nom_variable, 1, Integer::sum);
+        }
+        else{
+            TreeMap<String, Integer> table = new TreeMap<>();
+            table.put(nom_variable, 1);
+            tableDesDeclaration.put(nom_methode, table);
+        }
     }
 
     public static int getIndexPile() {
@@ -70,10 +85,11 @@ public class codeGen {
 
     private static int countEntries(Map<String, Integer> entryMap) {
         int count = 0;
+        if(entryMap == null){
+            return 0;
+        }
         for (int value : entryMap.values()) {
-            if (value > 1) {
                 count++;
-            }
         }
         return count;
     }
@@ -103,6 +119,14 @@ public class codeGen {
         }
     }
 
+    public static void setMethod(String s){
+        methode = s;
+    }
+
+    public static String getMethod(){
+        return methode;
+    }
+
     static int nbPush = 0;
 
     public static DVal getRegistreCourant(DecacCompiler compiler) {
@@ -126,8 +150,7 @@ public class codeGen {
     }
 
     public static DAddr getRegistreVariable() {
-        indexPile++;
-        return new RegisterOffset(indexPile, Register.GB);
+        return new RegisterOffset(indexPile++, Register.GB);
     }
 
     public static GPRegister getGPRegisterVariable() {
@@ -145,31 +168,27 @@ public class codeGen {
     }
 
     // ----------------------------------------------------
-    static Map<String, Integer> topNEntries;
+    static Map<String, Map<String, Integer>> topNEntries;
 
     public static boolean isGPRegisterRestant(String s) {
-        return registresLibres.size() > 2 && topNEntries.containsKey(s);
+        return registresLibres.size() > 2 && topNEntries.get(methode).containsKey(s);
     }
 
     public static void genereTopNEntries() {
         if (nombreRegistres <= 2) {
             return;
+
         }
-        topNEntries = table.entrySet().stream()
-                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .limit(nombreRegistres - 2)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, TreeMap::new));
+        topNEntries = new HashMap<>();
+
+        for (String keyName : tableDesDeclaration.keySet()) {
+            Map<String, Integer> stringIntegerMap = tableDesDeclaration.get(keyName);
+            topNEntries.put(keyName,stringIntegerMap.entrySet().stream()
+                    .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                    .limit(nombreRegistres - 2)
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, TreeMap::new)));
+        }
     }
-
-
-    public static void addVariableTable(String s) {
-        table.merge(s, 1, Integer::sum);
-    }
-
-    public static int getValueVariableTable(String s) {
-        return table.get(s);
-    }
-
 
     public static void afficheTable() {
         System.out.println("table : ");
@@ -250,7 +269,7 @@ public class codeGen {
             compiler.addComment("\tSauvegarde des registres");
         }
 
-        compiler.addInstruction(new TSTO(nombreRegistres + 50)); // +50 pour laisser de la place pour les variables locales
+        compiler.addInstruction(new TSTO(nombreRegistres + 50 + tableSize())); // +50 pour laisser de la place pour les variables locales
         compiler.addInstruction(new BOV(new Label("pile_pleine")));
         compiler.addInstruction(new ADDSP(nombreRegistres));
 

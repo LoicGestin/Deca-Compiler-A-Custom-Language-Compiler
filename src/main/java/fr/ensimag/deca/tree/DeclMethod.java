@@ -117,6 +117,7 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyMethodBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("\t[PASSE 3] : \t Méthode " + this.name.getName());
+        codeGen.setMethod("code." + currentClass.getType().getName() + "." + name.getName());
         body.verifyMethodBody(compiler, this.envParam, currentClass, type.getType());
         LOG.debug("\t[PASSE 3] : \t [FIN]");
     }
@@ -147,6 +148,7 @@ public class DeclMethod extends AbstractDeclMethod {
         codeGen.setCurrentMethod(currentClass.getType().getName() + "." + name.getName());
         codeGen.protect_registres(compiler);
 
+        codeGen.setMethod("code." + currentClass.getType().getName() + "." + name.getName());
         params.codeGenListDeclParam(compiler, currentClass, this.envParam);
         body.codeGenMethodBody(compiler, currentClass, this.envParam, type.getType());
 

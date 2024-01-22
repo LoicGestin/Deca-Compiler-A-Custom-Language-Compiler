@@ -26,7 +26,6 @@ public class DeclVar extends AbstractDeclVar {
         this.type = type;
         this.varName = varName;
         this.initialization = initialization;
-        codeGen.addVariableTable(varName.getName().toString());
     }
 
     @Override
@@ -42,40 +41,41 @@ public class DeclVar extends AbstractDeclVar {
         varName.setDefinition(new VariableDefinition(t, varName.getLocation()));
         varName.setType(t);
 
+
         try {
             localEnv.declare(varName.getName(), varName.getExpDefinition());
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Exception : Variable already declared", varName.getLocation());
         }
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);
+
+        codeGen.addtableDesDeclaration(codeGen.getMethod(), varName.getName().toString());
     }
 
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        int usageCount = codeGen.getValueVariableTable(varName.getName().toString());
         boolean isGPRegisterRemaining = codeGen.isGPRegisterRestant(varName.getName().toString());
 
-        if (usageCount > 1) {
-            ExpDefinition expDefinition = varName.getExpDefinition();
+        ExpDefinition expDefinition = varName.getExpDefinition();
 
-            if (isGPRegisterRemaining) {
-                expDefinition.setGPRegister(codeGen.getGPRegisterVariable());
-            } else {
-                expDefinition.setOperand(codeGen.getRegistreVariable());
-            }
-
-
-            if (DecacCompiler.getDebug()) {
-                if (initialization instanceof Initialization) {
-                    compiler.addComment("Declaration de la variable (" + usageCount + " usage) " + varName.getName() + " et initialisation" + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));
-                }
-                if (initialization instanceof NoInitialization) {
-                    compiler.addComment("Declaration de la variable (" + usageCount + " usage) " + varName.getName() + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));
-                }
-            }
-            initialization.codeGenInit(compiler, expDefinition);
+        if (isGPRegisterRemaining) {
+            expDefinition.setGPRegister(codeGen.getGPRegisterVariable());
+        } else {
+            expDefinition.setOperand(codeGen.getRegistreVariable());
         }
+
+
+        if (DecacCompiler.getDebug()) {
+            if (initialization instanceof Initialization) {
+                compiler.addComment("Declaration de la variable " + varName.getName() + " et initialisation" + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));
+            }
+            if (initialization instanceof NoInitialization) {
+                compiler.addComment("Declaration de la variable " + varName.getName() + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));
+            }
+        }
+        initialization.codeGenInit(compiler, expDefinition);
+
 
     }
 

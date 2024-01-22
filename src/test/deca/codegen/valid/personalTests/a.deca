@@ -1,0 +1,14 @@
+class Point {
+    int x = 3;
+    int y = 4;
+
+    int setX(float a, int b) {
+        return x;
+    }
+}
+
+{
+    Point p = new Point();
+    p.setX(5, 6);
+    print(p.setX(5, 6));
+}

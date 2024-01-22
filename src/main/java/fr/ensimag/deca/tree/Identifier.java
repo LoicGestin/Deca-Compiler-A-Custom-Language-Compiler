@@ -184,7 +184,11 @@ public class Identifier extends AbstractIdentifier {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
         ExpDefinition expDef = localEnv.get(this.getName());
-        codeGen.addVariableTable(this.getName().toString());
+        // Si c'est pas une méthode
+        if (expDef != null && !expDef.isMethod() && !expDef.isParam() && ! expDef.isField() && !expDef.isClass()) {
+            codeGen.addtableDesDeclaration(codeGen.getMethod(), this.getName().toString());
+        }
+
         if (expDef == null && currentClass != null) {
             expDef = currentClass.getMembers().get(this.getName());
         }

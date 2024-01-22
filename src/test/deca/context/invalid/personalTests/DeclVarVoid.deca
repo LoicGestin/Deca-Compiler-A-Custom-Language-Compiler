@@ -1,0 +1,14 @@
+class A{
+    int a;
+    int b;
+
+    int set(int a, int a){
+        this.a = a;
+        this.b = b;
+    }
+}
+
+{
+    A a = new A();
+    a.set(1,2);
+}

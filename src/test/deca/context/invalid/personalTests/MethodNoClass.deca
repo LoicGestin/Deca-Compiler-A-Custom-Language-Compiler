@@ -1,0 +1,10 @@
+class A{
+    void m1(){
+        println("A");
+    }
+}
+
+{
+    int a;
+    a.m1();
+}

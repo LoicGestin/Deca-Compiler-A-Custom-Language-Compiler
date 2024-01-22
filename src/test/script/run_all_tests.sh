@@ -117,6 +117,8 @@ echo "====================   Etape B   ===================="
 
 echo "==> Test du contexte"
 
+echo "   --> Tests des programmes corrects"
+
 passed=0
 total=0
 

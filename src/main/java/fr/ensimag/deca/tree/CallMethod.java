@@ -162,9 +162,7 @@ public class CallMethod extends AbstractExpr {
         // On récupère le parametre implicite (this) dans SP
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), codeGen.getRegistreLibre()));
 
-        // On teste si le parametre implicite est null
-        compiler.addInstruction(new CMP(new NullOperand(), codeGen.getCurrentRegistreUtilise()));
-        compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
+
 
         // On récupère l'adresse de la méthode dans le VMT
         compiler.addInstruction(new LOAD(new RegisterOffset(0, codeGen.getCurrentRegistreUtilise()), codeGen.getCurrentRegistreUtilise()));

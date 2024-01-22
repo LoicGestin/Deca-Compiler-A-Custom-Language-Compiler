@@ -56,6 +56,10 @@ public class CallMethod extends AbstractExpr {
 
         Definition def = c.getMembers().get(method.getName());
 
+        if(def == null) {
+            throw new ContextualError("L'identificateur n'existe pas dans la classe", this.getLocation());
+        }
+
         if (!def.isMethod()) {
             throw new ContextualError("L'identificateur n'est pas une méthode", this.getLocation());
         }

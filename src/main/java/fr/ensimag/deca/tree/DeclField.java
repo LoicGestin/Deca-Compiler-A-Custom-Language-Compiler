@@ -96,14 +96,6 @@ public class DeclField extends AbstractDeclField {
             throw new ContextualError("Exception : Variable type cannot be void", type.getLocation());
         }
 
-        EnvironmentExp envSuper = currentClass.getSuperClass().getMembers();
-
-        if(envSuper.get(field.getName()) != null){
-                if(envSuper.get(field.getName()).isMethod()){
-                    throw new ContextualError("Exception : Field " + field.getName() + " is already defined as a method in SuperClass", field.getLocation());
-                }
-        }
-
         field.setDefinition(new FieldDefinition(t, field.getLocation(), visibility, currentClass, currentClass.getNumberOfFields() + 1));
 
         try {
@@ -128,23 +120,25 @@ public class DeclField extends AbstractDeclField {
     public void codeGenFieldPasseTwo(DecacCompiler compiler, ClassDefinition classDefinition) {
 
         FieldDefinition fieldDefinition = field.getFieldDefinition();
-        fieldDefinition.setOperand(new RegisterOffset(fieldDefinition.getIndex(), Register.R1));
+        fieldDefinition.setOperand(new RegisterOffset(fieldDefinition.getIndex(),Register.R1));
 
-        // Generate the code for the field
-        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
 
         if (initialization instanceof NoInitialization){
             if (field.getType().isInt() || field.getType().isBoolean()){
-                compiler.addInstruction(new LOAD(new ImmediateInteger(0), codeGen.getRegistreLibre()));
+                compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));
             } else if (field.getType().isFloat() ){
-                compiler.addInstruction(new LOAD(new ImmediateInteger(0), codeGen.getRegistreLibre()));
+                compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));
             } else if (field.getType().isClass()){
-                compiler.addInstruction(new LOAD(new NullOperand(), codeGen.getRegistreLibre()));
+                compiler.addInstruction(new LOAD(new NullOperand(),  Register.R0));
             }
-            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), fieldDefinition.getOperand()));
+
         }
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+        compiler.addInstruction(new STORE(Register.R0, fieldDefinition.getOperand()));
+        // Generate the code for the field
+
         // Generate the code for the initialization
-        initialization.codeGenInit(compiler, field.getFieldDefinition());
+        //initialization.codeGenInit(compiler, field.getFieldDefinition());
     }
 
 }

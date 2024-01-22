@@ -10,6 +10,9 @@ import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -279,17 +282,24 @@ public class Identifier extends AbstractIdentifier {
             } else if (definition.getType().isFloat()) {
                 compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
             } else {
-                throw new UnsupportedOperationException("Not supported yet.");
+                compiler.addInstruction(new WSTR("This type is not printable"));
             }
         }
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        if (this.getExpDefinition().isField()) {
-            // Generate the code for the field
-            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+
+
+        if(this.getExpDefinition().isField()){
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), codeGen.getCurrentRegistreLibre()));
+            compiler.addInstruction(new LOAD(new RegisterOffset(this.getFieldDefinition().getIndex(), codeGen.getCurrentRegistreLibre()), codeGen.getRegistreLibre()));
         }
-        codeGen.setRegistreCourant(this.getExpDefinition().isAddr() ? this.getExpDefinition().getOperand() : this.getExpDefinition().getGPRegister(), compiler);
+        else if(this.getExpDefinition().isParam()){
+            compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), codeGen.getRegistreLibre())); // need to determine which param it is
+        }
+        else {
+            codeGen.setRegistreCourant(this.getExpDefinition().isAddr() ? this.getExpDefinition().getOperand() : this.getExpDefinition().getGPRegister(), compiler);
+        }
     }
 }

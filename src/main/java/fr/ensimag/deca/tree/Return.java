@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
@@ -61,10 +62,14 @@ public class Return extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        codeGen.setAssignation(true);
         expr.codeGenInst(compiler);
-        // On met le résultat dans le registre R0
-        compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), Register.R0));
-
+        if(expr instanceof This){
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2,Register.LB), Register.R0));
+        }
+        else{
+            compiler.addInstruction(new LOAD(codeGen.getRegistreCourant(compiler), Register.R0));
+        }
         // Get the name of the method
         compiler.addInstruction(new BRA(new Label("fin." + codeGen.getCurrentMethod())));
     }

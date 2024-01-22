@@ -64,8 +64,6 @@ public class DeclVar extends AbstractDeclVar {
             } else {
                 expDefinition.setOperand(codeGen.getRegistreVariable());
             }
-
-
             if (DecacCompiler.getDebug()) {
                 if (initialization instanceof Initialization) {
                     compiler.addComment("Declaration de la variable (" + usageCount + " usage) " + varName.getName() + " et initialisation" + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));

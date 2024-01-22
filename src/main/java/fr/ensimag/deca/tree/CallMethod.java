@@ -4,6 +4,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
@@ -12,6 +14,7 @@ import fr.ensimag.ima.pseudocode.instructions.*;
 
 
 import java.io.PrintStream;
+import java.util.List;
 
 
 public class CallMethod extends AbstractExpr {
@@ -141,56 +144,36 @@ public class CallMethod extends AbstractExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        // On reserve de la place pour les parametres
-        compiler.addInstruction(new ADDSP(arguments.size() + 1));
-
-        // On empile le parametre implicite (this) dans SP
+        compiler.addInstruction(new ADDSP(1 + arguments.size()));
         codeGen.setAssignation(true);
         expr.codeGenInst(compiler);
         compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(0, Register.SP)));
-
-        // On empile les parametres dans SP dans une boucle
-        for (int i = 0; i < arguments.size(); i++) {
-            codeGen.setAssignation(true);
-            arguments.getList().get(i).codeGenInst(compiler);
-            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(-i - 1, Register.SP)));
+        List<AbstractExpr> exprList = arguments.getList();
+        for (int i = 0; i < exprList.size() ; i++) {
+            exprList.get(i).codeGenInst(compiler);
+            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(-i -1, Register.SP)));
         }
-
-        // On récupère le parametre implicite (this) dans SP
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), codeGen.getRegistreLibre()));
-
-        // On teste si le parametre implicite est null
-        compiler.addInstruction(new CMP(new NullOperand(), codeGen.getCurrentRegistreUtilise()));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), codeGen.getCurrentRegistreLibre()));
+        compiler.addInstruction(new CMP(new NullOperand(), codeGen.getCurrentRegistreLibre()));
         compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
-
-        // On récupère l'adresse de la méthode dans le VMT
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, codeGen.getCurrentRegistreUtilise()), codeGen.getCurrentRegistreUtilise()));
-
-        // On appelle la méthode
-        compiler.addInstruction(new BSR(new RegisterOffset(method.getMethodDefinition().getIndex(), codeGen.getCurrentRegistreUtilise())));
-
-        // On dépile les parametres
-        compiler.addInstruction(new SUBSP(arguments.size() + 1));
-
-        // Si la méthode n'est pas void, on récupère le résultat dans un registre
-        if (!method.getMethodDefinition().getType().isVoid()) {
-            compiler.addInstruction(new LOAD(Register.R0, codeGen.getRegistreLibre()));
-        }
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, codeGen.getCurrentRegistreLibre()), codeGen.getCurrentRegistreLibre()));
+        compiler.addInstruction(new BSR(new RegisterOffset(method.getMethodDefinition().getIndex() , codeGen.getCurrentRegistreLibre())));
+        compiler.addInstruction(new SUBSP(1 + arguments.size()));
+        compiler.addComment("new line -----------------------------------");
     }
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        codeGenInst(compiler);
-        compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), Register.R1));
-        if (getType().isInt()) {
-            compiler.addInstruction(new WINT());
-        } else if (getType().isFloat()) {
-            compiler.addInstruction(new WFLOAT());
-        } else if (getType().isBoolean()) {
+        this.codeGenInst(compiler);
+        if(this.method.getMethodDefinition().getType().isBoolean()){
             print_boolean(compiler);
-        } else {
-            throw new UnsupportedOperationException("Not supposed to be called");
+        }
+        compiler.addInstruction(new LOAD(Register.getR(0),Register.getR(1)));
+        if(this.method.getMethodDefinition().getType().isInt()){
+            compiler.addInstruction(new WINT());
+        }
+        else if(this.method.getMethodDefinition().getType().isFloat()){
+            compiler.addInstruction(new WFLOAT());
         }
     }
-
 }

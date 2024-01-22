@@ -88,7 +88,7 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-
+        codeGen.setNbMethod(codeGen.getNbMethod() + listDeclMethod.getList().size() + 2 + listDeclField.size());
         LOG.debug("[PASSE 1] : Classe " + this.varName.getName());
 
         EnvironmentType environmentType = compiler.getEnvironmentType();

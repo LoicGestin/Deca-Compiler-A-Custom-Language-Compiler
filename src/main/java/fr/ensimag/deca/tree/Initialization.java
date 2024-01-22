@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
@@ -54,7 +55,13 @@ public class Initialization extends AbstractInitialization {
         codeGen.setAssignation(true);
         expression.codeGenInst(compiler);
         if (var.isAddr()) {
-            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), var.getOperand()));
+            if(expression instanceof CallMethod){
+                compiler.addInstruction(new STORE(Register.getR(0), var.getOperand()));
+            }else {
+                compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), var.getOperand()));
+            }
+
+
         } else {
             codeGen.saveVariable();
         }

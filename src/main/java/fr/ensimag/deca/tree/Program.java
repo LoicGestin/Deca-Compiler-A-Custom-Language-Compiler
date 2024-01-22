@@ -72,11 +72,8 @@ public class Program extends AbstractProgram {
         compiler.addComment("end main program");
         LOG.trace("end main program");
 
-        codeGen.clear_registres(compiler);
 
         classes.codeGenListClassPasseTwo(compiler);
-
-
         if (!DecacCompiler.getNocheck()) {
             compiler.addLabel(new Label("overflow_error"));
             compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));

@@ -65,16 +65,7 @@ public abstract class AbstractIdentifier extends AbstractLValue {
      */
     public abstract ExpDefinition getExpDefinition();
 
-    /**
-     * Like {@link #getDefinition()}, but works only if the definition is a
-     * VariableDefinition.
-     * <p>
-     * This method essentially performs a cast, but throws an explicit exception
-     * when the cast fails.
-     *
-     * @throws DecacInternalError if the definition is not a field definition.
-     */
-    public abstract VariableDefinition getVariableDefinition();
+
 
     /**
      * Implements non-terminal "type" of [SyntaxeContextuelle] in the 3 passes

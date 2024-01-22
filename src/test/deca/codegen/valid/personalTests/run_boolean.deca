@@ -1,0 +1,9 @@
+
+    class A {
+    boolean a = true;
+    }
+
+{
+  A a = new A();
+  println(a.a);
+}

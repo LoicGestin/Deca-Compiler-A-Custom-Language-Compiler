@@ -67,14 +67,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public ClassDefinition getClassDefinition() {
-        try {
-            return (ClassDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a class identifier, you can't call getClassDefinition on it");
-        }
+        return (ClassDefinition) definition;
     }
 
     /**
@@ -88,14 +81,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public MethodDefinition getMethodDefinition() {
-        try {
-            return (MethodDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a method identifier, you can't call getMethodDefinition on it");
-        }
+        return (MethodDefinition) definition;
     }
 
     /**
@@ -109,35 +95,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public FieldDefinition getFieldDefinition() {
-        try {
-            return (FieldDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a field identifier, you can't call getFieldDefinition on it");
-        }
-    }
-
-    /**
-     * Like {@link #getDefinition()}, but works only if the definition is a
-     * VariableDefinition.
-     * <p>
-     * This method essentially performs a cast, but throws an explicit exception
-     * when the cast fails.
-     *
-     * @throws DecacInternalError if the definition is not a field definition.
-     */
-    @Override
-    public VariableDefinition getVariableDefinition() {
-        try {
-            return (VariableDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a variable identifier, you can't call getVariableDefinition on it");
-        }
+        return (FieldDefinition) definition;
     }
 
     /**
@@ -150,14 +108,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public ExpDefinition getExpDefinition() {
-        try {
-            return (ExpDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a Exp identifier, you can't call getExpDefinition on it");
-        }
+        return (ExpDefinition) definition;
     }
 
     @Override

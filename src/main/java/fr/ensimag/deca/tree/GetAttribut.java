@@ -89,8 +89,6 @@ public class GetAttribut extends AbstractIdentifier {
                 compiler.addInstruction(new WINT());
             } else if (getType().isFloat()) {
                 compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
-            } else {
-                throw new UnsupportedOperationException("Not supported yet.");
             }
         }
     }
@@ -182,18 +180,6 @@ public class GetAttribut extends AbstractIdentifier {
                     "Identifier "
                             + getName()
                             + " is not a Exp identifier, you can't call getExpDefinition on it");
-        }
-    }
-
-    @Override
-    public VariableDefinition getVariableDefinition() {
-        try {
-            return (VariableDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a variable identifier, you can't call getVariableDefinition on it");
         }
     }
 

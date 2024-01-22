@@ -32,7 +32,7 @@ public class MethodBody extends AbstractMethodBody {
         if (stringLiteral != null) {
             s.print(" asm(");
             stringLiteral.decompile(s);
-            s.print(")");
+            s.print(");");
         } else {
             s.println("{");
             s.indent();

@@ -73,7 +73,7 @@ public class DecacCompiler {
     }
 
     public static boolean getDebug() {
-        return true;
+        return debug;
     }
 
     public static void setDebug(boolean deb) {

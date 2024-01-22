@@ -25,7 +25,11 @@ public class InstanceOf extends AbstractOpExactCmp {
 
     @Override
     public void codeGenOp(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        // a InstanceOf B
+        // On parcours la chaine de pointeur
+
+
+
     }
 
     @Override

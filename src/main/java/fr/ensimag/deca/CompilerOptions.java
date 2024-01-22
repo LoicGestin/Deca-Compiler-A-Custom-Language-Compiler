@@ -107,6 +107,7 @@ public class CompilerOptions {
                 break;
             case TRACE:
                 logger.setLevel(Level.TRACE);
+                DecacCompiler.setDebug(true);
                 break;
             default:
                 logger.setLevel(Level.ALL);

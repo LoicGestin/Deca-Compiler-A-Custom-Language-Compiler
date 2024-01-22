@@ -49,7 +49,7 @@ public class CallMethod extends AbstractExpr {
 
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
         if (!t.isClass()) {
-            throw new ContextualError("L'expression n'est pas de type classe", this.getLocation());
+            throw new ContextualError("Exception : L'expression n'est pas de type classe", this.getLocation());
         }
 
 
@@ -63,11 +63,11 @@ public class CallMethod extends AbstractExpr {
         Definition def = c.getMembers().get(method.getName());
 
         if(def == null) {
-            throw new ContextualError("L'identificateur n'existe pas dans la classe", this.getLocation());
+            throw new ContextualError("Exception : L'identificateur n'existe pas dans la classe", this.getLocation());
         }
 
         if (!def.isMethod()) {
-            throw new ContextualError("L'identificateur n'est pas une méthode", this.getLocation());
+            throw new ContextualError("Exception : L'identificateur n'est pas une méthode", this.getLocation());
         }
 
         MethodDefinition methodDefinition = (MethodDefinition) def;

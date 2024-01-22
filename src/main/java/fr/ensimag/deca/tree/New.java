@@ -62,7 +62,7 @@ public class New extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type t = type.verifyType(compiler);
         if (!t.isClass()) {
-            throw new ContextualError("new must be used with a class", getLocation());
+            throw new ContextualError("Exception : new must be used with a class", getLocation());
         }
         setType(t);
         return getType();

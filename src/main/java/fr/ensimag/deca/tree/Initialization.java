@@ -28,6 +28,11 @@ public class Initialization extends AbstractInitialization {
             throws ContextualError {
         // Vérification de la compatibilité des types
         Type type = expression.verifyRValue(compiler, localEnv, currentClass, t).getType();
+        // Conversion de type implicite
+        if (t.isFloat() && type.isInt()) {
+            expression = new ConvFloat(expression);
+            expression.verifyExpr(compiler, localEnv, currentClass);
+        }
         expression.setType(type);
     }
 

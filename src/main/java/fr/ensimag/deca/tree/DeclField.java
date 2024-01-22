@@ -110,6 +110,7 @@ public class DeclField extends AbstractDeclField {
         }
 
         field.verifyExpr(compiler, currentClass.getMembers(), currentClass);
+
         currentClass.incNumberOfFields();
         LOG.debug("\t[PASSE 2] : \t [FIN]");
     }

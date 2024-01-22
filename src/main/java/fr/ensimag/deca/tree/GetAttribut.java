@@ -42,13 +42,9 @@ public class GetAttribut extends AbstractIdentifier {
             throw new ContextualError("Exception : L'attribut n'existe pas dans la classe", this.getLocation());
         }
 
-        if (!e.isField()) {
-            throw new ContextualError("Exception : L'attribut n'est pas un champ de la classe", this.getLocation());
-        }
-
         // Si c'est protected impossible d'y accéder depuis une autre classe qui n'est pas une sous-classe ou le main
         if (e.getVisibility() == Visibility.PROTECTED && !(expr instanceof This)) {
-            throw new ContextualError("Exception : L'attribut est protected, impossible d'y accéder depuis une autre classe", this.getLocation());
+            throw new ContextualError("Exception : L'attribut est protected, impossible d'y accéder", this.getLocation());
         }
         attribut.setDefinition(e);
         setType(e.getType());

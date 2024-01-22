@@ -18,7 +18,7 @@ public class CallMethod extends AbstractExpr {
 
     private final AbstractExpr expr;
     private final AbstractIdentifier method;
-    private final ListExpr arguments;
+    private ListExpr arguments;
 
     public CallMethod(AbstractExpr expr, AbstractIdentifier method, ListExpr arguments) {
         this.expr = expr;
@@ -79,10 +79,20 @@ public class CallMethod extends AbstractExpr {
             throw new ContextualError("Exception : Wrong number of arguments in method call : " + sig.size() + " expected, " + arguments.size() + " given", getLocation());
         }
 
+        ListExpr new_arguments = new ListExpr();
         for (int n = 0; n < sig.size(); n++) {
             AbstractExpr e = arguments.getList().get(n);
             e.verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(n));
+
+            // Convert int to float if needed
+            if (sig.paramNumber(n).isFloat() && e.getType().isInt()) {
+                ConvFloat conv = new ConvFloat(e);
+                conv.verifyExpr(compiler, localEnv, currentClass);
+                e = conv;
+            }
+            new_arguments.add(e);
         }
+        arguments = new_arguments;
 
         setType(methodDefinition.getType());
 

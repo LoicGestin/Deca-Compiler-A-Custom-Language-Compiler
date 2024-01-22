@@ -45,12 +45,14 @@ public class InstanceOf extends AbstractOpExactCmp {
 
         GPRegister r = codeGen.getCurrentRegistreUtilise();
 
+        compiler.addInstruction(new LEA(new RegisterOffset(0, r), r));
+
         compiler.addLabel(deb);
 
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, r), r));
         // On teste si le parametre implicite est null
         compiler.addInstruction(new CMP(new RegisterOffset(1, Register.GB), r));
         compiler.addInstruction(new BEQ(not_eq));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, r), r));
         compiler.addInstruction(new CMP(new RegisterOffset(compiler.getEnvironmentType().getClassDefinition(getRightOperand().getType().getName()).getAdressTable(), Register.GB), r));
         compiler.addInstruction(new BNE(deb));
         compiler.addInstruction(new SEQ(r));

@@ -19,4 +19,7 @@ class B extends A{
     if (a instanceof B){
          println("ERROR");
      }
+     else {
+         println("a is not instance of B");
+     }
 }

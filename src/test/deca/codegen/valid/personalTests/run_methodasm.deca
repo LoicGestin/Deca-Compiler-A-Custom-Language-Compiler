@@ -1,0 +1,10 @@
+class A {
+
+    void m() asm("Load #1, R1
+                  WINT");
+}
+
+{
+    A p = new A();
+    p.m();
+}

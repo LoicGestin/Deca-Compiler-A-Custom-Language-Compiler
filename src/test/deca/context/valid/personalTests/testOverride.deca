@@ -19,6 +19,4 @@ class B extends A {
     B b = new B();
     a.m1();
     b.m1();
-    println(a.m1());
-    println(b.m1());
 }

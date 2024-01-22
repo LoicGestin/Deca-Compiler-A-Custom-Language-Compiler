@@ -1,14 +1,20 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 import java.io.PrintStream;
 
 public class Return extends AbstractInst {
 
     private AbstractExpr expr;
+    private String method;
 
     public Return(AbstractExpr expr) {
         this.expr = expr;
@@ -34,7 +40,7 @@ public class Return extends AbstractInst {
             ClassType tClass = t.asClassType("Exception : Return type is not a class", this.getLocation());
             ClassType returnTypeClass = returnType.asClassType("Return type is not a class", this.getLocation());
             if (tClass != returnTypeClass) {
-                if(!tClass.isSubClassOf(returnTypeClass)){
+                if (!tClass.isSubClassOf(returnTypeClass)) {
                     throw new ContextualError("Exception : Return type is not a subclass of the method type", this.getLocation());
                 }
             }
@@ -46,7 +52,6 @@ public class Return extends AbstractInst {
         }
 
         expr.setType(returnType);
-
     }
 
     /**
@@ -56,7 +61,13 @@ public class Return extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        codeGen.setAssignation(true);
+        expr.codeGenInst(compiler);
+        // On met le résultat dans le registre R0
+        compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), Register.R0));
+
+        // Get the name of the method
+        compiler.addInstruction(new BRA(new Label("fin." + codeGen.getCurrentMethod())));
     }
 
     /**

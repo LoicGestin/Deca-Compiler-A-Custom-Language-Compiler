@@ -1,10 +1,7 @@
 class A{
-    int a;
-
 }
 
 class B extends A{
-    int b;
 }
 
 {
@@ -18,4 +15,11 @@ class B extends A{
     if(b instanceof B){
         println("b is instance of B");
     }
+
+    if (a instanceof B){
+         println("ERROR");
+     }
+     else {
+         println("a is not instance of B");
+     }
 }

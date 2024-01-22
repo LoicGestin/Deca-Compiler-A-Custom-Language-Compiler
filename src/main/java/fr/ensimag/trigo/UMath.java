@@ -1,17 +1,16 @@
 package fr.ensimag.trigo;
-//Fichier destiné à devenir Math.decah, utilisé ici pour tester les algorithmes
 
-public class UMath {
+class UMath {
 
-    float POSITIVE_INFINITY = pow(2,128);
+    float POSITIVE_INFINITY = this.pow(2,128);
     float NEGATIVE_INFINITY =  -this.POSITIVE_INFINITY;
 
-    float NaN = pow(2,128)*(float)1.5;
+    float NaN = this.pow(2,128)*(float)1.5;
 
     float MAX_VALUE = 0x1.fffffep127F;
     float MIN_VALUE = 0x0.000002p-126F;
 
-    float PI = 4 * atan(1);
+    float PI = (float)3.1415927;//4 * this.atan((float)1.0);
 
     boolean isInfinite(float f){
         return (f==POSITIVE_INFINITY || f== NEGATIVE_INFINITY);
@@ -42,138 +41,145 @@ public class UMath {
             return 1;
         }
         if (exp>0) {
-            return f * pow(f, exp - 1);
+            return f * this.pow(f, exp - 1);
         }
-        return pow(f,exp+1)/f;
+        return this.pow(f,exp+1)/f;
     }
 
     float fact(int n){
         if (n==0){
             return 1;
         }
-        return fact(n-1);
+        return this.fact(n-1);
     }
 
-    protected float sinHornerFactor(float x2, int n, float inv_fact) {
+    float sinHorner(float f2, int n, float invFact) {
 
-        inv_fact = inv_fact / (2 * n * (2 * n + 1));
+        invFact = invFact / (2 * n * (2 * n + 1));
 
         if (n == 255) {
-            return x2 * inv_fact;
+            return f2 * invFact;
         }
 
-        return inv_fact - x2 * sinHornerFactor(x2, n + 1, inv_fact);
+        return invFact - f2 * this.sinHorner(f2, n + 1, invFact);
     }
 
     float sin(float f) {
 
-        f= f%(2*(float)Math.PI);
-        float x2 = pow(f, 2);
+        f=f%(2*PI);
+        float f2 = f*f;
         float inter_res;
 
-        if (isNaN(f) || isInfinite(f)) {
+        if (this.isNaN(f) || this.isInfinite(f)) {
             return NaN;
         } else if (f == 0) {
             return 0;
         }
 
-        inter_res = 1 - x2 * sinHornerFactor(x2, 1, 1);
+        inter_res = 1 - f2 * this.sinHorner(f2, 1, 1);
 
         return f * inter_res;
     }
 
     float cosNaif(float f){
-        float somme = 0;
+        float somme = (float)0.0;
         int n =0;
-        while (n != 2550) {
-            somme = somme + pow(-1,n)*pow(f, 2*n)/fact(2*n);
+        while (n != 255) {
+            somme = somme + this.pow(-1,n)*this.pow(f, 2*n)/this.fact(2*n);
             n=n+1;
         }
         return somme;
     }
-    protected float cosHornerFactor(float x2, int n, float inv_fact) {
 
-        inv_fact = inv_fact/(2*n*(2*n-1));
+    float cosHorner(float f2, int n, float invFact) {
+
+        invFact = invFact/(2*n*(2*n-1));
 
         if (n == 255) {
-            return x2 * inv_fact;
+            return f2 * invFact;
         }
 
-        return inv_fact - x2 * cosHornerFactor(x2, n + 1, inv_fact);
+        return invFact - f2 * this.cosHorner(f2, n + 1, invFact);
     }
 
     float cos(float f) {
 
-        f= f%(2*(float)Math.PI);
-        float x2 = pow(f, 2);
+        f=f%(2*PI);
+        float f2 = f*f;
 
-        if (isNaN(f) || isInfinite(f)) {
-            return Float.NaN;
+        if (this.isNaN(f) || this.isInfinite(f)) {
+            return NaN;
         }
 
-        return 1-x2*cosHornerFactor(x2, 1, 1);
+        return 1-f2*this.cosHorner(f2, 1, 1);
     }
 
-    float asinHornerFactor(float x2, int n, float recN) {
-        recN = recN*(1-(float)1/(2*n));
+    float asinHorner(float f2, int n, float recN) {
+        recN = recN*(1-1/(2*n));
 
         if (n == 255) {
-            return recN * x2/(2*n+1);
+            return recN * f2/(2*n+1);
         }
 
-        return recN/(2*n+1) + x2 * asinHornerFactor(x2, n + 1,recN);
+        return recN/(2*n+1) + f2 * this.asinHorner(f2, n + 1,recN);
     }
 
     float asin(float f) {
 
-        float x2 = pow(f, 2);
+        float f2 = f*f;
         float inter_res;
 
-        if (isNaN(f) || abs(f) > 1) {
+        if (this.isNaN(f) || this.abs(f) > 1) {
             return NaN;
         } else if (f == 0) {
             return 0;
         }
 
-        inter_res = 1+x2*asinHornerFactor(x2, 1, (float)1);
+        inter_res = 1+f2*this.asinHorner(f2, 1, 1);
         return f*inter_res;
     }
 
-    float atanHF(float x2, int n){
+    float atanHorner(float f2, int n){
         if (n==255){
-            return x2/(2*n+1);
+            return f2/(2*n+1);
         }
 
-        return (float)1/(2*n+1) - x2*atanHF(x2,n+1);
+        return 1/(2*n+1) - f2*this.atanHorner(f2,n+1);
     }
 
     float atan(float f) {
 
-        float x2 = pow(f, 2);
+        float f2 = f*f;
 
-        if (isNaN(f)) {
+        if (this.isNaN(f)) {
             return NaN;
         } else if (f == 0) {
             return 0;
         }
 
-        return f*atanHF(x2,0);
+        return f*this.atanHorner(f2,0);
     }
 
     float ulp(float f){
         int e = -1;
         int continu = 1;
-        float fabs = abs(f);
+        float fabs = f;
         float p=1;
 
-        if (Float.isNaN(f))
+        if (this.isNaN(f)){
             return f;
-        if (Float.isInfinite(f))
+        }
+        if (this.isInfinite(f)){
             return POSITIVE_INFINITY;
+        }
         // This handles both +0.0 and -0.0.
-        if (f == 0.0)
+        if (f == 0.0){
             return MIN_VALUE;
+        }
 
+        if (f<0){
+            fabs=-f;
+        }
         while (continu==1 && e!=255) {
             e=e+1;
             if (p < fabs && fabs <= 2*p){
@@ -182,8 +188,7 @@ public class UMath {
             p=2*p;
 
         }
-        return pow(2,e-23);
+
+        return this.pow(2,e-23);
     }
 }
-
-

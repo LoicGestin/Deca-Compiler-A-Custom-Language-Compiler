@@ -1,0 +1,14 @@
+class A {
+    protected int x ;
+    int getX() {
+        return x ;
+    }
+    void setX(int x) {
+    this.x = x ;
+ }
+}
+
+{
+ int b = 6;
+ A a = new float() ;
+}

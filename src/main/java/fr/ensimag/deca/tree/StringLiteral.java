@@ -3,12 +3,15 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.IMAProgram;
 import fr.ensimag.ima.pseudocode.ImmediateString;
+import fr.ensimag.ima.pseudocode.InlinePortion;
 import fr.ensimag.ima.pseudocode.instructions.WNL;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
+import java.util.Scanner;
 
 /**
  * String literal
@@ -73,6 +76,16 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     String prettyPrintNode() {
         return "StringLiteral (" + value + ")";
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        String val = value.substring(1, value.length() - 1).replace("\\\"", "\"").replace("\\\\", "\\");
+        // Print the string by splitting it into several WNL and WSTR beetwen \n and not wnl at the end
+        String[] split = val.split("\n");
+        for (int i = 0; i < split.length; i++) {
+            compiler.add(new InlinePortion(split[i]));
+        }
     }
 
 }

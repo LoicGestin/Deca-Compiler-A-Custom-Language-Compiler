@@ -15,9 +15,6 @@ import fr.ensimag.ima.pseudocode.AbstractLine;
 import fr.ensimag.ima.pseudocode.IMAProgram;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.ERROR;
-import fr.ensimag.ima.pseudocode.instructions.WNL;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -46,28 +43,24 @@ public class DecacCompiler {
      * Portable newline character.
      */
     private static final String nl = System.getProperty("line.separator", "\n");
-
+    public static boolean debug = false;
     private static boolean color = false;
     private static boolean nocheck = false;
-    /**
-     * The global environment for types, the symbolTable and the labelTable
-     */
-    public EnvironmentType environmentType = new EnvironmentType(this);
-    public EnvironmentExp environmentExp = new EnvironmentExp(null);
-    public EnvironmentExp environmentExpClass = new EnvironmentExp(null);
+    public final LabelTable labelTable = new LabelTable();
+    public final ClassLabel classLabel = new ClassLabel();
     private final CompilerOptions compilerOptions;
     private final File source;
     /**
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
-    private final Label overflow_error = new Label("overflow_error");
-    private final Label io_error = new Label("io_error");
-    private final Label stack_overflow_error = new Label("stack_overflow_error");
+    /**
+     * The global environment for types, the symbolTable and the labelTable
+     */
+    public EnvironmentType environmentType = new EnvironmentType(this);
+    public EnvironmentExp environmentExp = new EnvironmentExp(null);
+    public EnvironmentExp environmentExpClass = new EnvironmentExp(null);
     public SymbolTable symbolTable = new SymbolTable();
-    public final LabelTable labelTable = new LabelTable();
-
-    public final ClassLabel classLabel = new ClassLabel();
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -78,14 +71,19 @@ public class DecacCompiler {
             nocheck = compilerOptions.nocheck;
         }
     }
-    public static boolean debug = false;
+
     public static boolean getDebug() {
-        return true;
+        return debug;
+    }
+
+    public static void setDebug(boolean deb) {
+        debug = deb;
     }
 
     public static boolean getColor() {
         return color;
     }
+
     public static void setColor(boolean col) {
         color = col;
     }
@@ -93,6 +91,7 @@ public class DecacCompiler {
     public static boolean getNocheck() {
         return nocheck;
     }
+
     public static void setNocheck(boolean noch) {
         nocheck = noch;
     }
@@ -257,9 +256,6 @@ public class DecacCompiler {
         LOG.info("Compilation of " + sourceName + " successful.");
         return debug;
     }
-    public static void setDebug(boolean deb) {
-        debug = deb;
-    }
 
     /**
      * Build and call the lexer and parser to build the primitive abstract
@@ -296,18 +292,6 @@ public class DecacCompiler {
         DecaParser parser = new DecaParser(tokens);
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
-    }
-
-    public Label getStack_Overflow_error() {
-        return stack_overflow_error;
-    }
-
-    public Label getOverflow_error() {
-        return overflow_error;
-    }
-
-    public Label getIo_error() {
-        return io_error;
     }
 
     public EnvironmentType getEnvironmentType() {

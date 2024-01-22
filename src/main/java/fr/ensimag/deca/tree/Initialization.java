@@ -22,30 +22,18 @@ public class Initialization extends AbstractInitialization {
         this.expression = expression;
     }
 
-    public AbstractExpr getExpression() {
-        return expression;
-    }
-
-    public void setExpression(AbstractExpr expression) {
-        Validate.notNull(expression);
-        this.expression = expression;
-    }
-
     @Override
     protected void verifyInitialization(DecacCompiler compiler, Type t,
                                         EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         // Vérification de la compatibilité des types
         Type type = expression.verifyRValue(compiler, localEnv, currentClass, t).getType();
-        expression.setType(type);
-        if (compiler.environmentType.compatible(t, type)) {
-            if (type.isFloat() && t.isInt()) {
-                expression = new ConvFloat(expression);
-                expression.setType(expression.verifyExpr(compiler, localEnv, currentClass));
-            }
-        } else {
-            throw new ContextualError("Exception : Incompatible types in initialisation :" + t + " and " + type, getLocation());
+        // Conversion de type implicite
+        if (t.isFloat() && type.isInt()) {
+            expression = new ConvFloat(expression);
+            expression.verifyExpr(compiler, localEnv, currentClass);
         }
+        expression.setType(type);
     }
 
 

@@ -34,4 +34,6 @@ public abstract class AbstractDeclParam extends Tree {
     protected abstract Type verifyParam(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError;
 
+    public abstract void codeGenParam(DecacCompiler compiler, ClassDefinition currentClass, EnvironmentExp envParam, int i);
+
 }

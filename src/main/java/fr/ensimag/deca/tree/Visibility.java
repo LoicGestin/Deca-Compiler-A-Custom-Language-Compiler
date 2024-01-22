@@ -12,10 +12,4 @@ import java.io.PrintStream;
 public enum Visibility {
     PUBLIC,
     PROTECTED;
-
-    public void prettyPrint(PrintStream s, String prefix, boolean b) {
-        if (this == PROTECTED) {
-            s.print("protected");
-        }
-    }
 }

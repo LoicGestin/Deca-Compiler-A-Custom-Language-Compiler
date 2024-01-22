@@ -1,8 +1,14 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.io.PrintStream;
 
@@ -12,7 +18,7 @@ public class CallMethod extends AbstractExpr {
 
     private final AbstractExpr expr;
     private final AbstractIdentifier method;
-    private final ListExpr arguments;
+    private ListExpr arguments;
 
     public CallMethod(AbstractExpr expr, AbstractIdentifier method, ListExpr arguments) {
         this.expr = expr;
@@ -43,7 +49,7 @@ public class CallMethod extends AbstractExpr {
 
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
         if (!t.isClass()) {
-            throw new ContextualError("L'expression n'est pas de type classe", this.getLocation());
+            throw new ContextualError("Exception : L'expression n'est pas de type classe", this.getLocation());
         }
 
 
@@ -56,8 +62,12 @@ public class CallMethod extends AbstractExpr {
 
         Definition def = c.getMembers().get(method.getName());
 
+        if(def == null) {
+            throw new ContextualError("Exception : L'identificateur n'existe pas dans la classe", this.getLocation());
+        }
+
         if (!def.isMethod()) {
-            throw new ContextualError("L'identificateur n'est pas une méthode", this.getLocation());
+            throw new ContextualError("Exception : L'identificateur n'est pas une méthode", this.getLocation());
         }
 
         MethodDefinition methodDefinition = (MethodDefinition) def;
@@ -69,10 +79,20 @@ public class CallMethod extends AbstractExpr {
             throw new ContextualError("Exception : Wrong number of arguments in method call : " + sig.size() + " expected, " + arguments.size() + " given", getLocation());
         }
 
+        ListExpr new_arguments = new ListExpr();
         for (int n = 0; n < sig.size(); n++) {
             AbstractExpr e = arguments.getList().get(n);
             e.verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(n));
+
+            // Convert int to float if needed
+            if (sig.paramNumber(n).isFloat() && e.getType().isInt()) {
+                ConvFloat conv = new ConvFloat(e);
+                conv.verifyExpr(compiler, localEnv, currentClass);
+                e = conv;
+            }
+            new_arguments.add(e);
         }
+        arguments = new_arguments;
 
         setType(methodDefinition.getType());
 
@@ -131,4 +151,58 @@ public class CallMethod extends AbstractExpr {
         method.iterChildren(f);
         arguments.iterChildren(f);
     }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        // On reserve de la place pour les parametres
+        compiler.addInstruction(new ADDSP(arguments.size() + 1));
+
+        // On empile le parametre implicite (this) dans SP
+        codeGen.setAssignation(true);
+        expr.codeGenInst(compiler);
+        compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(0, Register.SP)));
+
+        // On empile les parametres dans SP dans une boucle
+        for (int i = 0; i < arguments.size(); i++) {
+            codeGen.setAssignation(true);
+            arguments.getList().get(i).codeGenInst(compiler);
+            compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), new RegisterOffset(-i - 1, Register.SP)));
+        }
+
+        // On récupère le parametre implicite (this) dans SP
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), codeGen.getRegistreLibre()));
+
+
+
+        // On récupère l'adresse de la méthode dans le VMT
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, codeGen.getCurrentRegistreUtilise()), codeGen.getCurrentRegistreUtilise()));
+
+        // On appelle la méthode
+        compiler.addInstruction(new BSR(new RegisterOffset(method.getMethodDefinition().getIndex(), codeGen.getRegistreUtilise())));
+
+        // On dépile les parametres
+        compiler.addInstruction(new SUBSP(arguments.size() + 1));
+
+        // Si la méthode n'est pas void, on récupère le résultat dans un registre
+        if (!method.getMethodDefinition().getType().isVoid()) {
+            compiler.addInstruction(new LOAD(Register.R0, codeGen.getRegistreLibre()));
+        }
+    }
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        codeGenInst(compiler);
+        if(getType().isBoolean()){
+            print_boolean(compiler);
+        }
+        else {
+            compiler.addInstruction(new LOAD(codeGen.getRegistreUtilise(), Register.R1));
+            if (getType().isInt()) {
+                compiler.addInstruction(new WINT());
+            } else if (getType().isFloat()) {
+                compiler.addInstruction(new WFLOAT());
+            }
+        }
+    }
+
 }

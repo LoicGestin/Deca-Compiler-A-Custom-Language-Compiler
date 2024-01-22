@@ -32,7 +32,7 @@ public class MethodBody extends AbstractMethodBody {
         if (stringLiteral != null) {
             s.print(" asm(");
             stringLiteral.decompile(s);
-            s.print(")");
+            s.print(");");
         } else {
             s.println("{");
             s.indent();
@@ -70,6 +70,15 @@ public class MethodBody extends AbstractMethodBody {
         } else {
             declVars.verifyListDeclVariable(compiler, localEnv);
             insts.verifyListInst(compiler, localEnv, currentClass, returnType);
+        }
+    }
+
+    public void codeGenMethodBody(DecacCompiler compiler, ClassDefinition currentClass, EnvironmentExp envParam, Type type) {
+        if (stringLiteral != null) {
+            stringLiteral.codeGenInst(compiler);
+        } else {
+            declVars.codeGenListDeclVar(compiler, currentClass);
+            insts.codeGenListInst(compiler, currentClass);
         }
     }
 }

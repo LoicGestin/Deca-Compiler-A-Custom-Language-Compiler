@@ -4,14 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.LabelOperand;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
-import fr.ensimag.ima.pseudocode.instructions.TSTO;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -39,10 +32,7 @@ public class DeclMethod extends AbstractDeclMethod {
         this.body = body;
     }
 
-    public EnvironmentExp getEnvParam() {
-        return envParam;
-    }
-    public MethodDefinition getMethodDefinition(){
+    public MethodDefinition getMethodDefinition() {
         return (MethodDefinition) name.getExpDefinition();
     }
 
@@ -93,13 +83,13 @@ public class DeclMethod extends AbstractDeclMethod {
         int index = currentClass.getNumberOfMethods() + 1;
         EnvironmentExp envSuper = currentClass.getSuperClass().getMembers();
 
-        if(envSuper.get(name.getName()) != null){
-            if(envSuper.get(name.getName()).isMethod()){
+        if (envSuper.get(name.getName()) != null) {
+            if (envSuper.get(name.getName()).isMethod()) {
                 MethodDefinition methodDef = (MethodDefinition) envSuper.get(name.getName());
-                if(methodDef.getSignature().size() !=(signature.size())){
+                if (methodDef.getSignature().size() != (signature.size())) {
                     throw new ContextualError("Exception : Signature of method " + name.getName() + " is not the same", name.getLocation());
                 }
-                if(!compiler.environmentType.subType(compiler.environmentType, t, methodDef.getType())){
+                if (!compiler.environmentType.subType(compiler.environmentType, t, methodDef.getType())) {
                     throw new ContextualError("Exception : Type of method " + name.getName() + " is not the same", name.getLocation());
                 }
                 isOverride = true;
@@ -111,7 +101,7 @@ public class DeclMethod extends AbstractDeclMethod {
 
         name.setDefinition(new MethodDefinition(t, name.getLocation(), signature, index));
 
-        if(!isOverride){
+        if (!isOverride) {
             currentClass.incNumberOfMethods();
         }
 
@@ -127,20 +117,13 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyMethodBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("\t[PASSE 3] : \t Méthode " + this.name.getName());
+        codeGen.setMethod("code." + currentClass.getType().getName() + "." + name.getName());
         body.verifyMethodBody(compiler, this.envParam, currentClass, type.getType());
         LOG.debug("\t[PASSE 3] : \t [FIN]");
     }
 
-    @Override
-    public void codeGenMethodPasseOne(DecacCompiler compiler) {
-        Label objectLabel = compiler.classLabel.addLabel("code." + name.getName());
-        compiler.addInstruction(new LOAD(new LabelOperand(objectLabel), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(codeGen.addIndexPile(), Register.GB)));
-    }
 
-
-
-    public void codeGenMethodPasseTwo(DecacCompiler compiler) {
+    public void codeGenMethodPasseTwo(DecacCompiler compiler, ClassDefinition currentClass) {
         /*
 
         code.A.m:
@@ -157,17 +140,23 @@ public class DeclMethod extends AbstractDeclMethod {
         RTS
          */
 
+        LOG.trace("Ecriture du code de la méthode " + name.getName());
+
         // code.A.m:
-        Label objectLabel = compiler.classLabel.addLabel("code." + name.getName());
-        compiler.addLabel(objectLabel);
+        compiler.addLabel(compiler.classLabel.addLabel("code." + currentClass.getType().getName() + "." + name.getName()));
 
-        // TSTO #d1 ; taille maximale de la pile
-        compiler.addInstruction(new TSTO(100)); // TODO : taille maximale de la pile
+        codeGen.setCurrentMethod(currentClass.getType().getName() + "." + name.getName());
+        codeGen.protect_registres(compiler);
 
-        // BOV pile_pleine
-        compiler.addInstruction(new BOV(compiler.getStack_Overflow_error()));
+        codeGen.setMethod("code." + currentClass.getType().getName() + "." + name.getName());
+        params.codeGenListDeclParam(compiler, currentClass, this.envParam);
+        body.codeGenMethodBody(compiler, currentClass, this.envParam, type.getType());
 
-        // ADDSP #d2 ; variables locales
-        
+
+        compiler.addLabel(compiler.classLabel.addLabel("fin." + currentClass.getType().getName() + "." + name.getName()));
+        codeGen.unprotect_registres(compiler);
+        compiler.addInstruction(new RTS());
+
+
     }
 }

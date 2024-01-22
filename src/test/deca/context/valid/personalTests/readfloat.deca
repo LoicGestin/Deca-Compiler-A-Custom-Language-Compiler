@@ -1,0 +1,4 @@
+{
+    float b = readFloat();
+    println(b);
+}

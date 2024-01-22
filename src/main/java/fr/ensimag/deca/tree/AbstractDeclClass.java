@@ -3,8 +3,6 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 
-import java.util.ArrayList;
-
 /**
  * Class declaration.
  *
@@ -34,11 +32,7 @@ public abstract class AbstractDeclClass extends Tree {
     protected abstract void verifyClassBody(DecacCompiler compiler)
             throws ContextualError;
 
-    public void codeGenClassPasseOne(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
-    }
+    public abstract void codeGenClassPasseOne(DecacCompiler compiler) ;
 
-    public void codeGenClassPasseTwo(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
-    }
+    public abstract void codeGenClassPasseTwo(DecacCompiler compiler);
 }

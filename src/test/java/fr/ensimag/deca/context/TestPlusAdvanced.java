@@ -1,9 +1,9 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.tree.AbstractExpr;
-import fr.ensimag.deca.tree.ConvFloat;
-import fr.ensimag.deca.tree.Plus;
+import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.deca.tree.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,5 +77,62 @@ public class TestPlusAdvanced {
         // check that the mocks have been called properly.
         //verify(intexpr1).verifyExpr(compiler, null, null);
         //verify(floatexpr1).verifyExpr(compiler, null, null);
+    }
+    @Test
+    public void testType() throws ContextualError {
+        DecacCompiler compiler = new DecacCompiler(null, null);
+        SymbolTable t = compiler.symbolTable;
+
+        Identifier identifierInt = new Identifier(t.create("int"));
+        Identifier identifierX = new Identifier(t.create("x"));
+
+        IntLiteral intLiteralOne = new IntLiteral(1);
+        Initialization initializationOne = new Initialization(intLiteralOne);
+
+        NoInitialization initializationTwo = new NoInitialization();
+        initializationTwo.decompile((IndentPrintStream) null);
+
+        Tree tree = new EmptyMain();
+        tree.decompile((IndentPrintStream) null);
+        tree.checkAllDecorations();
+        tree.checkAllLocations();
+        tree.prettyPrint(System.out);
+        tree.setLocation(null);
+
+
+        try {
+            GetAttribut getAttribut = new GetAttribut(new This(true), identifierX);
+            getAttribut.getExpDefinition();
+            getAttribut.getClassDefinition();
+            getAttribut.getFieldDefinition();
+            getAttribut.getMethodDefinition();
+            getAttribut.getName();
+            getAttribut.getDefinition();
+            getAttribut.getGPRegister();
+            getAttribut.verifyType(compiler);
+
+        }
+        catch (Exception ignored) {
+        }
+        AbstractMain emptyMain2 = new EmptyMain();
+        emptyMain2.decompile((IndentPrintStream) null);
+
+        EmptyMain emptyMain = new EmptyMain();
+        emptyMain.decompile((IndentPrintStream) null);
+
+        DeclVar varX = new DeclVar(identifierInt, identifierX, initializationOne);
+        ListDeclVar l = new ListDeclVar();
+        l.set(0, varX);
+        l.iterator();
+        l.add(varX);
+        Main main = new Main(l, new ListInst());
+
+        Program prog = new Program(new ListDeclClass(), main);
+        prog.verifyProgram(compiler);
+        DecacCompiler.setDebug(true);
+        DecacCompiler.setColor(true);
+        DecacCompiler.setNocheck(true);
+        prog.codeGenProgram(compiler);
+
     }
 }

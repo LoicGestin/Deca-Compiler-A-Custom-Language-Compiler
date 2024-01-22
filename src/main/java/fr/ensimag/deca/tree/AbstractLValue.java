@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
@@ -13,9 +14,12 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 public abstract class AbstractLValue extends AbstractExpr {
     public abstract SymbolTable.Symbol getName();
 
-    public abstract DAddr getAddr();
+    public abstract DAddr getAddr(DecacCompiler compiler);
 
     public abstract GPRegister getGPRegister();
 
-    public abstract boolean isAddr();
+    public abstract boolean isAddr(DecacCompiler compiler);
+
+    public abstract boolean isField(DecacCompiler compiler);
+
 }

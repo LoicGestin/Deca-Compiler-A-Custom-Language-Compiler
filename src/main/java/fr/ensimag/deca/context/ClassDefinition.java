@@ -11,8 +11,8 @@ import fr.ensimag.deca.tree.Location;
 public class ClassDefinition extends TypeDefinition {
 
 
-    private EnvironmentExp members;
-    private ClassDefinition superClass;
+    private final EnvironmentExp members;
+    private final ClassDefinition superClass;
     private int numberOfFields = 0;
     private int numberOfMethods = 0;
 
@@ -33,24 +33,25 @@ public class ClassDefinition extends TypeDefinition {
     public int getNumberOfFields() {
         return numberOfFields;
     }
-    public void incNumberOfFields() {
-        this.numberOfFields++;
-    }
 
     public void setNumberOfFields(int numberOfFields) {
         this.numberOfFields = numberOfFields;
+    }
+
+    public void incNumberOfFields() {
+        this.numberOfFields++;
     }
 
     public int getNumberOfMethods() {
         return numberOfMethods;
     }
 
-    public void incNumberOfMethods() {
-        numberOfMethods++;
-    }
-
     public void setNumberOfMethods(int numberOfMethods) {
         this.numberOfMethods = numberOfMethods;
+    }
+
+    public void incNumberOfMethods() {
+        numberOfMethods++;
     }
 
     public int getAdressTable() {

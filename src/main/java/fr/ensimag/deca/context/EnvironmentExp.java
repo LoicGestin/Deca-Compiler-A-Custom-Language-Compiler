@@ -40,7 +40,8 @@ public class EnvironmentExp {
      * symbol is undefined.
      */
     public ExpDefinition get(Symbol key) {
-        if (envExp.containsKey(key)) {         return envExp.get(key);
+        if (envExp.containsKey(key)) {
+            return envExp.get(key);
         } else if (parentEnvironment != null) {
             return parentEnvironment.get(key);
         }
@@ -66,16 +67,16 @@ public class EnvironmentExp {
         }
     }
 
-    public static class DoubleDefException extends Exception {
-        private static final long serialVersionUID = -2733379901827316441L;
+    public void afficher() {
+        System.out.println("Affichage de l'environnement : ");
+        for (Symbol key : envExp.keySet()) {
+            System.out.println(key + " : " + envExp.get(key));
+        }
+        System.out.println("Fin de l'affichage de l'environnement.");
     }
 
-    public void afficher() {
-    	System.out.println("Affichage de l'environnement : ");
-    	for (Symbol key : envExp.keySet()) {
-    		System.out.println(key + " : " + envExp.get(key));
-    	}
-    	System.out.println("Fin de l'affichage de l'environnement.");
+    public static class DoubleDefException extends Exception {
+        private static final long serialVersionUID = -2733379901827316441L;
     }
 
 }

@@ -8,6 +8,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -49,6 +51,11 @@ public class Identifier extends AbstractIdentifier {
         this.definition = definition;
     }
 
+    @Override
+    public boolean isField(DecacCompiler compiler) {
+        return false;
+    }
+
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * ClassDefinition.
@@ -60,14 +67,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public ClassDefinition getClassDefinition() {
-        try {
-            return (ClassDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a class identifier, you can't call getClassDefinition on it");
-        }
+        return (ClassDefinition) definition;
     }
 
     /**
@@ -81,14 +81,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public MethodDefinition getMethodDefinition() {
-        try {
-            return (MethodDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a method identifier, you can't call getMethodDefinition on it");
-        }
+        return (MethodDefinition) definition;
     }
 
     /**
@@ -102,35 +95,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public FieldDefinition getFieldDefinition() {
-        try {
-            return (FieldDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a field identifier, you can't call getFieldDefinition on it");
-        }
-    }
-
-    /**
-     * Like {@link #getDefinition()}, but works only if the definition is a
-     * VariableDefinition.
-     * <p>
-     * This method essentially performs a cast, but throws an explicit exception
-     * when the cast fails.
-     *
-     * @throws DecacInternalError if the definition is not a field definition.
-     */
-    @Override
-    public VariableDefinition getVariableDefinition() {
-        try {
-            return (VariableDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a variable identifier, you can't call getVariableDefinition on it");
-        }
+        return (FieldDefinition) definition;
     }
 
     /**
@@ -143,14 +108,7 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public ExpDefinition getExpDefinition() {
-        try {
-            return (ExpDefinition) definition;
-        } catch (ClassCastException e) {
-            throw new DecacInternalError(
-                    "Identifier "
-                            + getName()
-                            + " is not a Exp identifier, you can't call getExpDefinition on it");
-        }
+        return (ExpDefinition) definition;
     }
 
     @Override
@@ -159,7 +117,7 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
-    public DAddr getAddr() {
+    public DAddr getAddr(DecacCompiler compiler) {
         return this.getExpDefinition().getOperand();
     }
 
@@ -169,7 +127,7 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
-    public boolean isAddr() {
+    public boolean isAddr(DecacCompiler compiler) {
         return this.getExpDefinition().isAddr();
     }
 
@@ -177,24 +135,27 @@ public class Identifier extends AbstractIdentifier {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
         ExpDefinition expDef = localEnv.get(this.getName());
-        codeGen.addVariableTable(this.getName().toString());
+        // Si c'est pas une méthode
+        if (expDef != null && !expDef.isMethod() && !expDef.isParam() && !expDef.isField() && !expDef.isClass()) {
+            codeGen.addtableDesDeclaration(codeGen.getMethod(), this.getName().toString());
+        }
+
         if (expDef == null && currentClass != null) {
             expDef = currentClass.getMembers().get(this.getName());
         }
 
         if (expDef == null && currentClass == null) {
             ClassDefinition exp = compiler.environmentType.defOfClass(this.getName());
-            if(exp != null){
+            if (exp != null) {
                 setDefinition(exp);
                 setType(exp.getType());
                 return exp.getType();
-            }
-            else {
+            } else {
                 throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
             }
         }
 
-        if(expDef == null){
+        if (expDef == null) {
             throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
         }
 
@@ -279,6 +240,10 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        if (this.getExpDefinition().isField()) {
+            // Generate the code for the field
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+        }
         codeGen.setRegistreCourant(this.getExpDefinition().isAddr() ? this.getExpDefinition().getOperand() : this.getExpDefinition().getGPRegister(), compiler);
     }
 }

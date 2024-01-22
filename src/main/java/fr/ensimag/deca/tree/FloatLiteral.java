@@ -29,8 +29,9 @@ public class FloatLiteral extends AbstractExpr {
     public FloatLiteral(float value) {
         Validate.isTrue(!Float.isInfinite(value),
                 "literal values cannot be infinite");
-        Validate.isTrue(!Float.isNaN(value),
-                "literal values cannot be NaN");
+        // TO DO, voir si on peut pas mettre des NaN
+       // Validate.isTrue(!Float.isNaN(value),
+       //         "literal values cannot be NaN");
         this.value = value;
     }
 
@@ -47,8 +48,7 @@ public class FloatLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), codeGen.getCurrentRegistreLibre()));
-        compiler.addInstruction(new LOAD(codeGen.getCurrentRegistreLibre(), GPRegister.getR(1)));
+        compiler.addInstruction(new LOAD(new ImmediateFloat(this.getValue()), GPRegister.getR(1)));
         compiler.addInstruction(super.isHexa() ? new WFLOATX() : new WFLOAT());
     }
 

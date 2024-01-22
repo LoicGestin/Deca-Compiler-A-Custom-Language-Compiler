@@ -117,6 +117,8 @@ echo "====================   Etape B   ===================="
 
 echo "==> Test du contexte"
 
+echo "   --> Tests des programmes corrects"
+
 passed=0
 total=0
 
@@ -273,6 +275,9 @@ do
   total=$((total + 1))
 done
 
+decac -r 4 src/test/deca/codegen/valid/personalTests/readint.deca > /tmp/null 2>/dev/null
+echo -e "12\n13.45" > ima src/test/deca/codegen/valid/personalTests/readint.ass
+
 rm src/test/deca/codegen/valid/personalTests/*.run
 rm src/test/deca/codegen/valid/personalTests/*.ass
 
@@ -291,3 +296,6 @@ else
   echo -e "${RED}Il y a eu $erreur_total erreur(s)${NC}"
   exit 1 # exit with failure
 fi
+
+
+

@@ -1,0 +1,17 @@
+class A{
+    int a;
+
+}
+
+class B extends A{
+    int b;
+
+    void display(){
+        println("B");
+    }
+}
+
+{
+    A a = new B();
+    a.display();
+}

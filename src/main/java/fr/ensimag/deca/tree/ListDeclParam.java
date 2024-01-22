@@ -26,4 +26,12 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
         }
         return sig;
     }
+
+    public void codeGenListDeclParam(DecacCompiler compiler, ClassDefinition currentClass, EnvironmentExp envParam) {
+        int i = 0;
+        for (AbstractDeclParam p : getList()) {
+            p.codeGenParam(compiler, currentClass, envParam, i);
+            i++;
+        }
+    }
 }

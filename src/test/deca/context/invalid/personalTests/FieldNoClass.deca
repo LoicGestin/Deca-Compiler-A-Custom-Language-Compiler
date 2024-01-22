@@ -1,0 +1,10 @@
+class A{
+    int a;
+}
+
+{
+    A a;
+    int b;
+    a = new A();
+    b.a;
+}

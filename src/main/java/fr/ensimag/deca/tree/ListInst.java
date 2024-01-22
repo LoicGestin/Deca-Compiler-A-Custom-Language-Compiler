@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -32,8 +33,14 @@ public class ListInst extends TreeList<AbstractInst> {
     public void codeGenListInst(DecacCompiler compiler) {
         for (AbstractInst i : getList()) {
             i.codeGenInst(compiler);
+            codeGen.free_reg();
         }
     }
+
+    public void codeGenListInst(DecacCompiler compiler, ClassDefinition currentClass) {
+        codeGenListInst(compiler);
+    }
+
 
     @Override
     public void decompile(IndentPrintStream s) {

@@ -4,12 +4,10 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.*;
-import fr.ensimag.ima.pseudocode.instructions.ERROR;
-import fr.ensimag.ima.pseudocode.instructions.HALT;
-import fr.ensimag.ima.pseudocode.instructions.WNL;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -52,15 +50,13 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        codeGen.init_registres(compiler);
-
-
 
 
         // PASSE 1
         //— construction du tableau des étiquettes des méthodes.
         //— génération de code permettant de construire la table des méthodes.
         codeGen.construireTableDesMethodes(classes.getList());
+        codeGen.init_registres(compiler);
         classes.codeGenListClassPasseOne(compiler);
 
 
@@ -73,12 +69,13 @@ public class Program extends AbstractProgram {
 
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
-        //classes.codeGenListClassPasseTwo(compiler);
-
-
-
         compiler.addComment("end main program");
         LOG.trace("end main program");
+
+        codeGen.clear_registres();
+
+        classes.codeGenListClassPasseTwo(compiler);
+
 
         if (!DecacCompiler.getNocheck()) {
             compiler.addLabel(new Label("overflow_error"));
@@ -91,11 +88,23 @@ public class Program extends AbstractProgram {
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
 
-            compiler.addLabel(new Label("stack_overflow_error"));
+            compiler.addLabel(new Label("pile_pleine"));
             compiler.addInstruction(new WSTR("Error: Stack overflow"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
+
+            compiler.addLabel(new Label("dereferencement.null"));
+            compiler.addInstruction(new WSTR("Error: deferencement of null pointer"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+
         }
+        compiler.addLabel(new Label("code.object.equals"));
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(0)));
+        compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), Register.getR(1)));
+        compiler.addInstruction(new CMP(Register.getR(1), Register.getR(0)));
+        compiler.addInstruction(new SEQ(Register.getR(0)));
+        compiler.addInstruction(new RTS());
 
 
     }

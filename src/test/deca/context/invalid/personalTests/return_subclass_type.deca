@@ -1,0 +1,16 @@
+class A {
+    B getB() {
+           return this;
+       }
+
+}
+class B{
+    A getA() {
+        return new A() ;
+    }
+}
+
+{
+ A a = new A() ;
+ a.getB();
+}

@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DAddr;
 
 /**
  * @author gl29
@@ -24,6 +25,9 @@ public abstract class AbstractIdentifier extends AbstractLValue {
     public abstract Definition getDefinition();
 
     public abstract void setDefinition(Definition definition);
+
+    @Override
+    public abstract boolean isField(DecacCompiler compiler);
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
@@ -49,6 +53,8 @@ public abstract class AbstractIdentifier extends AbstractLValue {
 
     public abstract SymbolTable.Symbol getName();
 
+    public abstract DAddr getAddr(DecacCompiler compiler);
+
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
      * <p>
@@ -59,16 +65,7 @@ public abstract class AbstractIdentifier extends AbstractLValue {
      */
     public abstract ExpDefinition getExpDefinition();
 
-    /**
-     * Like {@link #getDefinition()}, but works only if the definition is a
-     * VariableDefinition.
-     * <p>
-     * This method essentially performs a cast, but throws an explicit exception
-     * when the cast fails.
-     *
-     * @throws DecacInternalError if the definition is not a field definition.
-     */
-    public abstract VariableDefinition getVariableDefinition();
+
 
     /**
      * Implements non-terminal "type" of [SyntaxeContextuelle] in the 3 passes

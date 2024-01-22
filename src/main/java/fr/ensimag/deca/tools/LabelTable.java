@@ -21,7 +21,7 @@ public class LabelTable {
     }
 
     public Label addLabel(String type, Boolean duplicate) {
-        if (duplicate){
+        if (duplicate) {
             Label lab = new Label(type, 0);
             map.put(type, 0);
             return lab;

@@ -40,7 +40,7 @@ public class Return extends AbstractInst {
             ClassType tClass = t.asClassType("Exception : Return type is not a class", this.getLocation());
             ClassType returnTypeClass = returnType.asClassType("Return type is not a class", this.getLocation());
             if (tClass != returnTypeClass) {
-                if(!tClass.isSubClassOf(returnTypeClass)){
+                if (!tClass.isSubClassOf(returnTypeClass)) {
                     throw new ContextualError("Exception : Return type is not a subclass of the method type", this.getLocation());
                 }
             }

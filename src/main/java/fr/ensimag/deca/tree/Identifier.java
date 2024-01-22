@@ -47,13 +47,13 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
-    public boolean isField(DecacCompiler compiler) {
-        return false;
+    public void setDefinition(Definition definition) {
+        this.definition = definition;
     }
 
     @Override
-    public void setDefinition(Definition definition) {
-        this.definition = definition;
+    public boolean isField(DecacCompiler compiler) {
+        return false;
     }
 
     /**
@@ -185,7 +185,7 @@ public class Identifier extends AbstractIdentifier {
                            ClassDefinition currentClass) throws ContextualError {
         ExpDefinition expDef = localEnv.get(this.getName());
         // Si c'est pas une méthode
-        if (expDef != null && !expDef.isMethod() && !expDef.isParam() && ! expDef.isField() && !expDef.isClass()) {
+        if (expDef != null && !expDef.isMethod() && !expDef.isParam() && !expDef.isField() && !expDef.isClass()) {
             codeGen.addtableDesDeclaration(codeGen.getMethod(), this.getName().toString());
         }
 
@@ -195,17 +195,16 @@ public class Identifier extends AbstractIdentifier {
 
         if (expDef == null && currentClass == null) {
             ClassDefinition exp = compiler.environmentType.defOfClass(this.getName());
-            if(exp != null){
+            if (exp != null) {
                 setDefinition(exp);
                 setType(exp.getType());
                 return exp.getType();
-            }
-            else {
+            } else {
                 throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
             }
         }
 
-        if(expDef == null){
+        if (expDef == null) {
             throw new ContextualError("Exception : Identifier " + this.getName() + " is not defined", this.getLocation());
         }
 

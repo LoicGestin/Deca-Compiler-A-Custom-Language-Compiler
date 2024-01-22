@@ -3,8 +3,6 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 
-import java.util.ArrayList;
-
 /**
  * Class declaration.
  *

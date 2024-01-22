@@ -26,14 +26,14 @@ public class Cast extends AbstractExpr {
         Type t = type.verifyType(compiler);
         Type e = expr.verifyExpr(compiler, localEnv, currentClass);
 
-        if(compiler.environmentType.cast_compatible(t, e)) {
+        if (compiler.environmentType.cast_compatible(t, e)) {
             if (t.isFloat() && e.isInt()) {
                 this.expr = new ConvFloat(expr);
                 t = this.expr.verifyExpr(compiler, localEnv, currentClass);
                 this.expr.setLocation(getLocation());
                 setType(t);
                 return t;
-            }else if (t.isInt() && e.isFloat()) {
+            } else if (t.isInt() && e.isFloat()) {
                 this.expr = new ConvInt(expr);
                 t = this.expr.verifyExpr(compiler, localEnv, currentClass);
                 this.expr.setLocation(getLocation());
@@ -42,7 +42,7 @@ public class Cast extends AbstractExpr {
             } else if (compiler.environmentType.subType(compiler.environmentType, e, t)) {
                 setType(t);
                 return t;
-            }else if(compiler.environmentType.subType(compiler.environmentType, t, e)){
+            } else if (compiler.environmentType.subType(compiler.environmentType, t, e)) {
                 setType(t);
                 return t;
             }

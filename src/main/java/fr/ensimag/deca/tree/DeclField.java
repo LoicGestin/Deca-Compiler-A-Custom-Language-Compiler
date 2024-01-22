@@ -33,6 +33,18 @@ public class DeclField extends AbstractDeclField {
         this.visibility = visibility;
     }
 
+    protected static void print_def_variable(IndentPrintStream s, AbstractIdentifier type, AbstractIdentifier field, AbstractInitialization initialization) {
+        if (DecacCompiler.getColor()) s.print("\033[0;31m");
+        type.decompile(s);
+        if (DecacCompiler.getColor()) s.print("\033[0m");
+        s.print(" ");
+        field.decompile(s);
+        if (!(initialization instanceof NoInitialization)) {
+            s.print(" = ");
+            initialization.decompile(s);
+        }
+    }
+
     @Override
     public void decompile(IndentPrintStream s) {
         if (DecacCompiler.getColor()) {
@@ -50,18 +62,6 @@ public class DeclField extends AbstractDeclField {
             s.print(";", "orange");
         } else {
             s.println(";");
-        }
-    }
-
-    protected static void print_def_variable(IndentPrintStream s, AbstractIdentifier type, AbstractIdentifier field, AbstractInitialization initialization) {
-        if (DecacCompiler.getColor()) s.print("\033[0;31m");
-        type.decompile(s);
-        if (DecacCompiler.getColor()) s.print("\033[0m");
-        s.print(" ");
-        field.decompile(s);
-        if (!(initialization instanceof NoInitialization)) {
-            s.print(" = ");
-            initialization.decompile(s);
         }
     }
 
@@ -98,10 +98,10 @@ public class DeclField extends AbstractDeclField {
 
         EnvironmentExp envSuper = currentClass.getSuperClass().getMembers();
 
-        if(envSuper.get(field.getName()) != null){
-                if(envSuper.get(field.getName()).isMethod()){
-                    throw new ContextualError("Exception : Field " + field.getName() + " is already defined as a method in SuperClass", field.getLocation());
-                }
+        if (envSuper.get(field.getName()) != null) {
+            if (envSuper.get(field.getName()).isMethod()) {
+                throw new ContextualError("Exception : Field " + field.getName() + " is already defined as a method in SuperClass", field.getLocation());
+            }
         }
 
         field.setDefinition(new FieldDefinition(t, field.getLocation(), visibility, currentClass, currentClass.getNumberOfFields() + 1));
@@ -133,12 +133,12 @@ public class DeclField extends AbstractDeclField {
         // Generate the code for the field
         compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
 
-        if (initialization instanceof NoInitialization){
-            if (field.getType().isInt() || field.getType().isBoolean()){
+        if (initialization instanceof NoInitialization) {
+            if (field.getType().isInt() || field.getType().isBoolean()) {
                 compiler.addInstruction(new LOAD(new ImmediateInteger(0), codeGen.getRegistreLibre()));
-            } else if (field.getType().isFloat() ){
+            } else if (field.getType().isFloat()) {
                 compiler.addInstruction(new LOAD(new ImmediateInteger(0), codeGen.getRegistreLibre()));
-            } else if (field.getType().isClass()){
+            } else if (field.getType().isClass()) {
                 compiler.addInstruction(new LOAD(new NullOperand(), codeGen.getRegistreLibre()));
             }
             compiler.addInstruction(new STORE(codeGen.getRegistreUtilise(), fieldDefinition.getOperand()));

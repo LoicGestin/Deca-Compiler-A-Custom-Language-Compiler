@@ -53,7 +53,7 @@ public class ListDeclClass extends TreeList<DeclClass> {
         }
     }
 
-    public void codeGenListClassPasseOne(DecacCompiler compiler){
+    public void codeGenListClassPasseOne(DecacCompiler compiler) {
         compiler.addComment("Code de la table des méthodes de Object;");
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
         compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(1, Register.GB)));
@@ -65,7 +65,8 @@ public class ListDeclClass extends TreeList<DeclClass> {
             c.codeGenClassPasseOne(compiler);
         }
     }
-    public void codeGenListClassPasseTwo(DecacCompiler compiler){
+
+    public void codeGenListClassPasseTwo(DecacCompiler compiler) {
 
         for (AbstractDeclClass c : getList()) {
             c.codeGenClassPasseTwo(compiler);

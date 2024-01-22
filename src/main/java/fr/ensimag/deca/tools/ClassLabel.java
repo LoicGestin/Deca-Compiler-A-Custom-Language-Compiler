@@ -2,9 +2,7 @@ package fr.ensimag.deca.tools;
 
 import fr.ensimag.ima.pseudocode.Label;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ClassLabel {

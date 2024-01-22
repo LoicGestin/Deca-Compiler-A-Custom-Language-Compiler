@@ -1,14 +1,11 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -78,7 +75,7 @@ public class MethodBody extends AbstractMethodBody {
 
     public void codeGenMethodBody(DecacCompiler compiler, ClassDefinition currentClass, EnvironmentExp envParam, Type type) {
         if (stringLiteral != null) {
-            stringLiteral.codeGenPrint(compiler);
+            stringLiteral.codeGenInst(compiler);
         } else {
             declVars.codeGenListDeclVar(compiler, currentClass);
             insts.codeGenListInst(compiler, currentClass);

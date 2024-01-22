@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.IMAProgram;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.instructions.WNL;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
@@ -73,6 +74,11 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     String prettyPrintNode() {
         return "StringLiteral (" + value + ")";
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("not Implemented yet");
     }
 
 }

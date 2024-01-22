@@ -4,7 +4,6 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
@@ -40,7 +39,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
 
         // On Load les fields de la classe super s'il y en as
         if (currentClass.getSuperClass().getNumberOfFields() != 0) {
-            if (DecacCompiler.getDebug()){
+            if (DecacCompiler.getDebug()) {
                 compiler.addComment("\tChargement des champs hérités de la classe " + currentClass.getSuperClass().getType().getName());
             }
 
@@ -53,7 +52,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
             compiler.addInstruction(new SUBSP(1));
         }
 
-        if (DecacCompiler.getDebug()){
+        if (DecacCompiler.getDebug()) {
             compiler.addComment("\tChargement des champs propres de la classe " + currentClass.getType().getName());
         }
 

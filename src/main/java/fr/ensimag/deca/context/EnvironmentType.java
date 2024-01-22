@@ -2,7 +2,6 @@ package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-import fr.ensimag.deca.tree.Identifier;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.deca.tree.Main;
 import org.apache.log4j.Logger;
@@ -78,24 +77,24 @@ public class EnvironmentType {
     }
 
     public boolean subType(EnvironmentType envTypes, Type t1, Type t2) {
-        if(t1.sameType(t2)) {
+        if (t1.sameType(t2)) {
             return true;
         }
 
-    	if (t1.isClassOrNull() && t2.isClass()) {
-            if(t1.isNull() && t2.isClass()) {
+        if (t1.isClassOrNull() && t2.isClass()) {
+            if (t1.isNull() && t2.isClass()) {
                 return true;
             }
 
-            if(!t1.isClass() && t2.isClass()){
+            if (!t1.isClass() && t2.isClass()) {
                 return false;
             }
 
-    		ClassDefinition def1 = envTypes.getClassDefinition(t1.getName());
-    		ClassDefinition def2 = envTypes.getClassDefinition(t2.getName());
+            ClassDefinition def1 = envTypes.getClassDefinition(t1.getName());
+            ClassDefinition def2 = envTypes.getClassDefinition(t2.getName());
             return def1.getType().isSubClassOf(def2.getType());
-    	}
-    	return false;
+        }
+        return false;
     }
 
     public boolean compatible(Type t1, Type t2) {
@@ -103,7 +102,7 @@ public class EnvironmentType {
     }
 
     public boolean cast_compatible(Type t1, Type t2) {
-    	return compatible(t1, t2) || compatible(t2, t1);
+        return compatible(t1, t2) || compatible(t2, t1);
     }
 
     public TypeDefinition defOfType(Symbol s) {
@@ -111,7 +110,7 @@ public class EnvironmentType {
     }
 
     public ClassDefinition defOfClass(Symbol s) {
-    	return envClasses.get(s);
+        return envClasses.get(s);
     }
 
     public void declareClass(Symbol key, ClassDefinition value, ClassDefinition superClass) throws EnvironmentExp.DoubleDefException {
@@ -119,7 +118,7 @@ public class EnvironmentType {
             throw new EnvironmentExp.DoubleDefException();
         }
 
-        if(envClasses.containsKey(key)) {
+        if (envClasses.containsKey(key)) {
             throw new EnvironmentExp.DoubleDefException();
         }
 
@@ -128,14 +127,14 @@ public class EnvironmentType {
     }
 
     public ClassDefinition getClassDefinition(Symbol key) {
-    	return envClasses.get(key);
+        return envClasses.get(key);
     }
 
     public void afficher() {
-    	System.out.println("Affichage de l'environnement : ");
-    	for (Symbol key : envTypes.keySet()) {
-    		System.out.println(key + " : " + envTypes.get(key));
-    	}
-    	System.out.println("Fin de l'affichage de l'environnement.");
+        System.out.println("Affichage de l'environnement : ");
+        for (Symbol key : envTypes.keySet()) {
+            System.out.println(key + " : " + envTypes.get(key));
+        }
+        System.out.println("Fin de l'affichage de l'environnement.");
     }
 }

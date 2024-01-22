@@ -42,7 +42,6 @@ public class IntLiteral extends AbstractExpr {
     }
 
 
-
     public void codeGenInst(DecacCompiler compiler) {
         codeGen.setRegistreCourant(new ImmediateInteger(this.getValue()), compiler);
     }

@@ -4,8 +4,6 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.codeGen;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
@@ -16,8 +14,6 @@ import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -156,14 +152,16 @@ public class DeclClass extends AbstractDeclClass {
         LOG.trace("Ecriture du code de la table des méthodes de " + varName.getName());
         compiler.addComment("Code de la table des méthodes de " + varName.getName() + ";");
         varName.getClassDefinition().setAdressTable(codeGen.getIndexPile());
-        compiler.addInstruction(new LEA(new RegisterOffset( varSuper.getName().getName().equals("Object") ? 1 : varSuper.getClassDefinition().getAdressTable(), Register.GB), Register.getR(0)));
+        compiler.addInstruction(new LEA(new RegisterOffset(varSuper.getName().getName().equals("Object") ? 1 : varSuper.getClassDefinition().getAdressTable(), Register.GB), Register.getR(0)));
         compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(codeGen.addIndexPile(), Register.GB)));
 
-        Map<Integer,String> hashMap = codeGen.getTableDesMethodes(getClassName());
-        for (Map.Entry<Integer, String> entry : hashMap.entrySet()) {
-            compiler.addInstruction(new LOAD(new LabelOperand(compiler.classLabel.addLabel(entry.getValue())), Register.getR(0)));
+        Map<Integer, String> hashMap = codeGen.getTableDesMethodes(getClassName());
+        // for sorted hashMap integer
+        hashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEachOrdered(x -> {
+            compiler.addInstruction(new LOAD(new LabelOperand(compiler.classLabel.addLabel(x.getValue())), Register.getR(0)));
             compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(codeGen.addIndexPile(), Register.GB)));
-        }
+        });
+
     }
 
     @Override
@@ -172,7 +170,7 @@ public class DeclClass extends AbstractDeclClass {
         LOG.trace("Ecriture du code de la classe " + varName.getName());
 
         compiler.addComment("Code de la classe " + varName.getName() + ";");
-        if (DecacCompiler.getDebug()){
+        if (DecacCompiler.getDebug()) {
             compiler.addComment("Initialisation des champs de " + varName.getName());
         }
         // init.A

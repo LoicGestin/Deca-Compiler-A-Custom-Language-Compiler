@@ -167,7 +167,7 @@ public class CallMethod extends AbstractExpr {
         compiler.addInstruction(new LOAD(new RegisterOffset(0, codeGen.getCurrentRegistreUtilise()), codeGen.getCurrentRegistreUtilise()));
 
         // On appelle la méthode
-        compiler.addInstruction(new BSR(new RegisterOffset(method.getMethodDefinition().getIndex(), codeGen.getCurrentRegistreUtilise())));
+        compiler.addInstruction(new BSR(new RegisterOffset(method.getMethodDefinition().getIndex(), codeGen.getRegistreUtilise())));
 
         // On dépile les parametres
         compiler.addInstruction(new SUBSP(arguments.size() + 1));

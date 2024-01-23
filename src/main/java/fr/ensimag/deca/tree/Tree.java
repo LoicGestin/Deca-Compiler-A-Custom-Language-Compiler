@@ -263,19 +263,4 @@ public abstract class Tree {
         return true;
     }
 
-    /**
-     * Call decompile() if the compiler has a debug level greater than 1.
-     * <p>
-     * Useful for debugging.
-     *
-     * @param compiler
-     * @return Decompilation, or the empty string.
-     */
-    protected String decompileIfDebug(DecacCompiler compiler) {
-        if (compiler.getCompilerOptions().getDebug() > 1) {
-            return decompile();
-        } else {
-            return "";
-        }
-    }
 }

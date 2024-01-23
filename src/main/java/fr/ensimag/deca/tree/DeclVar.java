@@ -65,7 +65,7 @@ public class DeclVar extends AbstractDeclVar {
             expDefinition.setOperand(codeGen.getRegistreVariable());
         }
 
-
+        /*
         if (DecacCompiler.getDebug()) {
             if (initialization instanceof Initialization) {
                 compiler.addComment("Declaration de la variable " + varName.getName() + " et initialisation" + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));
@@ -73,7 +73,7 @@ public class DeclVar extends AbstractDeclVar {
             if (initialization instanceof NoInitialization) {
                 compiler.addComment("Declaration de la variable " + varName.getName() + (expDefinition.isAddr() ? " par adresse : " + expDefinition.getOperand() : " par registre : " + expDefinition.getGPRegister()));
             }
-        }
+        }*/
         initialization.codeGenInit(compiler, expDefinition);
 
 

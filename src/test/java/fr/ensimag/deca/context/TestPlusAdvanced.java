@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tree.*;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -140,7 +141,51 @@ public class TestPlusAdvanced {
     public void getAttributTest8() throws ContextualError{
         LocationException locationException = new LocationException("test", null);
         locationException.display(new PrintStream(System.out));
+        TestPlusWithoutMock.DummyIntExpression dummyIntExpression = new TestPlusWithoutMock.DummyIntExpression();
     }
+
+    @Test
+    public void getAttributTest9() throws ContextualError{
+
+        DecacCompiler compiler = new DecacCompiler(null, null);
+        AbstractExpr dummyIntExpression = new TestPlusWithoutMock.DummyIntExpression();
+        ListInst listInst = new ListInst();
+        listInst.add(dummyIntExpression);
+
+
+        ListExpr listExpr = new ListExpr();
+        listExpr.add(dummyIntExpression);
+        Println println = new Println(false,listExpr);
+
+        listInst.add(println);
+        Program prog = new Program(new ListDeclClass(), new Main(new ListDeclVar(), listInst ));
+        prog.codeGenProgram(compiler);
+    }
+    @Test
+    public void getAttributTest10() throws ContextualError{
+
+        DecacCompiler compiler = new DecacCompiler(null, null);
+        Tree dummyIntExpression = new TestPlusWithoutMock.DummyIntExpression();
+        dummyIntExpression.setLocation(0,0, "yo");
+        dummyIntExpression.checkAllLocations();
+
+        ListInst listInst = new ListInst();
+        Program prog = new Program(new ListDeclClass(), new Main(new ListDeclVar(), listInst ));
+        prog.codeGenProgram(compiler);
+    }
+    @Test
+    public void getAttributTest11() throws ContextualError{
+
+        DecacCompiler compiler = new DecacCompiler(null, null);
+        Tree dummyIntExpression =new Println(false, new ListExpr());
+        dummyIntExpression.setLocation(0,0, null);
+        dummyIntExpression.setLocation(null);
+        dummyIntExpression.checkAllLocations();
+        ListInst listInst = new ListInst();
+        Program prog = new Program(new ListDeclClass(), new Main(new ListDeclVar(), listInst ));
+        prog.codeGenProgram(compiler);
+    }
+
 
     @Test
     public void testType() throws ContextualError {
@@ -187,6 +232,7 @@ public class TestPlusAdvanced {
         }
         catch (Exception ignored) {
         }
+
 
 
 

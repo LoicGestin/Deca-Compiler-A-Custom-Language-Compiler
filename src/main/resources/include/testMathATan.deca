@@ -3,4 +3,6 @@
 {
     Math m = new Math();
     println("atan(0.0) = ", m.atan(0.0));
+    println("atan(10.0) = ", m.atan(10.0));
+    println("atan(20.0) = ", m.atan(20.0));
 }

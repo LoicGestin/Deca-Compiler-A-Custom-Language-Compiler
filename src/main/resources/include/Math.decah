@@ -1,15 +1,15 @@
-class Math {
+class Float {
 
-    float PI = 4 * this.atan(1.0);
+    float PI = 3.1415927;
 
-    int sign(float f){
+    int _sign(float f){
         if (f<0){
             return -1;
         }
         return 1;
     }
 
-    float abs(float f){
+    float _abs(float f){
         if (f>=0){
             return f;
         }
@@ -18,22 +18,25 @@ class Math {
         }
     }
 
-    float pow(float f, int exp) {
+    float _pow(float f, int exp) {
         if (exp == 0) {
             return 1;
         }
         if (exp>0) {
-            return f * this.pow(f, exp - 1);
+            return f * this._pow(f, exp - 1);
         }
-        return this.pow(f,exp+1)/f;
+        return this._pow(f,exp+1)/f;
     }
 
-    float fact(int n){
+    float _fact(int n){
         if (n==0){
             return 1;
         }
-        return this.fact(n-1);
+        return this._fact(n-1);
     }
+}
+
+class Math {
 
     float sinHorner(float f2, int n, float invFact) {
 
@@ -61,10 +64,11 @@ class Math {
     }
 
     float cosNaif(float f){
+        Float m = new Float();
         float somme = 0.0;
         int n =0;
         while (n != 255) {
-            somme = somme + this.pow(-1,n)*this.pow(f, 2*n)/this.fact(2*n);
+            somme = somme + m._pow(-1,n)*m._pow(f, 2*n)/m._fact(2*n);
             n=n+1;
         }
         return somme;
@@ -102,9 +106,10 @@ class Math {
 
         float f2 = f*f;
         float inter_res;
+        Float m = new Float();
 
-        if (this.abs(f) > 1) {
-            return 0;
+        if (m._abs(f) > 1) {
+            return m._pow(2,128); //Force OverFlow
         } else if (f == 0) {
             return 0;
         }
@@ -133,14 +138,12 @@ class Math {
     }
 
     float ulp(float f){
+        Float m = new Float();
         int e = -1;
         int continu = 1;
-        float fabs = f;
+        float fabs = m._abs(f);
         float p=1;
 
-        if (f<0){
-            fabs=-f;
-        }
         while (continu==1 && e!=255) {
             e=e+1;
             if (p < fabs && fabs <= 2*p){
@@ -150,11 +153,6 @@ class Math {
 
         }
 
-        return this.pow(2,e-23);
+        return m._pow(2,e-23);
     }
-}
-
-{
- Math m = new Math();
- println(m.cos(8.0));
 }

@@ -1,6 +1,6 @@
 class Math {
 
-    float PI = 4 * this.atan(1.0);
+    float PI = 4 * this.atan(0.33) + 4 * this.atan(0.5);
 
     int sign(float f){
         if (f<0){
@@ -152,9 +152,4 @@ class Math {
 
         return this.pow(2,e-23);
     }
-}
-
-{
- Math m = new Math();
- println(m.cos(8.0));
 }

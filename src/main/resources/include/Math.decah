@@ -54,9 +54,10 @@ class Math {
 
     float sin(float f) {
 
-        f=f%2*this.PI;
-        float f2 = f*f;
+        float f2;
         float inter_res;
+        f=f%2*this.PI;
+        f2 = f*f;
 
         if (f == 0) {
             return 0;
@@ -90,8 +91,9 @@ class Math {
     }
 
     float cos(float f) {
+        float f2;
         f=f%2*this.PI;
-        float f2 = f*f;
+        f2 = f*f;
 
         return 1-f2*this.cosHorner(f2, 1, 1);
     }

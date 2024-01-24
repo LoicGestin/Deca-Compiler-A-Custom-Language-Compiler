@@ -1,0 +1,71 @@
+#include "Math.decah"
+
+{
+    Float f = new Float();
+    Math m = new Math();
+    float f1 =0.001;
+    float f2 = -12.3456;
+    float f3=0.5;
+    float f4=9876543.21;
+    float f5=-0.000001;
+    float f6=3.14159;
+    float f7=-876.54321;
+    float f8=2.71828;
+    float f9=-999999.999;
+    float f10=4.71239;
+
+    println(m.sin(f1));
+    println(m.sin(f2));
+    println(m.sin(f3));
+    println(m.sin(f4));
+    println(m.sin(f5));
+    println(m.sin(f6));
+    println(m.sin(f7));
+    println(m.sin(f8));
+    println(m.sin(f9));
+    println(m.sin(f10));
+
+    println(m.cos(f1));
+    println(m.cos(f2));
+    println(m.cos(f3));
+    println(m.cos(f4));
+    println(m.cos(f5));
+    println(m.cos(f6));
+    println(m.cos(f7));
+    println(m.cos(f8));
+    println(m.cos(f9));
+    println(m.cos(f10));
+
+    println(m.atan(f1));
+    println(m.atan(f2));
+    println(m.atan(f3));
+    println(m.atan(f4));
+    println(m.atan(f5));
+    println(m.atan(f6));
+    println(m.atan(f7));
+    println(m.atan(f8));
+    println(m.atan(f9));
+    println(m.atan(f10));
+
+    f1 = -0.723;
+    f2 = 0.456;
+    f3 = 0.821;
+    f4 = -0.134;
+    f5 = -0.589;
+    f6 = 0.675;
+    f7 = -0.287;
+    f8 = 0.932;
+    f9 = -0.045;
+    f10 = 0.213;
+
+    println(m.asin(f1));
+    println(m.asin(f2));
+    println(m.asin(f3));
+    println(m.asin(f4));
+    println(m.asin(f5));
+    println(m.asin(f6));
+    println(m.asin(f7));
+    println(m.asin(f8));
+    println(m.asin(f9));
+    println(m.asin(f10));
+}

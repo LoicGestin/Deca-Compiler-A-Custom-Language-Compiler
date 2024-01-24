@@ -1,7 +1,5 @@
 class Float {
 
-    float PI = 4 * this.atan(0.33) + 4 * this.atan(0.5);
-
     int _sign(float f){
         if (f<0){
             return -1;
@@ -37,6 +35,8 @@ class Float {
 }
 
 class Math {
+
+    float PI = 4 * this.atan(0.33) + 4 * this.atan(0.5);
 
     float sinHorner(float f2, int n, float invFact) {
 

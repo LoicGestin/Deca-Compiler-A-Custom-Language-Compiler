@@ -26,7 +26,7 @@
     println("sin(", f9, ")=", m.sin(f9));
     println("sin(", f10, ")=", m.sin(f10));
     println("---------------------------------------------------------");
-
+    /*
     println("Fonction cos");
     println("cos(", f1, ")=", m.cos(f1));
     println("cos(", f2, ")=", m.cos(f2));
@@ -39,20 +39,8 @@
     println("cos(", f9, ")=", m.cos(f9));
     println("cos(", f10, ")=", m.cos(f10));
     println("---------------------------------------------------------");
-
-    println("Fonction ain");
-    println("asin(", f1, ")=", m.asin(f1));
-    println("asin(", f2, ")=", m.asin(f2));
-    println("asin(", f3, ")=", m.asin(f3));
-    println("asin(", f4, ")=", m.asin(f4));
-    println("asin(", f5, ")=", m.asin(f5));
-    println("asin(", f6, ")=", m.asin(f6));
-    println("asin(", f7, ")=", m.asin(f7));
-    println("asin(", f8, ")=", m.asin(f8));
-    println("asin(", f9, ")=", m.asin(f9));
-    println("asin(", f10, ")=", m.asin(f10));
-    println("---------------------------------------------------------");
-
+    println(m.cosNaif(0.16);
+    */
     println("Fonction atan");
     println("atan(", f1, ")=", m.atan(f1));
     println("atan(", f2, ")=", m.atan(f2));
@@ -65,4 +53,29 @@
     println("atan(", f9, ")=", m.atan(f9));
     println("atan(", f10, ")=", m.atan(f10));
     println("---------------------------------------------------------");
+
+    f1 = -0.723;
+    f2 = 0.456;
+    f3 = 0.821;
+    f4 = -0.134;
+    f5 = -0.589;
+    f6 = 0.675;
+    f7 = -0.287;
+    f8 = 0.932;
+    f9 = -0.045;
+    f10 = 0.213;
+
+    println("Fonction asin");
+    println("asin(", f1, ")=", m.asin(f1));
+    println("asin(", f2, ")=", m.asin(f2));
+    println("asin(", f3, ")=", m.asin(f3));
+    println("asin(", f4, ")=", m.asin(f4));
+    println("asin(", f5, ")=", m.asin(f5));
+    println("asin(", f6, ")=", m.asin(f6));
+    println("asin(", f7, ")=", m.asin(f7));
+    println("asin(", f8, ")=", m.asin(f8));
+    println("asin(", f9, ")=", m.asin(f9));
+    println("asin(", f10, ")=", m.asin(f10));
+    println("---------------------------------------------------------");
+
 }

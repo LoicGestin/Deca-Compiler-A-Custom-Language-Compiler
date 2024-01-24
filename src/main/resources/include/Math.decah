@@ -123,6 +123,7 @@ class Math {
 
         if (m._abs(f) > 1) {
             println("Arithmetic Overflow"); //Force OverFlow
+            return 0;
         } else if (f == 0) {
             return 0;
         }else{
@@ -141,12 +142,14 @@ class Math {
 
     float atan(float f) {
 
+        Float m = new Float();
         float f2 = f*f;
 
         if (f == 0) {
             return 0;
+        } else if (m._abs(f) > 1) {
+            //return (1/f)*this.atanHorner(1/f2,0)+m._sign(f)*this.PI/2;
         }
-
         return f*this.atanHorner(f2,0);
     }
 

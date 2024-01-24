@@ -1,6 +1,7 @@
 class Float {
 
-    float PI = 4 * this.atan(0.33) + 4 * this.atan(0.5);
+    Math m = new Math();
+    float PI = 3.1415927;
 
     int _sign(float f){
         if (f<0){
@@ -34,11 +35,13 @@ class Float {
         }
         return this._fact(n-1);
     }
+
+    void _forceOverflow() asm ("BOV overflow_error");
 }
 
 class Math {
 
-    float sinHorner(float f2, int n, float invFact) {
+    float _sinHorner(float f2, int n, float invFact) {
 
         invFact = invFact / (2 * n * (2 * n + 1));
 
@@ -46,7 +49,7 @@ class Math {
             return f2 * invFact;
         }
 
-        return invFact - f2 * this.sinHorner(f2, n + 1, invFact);
+        return invFact - f2 * this._sinHorner(f2, n + 1, invFact);
     }
 
     float sin(float f) {
@@ -58,12 +61,12 @@ class Math {
             return 0;
         }
 
-        inter_res = 1 - f2 * this.sinHorner(f2, 1, 1);
+        inter_res = 1 - f2 * this._sinHorner(f2, 1, 1);
 
         return f * inter_res;
     }
 
-    float cosNaif(float f){
+    float _cosNaif(float f){
         Float m = new Float();
         float somme = 0.0;
         int n =0;
@@ -74,7 +77,7 @@ class Math {
         return somme;
     }
 
-    float cosHorner(float f2, int n, float invFact) {
+    float _cosHorner(float f2, int n, float invFact) {
 
         invFact = invFact/(2*n*(2*n-1));
 
@@ -82,24 +85,24 @@ class Math {
             return f2 * invFact;
         }
 
-        return invFact - f2 * this.cosHorner(f2, n + 1, invFact);
+        return invFact - f2 * this._cosHorner(f2, n + 1, invFact);
     }
 
     float cos(float f) {
 
         float f2 = f*f;
 
-        return 1-f2*this.cosHorner(f2, 1, 1);
+        return 1-f2*this._cosHorner(f2, 1, 1);
     }
 
-    float asinHorner(float f2, int n, float recN) {
+    float _asinHorner(float f2, int n, float recN) {
         recN = recN*(1-1/(2*n));
 
         if (n == 255) {
             return recN * f2/(2*n+1);
         }
 
-        return recN/(2*n+1) + f2 * this.asinHorner(f2, n + 1,recN);
+        return recN/(2*n+1) + f2 * this._asinHorner(f2, n + 1,recN);
     }
 
     float asin(float f) {
@@ -109,40 +112,46 @@ class Math {
         Float m = new Float();
 
         if (m._abs(f) > 1) {
-            return m._pow(2,128); //Force OverFlow
+            m._forceOverflow(); //Force OverFlow
+            return 0;
         } else if (f == 0) {
             return 0;
         }
 
-        inter_res = 1+f2*this.asinHorner(f2, 1, 1);
+        inter_res = 1+f2*this._asinHorner(f2, 1, 1);
         return f*inter_res;
     }
 
-    float atanHorner(float f2, int n){
+    float _atanHorner(float f2, int n){
         if (n==255){
             return f2/(2*n+1);
         }
 
-        return 1/(2*n+1) - f2*this.atanHorner(f2,n+1);
+        return 1/(2*n+1) - f2*this._atanHorner(f2,n+1);
     }
 
     float atan(float f) {
 
+        Float m = new Float();
         float f2 = f*f;
 
+        if (m._abs(f)>1){
+            m._forceOverflow();
+            return 0;
+        }
         if (f == 0) {
             return 0;
         }
 
-        return f*this.atanHorner(f2,0);
+        return f*this._atanHorner(f2,0);
     }
 
     float ulp(float f){
         Float m = new Float();
-        int e = -1;
+        int e = -128;
         int continu = 1;
         float fabs = m._abs(f);
-        float p=1;
+        float p=m._pow(2,e);
 
         while (continu==1 && e!=255) {
             e=e+1;

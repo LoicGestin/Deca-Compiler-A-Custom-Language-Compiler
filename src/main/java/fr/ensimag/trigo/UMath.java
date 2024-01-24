@@ -161,10 +161,10 @@ class UMath {
     }
 
     float ulp(float f){
-        int e = -1;
+        int e = -127;
         int continu = 1;
         float fabs = f;
-        float p=1;
+        float p=pow((float)2,e);
 
         if (this.isNaN(f)){
             return f;
@@ -180,15 +180,15 @@ class UMath {
         if (f<0){
             fabs=-f;
         }
-        while (continu==1 && e!=255) {
-            e=e+1;
+        while (continu==1 && e!=128) {
             if (p < fabs && fabs <= 2*p){
                 continu = 0;
             }
             p=2*p;
+            e=e+1;
 
         }
 
-        return this.pow(2,e-23);
+        return this.pow(2,e-24);
     }
 }

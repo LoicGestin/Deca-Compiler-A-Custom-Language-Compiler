@@ -2,7 +2,8 @@
 
 {
     Math m = new Math();
-    println("atan(0.0) = ", m.atan(0.0));
+    println("atan(1.0) = ", m.atan(1.0));
+    println("pi = ", 4 * m.atan(0.33) + 4 * m.atan(0.5));
     println("atan(10.0) = ", m.atan(10.0));
     println("atan(20.0) = ", m.atan(20.0));
 }

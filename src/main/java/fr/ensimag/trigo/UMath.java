@@ -158,7 +158,6 @@ class UMath {
         } else if (this.abs(f) > 1) {
             return (1/f)*this.atanHorner(1/f2,0)+this.sign(f)*this.PI/2;
         }
-
         return f*this.atanHorner(f2,0);
     }
 

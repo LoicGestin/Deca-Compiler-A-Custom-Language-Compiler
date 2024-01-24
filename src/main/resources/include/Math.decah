@@ -1,6 +1,9 @@
 class Float {
 
-    Math m = new Math();
+    float _modulo(float f1; float f2){
+        int k = (int)(f1/f2);
+        return f1-k*f2;
+    }
 
     int _sign(float f){
         if (f<0){
@@ -55,9 +58,10 @@ class Math {
 
     float sin(float f) {
 
+        Float m = new Float();
         float f2;
         float inter_res;
-        f=f%(2*this.PI);
+        f=m._modulo(f, 2*this.PI);
         f2 = f*f;
 
         if (f == 0) {
@@ -93,7 +97,7 @@ class Math {
 
     float cos(float f) {
         float f2;
-        f=f%2*this.PI;
+        f=m._modulo(f, 2*this.PI);
         f2 = f*f;
 
         return 1-f2*this.cosHorner(f2, 1, 1);

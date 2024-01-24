@@ -1,7 +1,6 @@
 class Float {
 
     Math m = new Math();
-    float PI = 3.1415927;
 
     int _sign(float f){
         if (f<0){
@@ -41,6 +40,8 @@ class Float {
 
 class Math {
 
+    float PI = 3.1415927;
+
     float sinHorner(float f2, int n, float invFact) {
 
         invFact = invFact / (2 * n * (2 * n + 1));
@@ -54,9 +55,10 @@ class Math {
 
     float sin(float f) {
 
-        f=f%(2*this.PI);
-        float f2 = f*f;
+        float f2;
         float inter_res;
+        f=f%(2*this.PI);
+        f2 = f*f;
 
         if (f == 0) {
             return 0;
@@ -90,8 +92,9 @@ class Math {
     }
 
     float cos(float f) {
+        float f2;
         f=f%2*this.PI;
-        float f2 = f*f;
+        f2 = f*f;
 
         return 1-f2*this.cosHorner(f2, 1, 1);
     }

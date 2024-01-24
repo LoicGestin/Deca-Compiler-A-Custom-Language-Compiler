@@ -13,19 +13,6 @@
     float f9=-999999.999;
     float f10=4.71239;
 
-    println("Fonction sin");
-    println("sin(", f1, ")=", m.sin(f1));
-    println("sin(", f2, ")=", m.sin(f2));
-    println("sin(", f3, ")=", m.sin(f3));
-    println("sin(", f4, ")=", m.sin(f4));
-    println("sin(", f5, ")=", m.sin(f5));
-    println("sin(", f6, ")=", m.sin(f6));
-    println("sin(", f7, ")=", m.sin(f7));
-    println("sin(", f8, ")=", m.sin(f8));
-    println("sin(", f9, ")=", m.sin(f9));
-    println("sin(", f10, ")=", m.sin(f10));
-    println("---------------------------------------------------------");
-
     println("Fonction cos");
     println("cos(", f1, ")=", m.cos(f1));
     println("cos(", f2, ")=", m.cos(f2));

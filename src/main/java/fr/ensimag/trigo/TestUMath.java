@@ -64,7 +64,7 @@ public class TestUMath{
         System.out.println("Test de la fonction ulp: ");
         for(int i=1;i<10;i++) {
             float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
-            System.out.println("\tulp("+ f +") = " + m.ulp(f) + "\t|\t" + (float)Math.ulp(f));
+            System.out.println("\tulp("+ f +") = " + m.ulp(f) + "\t|\t" + Math.ulp(f));
         }
         System.out.println("----------------------------------------------------------------------------");
 

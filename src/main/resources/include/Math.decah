@@ -113,7 +113,6 @@ class Math {
 
         if (m._abs(f) > 1) {
             m._forceOverflow(); //Force OverFlow
-            return 0;
         } else if (f == 0) {
             return 0;
         }

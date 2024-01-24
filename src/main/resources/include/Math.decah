@@ -45,7 +45,7 @@ class Math {
 
     float PI = 3.1415927;
 
-    float sinHorner(float f2, int n, float invFact) {
+    float _sinHorner(float f2, int n, float invFact) {
 
         invFact = invFact / (2 * n * (2 * n + 1));
 
@@ -53,20 +53,23 @@ class Math {
             return f2 * invFact;
         }
 
-        return invFact - f2 * this.sinHorner(f2, n + 1, invFact);
+        return invFact - f2 * this._sinHorner(f2, n + 1, invFact);
     }
 
     float sin(float f) {
 
+        Float m = new Float();
         float f2;
         float inter_res;
+        f = m._modulo(f, 2*this.PI);
         f2 = f*f;
+
 
         if (f == 0) {
             return 0;
         }
 
-        inter_res = 1 - f2 * this.sinHorner(f2, 1, 1);
+        inter_res = 1 - f2 * this._sinHorner(f2, 1, 1);
 
         return f * inter_res;
     }
@@ -94,7 +97,9 @@ class Math {
     }
 
     float cos(float f) {
+        //Float m = new Float();
         float f2;
+        //f = m._modulo(f, 2*this.PI);
         f2 = f*f;
 
         return 1-f2*this.cosHorner(f2, 1, 1);
@@ -147,12 +152,12 @@ class Math {
 
     float ulp(float f){
         Float m = new Float();
-        int e = -1;
+        int e = -127;
         int continu = 1;
         float fabs = m._abs(f);
         float p=1;
 
-        while (continu==1 && e!=255) {
+        while (continu==1 && e!=128) {
             e=e+1;
             if (p < fabs && fabs <= 2*p){
                 continu = 0;

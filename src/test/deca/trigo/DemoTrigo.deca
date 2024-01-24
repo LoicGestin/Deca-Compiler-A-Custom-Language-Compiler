@@ -1,2 +1,68 @@
 #include "Math.decah"
 
+{
+    Float f = new Float();
+    Math m = new Math();
+    float f1 =0.001;
+    float f2 = -12.3456;
+    float f3=0.5;
+    float f4=9876543.21;
+    float f5=-0.000001;
+    float f6=3.14159;
+    float f7=-876.54321;
+    float f8=2.71828;
+    float f9=-999999.999;
+    float f10=4.71239;
+
+    println("Fonction sin");
+    println("sin(", f1, ")=", m.sin(f1));
+    println("sin(", f2, ")=", m.sin(f2));
+    println("sin(", f3, ")=", m.sin(f3));
+    println("sin(", f4, ")=", m.sin(f4));
+    println("sin(", f5, ")=", m.sin(f5));
+    println("sin(", f6, ")=", m.sin(f6));
+    println("sin(", f7, ")=", m.sin(f7));
+    println("sin(", f8, ")=", m.sin(f8));
+    println("sin(", f9, ")=", m.sin(f9));
+    println("sin(", f10, ")=", m.sin(f10));
+    println("---------------------------------------------------------");
+
+    println("Fonction cos");
+    println("cos(", f1, ")=", m.cos(f1));
+    println("cos(", f2, ")=", m.cos(f2));
+    println("cos(", f3, ")=", m.cos(f3));
+    println("cos(", f4, ")=", m.cos(f4));
+    println("cos(", f5, ")=", m.cos(f5));
+    println("cos(", f6, ")=", m.cos(f6));
+    println("cos(", f7, ")=", m.cos(f7));
+    println("cos(", f8, ")=", m.cos(f8));
+    println("cos(", f9, ")=", m.cos(f9));
+    println("cos(", f10, ")=", m.cos(f10));
+    println("---------------------------------------------------------");
+
+    println("Fonction ain");
+    println("asin(", f1, ")=", m.asin(f1));
+    println("asin(", f2, ")=", m.asin(f2));
+    println("asin(", f3, ")=", m.asin(f3));
+    println("asin(", f4, ")=", m.asin(f4));
+    println("asin(", f5, ")=", m.asin(f5));
+    println("asin(", f6, ")=", m.asin(f6));
+    println("asin(", f7, ")=", m.asin(f7));
+    println("asin(", f8, ")=", m.asin(f8));
+    println("asin(", f9, ")=", m.asin(f9));
+    println("asin(", f10, ")=", m.asin(f10));
+    println("---------------------------------------------------------");
+
+    println("Fonction atan");
+    println("atan(", f1, ")=", m.atan(f1));
+    println("atan(", f2, ")=", m.atan(f2));
+    println("atan(", f3, ")=", m.atan(f3));
+    println("atan(", f4, ")=", m.atan(f4));
+    println("atan(", f5, ")=", m.atan(f5));
+    println("atan(", f6, ")=", m.atan(f6));
+    println("atan(", f7, ")=", m.atan(f7));
+    println("atan(", f8, ")=", m.atan(f8));
+    println("atan(", f9, ")=", m.atan(f9));
+    println("atan(", f10, ")=", m.atan(f10));
+    println("---------------------------------------------------------");
+}

@@ -1,11 +1,13 @@
 package fr.ensimag.trigo;
 
 import java.lang.Math;
+import java.util.Random;
 
 public class TestUMath{
 
     public static void main(String args[]){
         UMath m = new UMath();
+        Random r = new Random();
 
         System.out.println("Test de la bibliothèque UMath: \n\tComputed | Expected ");
         System.out.println("Test de la fonction pow: ");
@@ -31,27 +33,50 @@ public class TestUMath{
         System.out.println("\t|-32.584| = " + m.abs((float)-32.584));
         System.out.println("----------------------------------------------------------------------------");
 
-        System.out.println("Test des fonctions trigo: ");
-        System.out.println("\tsin(128.32) = " + m.sin(((float)128.32)) + "\t|\t" + (float)Math.sin((float)128.32));
-        System.out.println("\tcos(65.3265) = " + m.cos(((float)65.3265)) + "\t|\t" + (float)Math.cos((float)65.3265));
-        System.out.println("\tasin(0.012) = " + m.asin(((float)0.012)) + "\t|\t" + (float)Math.asin((float)0.012));
-        System.out.println("\tatan(0.5) = " + m.atan(((float)0.5)) + "\t|\t" + (float)Math.atan((float)0.5));
+        System.out.println("Test de la fonctions sinus: ");
+        for(int i=1;i<10;i++) {
+            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            System.out.println("\tsin("+ f +") = " + m.sin(f) + "\t|\t" + (float)Math.sin(f));
+        }
+        System.out.println("----------------------------------------------------------------------------");
+
+        System.out.println("Test de la fonctions cosinus: ");
+        for(int i=1;i<10;i++) {
+            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            System.out.println("\tcos("+ f +") = " + m.cos(f) + "\t|\t" + (float)Math.cos(f));
+        }
+        System.out.println("----------------------------------------------------------------------------");
+
+        System.out.println("Test de la fonctions arcsinus: ");
+        for(int i=1;i<10;i++) {
+            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            System.out.println("\tasin("+ f +") = " + m.asin(f) + "\t|\t" + (float)Math.asin(f));
+        }
+        System.out.println("----------------------------------------------------------------------------");
+
+        System.out.println("Test de la fonctions arctangente: ");
+        for(int i=1;i<10;i++) {
+            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            System.out.println("\tatan("+ f +") = " + m.atan(f) + "\t|\t" + (float)Math.atan(f));
+        }
         System.out.println("----------------------------------------------------------------------------");
 
         System.out.println("Test de la fonction ulp: ");
-        System.out.println("\tulp(75.61) = " + m.ulp((float)75.61) + "\t|\t" + Math.ulp((float)75.61));
-        System.out.println("\tulp(0.000235) = " + m.ulp((float)0.000235) + "\t|\t" + Math.ulp((float)0.000235));
+        for(int i=1;i<10;i++) {
+            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            System.out.println("\tulp("+ f +") = " + m.ulp(f) + "\t|\t" + (float)Math.ulp(f));
+        }
         System.out.println("----------------------------------------------------------------------------");
 
         System.out.println("Comparaison cosNaif et cos: ");
         long start = System.nanoTime();
         float calc = m.cosNaif((float)1.0);
         long end = System.nanoTime();
-        System.out.println("\tUMath: cosNaif(1.0) = " + calc + "\t|\t" + (end-start) + " ns");/*
+        System.out.println("\tUMath: cosNaif(1.0) = " + calc + "\t|\t" + (end-start) + " ns");
         long start1 = System.nanoTime();
         float calc1 = m.cos((float)1.0);
         long end1 = System.nanoTime();
-        System.out.println("\tUMath: cosHorner(1.0) = " + calc1 + "\t|\t" + (end1-start1) + " ns");*/
+        System.out.println("\tUMath: cosHorner(1.0) = " + calc1 + "\t|\t" + (end1-start1) + " ns");sc
         long start2 = System.nanoTime();
         float calc2 = (float)Math.cos((float)1.0);
         long end2 = System.nanoTime();

@@ -76,7 +76,7 @@ public class TestUMath{
         long start1 = System.nanoTime();
         float calc1 = m.cos((float)1.0);
         long end1 = System.nanoTime();
-        System.out.println("\tUMath: cosHorner(1.0) = " + calc1 + "\t|\t" + (end1-start1) + " ns");sc
+        System.out.println("\tUMath: cosHorner(1.0) = " + calc1 + "\t|\t" + (end1-start1) + " ns");
         long start2 = System.nanoTime();
         float calc2 = (float)Math.cos((float)1.0);
         long end2 = System.nanoTime();

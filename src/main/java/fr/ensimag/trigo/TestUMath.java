@@ -49,14 +49,14 @@ public class TestUMath{
 
         System.out.println("Test de la fonctions arcsinus: ");
         for(int i=1;i<10;i++) {
-            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            float f =r.nextFloat()*(float)Math.pow(-1,(double)r.nextInt());
             System.out.println("\tasin("+ f +") = " + m.asin(f) + "\t|\t" + (float)Math.asin(f));
         }
         System.out.println("----------------------------------------------------------------------------");
 
         System.out.println("Test de la fonctions arctangente: ");
         for(int i=1;i<10;i++) {
-            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            float f =r.nextFloat()*(float)Math.pow(-1,(double)r.nextInt());
             System.out.println("\tatan("+ f +") = " + m.atan(f) + "\t|\t" + (float)Math.atan(f));
         }
         System.out.println("----------------------------------------------------------------------------");

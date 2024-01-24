@@ -115,7 +115,7 @@ class UMath {
     }
 
     float asinHorner(float f2, int n, float recN) {
-        recN = recN*(1-1/(2*n));
+        recN = recN*(1-(float)1/(2*n));
 
         if (n == 255) {
             return recN * f2/(2*n+1);
@@ -144,7 +144,7 @@ class UMath {
             return f2/(2*n+1);
         }
 
-        return 1/(2*n+1) - f2*this.atanHorner(f2,n+1);
+        return (float)1/(2*n+1) - f2*this.atanHorner(f2,n+1);
     }
 
     float atan(float f) {

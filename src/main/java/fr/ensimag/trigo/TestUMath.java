@@ -8,6 +8,7 @@ public class TestUMath{
     public static void main(String args[]){
         UMath m = new UMath();
         Random r = new Random();
+        float avgDiff=0;
 
         System.out.println("Test de la bibliothèque UMath: \n\tComputed | Expected ");
         System.out.println("Test de la fonction pow: ");
@@ -35,38 +36,47 @@ public class TestUMath{
 
         System.out.println("Test de la fonctions sinus: ");
         for(int i=1;i<10;i++) {
-            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,r.nextInt());
             System.out.println("\tsin("+ f +") = " + m.sin(f) + "\t|\t" + (float)Math.sin(f));
+            avgDiff+=Math.abs(m.sin(f)-(float)Math.sin(f));
         }
-        System.out.println("----------------------------------------------------------------------------");
+        System.out.println("Différence moyenne: " + avgDiff/10 + "----------------------------------------------------------------");
+        avgDiff=0;
 
         System.out.println("Test de la fonctions cosinus: ");
         for(int i=1;i<10;i++) {
-            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,r.nextInt());
             System.out.println("\tcos("+ f +") = " + m.cos(f) + "\t|\t" + (float)Math.cos(f));
+            avgDiff+=Math.abs(m.cos(f)-(float)Math.cos(f));
         }
-        System.out.println("----------------------------------------------------------------------------");
+        System.out.println("Différence moyenne: " + avgDiff/10 + "----------------------------------------------------------------");
+        avgDiff=0;
 
         System.out.println("Test de la fonctions arcsinus: ");
         for(int i=1;i<10;i++) {
             float f =r.nextFloat()*(float)Math.pow(-1,(double)r.nextInt());
             System.out.println("\tasin("+ f +") = " + m.asin(f) + "\t|\t" + (float)Math.asin(f));
+            avgDiff+=Math.abs(m.asin(f)-(float)Math.asin(f));
         }
-        System.out.println("----------------------------------------------------------------------------");
+        System.out.println("Différence moyenne: " + avgDiff/10 + "----------------------------------------------------------------");
+        avgDiff=0;
 
         System.out.println("Test de la fonctions arctangente: ");
         for(int i=1;i<10;i++) {
-            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,r.nextInt());
             System.out.println("\tatan("+ f +") = " + m.atan(f) + "\t|\t" + (float)Math.atan(f));
+            avgDiff+=Math.abs(m.atan(f)-(float)Math.atan(f));
         }
-        System.out.println("----------------------------------------------------------------------------");
+        System.out.println("Différence moyenne: " + avgDiff/10 + "----------------------------------------------------------------");
+        avgDiff=0;
 
         System.out.println("Test de la fonction ulp: ");
         for(int i=1;i<10;i++) {
-            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,(double)r.nextInt());
+            float f =r.nextFloat()*(float)Math.pow(2,r.nextFloat()*100)*(float)Math.pow(-1,r.nextInt());
             System.out.println("\tulp("+ f +") = " + m.ulp(f) + "\t|\t" + Math.ulp(f));
+            avgDiff+=Math.abs(m.ulp(f)-Math.ulp(f));
         }
-        System.out.println("----------------------------------------------------------------------------");
+        System.out.println("Différence moyenne: " + avgDiff/10 + "----------------------------------------------------------------");
 
         System.out.println("Comparaison cosNaif et cos: ");
         long start = System.nanoTime();

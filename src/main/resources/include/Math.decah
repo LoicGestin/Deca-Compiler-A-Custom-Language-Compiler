@@ -164,6 +164,6 @@ class Math {
 
         }
 
-        return m._pow(2,e-23);
+        return m._pow(2,e-24);
     }
 }

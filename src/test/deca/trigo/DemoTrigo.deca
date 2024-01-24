@@ -26,19 +26,6 @@
     println("cos(", f10, ")=", m.cos(f10));
     println("---------------------------------------------------------");
 
-    println("Fonction asin");
-    println("asin(", f1, ")=", m.asin(f1));
-    println("asin(", f2, ")=", m.asin(f2));
-    println("asin(", f3, ")=", m.asin(f3));
-    println("asin(", f4, ")=", m.asin(f4));
-    println("asin(", f5, ")=", m.asin(f5));
-    println("asin(", f6, ")=", m.asin(f6));
-    println("asin(", f7, ")=", m.asin(f7));
-    println("asin(", f8, ")=", m.asin(f8));
-    println("asin(", f9, ")=", m.asin(f9));
-    println("asin(", f10, ")=", m.asin(f10));
-    println("---------------------------------------------------------");
-
     println("Fonction atan");
     println("atan(", f1, ")=", m.atan(f1));
     println("atan(", f2, ")=", m.atan(f2));
@@ -50,6 +37,19 @@
     println("atan(", f8, ")=", m.atan(f8));
     println("atan(", f9, ")=", m.atan(f9));
     println("atan(", f10, ")=", m.atan(f10));
+    println("---------------------------------------------------------");
+
+    println("Fonction ulp");
+    println("ulp(", f1, ")=", m.ulp(f1));
+    println("ulp(", f2, ")=", m.ulp(f2));
+    println("ulp(", f3, ")=", m.ulp(f3));
+    println("ulp(", f4, ")=", m.ulp(f4));
+    println("ulp(", f5, ")=", m.ulp(f5));
+    println("ulp(", f6, ")=", m.ulp(f6));
+    println("ulp(", f7, ")=", m.ulp(f7));
+    println("ulp(", f8, ")=", m.ulp(f8));
+    println("ulp(", f9, ")=", m.ulp(f9));
+    println("ulp(", f10, ")=", m.ulp(f10));
     println("---------------------------------------------------------");
 
     f1 = -0.723;

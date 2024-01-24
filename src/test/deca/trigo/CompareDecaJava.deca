@@ -47,6 +47,17 @@
     println(m.atan(f9));
     println(m.atan(f10));
 
+    println(m.ulp(f1));
+    println(m.ulp(f2));
+    println(m.ulp(f3));
+    println(m.ulp(f4));
+    println(m.ulp(f5));
+    println(m.ulp(f6));
+    println(m.ulp(f7));
+    println(m.ulp(f8));
+    println(m.ulp(f9));
+    println(m.ulp(f10));
+
     f1 = -0.723;
     f2 = 0.456;
     f3 = 0.821;

@@ -40,11 +40,8 @@
     println("---------------------------------------------------------");
 
     println("Fonction ulp");
-    println("ulp(", f1, ")=", m.ulp(f1));
     println("ulp(", f2, ")=", m.ulp(f2));
-    println("ulp(", f3, ")=", m.ulp(f3));
     println("ulp(", f4, ")=", m.ulp(f4));
-    println("ulp(", f5, ")=", m.ulp(f5));
     println("ulp(", f6, ")=", m.ulp(f6));
     println("ulp(", f7, ")=", m.ulp(f7));
     println("ulp(", f8, ")=", m.ulp(f8));

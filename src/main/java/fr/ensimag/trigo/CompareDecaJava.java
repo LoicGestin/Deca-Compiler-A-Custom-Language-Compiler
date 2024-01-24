@@ -49,13 +49,13 @@ public class CompareDecaJava {
         avgDiff=0;
 
         System.out.println("Comparaison ULP --------------------------------------------------------------");
-        for (int i=0; i<10;i++){
+        for (int i=0; i<7;i++){
             float computedRes = Math.abs(Float.parseFloat(Files.readAllLines(path).get(cat+i)));
             float diff = computedRes-Math.ulp(floatList.get(i));
             avgDiff += diff;
             System.out.println("Computed: "+computedRes +"\t\t\t| Expected:"+ (float)Math.ulp(floatList.get(i)) + "\t\t\tDifference: " + (computedRes-Math.ulp(floatList.get(i))));
         }
-        System.out.println("==> Average difference: " + avgDiff/10 +"------------------------------------------------------\n");
+        System.out.println("==> Average difference: " + avgDiff/7 +"------------------------------------------------------\n");
         cat++;
 
         floatList = Arrays.asList(

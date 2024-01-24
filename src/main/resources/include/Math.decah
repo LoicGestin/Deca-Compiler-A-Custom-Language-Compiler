@@ -44,6 +44,7 @@ class Float {
 class Math {
 
     float PI = 3.1415927;
+    Float m = new Float();
 
     float _sinHorner(float f2, int n, float invFact) {
 
@@ -57,8 +58,6 @@ class Math {
     }
 
     float sin(float f) {
-
-        Float m = new Float();
         float f2;
         float inter_res;
         f = m._modulo(f, 2*this.PI);
@@ -75,7 +74,6 @@ class Math {
     }
 
     float cosNaif(float f){
-        Float m = new Float();
         float somme = 0.0;
         int n =0;
         while (n != 255) {
@@ -97,9 +95,8 @@ class Math {
     }
 
     float cos(float f) {
-        //Float m = new Float();
         float f2;
-        //f = m._modulo(f, 2*this.PI);
+        f = m._modulo(f, 2*this.PI);
         f2 = f*f;
 
         return 1-f2*this.cosHorner(f2, 1, 1);
@@ -119,7 +116,6 @@ class Math {
 
         float f2 = f*f;
         float inter_res;
-        Float m = new Float();
 
         if (m._abs(f) > 1) {
             println("Arithmetic Overflow"); //Force OverFlow
@@ -142,13 +138,12 @@ class Math {
 
     float atan(float f) {
 
-        Float m = new Float();
         float f2 = f*f;
 
         if (f == 0) {
             return 0;
         } else if (m._abs(f) > 1) {
-            //return (1/f)*this.atanHorner(1/f2,0)+m._sign(f)*this.PI/2;
+            return (1/f)*this.atanHorner(1/f2,0)+m._sign(f)*this.PI/2;
         }
         return f*this.atanHorner(f2,0);
     }

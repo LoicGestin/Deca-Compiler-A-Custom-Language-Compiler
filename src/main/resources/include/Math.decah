@@ -35,6 +35,8 @@ class Float {
         }
         return this._fact(n-1);
     }
+
+    void _forceOverflow() asm ("BOV overflow_error");
 }
 
 class Math {
@@ -110,13 +112,13 @@ class Math {
         Float m = new Float();
 
         if (m._abs(f) > 1) {
-            return m._pow(2,128); //Force OverFlow
+            println("Arithmetic Overflow"); //Force OverFlow
         } else if (f == 0) {
             return 0;
+        }else{
+            inter_res = 1+f2*this.asinHorner(f2, 1, 1);
+            return f*inter_res;
         }
-
-        inter_res = 1+f2*this.asinHorner(f2, 1, 1);
-        return f*inter_res;
     }
 
     float atanHorner(float f2, int n){

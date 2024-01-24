@@ -3,5 +3,5 @@
 {
     Math m = new Math();
     println("asin(0.0) = ", m.asin(0.0));
-    println("asin(2) = ", m.asin(2));
+     m.asin(2);
 }

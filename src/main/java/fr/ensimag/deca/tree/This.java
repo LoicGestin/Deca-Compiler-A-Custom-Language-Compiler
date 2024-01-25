@@ -20,6 +20,9 @@ public class This extends AbstractExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+        if (currentClass == null){
+            throw new ContextualError("Exception : this is not define in main", getLocation());
+        }
         this.setType(currentClass.getType());
         return getType();
     }
